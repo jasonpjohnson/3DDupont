@@ -769,6 +769,9 @@ function goToView(v, animate = true) {
   pos.sub(target).multiplyScalar(scale).add(target);
   const fov = v.fov || 38;
   if (camera.fov !== fov) { camera.fov = fov; camera.updateProjectionMatrix(); }
+  // photo-matched cameras may look upward from eye level and stand close; normal views stay above the ground
+  controls.maxPolarAngle = v.fov ? Math.PI * 0.98 : Math.PI * 0.495;
+  controls.minDistance = v.fov ? 0.5 : 6;
   if (!animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     camera.position.copy(pos);
     controls.target.copy(target);
