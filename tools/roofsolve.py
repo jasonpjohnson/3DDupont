@@ -42,6 +42,7 @@ class Wing:
     overhang: float = 0.4
     solid: bool = True
     base_z: float = 0.0
+    bottom_z: float | None = None      # set for cantilevered volumes that stop above the ground
     meta: dict = field(default_factory=dict)
 
     def __post_init__(self):
@@ -191,6 +192,8 @@ def wall_polygons(wings, wing: Wing, bottom=None, probe=0.02):
     if fp.exterior.is_ccw is False:
         fp = Polygon(list(fp.exterior.coords)[::-1])
     bottom = wing.base_z if bottom is None else bottom
+    if wing.bottom_z is not None:
+        bottom = wing.bottom_z
     ring = np.asarray(fp.exterior.coords)
     others = [b for b in wings if b is not wing and b.solid and b.footprint is not None]
     out = []
@@ -223,7 +226,8 @@ def wall_polygons(wings, wing: Wing, bottom=None, probe=0.02):
                 pa = p + t * s0 + n * probe
                 pb = p + t * s1 + n * probe
                 bprof = envelope_profile(b, pa, pb)
-                cut = Polygon([(s0, bottom - 1.0)] + [(s0 + s, h) for s, h in bprof] + [(s1, bottom - 1.0)])
+                floor = bottom - 1.0 if b.bottom_z is None else b.bottom_z     # nothing is hidden below a cantilever
+                cut = Polygon([(s0, floor)] + [(s0 + s, h) for s, h in bprof] + [(s1, floor)])
                 if not cut.is_valid:
                     cut = cut.buffer(0)
                 poly = poly.difference(cut)

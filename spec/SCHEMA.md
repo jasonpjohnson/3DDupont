@@ -58,10 +58,16 @@ lower roof are kept. Wing footprints should otherwise not overlap.
   },
   "edge_materials": { "2": "stone" },   // optional: whole footprint edge (index after CCW ordering) in one material
   "roof_material": "roof", "fascia_material": "trim", "soffit_material": "trim",
+  "bottom_z": 262.2,                    // optional: a cantilevered volume. Walls start here instead of the ground,
+                                        // an underside is added, and walls of other wings stay visible below it
   "evidence": "lidar|record|photo|inferred", "source": "one line", "desc": "one sentence", "dims": "56' x 35'",
   "confidence": "high|medium|low"
 }
 ```
+
+`walls.patches` re-clads a rectangle of one wall, e.g. the finished wall of a walk-out basement:
+`"patches": [ { "from": [x, y], "to": [x, y], "z0": 259.2, "z1": 262.0, "material": "siding" } ]`
+(both points on the same wall of this wing).
 
 ## Openings — windows and doors
 
@@ -77,17 +83,23 @@ lower roof are kept. Wing footprints should otherwise not overlap.
   "label": "...", "evidence": "photo", "source": "...", "desc": "..." }
 ```
 
+Shaped glass (gable transoms): give `"outline": [[ds, dh], ...]` instead of width/height - a polygon measured from
+the opening's lower-left corner, `ds` running left to right as seen from outside. `at` is still the centre of its width.
+A trapezoid 1.6 m wide rising from 0.4 m at the left to 1.3 m at the right is `[[0,0],[1.6,0],[1.6,1.3],[0,0.4]]`.
+
+Doors: `"leaves": 2` makes a French or sliding pair; `"lite": [0.06, 0.94]` glazes each leaf; `"stile"` sets the rail width.
+
 Doors and garage doors become their own selectable parts; windows are grouped per wing unless `"own_part": true`.
 
 ## Elements — everything else
 
 | kind | fields |
 |---|---|
-| `prism` | `polygon`, `z0`, `z1`, `material`, optional `holes`, `pad` (default true: terrain is kept below thin slabs) — slabs, decks, patios, chimneys, steps |
+| `prism` | `polygon`, `z0`, `z1`, `material`, optional `holes`, `side_material` (deck boards on top, fascia around), `pad` (default true: terrain is kept below thin slabs) — slabs, decks, patios, retaining walls, chimneys |
 | `post` | `at` or `at_list`, `z0`, `z1`, `size: [sx, sy]`, `yaw`, optional `base: {height, size, material, cap_material}` |
 | `beam` | `a`, `b` (3D points) or `segments: [[a, b], ...]`, `size: [width, depth]` |
 | `railing` | `path: [[x, y], ...]`, `z` (deck surface), `height`, `style: "balusters"|"horizontal"`, `rails` |
-| `stairs` | `top: [x, y]` (centre of top edge), `direction: [dx, dy]` (downhill), `z_top`, `z_bottom`, `width`, `solid` |
+| `stairs` | `top: [x, y]` (centre of top edge), `direction: [dx, dy]` (downhill), `z_top`, `z_bottom`, `width`, `solid`, `railing: {material, height, sides: both/left/right}` |
 | `box` | `center: [x, y, z]`, `size: [sx, sy, sz]`, `yaw` |
 | `cylinder` | `base: [x, y, z]`, `radius`, `height` |
 | `wall_panel` | vertical slab from plan point `a` to `b`: `thickness`, and either `z0`/`z1` or `outline: [[s, h], ...]` (s = metres from `a`, h = absolute z); `holes: [[[s, h], ...]]`; `arches: [{s0, s1, sill_z, spring_z, rise}]` cut arched openings — gable infill, screen walls, arched porch fronts |

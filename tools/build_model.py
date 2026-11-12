@@ -113,7 +113,8 @@ class Builder:
             eave = Polygon(w["eave"]) if w.get("eave") else None
             wing = Wing(w["id"], w["planes"], footprint=fp, eave=eave,
                         overhang=w.get("overhang", self.cfg["overhang"]),
-                        solid=w.get("solid", fp is not None), base_z=w.get("base_z", spec["z0"]))
+                        solid=w.get("solid", fp is not None), base_z=w.get("base_z", spec["z0"]),
+                        bottom_z=w.get("bottom_z"))
             self.wings.append(wing)
             self.wspec[w["id"]] = w
         self.solids = unary_union([w.footprint for w in self.wings if w.solid and w.footprint is not None]) \
@@ -192,6 +193,11 @@ class Builder:
             (k, s, L, p, q), dist = nearest_edge(wing.footprint, o["at"])
             if dist > o.get("snap_tolerance", 1.5):
                 raise ValueError(f"opening {o.get('id')} is {dist:.2f} m from any wall of wing {wing.id}")
+            outline = o.get("outline")                     # [[ds, dh], ...] from the lower-left corner, as seen from outside
+            if outline:
+                xs = [pt[0] for pt in outline]
+                ys = [pt[1] for pt in outline]
+                o = {**o, "width": max(xs) - min(xs), "height": max(ys) - min(ys)}
             w = o["width"]
             s0, s1 = s - w / 2, s + w / 2
             if s0 < 0.05:
@@ -201,7 +207,13 @@ class Builder:
             floor = self.wspec[wing.id].get("floor_z", wing.base_z)
             h0 = o["sill_z"] if "sill_z" in o else floor + o.get("sill", 0.0)
             h1 = h0 + o["height"]
-            rec = dict(wing=wing.id, edge=k, s0=s0, s1=s1, h0=h0, h1=h1, p=p, q=q, L=L, spec=o)
+            if outline:
+                shape = Polygon([(s0 + pt[0] - min(xs), h0 + pt[1] - min(ys)) for pt in outline])
+                if not shape.is_valid:
+                    shape = shape.buffer(0)
+            else:
+                shape = box(s0, h0, s1, h1)
+            rec = dict(wing=wing.id, edge=k, s0=s0, s1=s1, h0=h0, h1=h1, p=p, q=q, L=L, spec=o, shape=shape)
             by_edge.setdefault((wing.id, k), []).append(rec)
             self.resolved_openings.append(rec)
         return by_edge
@@ -228,27 +240,43 @@ class Builder:
                 bands.append((lo, 1e4, main_mat, None))
             parts = {}
             label = ws.get("label", wing.id)
+            patches = {}
+            for pt in wcfg.get("patches", []):
+                (k, sa, L, p_, q_), da = nearest_edge(wing.footprint, pt["from"])
+                (k2, sb, _, _, _), db = nearest_edge(wing.footprint, pt["to"])
+                if k != k2 or max(da, db) > 1.5:
+                    raise ValueError(f"wing {wing.id}: wall patch must lie on one wall (edges {k}/{k2}, {da:.2f}/{db:.2f} m off)")
+                patches.setdefault(k, []).append(dict(s0=min(sa, sb), s1=max(sa, sb), z0=pt["z0"], z1=pt["z1"], material=pt["material"]))
             for e in wall_polygons(self.wings, wing, bottom=bottom):
                 poly = e["poly"]
                 if poly.is_empty:
                     continue
                 per_edge = ws.get("edge_materials", {}).get(str(e["edge"]))
                 for r in by_edge.get((wing.id, e["edge"]), []):
-                    poly = poly.difference(box(r["s0"], r["h0"], r["s1"], r["h1"]))
+                    poly = poly.difference(r["shape"])
                 origin = (e["p"][0], e["p"][1], 0.0)
                 u = (e["tangent"][0], e["tangent"][1], 0.0)
                 nrm = (e["normal"][0], e["normal"][1], 0.0)
-                for zlo, zhi, mat, blabel in bands:
-                    mat = per_edge or mat
-                    piece = poly.intersection(box(-1.0, zlo, e["length"] + 1.0, zhi))
+                def emit(piece, mat):
                     if piece.is_empty:
-                        continue
-                    key = mat
-                    if key not in parts:
+                        return
+                    if mat not in parts:
                         suffix = "walls" if mat == main_mat else f"walls_{mat}"
                         info = self.info_of({**ws, **ws.get("wall_info", {})}, label=f"{label} — {self.spec['materials'][mat].get('label', mat)}")
-                        parts[key] = self.part(f"{wing.id}_{suffix}", mat, info)
-                    parts[key].planar(piece, origin, u, (0, 0, 1), normal=nrm, uv_scale=self.uv(mat))
+                        parts[mat] = self.part(f"{wing.id}_{suffix}", mat, info)
+                    parts[mat].planar(piece, origin, u, (0, 0, 1), normal=nrm, uv_scale=self.uv(mat))
+
+                # patches: rectangles of a different cladding on this edge (e.g. a finished walk-out wall)
+                for pt in patches.get(e["edge"], []):
+                    rect = box(pt["s0"], pt["z0"], pt["s1"], pt["z1"])
+                    emit(poly.intersection(rect), pt["material"])
+                    poly = poly.difference(rect)
+                for zlo, zhi, mat, blabel in bands:
+                    emit(poly.intersection(box(-1.0, zlo, e["length"] + 1.0, zhi)), per_edge or mat)
+            if wing.bottom_z is not None:                                   # underside of a cantilever
+                smat = ws.get("soffit_material", "trim")
+                under = self.part(f"{wing.id}_underside", smat, self.info_of(ws, label=f"{label} — underside"))
+                under.planar(wing.footprint, (0, 0, wing.bottom_z), (1, 0, 0), (0, 1, 0), normal=(0, 0, -1), uv_scale=self.uv(smat))
 
     def build_openings(self):
         cfg = self.cfg
@@ -258,98 +286,125 @@ class Builder:
             kind = o.get("kind", "window")
             t = (r["q"] - r["p"]) / r["L"]
             n = np.array([t[1], -t[0]])                    # outward
-            def P(s, h, out=0.0):
+
+            def P(s, h, out=0.0, r=r, t=t, n=n):
                 xy = r["p"] + t * s + n * out
                 return np.array([xy[0], xy[1], h])
             s0, s1, h0, h1 = r["s0"], r["s1"], r["h0"], r["h1"]
+            shape = r["shape"]                               # shapely polygon in (s, h)
             frame_mat = o.get("frame_material", "window_frame")
             glass_mat = o.get("glass_material", "glass")
             info = self.info_of(o, dims=o.get("dims") or f"{fmt_ft(s1 - s0)} wide x {fmt_ft(h1 - h0)} high")
             own = o.get("own_part") or kind in ("door", "garage_door")
             base_name = o.get("id") if own and o.get("id") else f"{r['wing']}_{kind}s"
-            def get(suffix, mat, label):
+
+            def get(suffix, mat, label, r=r, info=info, own=own, base_name=base_name):
                 key = (base_name, suffix)
                 if key not in groups:
                     ws_label = self.wspec[r["wing"]].get("label", r["wing"])
                     lab = info.get("label") if own else f"{ws_label} — {label}"
                     groups[key] = self.part(f"{base_name}_{suffix}", mat, {**info, "label": lab or label})
                 return groups[key]
+
+            def flat(part, geom, out, mat, P=P, t=t, n=n):
+                o3 = P(0, 0, out)
+                part.planar(geom, (o3[0], o3[1], 0.0), (t[0], t[1], 0), (0, 0, 1), normal=(n[0], n[1], 0), uv_scale=self.uv(mat))
+
+            def outline_members(part, geom, width, depth, out, P=P):
+                """Frame members running along the inside of a polygon's edges."""
+                inner = geom.buffer(-width / 2, join_style=2)
+                for g in polygon_parts(inner):
+                    c = np.asarray(g.exterior.coords)
+                    for k in range(len(c) - 1):
+                        a, b_ = c[k], c[k + 1]
+                        if np.hypot(*(b_ - a)) < 1e-4:
+                            continue
+                        horizontal = abs(b_[1] - a[1]) < abs(b_[0] - a[0])
+                        if horizontal:
+                            part.beam(P(a[0], a[1], out), P(b_[0], b_[1], out), depth, width)
+                        else:
+                            part.beam(P(a[0], a[1], out), P(b_[0], b_[1], out), width, depth)
+
             fw, fd, gi = cfg["frame_w"], cfg["frame_depth"], cfg["glass_inset"]
             frame = get("frame", frame_mat, "window frames" if kind == "window" else "frame")
-            # frame: four members around the hole, proud of the wall by 15 mm, running back fd
-            for (a0, a1) in (((s0, h0), (s1, h0)), ((s0, h1), (s1, h1)), ((s0, h0), (s0, h1)), ((s1, h0), (s1, h1))):
-                horiz = a0[1] == a1[1]
-                inset = fw / 2
-                if horiz:
-                    hh = a0[1] + (inset if a0[1] == h0 else -inset)
-                    frame.beam(P(a0[0], hh, 0.015 - fd / 2), P(a1[0], hh, 0.015 - fd / 2), fd, fw)
-                else:
-                    ss = a0[0] + (inset if a0[0] == s0 else -inset)
-                    frame.beam(P(ss, a0[1], 0.015 - fd / 2), P(ss, a1[1], 0.015 - fd / 2), fw, fd)
+            outline_members(frame, shape, fw, fd, 0.015 - fd / 2)
             if o.get("casing", kind != "garage_door"):
                 cw = o.get("casing_w", cfg["casing_w"])
                 cmat = o.get("casing_material", "trim")
                 casing = get("casing", cmat, "casing")
-                ring = Polygon([(s0 - cw, h0 - (cw if kind == "window" else 0)), (s1 + cw, h0 - (cw if kind == "window" else 0)),
-                                (s1 + cw, h1 + cw), (s0 - cw, h1 + cw)]).difference(box(s0, h0, s1, h1))
-                o3 = P(0, 0, 0.022)
-                casing.planar(ring, (o3[0], o3[1], 0.0), (t[0], t[1], 0), (0, 0, 1), normal=(n[0], n[1], 0), uv_scale=self.uv(cmat))
+                ring = shape.buffer(cw, join_style=2).difference(shape)
+                if kind != "window":                         # no casing below a door threshold
+                    ring = ring.difference(box(s0 - 1, h0 - 1, s1 + 1, h0))
+                flat(casing, ring, 0.022, cmat)
+
             if kind == "window":
                 glass = get("glass", glass_mat, "glazing")
-                glass.quad(P(s0, h0, -gi), P(s1, h0, -gi), P(s1, h1, -gi), P(s0, h1, -gi))
+                flat(glass, shape, -gi, glass_mat)
                 cols, rows = o.get("grid", [1, 1])
-                bar = 0.022
+                bar = o.get("mullion_w", 0.022)
                 for c in range(1, cols):
-                    s = s0 + (s1 - s0) * c / cols
-                    frame.beam(P(s, h0, -gi + 0.012), P(s, h1, -gi + 0.012), bar, 0.02)
+                    sx = s0 + (s1 - s0) * c / cols
+                    seg = shape.intersection(box(sx - 1e-4, h0 - 1, sx + 1e-4, h1 + 1))
+                    if not seg.is_empty:
+                        frame.beam(P(sx, seg.bounds[1], -gi + 0.012), P(sx, seg.bounds[3], -gi + 0.012), bar, 0.02)
                 for rr in range(1, rows):
-                    h = h0 + (h1 - h0) * rr / rows
-                    frame.beam(P(s0, h, -gi + 0.012), P(s1, h, -gi + 0.012), 0.02, bar)
+                    hy = h0 + (h1 - h0) * rr / rows
+                    seg = shape.intersection(box(s0 - 1, hy - 1e-4, s1 + 1, hy + 1e-4))
+                    if not seg.is_empty:
+                        frame.beam(P(seg.bounds[0], hy, -gi + 0.012), P(seg.bounds[2], hy, -gi + 0.012), 0.02, bar)
                 if o.get("style") == "double_hung":            # meeting rail
                     hm = (h0 + h1) / 2
                     frame.beam(P(s0, hm, -gi + 0.015), P(s1, hm, -gi + 0.015), 0.03, 0.045)
             elif kind == "door":
                 dmat = o.get("material", "door")
                 slab = get("slab", dmat, "door")
-                slab.quad(P(s0 + fw, h0, -gi), P(s1 - fw, h0, -gi), P(s1 - fw, h1 - fw, -gi), P(s0 + fw, h1 - fw, -gi), uv_scale=self.uv(dmat))
-                lite = o.get("lite")                              # [bottom fraction, top fraction] of glass
-                if lite:
-                    glass = get("glass", glass_mat, "door glazing")
-                    m = 0.14
-                    ha, hb = h0 + (h1 - h0) * lite[0], h0 + (h1 - h0) * lite[1]
-                    glass.quad(P(s0 + fw + m, ha, -gi + 0.012), P(s1 - fw - m, ha, -gi + 0.012),
-                               P(s1 - fw - m, hb, -gi + 0.012), P(s0 + fw + m, hb, -gi + 0.012))
-                    cols, rows = o.get("grid", [1, 1])
-                    for c in range(1, cols):
-                        s = s0 + fw + m + (s1 - s0 - 2 * fw - 2 * m) * c / cols
-                        frame.beam(P(s, ha, -gi + 0.02), P(s, hb, -gi + 0.02), 0.02, 0.016)
-                    for rr in range(1, rows):
-                        h = ha + (hb - ha) * rr / rows
-                        frame.beam(P(s0 + fw + m, h, -gi + 0.02), P(s1 - fw - m, h, -gi + 0.02), 0.016, 0.02)
+                leaves = max(1, int(o.get("leaves", 1)))
+                lite = o.get("lite")                              # [bottom, top] of the glass as fractions of the height
+                stile = o.get("stile", 0.11)
+                inner0, inner1 = s0 + fw, s1 - fw
+                lw = (inner1 - inner0) / leaves
+                top = h1 - fw
+                for k in range(leaves):
+                    a, b_ = inner0 + lw * k, inner0 + lw * (k + 1)
+                    leaf = box(a + 0.004, h0, b_ - 0.004, top)
+                    if lite:
+                        ha, hb = h0 + (h1 - h0) * lite[0], h0 + (h1 - h0) * lite[1]
+                        pane = box(a + stile, ha, b_ - stile, hb)
+                        flat(slab, leaf.difference(pane), -gi, dmat)
+                        flat(get("glass", glass_mat, "door glazing"), pane, -gi - 0.012, glass_mat)
+                        cols, rows = o.get("grid", [1, 1])
+                        for c in range(1, cols):
+                            sx = a + stile + (lw - 2 * stile) * c / cols
+                            frame.beam(P(sx, ha, -gi), P(sx, hb, -gi), 0.02, 0.016)
+                        for rr in range(1, rows):
+                            hy = ha + (hb - ha) * rr / rows
+                            frame.beam(P(a + stile, hy, -gi), P(b_ - stile, hy, -gi), 0.016, 0.02)
+                    else:
+                        flat(slab, leaf, -gi, dmat)
             elif kind == "garage_door":
                 dmat = o.get("material", "garage_door")
                 slab = get("slab", dmat, "garage door")
                 gi2 = 0.1
-                slab.quad(P(s0, h0, -gi2), P(s1, h0, -gi2), P(s1, h1, -gi2), P(s0, h1, -gi2), uv_scale=self.uv(dmat))
+                flat(slab, box(s0, h0, s1, h1), -gi2, dmat)
                 sections = o.get("sections", 4)
-                groove = get("groove", o.get("groove_material", "shadow"), "garage door panel lines")
+                gmat = o.get("groove_material", "shadow")
+                groove = get("groove", gmat, "garage door panel lines")
                 for k in range(1, sections):
                     h = h0 + (h1 - h0) * k / sections
-                    groove.quad(P(s0, h - 0.012, -gi2 + 0.004), P(s1, h - 0.012, -gi2 + 0.004), P(s1, h + 0.012, -gi2 + 0.004), P(s0, h + 0.012, -gi2 + 0.004))
+                    flat(groove, box(s0, h - 0.012, s1, h + 0.012), -gi2 + 0.004, gmat)
                 wins = o.get("windows", 0)
                 if wins:
                     glass = get("glass", glass_mat, "garage door glazing")
                     sec_h = (h1 - h0) / sections
-                    hb = h1 - sec_h * 0.2
-                    ha = h1 - sec_h * 0.8
+                    hb, ha = h1 - sec_h * 0.2, h1 - sec_h * 0.8
                     bay = (s1 - s0) / wins
                     for k in range(wins):
-                        a = s0 + bay * k + bay * 0.14
-                        b_ = s0 + bay * (k + 1) - bay * 0.14
-                        glass.quad(P(a, ha, -gi2 + 0.008), P(b_, ha, -gi2 + 0.008), P(b_, hb, -gi2 + 0.008), P(a, hb, -gi2 + 0.008))
-                # reveal (jamb returns)
-                for (sa, sb) in ((s0, s0), (s1, s1)):
-                    pass
+                        flat(glass, box(s0 + bay * k + bay * 0.14, ha, s0 + bay * (k + 1) - bay * 0.14, hb), -gi2 + 0.008, glass_mat)
+                # jamb and head returns so the recess reads as solid
+                jamb = get("jamb", o.get("casing_material", "trim"), "garage door jambs")
+                for sx in (s0, s1):
+                    jamb.quad(P(sx, h0, 0.0), P(sx, h0, -gi2), P(sx, h1, -gi2), P(sx, h1, 0.0), flip=sx == s0)
+                jamb.quad(P(s0, h1, 0.0), P(s1, h1, 0.0), P(s1, h1, -gi2), P(s0, h1, -gi2))
 
     # -- free elements -------------------------------------------------------
     def build_elements(self):
@@ -364,7 +419,12 @@ class Builder:
                 poly = Polygon(el["polygon"], el.get("holes"))
                 if not poly.is_valid:
                     poly = poly.buffer(0)
-                p.prism(poly, el["z0"], el["z1"], uv_scale=uv)
+                side = el.get("side_material")
+                if side:                                             # e.g. deck boards on top, fascia band around
+                    p.prism(poly, el["z0"], el["z1"], uv_scale=uv, sides=False)
+                    self.part(name + "_edge", side, info).prism(poly, el["z0"], el["z1"], uv_scale=self.uv(side), cap_top=False, cap_bottom=False)
+                else:
+                    p.prism(poly, el["z0"], el["z1"], uv_scale=uv)
             elif kind == "post":
                 p = self.part(name, mat, info)
                 sx, sy = el.get("size", [0.2, 0.2])
@@ -522,6 +582,29 @@ class Builder:
                 p.box((c[0], c[1], (zt + z_bot - 0.1) / 2), (tread, width, zt - z_bot + 0.1), yaw, uv_scale=self.uv(mat))
             else:
                 p.box((c[0], c[1], zt - 0.02), (tread, width, 0.04), yaw, uv_scale=self.uv(mat))
+        rail = el.get("railing")
+        if rail:                                            # {"material": ..., "height": 0.92, "sides": "both|left|right"}
+            rmat = rail.get("material", "trim")
+            rp = self.part(name + "_rail", rmat, {**info, "label": (info.get("label") or "Stairs") + " — railing"})
+            h = rail.get("height", 0.92)
+            side_vec = np.array([-direction[1], direction[0]])
+            run = tread * (n - 1)
+            sides = {"both": (1, -1), "left": (1,), "right": (-1,)}[rail.get("sides", "both")]
+            for sgn in sides:
+                off = side_vec * sgn * (width / 2 - 0.05)
+                a = top + off
+                b_ = top + direction * run + off
+                za, zb = z_top, z_bot + riser
+                rp.beam([a[0], a[1], za + h], [b_[0], b_[1], zb + h], 0.09, 0.05)
+                rp.beam([a[0], a[1], za + 0.12], [b_[0], b_[1], zb + 0.12], 0.05, 0.04)
+                for xy, zz in ((a, za), (b_, zb - riser)):
+                    rp.box((xy[0], xy[1], zz + (h + 0.1) / 2), (0.1, 0.1, h + 0.1 + (0 if zz == za else riser)))
+                nb = max(2, int(run / 0.115))
+                for k in range(1, nb):
+                    f = k / nb
+                    c = a + (b_ - a) * f
+                    zc = za + (zb - za) * f
+                    rp.box((c[0], c[1], zc + (h + 0.12) / 2), (0.02, 0.02, h - 0.12))
 
     # -- run -----------------------------------------------------------------
     def run(self):
