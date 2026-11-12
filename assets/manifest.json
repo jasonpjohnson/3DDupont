@@ -1,0 +1,650 @@
+{
+ "eyebrow": "Site model \u00b7 draft",
+ "title": "3910 W Dupont Rd",
+ "subtitle": "Fort Wayne, Indiana",
+ "facts": [
+  {
+   "k": "Built",
+   "v": "1989"
+  },
+  {
+   "k": "Lot",
+   "v": "11.90 ac"
+  },
+  {
+   "k": "Floor area",
+   "v": "3,111 sq ft"
+  },
+  {
+   "k": "Parcel",
+   "v": "02-01-36-400-004.001-044",
+   "wide": true
+  },
+  {
+   "k": "Survey",
+   "v": "LiDAR 2017"
+  }
+ ],
+ "foot_note": "Draft pipeline test \u2014 not the verified model",
+ "location": {
+  "lat": 41.1791121,
+  "lon": -85.1948761,
+  "grid_convergence_deg": 1.19
+ },
+ "z0": 261.7,
+ "focus": [
+  0,
+  13,
+  263.7
+ ],
+ "terrain": {
+  "file": "terrain.bin",
+  "nx": 311,
+  "ny": 401,
+  "x0": -200.0,
+  "y0": -230.0,
+  "cell": 1.0,
+  "zmin": 256.2,
+  "zscale": 0.001,
+  "dtype": "uint16",
+  "rows": "south to north"
+ },
+ "ortho": {
+  "file": "ortho.jpg"
+ },
+ "trees": {
+  "file": "trees.bin",
+  "count": 578,
+  "record": "float32 x, y, ground_z, height, crown_radius, kind"
+ },
+ "points": {
+  "file": "points.bin",
+  "count": 117931,
+  "origin": [
+   -200.0,
+   -230.0,
+   256.0
+  ],
+  "scale": [
+   0.01,
+   0.01,
+   0.001
+  ],
+  "record": "x:u16 y:u16 z:u16 cls:u8 intensity:u8 (little endian, 8 bytes)"
+ },
+ "models": [
+  {
+   "id": "house",
+   "file": "house.glb",
+   "label": "House"
+  }
+ ],
+ "parts": {
+  "main_roof": {
+   "building": "house",
+   "material": "Charcoal asphalt shingles",
+   "label": "Main block \u2014 roof",
+   "desc": "Draft massing",
+   "evidence": "sketch"
+  },
+  "main_fascia": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Main block \u2014 fascia and soffit",
+   "desc": "Draft massing",
+   "evidence": "sketch"
+  },
+  "two_storey_roof": {
+   "building": "house",
+   "material": "Charcoal asphalt shingles",
+   "label": "Two-storey block \u2014 roof",
+   "evidence": "sketch"
+  },
+  "two_storey_fascia": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Two-storey block \u2014 fascia and soffit",
+   "evidence": "sketch"
+  },
+  "east_roof": {
+   "building": "house",
+   "material": "Charcoal asphalt shingles",
+   "label": "East wing \u2014 roof",
+   "evidence": "sketch"
+  },
+  "east_fascia": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "East wing \u2014 fascia and soffit",
+   "evidence": "sketch"
+  },
+  "link_roof": {
+   "building": "house",
+   "material": "Charcoal asphalt shingles",
+   "label": "Garage link \u2014 roof",
+   "evidence": "sketch"
+  },
+  "link_fascia": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Garage link \u2014 fascia and soffit",
+   "evidence": "sketch"
+  },
+  "garage_roof": {
+   "building": "house",
+   "material": "Charcoal asphalt shingles",
+   "label": "Attached garage \u2014 roof",
+   "evidence": "sketch"
+  },
+  "garage_fascia": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Attached garage \u2014 fascia and soffit",
+   "evidence": "sketch"
+  },
+  "porch_roof": {
+   "building": "house",
+   "material": "Standing-seam metal",
+   "label": "Front porch \u2014 roof",
+   "evidence": "sketch"
+  },
+  "porch_fascia": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Front porch \u2014 fascia and soffit",
+   "evidence": "sketch"
+  },
+  "main_walls_stone": {
+   "building": "house",
+   "material": "Stone veneer",
+   "label": "Main block \u2014 Stone veneer",
+   "desc": "Draft massing",
+   "evidence": "sketch"
+  },
+  "main_walls": {
+   "building": "house",
+   "material": "White lap siding",
+   "label": "Main block \u2014 White lap siding",
+   "desc": "Draft massing",
+   "evidence": "sketch"
+  },
+  "two_storey_walls": {
+   "building": "house",
+   "material": "White lap siding",
+   "label": "Two-storey block \u2014 White lap siding",
+   "evidence": "sketch"
+  },
+  "two_storey_walls_board_batten": {
+   "building": "house",
+   "material": "White board-and-batten",
+   "label": "Two-storey block \u2014 White board-and-batten",
+   "evidence": "sketch"
+  },
+  "two_storey_walls_stone": {
+   "building": "house",
+   "material": "Stone veneer",
+   "label": "Two-storey block \u2014 Stone veneer",
+   "evidence": "sketch"
+  },
+  "east_walls_stone": {
+   "building": "house",
+   "material": "Stone veneer",
+   "label": "East wing \u2014 Stone veneer",
+   "evidence": "sketch"
+  },
+  "east_walls": {
+   "building": "house",
+   "material": "White lap siding",
+   "label": "East wing \u2014 White lap siding",
+   "evidence": "sketch"
+  },
+  "link_walls_stone": {
+   "building": "house",
+   "material": "Stone veneer",
+   "label": "Garage link \u2014 Stone veneer",
+   "evidence": "sketch"
+  },
+  "link_walls": {
+   "building": "house",
+   "material": "White lap siding",
+   "label": "Garage link \u2014 White lap siding",
+   "evidence": "sketch"
+  },
+  "garage_walls_stone": {
+   "building": "house",
+   "material": "Stone veneer",
+   "label": "Attached garage \u2014 Stone veneer",
+   "evidence": "sketch"
+  },
+  "garage_walls": {
+   "building": "house",
+   "material": "White lap siding",
+   "label": "Attached garage \u2014 White lap siding",
+   "evidence": "sketch"
+  },
+  "front_door_frame": {
+   "building": "house",
+   "material": "Black window frame",
+   "label": "Front door",
+   "dims": "3'3\" wide x 6'11\" high",
+   "evidence": "photo"
+  },
+  "front_door_casing": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Front door",
+   "dims": "3'3\" wide x 6'11\" high",
+   "evidence": "photo"
+  },
+  "front_door_slab": {
+   "building": "house",
+   "material": "Wood door",
+   "label": "Front door",
+   "dims": "3'3\" wide x 6'11\" high",
+   "evidence": "photo"
+  },
+  "front_door_glass": {
+   "building": "house",
+   "material": "Glass",
+   "label": "Front door",
+   "dims": "3'3\" wide x 6'11\" high",
+   "evidence": "photo"
+  },
+  "two_storey_windows_frame": {
+   "building": "house",
+   "material": "Black window frame",
+   "label": "Two-storey block \u2014 window frames",
+   "dims": "5'11\" wide x 5'3\" high"
+  },
+  "two_storey_windows_casing": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Two-storey block \u2014 casing",
+   "dims": "5'11\" wide x 5'3\" high"
+  },
+  "two_storey_windows_glass": {
+   "building": "house",
+   "material": "Glass",
+   "label": "Two-storey block \u2014 glazing",
+   "dims": "5'11\" wide x 5'3\" high"
+  },
+  "east_windows_frame": {
+   "building": "house",
+   "material": "Black window frame",
+   "label": "East wing \u2014 window frames",
+   "dims": "7'3\" wide x 4'7\" high"
+  },
+  "east_windows_casing": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "East wing \u2014 casing",
+   "dims": "7'3\" wide x 4'7\" high"
+  },
+  "east_windows_glass": {
+   "building": "house",
+   "material": "Glass",
+   "label": "East wing \u2014 glazing",
+   "dims": "7'3\" wide x 4'7\" high"
+  },
+  "garage_door_w_frame": {
+   "building": "house",
+   "material": "Black window frame",
+   "label": "Garage door",
+   "dims": "16'1\" wide x 7'10\" high"
+  },
+  "garage_door_w_slab": {
+   "building": "house",
+   "material": "Garage door",
+   "label": "Garage door",
+   "dims": "16'1\" wide x 7'10\" high"
+  },
+  "garage_door_w_groove": {
+   "building": "house",
+   "material": "Panel line",
+   "label": "Garage door",
+   "dims": "16'1\" wide x 7'10\" high"
+  },
+  "garage_door_w_glass": {
+   "building": "house",
+   "material": "Glass",
+   "label": "Garage door",
+   "dims": "16'1\" wide x 7'10\" high"
+  },
+  "garage_windows_frame": {
+   "building": "house",
+   "material": "Black window frame",
+   "label": "Attached garage \u2014 window frames",
+   "dims": "2'11\" wide x 4'3\" high"
+  },
+  "garage_windows_casing": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Attached garage \u2014 casing",
+   "dims": "2'11\" wide x 4'3\" high"
+  },
+  "garage_windows_glass": {
+   "building": "house",
+   "material": "Glass",
+   "label": "Attached garage \u2014 glazing",
+   "dims": "2'11\" wide x 4'3\" high"
+  },
+  "main_windows_frame": {
+   "building": "house",
+   "material": "Black window frame",
+   "label": "Main block \u2014 window frames",
+   "dims": "5'11\" wide x 4'7\" high"
+  },
+  "main_windows_casing": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Main block \u2014 casing",
+   "dims": "5'11\" wide x 4'7\" high"
+  },
+  "main_windows_glass": {
+   "building": "house",
+   "material": "Glass",
+   "label": "Main block \u2014 glazing",
+   "dims": "5'11\" wide x 4'7\" high"
+  },
+  "porch_floor": {
+   "building": "house",
+   "material": "Concrete",
+   "label": "Front porch floor",
+   "dims": "30' x 9'",
+   "evidence": "sketch"
+  },
+  "porch_posts": {
+   "building": "house",
+   "material": "White trim",
+   "label": "Porch posts",
+   "evidence": "photo"
+  },
+  "porch_posts_base": {
+   "building": "house",
+   "material": "Stone veneer",
+   "label": "Porch posts",
+   "evidence": "photo"
+  },
+  "porch_posts_base_cap": {
+   "building": "house",
+   "material": "Concrete",
+   "label": "Porch posts",
+   "evidence": "photo"
+  },
+  "rear_deck": {
+   "building": "house",
+   "material": "Wood decking",
+   "label": "Rear deck",
+   "dims": "36' x 13'",
+   "evidence": "sketch"
+  },
+  "rear_deck_rail": {
+   "building": "house",
+   "material": "Black trim",
+   "label": "Deck railing",
+   "evidence": "inferred"
+  },
+  "porch_steps": {
+   "building": "house",
+   "material": "Concrete",
+   "label": "Porch steps",
+   "evidence": "inferred"
+  }
+ },
+ "parcel": [
+  [
+   38.6,
+   -175.4
+  ],
+  [
+   38.4,
+   -167.8
+  ],
+  [
+   29.5,
+   120.8
+  ],
+  [
+   -132.8,
+   117.6
+  ],
+  [
+   -123.9,
+   -171.2
+  ],
+  [
+   -123.6,
+   -178.8
+  ],
+  [
+   38.6,
+   -175.4
+  ]
+ ],
+ "parcel_corners": [
+  [
+   38.6,
+   -175.4
+  ],
+  [
+   29.5,
+   120.8
+  ],
+  [
+   -132.8,
+   117.6
+  ],
+  [
+   -123.6,
+   -178.8
+  ]
+ ],
+ "layers": [
+  {
+   "id": "house",
+   "label": "House",
+   "on": true
+  },
+  {
+   "id": "trees",
+   "label": "Trees",
+   "note": "578 from LiDAR",
+   "on": true
+  },
+  {
+   "id": "aerial",
+   "label": "Aerial photo",
+   "note": "2024",
+   "on": true
+  },
+  {
+   "id": "contours",
+   "label": "Contours",
+   "note": "1 ft",
+   "on": false
+  },
+  {
+   "id": "parcel",
+   "label": "Parcel boundary",
+   "note": "11.90 ac",
+   "on": true
+  },
+  {
+   "id": "labels",
+   "label": "Labels",
+   "on": true
+  },
+  {
+   "id": "dimensions",
+   "label": "Dimensions",
+   "note": "county sketch",
+   "on": false
+  },
+  {
+   "id": "points",
+   "label": "LiDAR points",
+   "note": "2017 survey",
+   "on": false
+  }
+ ],
+ "views": [
+  {
+   "id": "front",
+   "label": "Front",
+   "pos": [
+    6,
+    -40,
+    271.7
+   ],
+   "target": [
+    0,
+    10,
+    264.2
+   ]
+  },
+  {
+   "id": "rear",
+   "label": "Rear",
+   "pos": [
+    -4,
+    66,
+    273.7
+   ],
+   "target": [
+    0,
+    14,
+    264.2
+   ]
+  },
+  {
+   "id": "east",
+   "label": "East",
+   "pos": [
+    52,
+    10,
+    271.7
+   ],
+   "target": [
+    0,
+    12,
+    264.2
+   ]
+  },
+  {
+   "id": "west",
+   "label": "West",
+   "pos": [
+    -56,
+    8,
+    272.7
+   ],
+   "target": [
+    0,
+    12,
+    264.2
+   ]
+  },
+  {
+   "id": "plan",
+   "label": "Plan",
+   "pos": [
+    0,
+    11.9,
+    339.7
+   ],
+   "target": [
+    0,
+    12,
+    261.7
+   ]
+  },
+  {
+   "id": "site",
+   "label": "Site",
+   "pos": [
+    -150,
+    -300,
+    471.7
+   ],
+   "target": [
+    -45,
+    -30,
+    261.7
+   ]
+  }
+ ],
+ "labels": [
+  {
+   "text": "House",
+   "note": "1989",
+   "at": [
+    0,
+    14
+   ],
+   "lift": 11
+  },
+  {
+   "text": "Detached garage",
+   "note": "2009",
+   "at": [
+    -32.5,
+    -6
+   ],
+   "lift": 8
+  },
+  {
+   "text": "W Dupont Rd",
+   "at": [
+    -60,
+    -177
+   ],
+   "lift": 1,
+   "kind": "road"
+  }
+ ],
+ "dimensions": [
+  {
+   "a": [
+    -9.67,
+    11.5,
+    262.0
+   ],
+   "b": [
+    7.4,
+    11.5,
+    262.0
+   ],
+   "text": "56'"
+  }
+ ],
+ "evidence": {
+  "lidar": {
+   "label": "Measured",
+   "color": "#2f7f6f",
+   "detail": "fitted to LiDAR survey points"
+  },
+  "sketch": {
+   "label": "County record",
+   "color": "#3b6ea8",
+   "detail": "dimension from the assessor's sketch"
+  },
+  "photo": {
+   "label": "Photographed",
+   "color": "#d9a441",
+   "detail": "read from a photo or aerial"
+  },
+  "inferred": {
+   "label": "Inferred",
+   "color": "#b9b4a8",
+   "detail": "typical construction, not observed"
+  }
+ },
+ "about": {
+  "heading": "How this model was made",
+  "intro": [
+   "Draft."
+  ],
+  "sources": [],
+  "limits": []
+ }
+}

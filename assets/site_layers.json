@@ -1,0 +1,49 @@
+{
+ "frame": {
+  "epsg": 26916,
+  "E0": 651405.348,
+  "N0": 4560211.139,
+  "note": "x east, y north, z NAVD88 metres"
+ },
+ "terrain": {
+  "file": "terrain.bin",
+  "nx": 311,
+  "ny": 401,
+  "x0": -200.0,
+  "y0": -230.0,
+  "cell": 1.0,
+  "zmin": 256.2,
+  "zscale": 0.001,
+  "dtype": "uint16",
+  "rows": "south to north"
+ },
+ "trees": {
+  "file": "trees.bin",
+  "count": 580,
+  "conifers": 384,
+  "record": "float32 x, y, ground_z, height, crown_radius, kind (0 deciduous, 1 conifer)"
+ },
+ "ortho": {
+  "file": "ortho.jpg",
+  "width": 2480,
+  "height": 3200,
+  "mpp": 0.125,
+  "credit": "Indiana Geographic Information Office, 2024 statewide orthoimagery (CC0)"
+ },
+ "points": {
+  "file": "points.bin",
+  "count": 176910,
+  "origin": [
+   -200.0,
+   -230.0,
+   256.0
+  ],
+  "scale": [
+   0.01,
+   0.01,
+   0.001
+  ],
+  "record": "x:u16 y:u16 z:u16 cls:u8 intensity:u8 (little endian, 8 bytes)"
+ },
+ "source": "USGS 3DEP IN_Statewide_B1_2017 (flown 2017-03-12 and 2017-03-23), public domain"
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3910 W Dupont Rd — 3D site model</title>
+<meta name="description" content="Interactive 3D model of the house and grounds at 3910 W Dupont Rd, Fort Wayne, Indiana, reconstructed from public LiDAR, aerial photography and county records.">
+<meta name="theme-color" content="#f3f0e8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f3f0e8'/%3E%3Cpath d='M5 17 16 7l11 10v9H5z' fill='none' stroke='%231c2630' stroke-width='2.2' stroke-linejoin='miter'/%3E%3Cpath d='M13 26v-7h6v7' fill='none' stroke='%23e4572e' stroke-width='2.2'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/barlow-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/build/three.module.js", "three/addons/": "./vendor/three/addons/" } }
+</script>
+</head>
+<body>
+<canvas id="scene" aria-label="3D model of the house and site. Drag to orbit, scroll or pinch to zoom, right-drag or two-finger drag to pan."></canvas>
+<div id="labels" aria-hidden="true"></div>
+
+<div class="sheet">
+  <header class="titleblock" id="titleblock">
+    <p class="eyebrow" id="tb-eyebrow">Site model</p>
+    <h1 id="tb-title">3910 W Dupont Rd</h1>
+    <p class="sub" id="tb-sub">Fort Wayne, Indiana</p>
+    <dl class="facts" id="tb-facts"></dl>
+  </header>
+
+  <nav class="views" aria-label="Camera views">
+    <span class="rail-label">View</span>
+    <div class="btnrow" id="views"></div>
+  </nav>
+
+  <aside class="panel" id="panel">
+    <button class="panel-toggle" id="panel-toggle" aria-expanded="true" aria-controls="panel-body">
+      <span>Controls</span><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+    <div class="panel-body" id="panel-body">
+      <section>
+        <h2>Display</h2>
+        <div class="seg" id="mode" role="radiogroup" aria-label="Display mode">
+          <button role="radio" data-mode="photo" aria-checked="true">Photo</button>
+          <button role="radio" data-mode="clay" aria-checked="false">Clay</button>
+          <button role="radio" data-mode="evidence" aria-checked="false">Evidence</button>
+        </div>
+        <p class="hint" id="mode-hint"></p>
+        <ul class="legend" id="evidence-legend" hidden></ul>
+      </section>
+
+      <section>
+        <h2>Layers</h2>
+        <ul class="toggles" id="layers"></ul>
+      </section>
+
+      <section>
+        <h2>Sun <span class="readout" id="sun-readout"></span></h2>
+        <label class="slider"><span>Time <output id="time-out"></output></span>
+          <input type="range" id="time" min="300" max="1320" step="5" value="900"></label>
+        <label class="slider"><span>Date <output id="date-out"></output></span>
+          <input type="range" id="date" min="1" max="365" step="1" value="172"></label>
+        <div class="btnrow tight">
+          <button id="sun-play" aria-pressed="false">Play day</button>
+          <button data-day="172">Jun 21</button>
+          <button data-day="266">Sep 23</button>
+          <button data-day="355">Dec 21</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Measure</h2>
+        <div class="btnrow tight">
+          <button id="measure" aria-pressed="false">Measure distance</button>
+          <button id="measure-clear" hidden>Clear</button>
+        </div>
+        <p class="hint" id="measure-hint">Click two points on the model or ground.</p>
+      </section>
+    </div>
+  </aside>
+
+  <div class="compass" id="compass" title="North">
+    <svg viewBox="-24 -24 48 48" width="56" height="56" aria-hidden="true">
+      <circle r="21" fill="none" stroke="currentColor" stroke-width="1"/>
+      <g id="compass-needle">
+        <path d="M0-19 5 0H-5z" class="n"/>
+        <path d="M0 19 5 0H-5z" fill="none" stroke="currentColor" stroke-width="1"/>
+        <text y="-9.5" text-anchor="middle" class="nlabel">N</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="card" id="card" hidden>
+    <button class="card-close" id="card-close" aria-label="Close">×</button>
+    <p class="eyebrow" id="card-kind"></p>
+    <h3 id="card-title"></h3>
+    <p id="card-desc"></p>
+    <dl id="card-dl"></dl>
+  </div>
+
+  <footer class="foot">
+    <button id="open-about">Sources &amp; method</button>
+    <a id="download" href="assets/house.glb" download>Download .glb</a>
+    <span class="foot-note" id="foot-note"></span>
+  </footer>
+</div>
+
+<dialog id="about">
+  <form method="dialog"><button class="card-close" aria-label="Close">×</button></form>
+  <div class="about-body" id="about-body"></div>
+</dialog>
+
+<div id="loading" role="status" aria-live="polite">
+  <div class="loading-inner">
+    <p class="eyebrow">Site model</p>
+    <p class="loading-title">3910 W Dupont Rd</p>
+    <div class="bar"><i id="bar"></i></div>
+    <p class="loading-msg" id="loading-msg">Loading survey data…</p>
+  </div>
+</div>
+<noscript><p class="noscript">This page needs JavaScript and WebGL to show the 3D model.</p></noscript>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

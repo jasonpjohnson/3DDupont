@@ -1,0 +1,312 @@
+{
+ "main_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Main block \u2014 roof",
+  "desc": "Draft massing",
+  "evidence": "sketch"
+ },
+ "main_fascia": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Main block \u2014 fascia and soffit",
+  "desc": "Draft massing",
+  "evidence": "sketch"
+ },
+ "two_storey_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Two-storey block \u2014 roof",
+  "evidence": "sketch"
+ },
+ "two_storey_fascia": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Two-storey block \u2014 fascia and soffit",
+  "evidence": "sketch"
+ },
+ "east_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "East wing \u2014 roof",
+  "evidence": "sketch"
+ },
+ "east_fascia": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "East wing \u2014 fascia and soffit",
+  "evidence": "sketch"
+ },
+ "link_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Garage link \u2014 roof",
+  "evidence": "sketch"
+ },
+ "link_fascia": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Garage link \u2014 fascia and soffit",
+  "evidence": "sketch"
+ },
+ "garage_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Attached garage \u2014 roof",
+  "evidence": "sketch"
+ },
+ "garage_fascia": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Attached garage \u2014 fascia and soffit",
+  "evidence": "sketch"
+ },
+ "porch_roof": {
+  "building": "house",
+  "material": "Standing-seam metal",
+  "label": "Front porch \u2014 roof",
+  "evidence": "sketch"
+ },
+ "porch_fascia": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Front porch \u2014 fascia and soffit",
+  "evidence": "sketch"
+ },
+ "main_walls_stone": {
+  "building": "house",
+  "material": "Stone veneer",
+  "label": "Main block \u2014 Stone veneer",
+  "desc": "Draft massing",
+  "evidence": "sketch"
+ },
+ "main_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Main block \u2014 White lap siding",
+  "desc": "Draft massing",
+  "evidence": "sketch"
+ },
+ "two_storey_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Two-storey block \u2014 White lap siding",
+  "evidence": "sketch"
+ },
+ "two_storey_walls_board_batten": {
+  "building": "house",
+  "material": "White board-and-batten",
+  "label": "Two-storey block \u2014 White board-and-batten",
+  "evidence": "sketch"
+ },
+ "two_storey_walls_stone": {
+  "building": "house",
+  "material": "Stone veneer",
+  "label": "Two-storey block \u2014 Stone veneer",
+  "evidence": "sketch"
+ },
+ "east_walls_stone": {
+  "building": "house",
+  "material": "Stone veneer",
+  "label": "East wing \u2014 Stone veneer",
+  "evidence": "sketch"
+ },
+ "east_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "East wing \u2014 White lap siding",
+  "evidence": "sketch"
+ },
+ "link_walls_stone": {
+  "building": "house",
+  "material": "Stone veneer",
+  "label": "Garage link \u2014 Stone veneer",
+  "evidence": "sketch"
+ },
+ "link_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Garage link \u2014 White lap siding",
+  "evidence": "sketch"
+ },
+ "garage_walls_stone": {
+  "building": "house",
+  "material": "Stone veneer",
+  "label": "Attached garage \u2014 Stone veneer",
+  "evidence": "sketch"
+ },
+ "garage_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Attached garage \u2014 White lap siding",
+  "evidence": "sketch"
+ },
+ "front_door_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Front door",
+  "dims": "3'3\" wide x 6'11\" high",
+  "evidence": "photo"
+ },
+ "front_door_casing": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Front door",
+  "dims": "3'3\" wide x 6'11\" high",
+  "evidence": "photo"
+ },
+ "front_door_slab": {
+  "building": "house",
+  "material": "Wood door",
+  "label": "Front door",
+  "dims": "3'3\" wide x 6'11\" high",
+  "evidence": "photo"
+ },
+ "front_door_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Front door",
+  "dims": "3'3\" wide x 6'11\" high",
+  "evidence": "photo"
+ },
+ "two_storey_windows_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Two-storey block \u2014 window frames",
+  "dims": "5'11\" wide x 5'3\" high"
+ },
+ "two_storey_windows_casing": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Two-storey block \u2014 casing",
+  "dims": "5'11\" wide x 5'3\" high"
+ },
+ "two_storey_windows_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Two-storey block \u2014 glazing",
+  "dims": "5'11\" wide x 5'3\" high"
+ },
+ "east_windows_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "East wing \u2014 window frames",
+  "dims": "7'3\" wide x 4'7\" high"
+ },
+ "east_windows_casing": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "East wing \u2014 casing",
+  "dims": "7'3\" wide x 4'7\" high"
+ },
+ "east_windows_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "East wing \u2014 glazing",
+  "dims": "7'3\" wide x 4'7\" high"
+ },
+ "garage_door_w_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Garage door",
+  "dims": "16'1\" wide x 7'10\" high"
+ },
+ "garage_door_w_slab": {
+  "building": "house",
+  "material": "Garage door",
+  "label": "Garage door",
+  "dims": "16'1\" wide x 7'10\" high"
+ },
+ "garage_door_w_groove": {
+  "building": "house",
+  "material": "Panel line",
+  "label": "Garage door",
+  "dims": "16'1\" wide x 7'10\" high"
+ },
+ "garage_door_w_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Garage door",
+  "dims": "16'1\" wide x 7'10\" high"
+ },
+ "garage_windows_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Attached garage \u2014 window frames",
+  "dims": "2'11\" wide x 4'3\" high"
+ },
+ "garage_windows_casing": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Attached garage \u2014 casing",
+  "dims": "2'11\" wide x 4'3\" high"
+ },
+ "garage_windows_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Attached garage \u2014 glazing",
+  "dims": "2'11\" wide x 4'3\" high"
+ },
+ "main_windows_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Main block \u2014 window frames",
+  "dims": "5'11\" wide x 4'7\" high"
+ },
+ "main_windows_casing": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Main block \u2014 casing",
+  "dims": "5'11\" wide x 4'7\" high"
+ },
+ "main_windows_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Main block \u2014 glazing",
+  "dims": "5'11\" wide x 4'7\" high"
+ },
+ "porch_floor": {
+  "building": "house",
+  "material": "Concrete",
+  "label": "Front porch floor",
+  "dims": "30' x 9'",
+  "evidence": "sketch"
+ },
+ "porch_posts": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Porch posts",
+  "evidence": "photo"
+ },
+ "porch_posts_base": {
+  "building": "house",
+  "material": "Stone veneer",
+  "label": "Porch posts",
+  "evidence": "photo"
+ },
+ "porch_posts_base_cap": {
+  "building": "house",
+  "material": "Concrete",
+  "label": "Porch posts",
+  "evidence": "photo"
+ },
+ "rear_deck": {
+  "building": "house",
+  "material": "Wood decking",
+  "label": "Rear deck",
+  "dims": "36' x 13'",
+  "evidence": "sketch"
+ },
+ "rear_deck_rail": {
+  "building": "house",
+  "material": "Black trim",
+  "label": "Deck railing",
+  "evidence": "inferred"
+ },
+ "porch_steps": {
+  "building": "house",
+  "material": "Concrete",
+  "label": "Porch steps",
+  "evidence": "inferred"
+ }
+}
