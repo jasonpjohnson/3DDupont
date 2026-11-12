@@ -184,7 +184,7 @@ dialog form { position: sticky; top: 0; height: 0; z-index: 2; }
 
 /* ---- loading ----------------------------------------------------------- */
 #loading { position: fixed; inset: 0; display: grid; place-items: center; background: var(--paper); z-index: 10; transition: opacity .5s ease, visibility .5s; }
-#loading.done { opacity: 0; visibility: hidden; }
+#loading.done { opacity: 0; visibility: hidden; pointer-events: none; }
 .loading-inner { width: min(320px, 80vw); }
 .loading-title { margin: 6px 0 16px; font: 700 34px/1 var(--display); text-transform: uppercase; }
 .bar { height: 9px; border: 1px solid var(--ink); }

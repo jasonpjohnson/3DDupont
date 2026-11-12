@@ -400,6 +400,7 @@ async function loadTrees() {
     crowns.castShadow = true;
     crowns.receiveShadow = true;
     crowns.userData.baseColors = crowns.instanceColor.array.slice();
+    crowns.userData.deciduous = kind === 0;
     g.add(trunks, crowns);
   });
 }
@@ -583,6 +584,7 @@ function layoutTags() {
 }
 
 // ---------------------------------------------------------- LiDAR points ----
+const RAMP = [new THREE.Color(0x1f8a7a), new THREE.Color(0xf2c14e), new THREE.Color(0xe4572e)];
 let pointsPromise = null;
 function loadPoints() {
   if (pointsPromise) return pointsPromise;
@@ -602,17 +604,18 @@ function loadPoints() {
       const cls = u8[i * 8 + 6];
       pos[i * 3] = x; pos[i * 3 + 1] = z - z0; pos[i * 3 + 2] = -y;
       if (cls === 2) {
-        c.setRGB(0.42, 0.37, 0.3);
+        c.setRGB(0.5, 0.46, 0.4);
       } else {
-        const hag = Math.max(0, z - groundZ(x, y));
-        c.setHSL(0.58 - Math.min(hag / 26, 1) * 0.52, 0.85, 0.5);
+        const t = Math.min(Math.max(z - groundZ(x, y), 0) / 24, 1);
+        c.copy(RAMP[0]).lerp(RAMP[1], Math.min(t * 2, 1));
+        if (t > 0.5) c.lerp(RAMP[2], (t - 0.5) * 2);
       }
       colr[i * 3] = c.r; colr[i * 3 + 1] = c.g; colr[i * 3 + 2] = c.b;
     }
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     geo.setAttribute('color', new THREE.BufferAttribute(colr, 3));
-    const mat = new THREE.PointsMaterial({ size: 0.34, vertexColors: true, sizeAttenuation: true, toneMapped: false });
+    const mat = new THREE.PointsMaterial({ size: 2.6, vertexColors: true, sizeAttenuation: false, toneMapped: false });
     const pts = new THREE.Points(geo, mat);
     pts.name = 'lidar';
     groups.points = pts;
@@ -796,6 +799,17 @@ function stopPlay() {
   $('sun-play').textContent = 'Play day';
 }
 
+// Hardwoods are bare from about late October to late April: thin the crowns and let the
+// low winter sun through instead of casting solid shadows.
+function setSeason() {
+  const leaf = THREE.MathUtils.smoothstep(state.day, 105, 135) * (1 - THREE.MathUtils.smoothstep(state.day, 285, 310));
+  groups.trees?.traverse((o) => {
+    if (!o.isInstancedMesh || !o.userData.deciduous) return;
+    o.material.opacity = 0.16 + 0.36 * leaf;
+    o.castShadow = leaf > 0.5;
+  });
+}
+
 const cDay = new THREE.Color(0xfff6e8), cLow = new THREE.Color(0xffb46b), cTmp = new THREE.Color();
 function setSun() {
   const { lat, lon } = M.location;
@@ -815,7 +829,7 @@ function setSun() {
   sun.intensity = 2.7 * day;
   sun.color.copy(cTmp.copy(cLow).lerp(cDay, high));
   sun.castShadow = altDeg > 0.6;
-  hemi.intensity = 0.2 + 0.72 * day;
+  hemi.intensity = 0.2 + 0.72 * day + 0.25 * day * (1 - high);
   hemi.color.setHSL(0.58, 0.35, 0.55 + 0.33 * day);
   fill.position.copy(focus).add(new THREE.Vector3(-dir.x, 0.6, -dir.z).multiplyScalar(200));
   fill.intensity = 0.1 + 0.22 * day;
@@ -826,6 +840,7 @@ function setSun() {
   const bottom = new THREE.Color(0xf1eee6).lerp(new THREE.Color(0xf3c9a0), (1 - high) * day).lerp(new THREE.Color(0x39424e), 1 - day);
   document.documentElement.style.setProperty('--sky-top', `#${top.getHexString()}`);
   document.documentElement.style.setProperty('--sky-bottom', `#${bottom.getHexString()}`);
+  setSeason();
   $('time-out').textContent = formatClock(state.minutes);
   $('date-out').textContent = formatDay(YEAR, state.day);
   $('sun-readout').textContent = altDeg > 0
