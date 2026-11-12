@@ -875,7 +875,10 @@ function setupPicking() {
     if (state.measuring) { measureClick(); return; }
     const visible = modelMeshes.filter((o) => groups[o.userData.model]?.visible !== false);
     const hit = ray.intersectObjects(visible, false)[0];
-    select(hit ? hit.object : null);
+    if (hit) { select(hit.object); return; }
+    const ground = ray.intersectObject(terrain, false)[0];
+    select(null);
+    if (ground) probeGround(ground.point);
   });
   let hoverRaf = 0;
   el.addEventListener('pointermove', (e) => {
@@ -896,6 +899,7 @@ function select(o) {
   if (state.selected) state.selected.material = materialFor(state.selected);
   state.selected = o;
   const card = $('card');
+  if (probePin) probePin.visible = false;
   if (!o) { card.hidden = true; state.dirty = true; return; }
   highlight(o);
   const info = o.userData.info || {};
@@ -916,6 +920,36 @@ function select(o) {
     dl.append(dt, dd);
   }
   card.hidden = false;
+  state.dirty = true;
+}
+
+// Clicking bare ground reports its surveyed elevation and position.
+let probePin = null;
+function probeGround(pt) {
+  const x = pt.x, y = -pt.z, z = pt.y + z0;
+  const g = ((M.location.grid_convergence_deg || 0) * Math.PI) / 180;
+  const north = -x * Math.sin(g) + y * Math.cos(g), east = x * Math.cos(g) + y * Math.sin(g);
+  const lat = M.location.lat + north / 111070;
+  const lon = M.location.lon + east / (111320 * Math.cos((M.location.lat * Math.PI) / 180));
+  const rel = z - z0;
+  $('card-kind').textContent = 'Ground · 2017 LiDAR';
+  $('card-title').textContent = `${(z / FT).toFixed(1)} ft above sea level`;
+  $('card-desc').textContent = `${Math.abs(rel / FT).toFixed(1)} ft ${rel >= 0 ? 'above' : 'below'} the grade at the front door.`;
+  const dl = $('card-dl');
+  dl.textContent = '';
+  for (const [k, v] of [['Elevation', `${z.toFixed(2)} m NAVD88`], ['Position', `${lat.toFixed(5)}° N, ${Math.abs(lon).toFixed(5)}° W`]]) {
+    const dt = document.createElement('dt'); dt.textContent = k;
+    const dd = document.createElement('dd'); dd.textContent = v;
+    dl.append(dt, dd);
+  }
+  if (!probePin) {
+    probePin = new THREE.Mesh(new THREE.ConeGeometry(0.35, 1.6, 10).rotateX(Math.PI).translate(0, 0.8, 0),
+      new THREE.MeshBasicMaterial({ color: ACCENT, toneMapped: false }));
+    scene.add(probePin);
+  }
+  probePin.position.copy(pt);
+  probePin.visible = true;
+  $('card').hidden = false;
   state.dirty = true;
 }
 
