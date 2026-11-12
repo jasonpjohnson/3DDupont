@@ -268,6 +268,9 @@ SURFACE_MATERIALS = {
     "lawn": dict(color="#5d7a3a", texture="granular", texture_args=dict(grain=0.07, blotch=0.06), roughness=1.0, label="Lawn"),
     "fence": dict(color="#9a6a3f", texture="pickets", roughness=0.9, double_sided=True, label="Cedar privacy fence"),
     "fence_post": dict(color="#7d5733", roughness=0.9, label="Fence post"),
+    "fence_stain": dict(color="#4a2b20", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
+    "fence_stain_post": dict(color="#3a2119", roughness=0.9, label="Fence post"),
+    "concrete_old": dict(color="#b3a9a1", texture="concrete", roughness=0.95, label="Concrete (weathered)"),
 }
 
 
@@ -323,15 +326,16 @@ def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
                 part = model.part(base, kind)
                 # each kind sits at its own height so overlapping surfaces never z-fight
                 lift = {"lawn": 0.015, "asphalt_old": 0.02, "asphalt": 0.03, "mulch": 0.035, "gravel": 0.04,
-                        "river_rock": 0.045, "concrete": 0.055}.get(kind, 0.03)
+                        "river_rock": 0.045, "concrete": 0.055, "concrete_old": 0.055}.get(kind, 0.03)
                 drape(part, poly, dem, extent, cell, float(it.get("lift", lift)), model.uv_scale(kind))
                 parts_info[base] = {**info, "material": SURFACE_MATERIALS[kind]["label"]}
             else:
                 h = float(it.get("height", 1.8))
                 path = np.asarray(it["path"], dtype=float)
-                part = model.part(base, "fence")
-                posts = model.part(base + "_posts", "fence_post")
-                uv = model.uv_scale("fence")
+                fmat = it.get("material", "fence")                      # "fence" (natural cedar) or "fence_stain"
+                part = model.part(base, fmat)
+                posts = model.part(base + "_posts", fmat + "_post" if fmat + "_post" in SURFACE_MATERIALS else "fence_post")
+                uv = model.uv_scale(fmat)
                 run = 0.0
                 for a, b in zip(path[:-1], path[1:]):
                     seg = float(np.hypot(*(b - a)))
@@ -348,8 +352,8 @@ def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
                         g = tri_z(dem, extent, cell, *c)
                         posts.box((c[0], c[1], g + (h + 0.1) / 2), (0.1, 0.1, h + 0.1), np.degrees(np.arctan2(b[1] - a[1], b[0] - a[0])))
                     run += seg
-                parts_info[base] = {**info, "material": "Cedar privacy fence"}
-                parts_info[base + "_posts"] = {**info, "material": "Cedar privacy fence"}
+                parts_info[base] = {**info, "material": SURFACE_MATERIALS[fmat]["label"]}
+                parts_info[base + "_posts"] = {**info, "material": SURFACE_MATERIALS[fmat]["label"]}
         name = f"surfaces_{year}.glb"
         model.write_glb(os.path.join(out_dir, name))
         models.append({"id": f"surfaces_{year}", "file": name, "label": f"Site works ({year})" if year else "Site works",
