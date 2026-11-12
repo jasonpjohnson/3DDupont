@@ -165,8 +165,10 @@ def pack_points(p, extent=EXTENT, near=(0.0, 12.0), near_r=70.0, far_keep=0.4, s
 
 
 def spec_footprints(spec):
-    """(roof outlines, pads) from the building spec. Roof outline = union of eaves per building;
-    pads = [(polygon, z)] areas where the terrain must not rise above a slab or floor."""
+    """(roof outlines, pads) from the building spec.
+    roofs = [(polygon, since_year)] union of eaves per building; pads = [(polygon, z)] areas
+    where the terrain must not rise above a slab or floor."""
+    from shapely.ops import unary_union
     roofs, pads = [], []
     for b in spec.get("buildings", []):
         polys = []
@@ -181,9 +183,9 @@ def spec_footprints(spec):
             if el.get("kind") == "prism" and el.get("pad", True) and el["z1"] - el["z0"] < 1.5:
                 pads.append((Polygon(el["polygon"]).buffer(0), float(el["z1"]) - 0.03))
         if polys:
-            from shapely.ops import unary_union
             u = unary_union(polys)
-            roofs.extend(list(u.geoms) if hasattr(u, "geoms") else [u])
+            for g in (u.geoms if hasattr(u, "geoms") else [u]):
+                roofs.append((g, int(b.get("since", 0))))
     return roofs, pads
 
 
@@ -220,7 +222,7 @@ def apply_pads(dem, pads, extent=EXTENT, cell=CELL):
     return out
 
 
-def build_ortho(ortho_path, out_path, roofs, ortho_extent, extent=EXTENT, quality=84):
+def build_ortho(ortho_path, out_path, roofs, ortho_extent, extent=EXTENT, quality=84, max_width=None):
     """Crop a north-up site-grid image to the terrain extent and paint out the buildings
     (their roofs would otherwise show on the ground around the 3D model)."""
     import cv2
@@ -241,8 +243,12 @@ def build_ortho(ortho_path, out_path, roofs, ortho_extent, extent=EXTENT, qualit
         fill = cv2.resize(fill, (img.shape[1], img.shape[0]), interpolation=cv2.INTER_CUBIC)
         soft = cv2.GaussianBlur(mask.astype(np.float32), (0, 0), 3)[:, :, None]
         img = (img * (1 - soft) + fill * soft).astype(np.uint8)
+    if max_width and img.shape[1] > max_width:
+        k = max_width / img.shape[1]
+        img = cv2.resize(img, (max_width, int(round(img.shape[0] * k))), interpolation=cv2.INTER_AREA)
+        mpp /= k
     cv2.imwrite(out_path, img, [cv2.IMWRITE_JPEG_QUALITY, quality])
-    return {"file": os.path.basename(out_path), "width": int(img.shape[1]), "height": int(img.shape[0]), "mpp": mpp}
+    return {"file": os.path.basename(out_path), "width": int(img.shape[1]), "height": int(img.shape[0]), "mpp": round(mpp, 4)}
 
 
 def classify_conifers(trees, cir_path, ortho_extent, ndvi_min=0.27):
@@ -277,6 +283,9 @@ def main():
     ap.add_argument("--ortho-extent", nargs=4, type=float, default=[-245.0, -230.0, 155.0, 170.0],
                     metavar=("XMIN", "YMIN", "XMAX", "YMAX"))
     ap.add_argument("--ortho-credit", default="")
+    ap.add_argument("--ortho-year", type=int, default=2024)
+    ap.add_argument("--ortho-date", default="")
+    ap.add_argument("--history", help='JSON file: [{"year": 2018, "path": "north-up image on the same extent", "date": "..."}] older photos')
     args = ap.parse_args()
     os.makedirs(args.out_dir, exist_ok=True)
     p = load_local(args.raw_npz)
@@ -284,7 +293,7 @@ def main():
     roofs, pads = [], []
     if args.spec:
         roofs, pads = spec_footprints(json.load(open(args.spec)))
-    trees, _ = find_trees(p, dem, exclude=roofs)
+    trees, _ = find_trees(p, dem, exclude=[r for r, _ in roofs])
     if args.cir:
         trees = classify_conifers(trees, args.cir, args.ortho_extent)
     dem = apply_pads(dem, pads)
@@ -295,9 +304,20 @@ def main():
     rec, pmeta = pack_points(p)
     rec.tofile(os.path.join(args.out_dir, "points.bin"))
     ortho = None
+    epochs = []
     if args.ortho:
-        ortho = build_ortho(args.ortho, os.path.join(args.out_dir, "ortho.jpg"), roofs, args.ortho_extent)
-        ortho["credit"] = args.ortho_credit
+        standing = [r for r, since in roofs if since <= args.ortho_year]
+        ortho = build_ortho(args.ortho, os.path.join(args.out_dir, "ortho.jpg"), standing, args.ortho_extent)
+        ortho.update(credit=args.ortho_credit, year=args.ortho_year, date=args.ortho_date)
+        epochs.append({"year": args.ortho_year, "file": "ortho.jpg", "date": args.ortho_date})
+    if args.history:
+        for h in json.load(open(args.history)):
+            standing = [r for r, since in roofs if since <= h["year"]]
+            name = f"ortho_{h['year']}.jpg"
+            build_ortho(h["path"], os.path.join(args.out_dir, name), standing, h.get("extent", args.ortho_extent),
+                        quality=80, max_width=h.get("max_width", 1240))
+            epochs.append({"year": h["year"], "file": name, "date": h.get("date", "")})
+    epochs.sort(key=lambda e: e["year"])
     meta = {
         "frame": {"epsg": 26916, "E0": E0, "N0": N0, "note": "x east, y north, z NAVD88 metres"},
         "terrain": {"file": "terrain.bin", "nx": int(dem.shape[1]), "ny": int(dem.shape[0]),
@@ -306,6 +326,7 @@ def main():
         "trees": {"file": "trees.bin", "count": int(len(trees)), "conifers": int((trees[:, 5] > 0.5).sum()) if len(trees) else 0,
                   "record": "float32 x, y, ground_z, height, crown_radius, kind (0 deciduous, 1 conifer)"},
         "ortho": ortho,
+        "ortho_epochs": epochs,
         "points": {"file": "points.bin", **pmeta},
         "source": "USGS 3DEP IN_Statewide_B1_2017 (flown 2017-03-12 and 2017-03-23), public domain",
     }

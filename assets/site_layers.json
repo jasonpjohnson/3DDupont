@@ -20,7 +20,7 @@
  "trees": {
   "file": "trees.bin",
   "count": 580,
-  "conifers": 384,
+  "conifers": 8,
   "record": "float32 x, y, ground_z, height, crown_radius, kind (0 deciduous, 1 conifer)"
  },
  "ortho": {
@@ -28,8 +28,47 @@
   "width": 2480,
   "height": 3200,
   "mpp": 0.125,
-  "credit": "Indiana Geographic Information Office, 2024 statewide orthoimagery (CC0)"
+  "credit": "Indiana Geographic Information Office, statewide orthoimagery (CC0)",
+  "year": 2024,
+  "date": "March 3, 2024"
  },
+ "ortho_epochs": [
+  {
+   "year": 1998,
+   "file": "ortho_1998.jpg",
+   "date": "about 1998"
+  },
+  {
+   "year": 2005,
+   "file": "ortho_2005.jpg",
+   "date": "spring 2005"
+  },
+  {
+   "year": 2012,
+   "file": "ortho_2012.jpg",
+   "date": "late winter 2012"
+  },
+  {
+   "year": 2015,
+   "file": "ortho_2015.jpg",
+   "date": "spring 2015"
+  },
+  {
+   "year": 2018,
+   "file": "ortho_2018.jpg",
+   "date": "spring 2018"
+  },
+  {
+   "year": 2021,
+   "file": "ortho_2021.jpg",
+   "date": "March 29, 2021"
+  },
+  {
+   "year": 2024,
+   "file": "ortho.jpg",
+   "date": "March 3, 2024"
+  }
+ ],
  "points": {
   "file": "points.bin",
   "count": 176910,

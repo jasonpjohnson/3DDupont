@@ -20,7 +20,7 @@ const ASSETS = (() => {
 
 const state = {
   mode: 'photo', minutes: 15 * 60, day: 172, playing: false, measuring: false,
-  layers: {}, selected: null, measure: [], dirty: true,
+  layers: {}, selected: null, measure: [], dirty: true, year: null,
 };
 let M;                       // manifest
 let z0 = 0;
@@ -67,6 +67,7 @@ async function init() {
   buildTags();
   buildDimensions();
   setupLayers();
+  setupEpochs();
   setupViews();
   setupModes();
   setupSun();
@@ -271,11 +272,71 @@ function groundZ(x, y) {
 }
 
 let orthoTex = null;
+const orthoCache = {};
+async function loadOrthoFile(file) {
+  if (!orthoCache[file]) {
+    orthoCache[file] = new THREE.TextureLoader().loadAsync(`${ASSETS}/${file}`).then((t) => {
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return t;
+    });
+  }
+  return orthoCache[file];
+}
 async function loadOrtho() {
   if (!M.ortho) return;
-  orthoTex = await new THREE.TextureLoader().loadAsync(`${ASSETS}/${M.ortho.file}`);
-  orthoTex.colorSpace = THREE.SRGBColorSpace;
-  orthoTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  orthoTex = await loadOrthoFile(M.ortho.file);
+  state.year = M.ortho.year ?? null;
+}
+
+// The ground photo can be swapped for older surveys; buildings newer than the photo are hidden.
+function setupEpochs() {
+  const epochs = M.ortho_epochs || [];
+  if (epochs.length < 2) return;
+  const row = $('epoch-row');
+  $('epochs').hidden = false;
+  const note = document.createElement('p');
+  note.id = 'epoch-note';
+  $('epochs').append(note);
+  for (const e of epochs) {
+    const b = document.createElement('button');
+    b.textContent = e.year;
+    b.dataset.year = e.year;
+    b.setAttribute('role', 'radio');
+    b.title = e.date ? `Photographed ${e.date}` : `Photographed ${e.year}`;
+    b.addEventListener('click', () => setEpoch(e));
+    row.append(b);
+  }
+  markEpoch();
+}
+function markEpoch() {
+  for (const b of $('epoch-row').children) b.setAttribute('aria-checked', String(+b.dataset.year === state.year));
+  const hidden = M.models.filter((m) => (m.since || 0) > state.year).map((m) => `${m.label.toLowerCase()} (${m.since})`);
+  const e = (M.ortho_epochs || []).find((x) => x.year === state.year);
+  const when = e?.date ? `Photo: ${e.date}.` : '';
+  const n = $('epoch-note');
+  if (n) n.textContent = hidden.length ? `${when} Not yet built: ${hidden.join(', ')}.` : when;
+  $('mode-hint').textContent = MODE_HINT[state.mode]();
+  const aerialNote = document.querySelector('input[data-layer="aerial"]')?.closest('li')?.querySelector('small');
+  if (aerialNote) aerialNote.textContent = String(state.year);
+  for (const t of tags) if (t.since) t.visible = t.since <= state.year;
+}
+async function setEpoch(e) {
+  const tex = await loadOrthoFile(e.file);
+  orthoTex = tex;
+  state.year = e.year;
+  if (state.layers.aerial === false) setLayer('aerial', true, true);
+  if (state.mode !== 'photo') applyMode('photo');
+  markEpoch();
+  syncModels();
+  applyTerrainLook();
+  state.dirty = true;
+}
+function syncModels() {
+  for (const m of M.models) {
+    const g = groups[m.id];
+    if (g) g.visible = state.layers[m.id] !== false && (state.year === null || (m.since || 0) <= state.year);
+  }
 }
 
 // ---------------------------------------------------------------- trees -----
@@ -447,7 +508,7 @@ function buildParcel() {
   if (!M.parcel) return;
   const ring = M.parcel.slice();
   if (ring[0][0] !== ring[ring.length - 1][0] || ring[0][1] !== ring[ring.length - 1][1]) ring.push(ring[0]);
-  g.add(drapedRibbon(ring, 0.9, 0.18, ACCENT));
+  g.add(drapedRibbon(ring, 0.55, 0.18, ACCENT));
   // corner pins
   const pinGeo = new THREE.CylinderGeometry(0.22, 0.22, 3.2, 8).translate(0, 1.6, 0);
   const pinMat = new THREE.MeshBasicMaterial({ color: ACCENT, toneMapped: false });
@@ -473,7 +534,8 @@ function addTag(text, pos, layer, cls = '', small = '') {
 function buildTags() {
   for (const l of M.labels || []) {
     const z = l.at.length > 2 ? l.at[2] : groundZ(l.at[0], l.at[1]) + (l.lift ?? 9);
-    addTag(l.text, v3(l.at[0], l.at[1], z), 'labels', l.kind || '', l.note || '');
+    const t = addTag(l.text, v3(l.at[0], l.at[1], z), 'labels', l.kind || '', l.note || '');
+    if (l.since) t.since = l.since;
   }
 }
 
@@ -594,6 +656,8 @@ function setLayer(id, on, quiet = false) {
     applyTerrainLook();
   } else if (id === 'contours') {
     applyTerrainLook();
+  } else if (M.models.some((m) => m.id === id)) {
+    syncModels();
   } else if (groups[id]) {
     groups[id].visible = on;
   }
@@ -612,9 +676,9 @@ function applyTerrainLook() {
 
 // ---------------------------------------------------------------- modes -----
 const MODE_HINT = {
-  photo: 'True materials and colours, on the 2024 aerial photograph.',
-  clay: 'Plain massing model with 1 ft contours — shape and shadow only.',
-  evidence: 'Coloured by how each part is known. Click any part for its source.',
+  photo: () => `True materials and colours, on the ${state.year ?? ''} aerial photograph.`.replace('  ', ' '),
+  clay: () => 'Plain massing model with 1 ft contours: shape and shadow only.',
+  evidence: () => 'Coloured by how each part is known. Click any part for its source.',
 };
 
 function setupModes() {
@@ -635,7 +699,7 @@ function setupModes() {
 function applyMode(mode) {
   state.mode = mode;
   for (const b of $('mode').querySelectorAll('button')) b.setAttribute('aria-checked', String(b.dataset.mode === mode));
-  $('mode-hint').textContent = MODE_HINT[mode];
+  $('mode-hint').textContent = MODE_HINT[mode]();
   $('evidence-legend').hidden = mode !== 'evidence';
   for (const o of modelMeshes) o.material = materialFor(o);
   if (mode !== 'photo' && state.layers.contours === false && !state._contourTouched) setLayer('contours', true, true);
@@ -797,6 +861,17 @@ function setupPicking() {
     const visible = modelMeshes.filter((o) => groups[o.userData.model]?.visible !== false);
     const hit = ray.intersectObjects(visible, false)[0];
     select(hit ? hit.object : null);
+  });
+  let hoverRaf = 0;
+  el.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || e.buttons || state.measuring || hoverRaf) return;
+    hoverRaf = requestAnimationFrame(() => {
+      hoverRaf = 0;
+      pointerNDC(e);
+      ray.setFromCamera(ndc, camera);
+      const visible = modelMeshes.filter((o) => groups[o.userData.model]?.visible !== false);
+      el.style.cursor = ray.intersectObjects(visible, false).length ? 'pointer' : '';
+    });
   });
   $('card-close').addEventListener('click', () => select(null));
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { select(null); if (state.measuring) toggleMeasure(false); } });

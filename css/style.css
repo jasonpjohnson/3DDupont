@@ -122,6 +122,12 @@ button[aria-pressed="true"], button[aria-checked="true"], button.on { background
 .toggles input:checked::after { content: ""; width: 7px; height: 4px; border-left: 1.6px solid var(--paper); border-bottom: 1.6px solid var(--paper); transform: rotate(-45deg) translate(1px, -1px); }
 .toggles small { font: 400 10.5px/1 var(--mono); color: var(--ink-2); }
 
+.epochs { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line-soft); }
+.epochs[hidden] { display: none; }
+.epochs > span { display: block; font: 500 13px/1 var(--body); margin-bottom: 7px; }
+.epochs .btnrow { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); }
+.epochs button { font: 500 11px/1 var(--mono); letter-spacing: 0; padding: 6px 0 5px; margin: 0 -1px -1px 0; }
+.epochs p { margin: 8px 0 0; font-size: 12px; color: var(--ink-2); min-height: 1.4em; }
 .legend { margin-top: 10px; display: grid; gap: 6px; }
 .legend[hidden] { display: none; }
 .legend li { display: grid; grid-template-columns: 14px 1fr; gap: 9px; align-items: start; font-size: 12.5px; line-height: 1.3; }

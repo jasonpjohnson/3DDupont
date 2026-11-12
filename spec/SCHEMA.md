@@ -90,6 +90,8 @@ Doors and garage doors become their own selectable parts; windows are grouped pe
 | `stairs` | `top: [x, y]` (centre of top edge), `direction: [dx, dy]` (downhill), `z_top`, `z_bottom`, `width`, `solid` |
 | `box` | `center: [x, y, z]`, `size: [sx, sy, sz]`, `yaw` |
 | `cylinder` | `base: [x, y, z]`, `radius`, `height` |
+| `wall_panel` | vertical slab from plan point `a` to `b`: `thickness`, and either `z0`/`z1` or `outline: [[s, h], ...]` (s = metres from `a`, h = absolute z); `holes: [[[s, h], ...]]`; `arches: [{s0, s1, sill_z, spring_z, rise}]` cut arched openings — gable infill, screen walls, arched porch fronts |
+| `skylight` | `wing`, `at: [x, y]`, `size: [across, up_slope]` — curb and glass laid on that wing's roof plane |
 
 Every element takes `id`, `material`, `label`, `desc`, `dims`, `evidence`, `source`, `confidence`.
 

@@ -4,142 +4,142 @@
   "material": "Charcoal asphalt shingles",
   "label": "Main block \u2014 roof",
   "desc": "Draft massing",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "main_fascia": {
   "building": "house",
   "material": "Black trim",
   "label": "Main block \u2014 fascia and soffit",
   "desc": "Draft massing",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "two_storey_roof": {
   "building": "house",
   "material": "Charcoal asphalt shingles",
   "label": "Two-storey block \u2014 roof",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "two_storey_fascia": {
   "building": "house",
   "material": "Black trim",
   "label": "Two-storey block \u2014 fascia and soffit",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "east_roof": {
   "building": "house",
   "material": "Charcoal asphalt shingles",
   "label": "East wing \u2014 roof",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "east_fascia": {
   "building": "house",
   "material": "Black trim",
   "label": "East wing \u2014 fascia and soffit",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "link_roof": {
   "building": "house",
   "material": "Charcoal asphalt shingles",
   "label": "Garage link \u2014 roof",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "link_fascia": {
   "building": "house",
   "material": "Black trim",
   "label": "Garage link \u2014 fascia and soffit",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "garage_roof": {
   "building": "house",
   "material": "Charcoal asphalt shingles",
   "label": "Attached garage \u2014 roof",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "garage_fascia": {
   "building": "house",
   "material": "Black trim",
   "label": "Attached garage \u2014 fascia and soffit",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "porch_roof": {
   "building": "house",
   "material": "Standing-seam metal",
   "label": "Front porch \u2014 roof",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "porch_fascia": {
   "building": "house",
   "material": "Black trim",
   "label": "Front porch \u2014 fascia and soffit",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "main_walls_stone": {
   "building": "house",
   "material": "Stone veneer",
   "label": "Main block \u2014 Stone veneer",
   "desc": "Draft massing",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "main_walls": {
   "building": "house",
   "material": "White lap siding",
   "label": "Main block \u2014 White lap siding",
   "desc": "Draft massing",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "two_storey_walls": {
   "building": "house",
   "material": "White lap siding",
   "label": "Two-storey block \u2014 White lap siding",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "two_storey_walls_board_batten": {
   "building": "house",
   "material": "White board-and-batten",
   "label": "Two-storey block \u2014 White board-and-batten",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "two_storey_walls_stone": {
   "building": "house",
   "material": "Stone veneer",
   "label": "Two-storey block \u2014 Stone veneer",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "east_walls_stone": {
   "building": "house",
   "material": "Stone veneer",
   "label": "East wing \u2014 Stone veneer",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "east_walls": {
   "building": "house",
   "material": "White lap siding",
   "label": "East wing \u2014 White lap siding",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "link_walls_stone": {
   "building": "house",
   "material": "Stone veneer",
   "label": "Garage link \u2014 Stone veneer",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "link_walls": {
   "building": "house",
   "material": "White lap siding",
   "label": "Garage link \u2014 White lap siding",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "garage_walls_stone": {
   "building": "house",
   "material": "Stone veneer",
   "label": "Attached garage \u2014 Stone veneer",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "garage_walls": {
   "building": "house",
   "material": "White lap siding",
   "label": "Attached garage \u2014 White lap siding",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "front_door_frame": {
   "building": "house",
@@ -270,7 +270,7 @@
   "material": "Concrete",
   "label": "Front porch floor",
   "dims": "30' x 9'",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "porch_posts": {
   "building": "house",
@@ -295,7 +295,7 @@
   "material": "Wood decking",
   "label": "Rear deck",
   "dims": "36' x 13'",
-  "evidence": "sketch"
+  "evidence": "record"
  },
  "rear_deck_rail": {
   "building": "house",

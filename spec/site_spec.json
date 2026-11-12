@@ -1,0 +1,947 @@
+{
+ "z0": 261.7,
+ "materials": {
+  "siding": {
+   "color": "#f2f0ea",
+   "texture": "lap_siding",
+   "label": "White lap siding"
+  },
+  "board_batten": {
+   "color": "#f2f0ea",
+   "texture": "board_batten",
+   "label": "White board-and-batten"
+  },
+  "stone": {
+   "color": "#8d877b",
+   "texture": "ledgestone",
+   "label": "Stone veneer"
+  },
+  "roof": {
+   "color": "#3a3c40",
+   "texture": "shingles",
+   "label": "Charcoal asphalt shingles",
+   "roughness": 0.95
+  },
+  "metal_roof": {
+   "color": "#9aa0a4",
+   "texture": "standing_seam",
+   "label": "Standing-seam metal",
+   "roughness": 0.5,
+   "metallic": 0.6
+  },
+  "trim": {
+   "color": "#17191b",
+   "label": "Black trim",
+   "roughness": 0.6
+  },
+  "trim_white": {
+   "color": "#f4f2ec",
+   "label": "White trim",
+   "roughness": 0.7
+  },
+  "window_frame": {
+   "color": "#141516",
+   "label": "Black window frame",
+   "roughness": 0.5
+  },
+  "glass": {
+   "color": "#27333d",
+   "label": "Glass",
+   "roughness": 0.08,
+   "metallic": 0.0
+  },
+  "door": {
+   "color": "#6b4a2f",
+   "label": "Wood door",
+   "roughness": 0.6
+  },
+  "garage_door": {
+   "color": "#f2f0ea",
+   "label": "Garage door",
+   "roughness": 0.7
+  },
+  "shadow": {
+   "color": "#8c8a85",
+   "label": "Panel line"
+  },
+  "concrete": {
+   "color": "#c9c6be",
+   "texture": "concrete",
+   "label": "Concrete"
+  },
+  "deck": {
+   "color": "#8c7a66",
+   "texture": "planks",
+   "label": "Wood decking"
+  }
+ },
+ "buildings": [
+  {
+   "id": "house",
+   "label": "House",
+   "wings": [
+    {
+     "id": "main",
+     "label": "Main block",
+     "footprint": [
+      [
+       -9.67,
+       11.97
+      ],
+      [
+       7.399,
+       11.97
+      ],
+      [
+       7.399,
+       22.638
+      ],
+      [
+       -5.403,
+       22.638
+      ],
+      [
+       -5.403,
+       19.59
+      ],
+      [
+       -9.67,
+       19.59
+      ]
+     ],
+     "base_z": 261.7,
+     "floor_z": 262.2,
+     "planes": [
+      [
+       0,
+       0.55,
+       258.2165
+      ],
+      [
+       0,
+       -0.55,
+       277.2509
+      ]
+     ],
+     "walls": {
+      "material": "siding",
+      "bands": [
+       {
+        "to_z": 262.9,
+        "material": "stone"
+       }
+      ]
+     },
+     "evidence": "record",
+     "desc": "Draft massing"
+    },
+    {
+     "id": "two_storey",
+     "label": "Two-storey block",
+     "footprint": [
+      [
+       3.436,
+       17.152
+      ],
+      [
+       7.399,
+       17.152
+      ],
+      [
+       7.399,
+       9.532
+      ],
+      [
+       0.693,
+       9.532
+      ],
+      [
+       0.693,
+       11.97
+      ],
+      [
+       3.436,
+       11.97
+      ]
+     ],
+     "base_z": 261.7,
+     "floor_z": 262.2,
+     "planes": [
+      [
+       0.7,
+       0,
+       266.81476000000004
+      ],
+      [
+       -0.7,
+       0,
+       272.47916000000004
+      ]
+     ],
+     "walls": {
+      "material": "siding",
+      "bands": [
+       {
+        "to_z": 262.9,
+        "material": "stone"
+       }
+      ],
+      "gable_material": "board_batten",
+      "gable_from_z": 267.3
+     },
+     "evidence": "record"
+    },
+    {
+     "id": "east",
+     "label": "East wing",
+     "footprint": [
+      [
+       7.399,
+       9.532
+      ],
+      [
+       11.361,
+       9.532
+      ],
+      [
+       11.361,
+       17.152
+      ],
+      [
+       7.399,
+       17.152
+      ]
+     ],
+     "base_z": 261.7,
+     "floor_z": 262.2,
+     "planes": [
+      [
+       0.5,
+       0,
+       261.00059999999996
+      ],
+      [
+       -0.5,
+       0,
+       270.38059999999996
+      ]
+     ],
+     "walls": {
+      "material": "siding",
+      "bands": [
+       {
+        "to_z": 262.9,
+        "material": "stone"
+       }
+      ]
+     },
+     "evidence": "record"
+    },
+    {
+     "id": "link",
+     "label": "Garage link",
+     "footprint": [
+      [
+       -8.756,
+       9.532
+      ],
+      [
+       -4.793,
+       9.532
+      ],
+      [
+       -4.793,
+       11.97
+      ],
+      [
+       -8.756,
+       11.97
+      ]
+     ],
+     "base_z": 261.7,
+     "floor_z": 261.9,
+     "planes": [
+      [
+       0.5,
+       0,
+       268.8778
+      ],
+      [
+       -0.5,
+       0,
+       262.10339999999997
+      ]
+     ],
+     "walls": {
+      "material": "siding",
+      "bands": [
+       {
+        "to_z": 262.9,
+        "material": "stone"
+       }
+      ]
+     },
+     "evidence": "record"
+    },
+    {
+     "id": "garage",
+     "label": "Attached garage",
+     "footprint": [
+      [
+       -11.804,
+       0.997
+      ],
+      [
+       -4.184,
+       0.997
+      ],
+      [
+       -4.184,
+       9.532
+      ],
+      [
+       -11.804,
+       9.532
+      ]
+     ],
+     "base_z": 261.7,
+     "floor_z": 261.8,
+     "planes": [
+      [
+       0.5,
+       0,
+       270.50179999999995
+      ],
+      [
+       -0.5,
+       0,
+       262.50819999999993
+      ]
+     ],
+     "walls": {
+      "material": "siding",
+      "bands": [
+       {
+        "to_z": 262.9,
+        "material": "stone"
+       }
+      ]
+     },
+     "evidence": "record"
+    },
+    {
+     "id": "porch",
+     "label": "Front porch",
+     "eave": [
+      [
+       -1.898,
+       6.545
+      ],
+      [
+       7.551,
+       6.545
+      ],
+      [
+       7.551,
+       9.532
+      ],
+      [
+       -1.898,
+       9.532
+      ]
+     ],
+     "solid": false,
+     "planes": [
+      [
+       0,
+       0.18,
+       263.184312
+      ]
+     ],
+     "roof_material": "metal_roof",
+     "evidence": "record"
+    }
+   ],
+   "openings": [
+    {
+     "id": "front_door",
+     "wing": "two_storey",
+     "at": [
+      1.912,
+      9.532
+     ],
+     "width": 1.0,
+     "sill": 0.0,
+     "height": 2.1,
+     "kind": "door",
+     "lite": [
+      0.45,
+      0.9
+     ],
+     "label": "Front door",
+     "evidence": "photo"
+    },
+    {
+     "wing": "two_storey",
+     "at": [
+      4.96,
+      9.532
+     ],
+     "width": 1.8,
+     "sill": 0.6,
+     "height": 1.6,
+     "kind": "window",
+     "grid": [
+      2,
+      1
+     ]
+    },
+    {
+     "wing": "two_storey",
+     "at": [
+      4.046,
+      9.532
+     ],
+     "width": 1.6,
+     "sill_z": 265.7,
+     "height": 1.3,
+     "kind": "window",
+     "grid": [
+      2,
+      2
+     ]
+    },
+    {
+     "wing": "east",
+     "at": [
+      9.38,
+      9.532
+     ],
+     "width": 2.2,
+     "sill": 0.7,
+     "height": 1.4,
+     "kind": "window",
+     "grid": [
+      2,
+      1
+     ]
+    },
+    {
+     "wing": "garage",
+     "at": [
+      -11.804,
+      5.264
+     ],
+     "width": 4.9,
+     "sill": 0.0,
+     "height": 2.4,
+     "kind": "garage_door",
+     "windows": 4,
+     "id": "garage_door_w",
+     "label": "Garage door"
+    },
+    {
+     "wing": "garage",
+     "at": [
+      -4.184,
+      5.264
+     ],
+     "width": 0.9,
+     "sill": 1.0,
+     "height": 1.3,
+     "kind": "window",
+     "style": "double_hung"
+    },
+    {
+     "wing": "main",
+     "at": [
+      -0.526,
+      22.638
+     ],
+     "width": 1.8,
+     "sill": 0.8,
+     "height": 1.4,
+     "kind": "window",
+     "grid": [
+      2,
+      1
+     ]
+    }
+   ],
+   "elements": [
+    {
+     "kind": "prism",
+     "id": "porch_floor",
+     "polygon": [
+      [
+       -1.745,
+       6.788
+      ],
+      [
+       7.399,
+       6.788
+      ],
+      [
+       7.399,
+       9.532
+      ],
+      [
+       -1.745,
+       9.532
+      ]
+     ],
+     "z0": 261.3,
+     "z1": 262.12,
+     "material": "concrete",
+     "label": "Front porch floor",
+     "evidence": "record",
+     "dims": "30' x 9'"
+    },
+    {
+     "kind": "post",
+     "id": "porch_posts",
+     "at_list": [
+      [
+       -1.44,
+       6.941
+      ],
+      [
+       1.303,
+       6.941
+      ],
+      [
+       4.351,
+       6.941
+      ],
+      [
+       7.094,
+       6.941
+      ]
+     ],
+     "z0": 262.12,
+     "z1": 264.7,
+     "size": [
+      0.22,
+      0.22
+     ],
+     "material": "trim_white",
+     "base": {
+      "height": 0.9,
+      "size": [
+       0.5,
+       0.5
+      ],
+      "material": "stone"
+     },
+     "label": "Porch posts",
+     "evidence": "photo"
+    },
+    {
+     "kind": "prism",
+     "id": "rear_deck",
+     "polygon": [
+      [
+       -9.67,
+       22.638
+      ],
+      [
+       1.303,
+       22.638
+      ],
+      [
+       1.303,
+       26.6
+      ],
+      [
+       -9.67,
+       26.6
+      ]
+     ],
+     "z0": 261.9,
+     "z1": 262.09999999999997,
+     "material": "deck",
+     "label": "Rear deck",
+     "evidence": "record",
+     "dims": "36' x 13'"
+    },
+    {
+     "kind": "railing",
+     "id": "rear_deck_rail",
+     "path": [
+      [
+       -9.67,
+       22.638
+      ],
+      [
+       -9.67,
+       26.6
+      ],
+      [
+       1.303,
+       26.6
+      ],
+      [
+       1.303,
+       22.638
+      ]
+     ],
+     "z": 262.09999999999997,
+     "height": 0.95,
+     "material": "trim",
+     "style": "horizontal",
+     "label": "Deck railing",
+     "evidence": "inferred"
+    },
+    {
+     "kind": "stairs",
+     "id": "porch_steps",
+     "top": [
+      2.827,
+      6.788
+     ],
+     "direction": [
+      0,
+      -1
+     ],
+     "z_top": 262.12,
+     "z_bottom": 261.7,
+     "width": 2.4,
+     "material": "concrete",
+     "label": "Porch steps",
+     "evidence": "inferred"
+    }
+   ],
+   "since": 1989
+  }
+ ],
+ "site": {
+  "eyebrow": "Site model \u00b7 LiDAR + county record",
+  "title": "3910 W Dupont Rd",
+  "subtitle": "Fort Wayne, Indiana",
+  "facts": [
+   {
+    "k": "Built",
+    "v": "1989"
+   },
+   {
+    "k": "Lot",
+    "v": "11.90 ac"
+   },
+   {
+    "k": "Floor area",
+    "v": "3,111 sq ft"
+   },
+   {
+    "k": "Parcel",
+    "v": "02-01-36-400-004.001-044",
+    "wide": true
+   },
+   {
+    "k": "Township",
+    "v": "Eel River"
+   }
+  ],
+  "foot_note": "",
+  "location": {
+   "lat": 41.1791121,
+   "lon": -85.1948761,
+   "grid_convergence_deg": 1.19
+  },
+  "focus": [
+   0,
+   13,
+   263.7
+  ],
+  "parcel": [
+   [
+    38.6,
+    -175.4
+   ],
+   [
+    38.4,
+    -167.8
+   ],
+   [
+    29.5,
+    120.8
+   ],
+   [
+    -132.8,
+    117.6
+   ],
+   [
+    -123.9,
+    -171.2
+   ],
+   [
+    -123.6,
+    -178.8
+   ]
+  ],
+  "parcel_corners": [
+   [
+    38.6,
+    -175.4
+   ],
+   [
+    29.5,
+    120.8
+   ],
+   [
+    -132.8,
+    117.6
+   ],
+   [
+    -123.6,
+    -178.8
+   ]
+  ],
+  "parcel_note": "11.90 ac",
+  "views": [
+   {
+    "id": "front",
+    "label": "Front",
+    "title": "From the driveway, looking north",
+    "pos": [
+     5,
+     -37,
+     271.7
+    ],
+    "target": [
+     0,
+     11,
+     264.2
+    ]
+   },
+   {
+    "id": "rear",
+    "label": "Rear",
+    "title": "From the back lawn, looking south",
+    "pos": [
+     -4,
+     65,
+     272.7
+    ],
+    "target": [
+     0,
+     14,
+     263.7
+    ]
+   },
+   {
+    "id": "east",
+    "label": "East",
+    "pos": [
+     52,
+     12,
+     271.7
+    ],
+    "target": [
+     0,
+     13,
+     264.2
+    ]
+   },
+   {
+    "id": "west",
+    "label": "West",
+    "pos": [
+     -56,
+     9,
+     272.7
+    ],
+    "target": [
+     0,
+     13,
+     264.2
+    ]
+   },
+   {
+    "id": "plan",
+    "label": "Plan",
+    "title": "Straight down, north up",
+    "pos": [
+     0,
+     12.9,
+     335.7
+    ],
+    "target": [
+     0,
+     13,
+     261.7
+    ]
+   },
+   {
+    "id": "site",
+    "label": "Site",
+    "title": "The whole 11.9-acre parcel",
+    "pos": [
+     -175,
+     -395,
+     546.7
+    ],
+    "target": [
+     -45,
+     -45,
+     259.7
+    ]
+   }
+  ],
+  "labels": [
+   {
+    "text": "House",
+    "note": "1989",
+    "at": [
+     0,
+     14
+    ],
+    "lift": 11
+   },
+   {
+    "text": "Detached garage",
+    "note": "2009",
+    "at": [
+     -33,
+     -5.5
+    ],
+    "lift": 8
+   },
+   {
+    "text": "W Dupont Rd",
+    "at": [
+     -70,
+     -177
+    ],
+    "lift": 1.5,
+    "kind": "road"
+   }
+  ],
+  "dimensions": [],
+  "dimensions_note": "county record",
+  "about": {
+   "heading": "How this model was made",
+   "intro": [
+    "Nothing here was drawn by eye from a single picture. The shape of the house comes from an airborne laser survey, its dimensions from the county's own record card, its colours and openings from photographs, and the ground from public elevation data. Each part of the model carries a note saying which of those it rests on - switch the display to Evidence and click anything to see.",
+    "The roof planes were fitted to the 2017 LiDAR returns and the result was scored against every return that hit the roof. Wall positions follow the dimensioned sketch on the assessor's record card, registered to the surveyed eave lines. The exterior was renovated after the survey was flown, so cladding, trim and porch details follow the 2024 aerial photograph and the assessor's street photograph instead."
+   ],
+   "accuracy": [],
+   "sources": [
+    {
+     "name": "USGS 3D Elevation Program LiDAR, Indiana statewide (block B1)",
+     "url": "https://registry.opendata.aws/usgs-lidar/",
+     "license": "public domain",
+     "used_for": "Roof planes, wall heights, terrain, tree positions and heights. About 4 returns per square metre.",
+     "date": "2017-03-12 / 23"
+    },
+    {
+     "name": "USGS 3DEP LiDAR, Allen County",
+     "url": "https://registry.opendata.aws/usgs-lidar/",
+     "license": "public domain",
+     "used_for": "Earlier survey used as a cross-check on the roof and to date changes.",
+     "date": "2011-04-02"
+    },
+    {
+     "name": "Indiana Geographic Information Office statewide orthoimagery",
+     "url": "https://registry.opendata.aws/in-imagery/",
+     "license": "CC0",
+     "used_for": "The ground photograph (6-inch pixels), roof layout, drive, decks and site history.",
+     "date": "1998 - 2024"
+    },
+    {
+     "name": "Allen County Assessor, property record card",
+     "url": "https://www.acimap.us/",
+     "license": "public record",
+     "used_for": "Dimensioned footprint sketch, floor areas, year built, porches, decks and outbuildings.",
+     "date": "2026"
+    },
+    {
+     "name": "Allen County Assessor, street photograph",
+     "url": "https://www.acimap.us/",
+     "license": "reference only, not reproduced",
+     "used_for": "Cladding, colours, front windows and doors, porch details.",
+     "date": "after 2021"
+    },
+    {
+     "name": "Allen County iMap GIS",
+     "url": "https://www.acimap.us/",
+     "license": "public record",
+     "used_for": "Parcel boundary, building outlines, 2017 contours, historic aerials for cross-checks.",
+     "date": "2024"
+    },
+    {
+     "name": "Indiana statewide parcel and address layers (IGIO Data Harvest)",
+     "url": "https://www.in.gov/gis/",
+     "license": "public",
+     "used_for": "Parcel polygon and address point cross-check.",
+     "date": "2025"
+    },
+    {
+     "name": "Overture Maps (National Address Database, Microsoft building footprints, OpenStreetMap)",
+     "url": "https://overturemaps.org/",
+     "license": "CDLA / ODbL",
+     "used_for": "Locating the address point and driveway; independent footprint check.",
+     "date": "2026-10"
+    },
+    {
+     "name": "three.js",
+     "url": "https://threejs.org/",
+     "license": "MIT",
+     "used_for": "Rendering in the browser. Typefaces: Barlow and IBM Plex Mono (SIL OFL).",
+     "date": ""
+    }
+   ],
+   "limits": [],
+   "record": [
+    {
+     "k": "Parcel",
+     "v": "02-01-36-400-004.001-044"
+    },
+    {
+     "k": "Legal description",
+     "v": "11.90 A Irr Tract 951.4 Ft E SW Corner SE 1/4 Sec 36 (T32N R11E)"
+    },
+    {
+     "k": "Township / district",
+     "v": "Eel River Township, Allen County"
+    },
+    {
+     "k": "Class",
+     "v": "One-family dwelling on unplatted land, 10 to 19.99 acres"
+    },
+    {
+     "k": "Dwelling",
+     "v": "Two-storey wood frame, built 1989, asphalt roof, central warm air"
+    },
+    {
+     "k": "First floor / second floor",
+     "v": "2,561 sq ft / 550 sq ft"
+    },
+    {
+     "k": "Basement",
+     "v": "2,341 sq ft, part finished, plus 168 sq ft on slab"
+    },
+    {
+     "k": "Bedrooms / baths",
+     "v": "3 / 3 full + 1 half"
+    },
+    {
+     "k": "Attached garage",
+     "v": "25 x 28 ft frame, two-car (700 sq ft)"
+    },
+    {
+     "k": "Porches and decks",
+     "v": "Open porches 30 x 9 and 14 x 10 ft; wood decks 36 x 13 and 15 x 18 ft; concrete patio 18 x 14 ft"
+    },
+    {
+     "k": "Detached garage",
+     "v": "30 x 28 ft wood frame, 2009"
+    },
+    {
+     "k": "Pole barn",
+     "v": "44 x 60 x 16 ft, 2025"
+    }
+   ],
+   "footer": "The model is a reconstruction for visualisation, not a survey. The parcel line is the county GIS line and is not a legal boundary."
+  }
+ }
+}

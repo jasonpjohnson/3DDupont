@@ -1,5 +1,5 @@
 {
- "eyebrow": "Site model \u00b7 draft",
+ "eyebrow": "Site model \u00b7 LiDAR + county record",
  "title": "3910 W Dupont Rd",
  "subtitle": "Fort Wayne, Indiana",
  "facts": [
@@ -21,11 +21,11 @@
    "wide": true
   },
   {
-   "k": "Survey",
-   "v": "LiDAR 2017"
+   "k": "Township",
+   "v": "Eel River"
   }
  ],
- "foot_note": "Draft pipeline test \u2014 not the verified model",
+ "foot_note": "",
  "location": {
   "lat": 41.1791121,
   "lon": -85.1948761,
@@ -50,16 +50,60 @@
   "rows": "south to north"
  },
  "ortho": {
-  "file": "ortho.jpg"
+  "file": "ortho.jpg",
+  "width": 2480,
+  "height": 3200,
+  "mpp": 0.125,
+  "credit": "Indiana Geographic Information Office, statewide orthoimagery (CC0)",
+  "year": 2024,
+  "date": "March 3, 2024"
  },
+ "ortho_epochs": [
+  {
+   "year": 1998,
+   "file": "ortho_1998.jpg",
+   "date": "about 1998"
+  },
+  {
+   "year": 2005,
+   "file": "ortho_2005.jpg",
+   "date": "spring 2005"
+  },
+  {
+   "year": 2012,
+   "file": "ortho_2012.jpg",
+   "date": "late winter 2012"
+  },
+  {
+   "year": 2015,
+   "file": "ortho_2015.jpg",
+   "date": "spring 2015"
+  },
+  {
+   "year": 2018,
+   "file": "ortho_2018.jpg",
+   "date": "spring 2018"
+  },
+  {
+   "year": 2021,
+   "file": "ortho_2021.jpg",
+   "date": "March 29, 2021"
+  },
+  {
+   "year": 2024,
+   "file": "ortho.jpg",
+   "date": "March 3, 2024"
+  }
+ ],
  "trees": {
   "file": "trees.bin",
-  "count": 578,
-  "record": "float32 x, y, ground_z, height, crown_radius, kind"
+  "count": 580,
+  "conifers": 8,
+  "record": "float32 x, y, ground_z, height, crown_radius, kind (0 deciduous, 1 conifer)"
  },
  "points": {
   "file": "points.bin",
-  "count": 117931,
+  "count": 176910,
   "origin": [
    -200.0,
    -230.0,
@@ -76,151 +120,153 @@
   {
    "id": "house",
    "file": "house.glb",
-   "label": "House"
+   "label": "House",
+   "since": 1989
   }
  ],
+ "download": "assets/house.glb",
  "parts": {
   "main_roof": {
    "building": "house",
    "material": "Charcoal asphalt shingles",
    "label": "Main block \u2014 roof",
    "desc": "Draft massing",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "main_fascia": {
    "building": "house",
    "material": "Black trim",
    "label": "Main block \u2014 fascia and soffit",
    "desc": "Draft massing",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "two_storey_roof": {
    "building": "house",
    "material": "Charcoal asphalt shingles",
    "label": "Two-storey block \u2014 roof",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "two_storey_fascia": {
    "building": "house",
    "material": "Black trim",
    "label": "Two-storey block \u2014 fascia and soffit",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "east_roof": {
    "building": "house",
    "material": "Charcoal asphalt shingles",
    "label": "East wing \u2014 roof",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "east_fascia": {
    "building": "house",
    "material": "Black trim",
    "label": "East wing \u2014 fascia and soffit",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "link_roof": {
    "building": "house",
    "material": "Charcoal asphalt shingles",
    "label": "Garage link \u2014 roof",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "link_fascia": {
    "building": "house",
    "material": "Black trim",
    "label": "Garage link \u2014 fascia and soffit",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "garage_roof": {
    "building": "house",
    "material": "Charcoal asphalt shingles",
    "label": "Attached garage \u2014 roof",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "garage_fascia": {
    "building": "house",
    "material": "Black trim",
    "label": "Attached garage \u2014 fascia and soffit",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "porch_roof": {
    "building": "house",
    "material": "Standing-seam metal",
    "label": "Front porch \u2014 roof",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "porch_fascia": {
    "building": "house",
    "material": "Black trim",
    "label": "Front porch \u2014 fascia and soffit",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "main_walls_stone": {
    "building": "house",
    "material": "Stone veneer",
    "label": "Main block \u2014 Stone veneer",
    "desc": "Draft massing",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "main_walls": {
    "building": "house",
    "material": "White lap siding",
    "label": "Main block \u2014 White lap siding",
    "desc": "Draft massing",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "two_storey_walls": {
    "building": "house",
    "material": "White lap siding",
    "label": "Two-storey block \u2014 White lap siding",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "two_storey_walls_board_batten": {
    "building": "house",
    "material": "White board-and-batten",
    "label": "Two-storey block \u2014 White board-and-batten",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "two_storey_walls_stone": {
    "building": "house",
    "material": "Stone veneer",
    "label": "Two-storey block \u2014 Stone veneer",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "east_walls_stone": {
    "building": "house",
    "material": "Stone veneer",
    "label": "East wing \u2014 Stone veneer",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "east_walls": {
    "building": "house",
    "material": "White lap siding",
    "label": "East wing \u2014 White lap siding",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "link_walls_stone": {
    "building": "house",
    "material": "Stone veneer",
    "label": "Garage link \u2014 Stone veneer",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "link_walls": {
    "building": "house",
    "material": "White lap siding",
    "label": "Garage link \u2014 White lap siding",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "garage_walls_stone": {
    "building": "house",
    "material": "Stone veneer",
    "label": "Attached garage \u2014 Stone veneer",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "garage_walls": {
    "building": "house",
    "material": "White lap siding",
    "label": "Attached garage \u2014 White lap siding",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "front_door_frame": {
    "building": "house",
@@ -351,7 +397,7 @@
    "material": "Concrete",
    "label": "Front porch floor",
    "dims": "30' x 9'",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "porch_posts": {
    "building": "house",
@@ -376,7 +422,7 @@
    "material": "Wood decking",
    "label": "Rear deck",
    "dims": "36' x 13'",
-   "evidence": "sketch"
+   "evidence": "record"
   },
   "rear_deck_rail": {
    "building": "house",
@@ -415,10 +461,6 @@
   [
    -123.6,
    -178.8
-  ],
-  [
-   38.6,
-   -175.4
   ]
  ],
  "parcel_corners": [
@@ -443,12 +485,13 @@
   {
    "id": "house",
    "label": "House",
+   "note": "",
    "on": true
   },
   {
    "id": "trees",
    "label": "Trees",
-   "note": "578 from LiDAR",
+   "note": "580 from LiDAR",
    "on": true
   },
   {
@@ -477,13 +520,13 @@
   {
    "id": "dimensions",
    "label": "Dimensions",
-   "note": "county sketch",
+   "note": "county record",
    "on": false
   },
   {
    "id": "points",
    "label": "LiDAR points",
-   "note": "2017 survey",
+   "note": "176k, 2017",
    "on": false
   }
  ],
@@ -491,29 +534,31 @@
   {
    "id": "front",
    "label": "Front",
+   "title": "From the driveway, looking north",
    "pos": [
-    6,
-    -40,
+    5,
+    -37,
     271.7
    ],
    "target": [
     0,
-    10,
+    11,
     264.2
    ]
   },
   {
    "id": "rear",
    "label": "Rear",
+   "title": "From the back lawn, looking south",
    "pos": [
     -4,
-    66,
-    273.7
+    65,
+    272.7
    ],
    "target": [
     0,
     14,
-    264.2
+    263.7
    ]
   },
   {
@@ -521,12 +566,12 @@
    "label": "East",
    "pos": [
     52,
-    10,
+    12,
     271.7
    ],
    "target": [
     0,
-    12,
+    13,
     264.2
    ]
   },
@@ -535,41 +580,43 @@
    "label": "West",
    "pos": [
     -56,
-    8,
+    9,
     272.7
    ],
    "target": [
     0,
-    12,
+    13,
     264.2
    ]
   },
   {
    "id": "plan",
    "label": "Plan",
+   "title": "Straight down, north up",
    "pos": [
     0,
-    11.9,
-    339.7
+    12.9,
+    335.7
    ],
    "target": [
     0,
-    12,
+    13,
     261.7
    ]
   },
   {
    "id": "site",
    "label": "Site",
+   "title": "The whole 11.9-acre parcel",
    "pos": [
-    -150,
-    -300,
-    471.7
+    -175,
+    -395,
+    546.7
    ],
    "target": [
     -45,
-    -30,
-    261.7
+    -45,
+    259.7
    ]
   }
  ],
@@ -587,51 +634,32 @@
    "text": "Detached garage",
    "note": "2009",
    "at": [
-    -32.5,
-    -6
+    -33,
+    -5.5
    ],
    "lift": 8
   },
   {
    "text": "W Dupont Rd",
    "at": [
-    -60,
+    -70,
     -177
    ],
-   "lift": 1,
+   "lift": 1.5,
    "kind": "road"
   }
  ],
- "dimensions": [
-  {
-   "a": [
-    -9.67,
-    11.5,
-    262.0
-   ],
-   "b": [
-    7.4,
-    11.5,
-    262.0
-   ],
-   "text": "56'"
-  }
- ],
+ "dimensions": [],
  "evidence": {
-  "lidar": {
-   "label": "Measured",
-   "color": "#2f7f6f",
-   "detail": "fitted to LiDAR survey points"
-  },
-  "sketch": {
+  "record": {
    "label": "County record",
    "color": "#3b6ea8",
-   "detail": "dimension from the assessor's sketch"
+   "detail": "dimension from the assessor's sketch or card"
   },
   "photo": {
    "label": "Photographed",
    "color": "#d9a441",
-   "detail": "read from a photo or aerial"
+   "detail": "read from an aerial or the assessor's photo"
   },
   "inferred": {
    "label": "Inferred",
@@ -642,9 +670,126 @@
  "about": {
   "heading": "How this model was made",
   "intro": [
-   "Draft."
+   "Nothing here was drawn by eye from a single picture. The shape of the house comes from an airborne laser survey, its dimensions from the county's own record card, its colours and openings from photographs, and the ground from public elevation data. Each part of the model carries a note saying which of those it rests on - switch the display to Evidence and click anything to see.",
+   "The roof planes were fitted to the 2017 LiDAR returns and the result was scored against every return that hit the roof. Wall positions follow the dimensioned sketch on the assessor's record card, registered to the surveyed eave lines. The exterior was renovated after the survey was flown, so cladding, trim and porch details follow the 2024 aerial photograph and the assessor's street photograph instead."
   ],
-  "sources": [],
-  "limits": []
+  "accuracy": [],
+  "sources": [
+   {
+    "name": "USGS 3D Elevation Program LiDAR, Indiana statewide (block B1)",
+    "url": "https://registry.opendata.aws/usgs-lidar/",
+    "license": "public domain",
+    "used_for": "Roof planes, wall heights, terrain, tree positions and heights. About 4 returns per square metre.",
+    "date": "2017-03-12 / 23"
+   },
+   {
+    "name": "USGS 3DEP LiDAR, Allen County",
+    "url": "https://registry.opendata.aws/usgs-lidar/",
+    "license": "public domain",
+    "used_for": "Earlier survey used as a cross-check on the roof and to date changes.",
+    "date": "2011-04-02"
+   },
+   {
+    "name": "Indiana Geographic Information Office statewide orthoimagery",
+    "url": "https://registry.opendata.aws/in-imagery/",
+    "license": "CC0",
+    "used_for": "The ground photograph (6-inch pixels), roof layout, drive, decks and site history.",
+    "date": "1998 - 2024"
+   },
+   {
+    "name": "Allen County Assessor, property record card",
+    "url": "https://www.acimap.us/",
+    "license": "public record",
+    "used_for": "Dimensioned footprint sketch, floor areas, year built, porches, decks and outbuildings.",
+    "date": "2026"
+   },
+   {
+    "name": "Allen County Assessor, street photograph",
+    "url": "https://www.acimap.us/",
+    "license": "reference only, not reproduced",
+    "used_for": "Cladding, colours, front windows and doors, porch details.",
+    "date": "after 2021"
+   },
+   {
+    "name": "Allen County iMap GIS",
+    "url": "https://www.acimap.us/",
+    "license": "public record",
+    "used_for": "Parcel boundary, building outlines, 2017 contours, historic aerials for cross-checks.",
+    "date": "2024"
+   },
+   {
+    "name": "Indiana statewide parcel and address layers (IGIO Data Harvest)",
+    "url": "https://www.in.gov/gis/",
+    "license": "public",
+    "used_for": "Parcel polygon and address point cross-check.",
+    "date": "2025"
+   },
+   {
+    "name": "Overture Maps (National Address Database, Microsoft building footprints, OpenStreetMap)",
+    "url": "https://overturemaps.org/",
+    "license": "CDLA / ODbL",
+    "used_for": "Locating the address point and driveway; independent footprint check.",
+    "date": "2026-10"
+   },
+   {
+    "name": "three.js",
+    "url": "https://threejs.org/",
+    "license": "MIT",
+    "used_for": "Rendering in the browser. Typefaces: Barlow and IBM Plex Mono (SIL OFL).",
+    "date": ""
+   }
+  ],
+  "limits": [],
+  "record": [
+   {
+    "k": "Parcel",
+    "v": "02-01-36-400-004.001-044"
+   },
+   {
+    "k": "Legal description",
+    "v": "11.90 A Irr Tract 951.4 Ft E SW Corner SE 1/4 Sec 36 (T32N R11E)"
+   },
+   {
+    "k": "Township / district",
+    "v": "Eel River Township, Allen County"
+   },
+   {
+    "k": "Class",
+    "v": "One-family dwelling on unplatted land, 10 to 19.99 acres"
+   },
+   {
+    "k": "Dwelling",
+    "v": "Two-storey wood frame, built 1989, asphalt roof, central warm air"
+   },
+   {
+    "k": "First floor / second floor",
+    "v": "2,561 sq ft / 550 sq ft"
+   },
+   {
+    "k": "Basement",
+    "v": "2,341 sq ft, part finished, plus 168 sq ft on slab"
+   },
+   {
+    "k": "Bedrooms / baths",
+    "v": "3 / 3 full + 1 half"
+   },
+   {
+    "k": "Attached garage",
+    "v": "25 x 28 ft frame, two-car (700 sq ft)"
+   },
+   {
+    "k": "Porches and decks",
+    "v": "Open porches 30 x 9 and 14 x 10 ft; wood decks 36 x 13 and 15 x 18 ft; concrete patio 18 x 14 ft"
+   },
+   {
+    "k": "Detached garage",
+    "v": "30 x 28 ft wood frame, 2009"
+   },
+   {
+    "k": "Pole barn",
+    "v": "44 x 60 x 16 ft, 2025"
+   }
+  ],
+  "footer": "The model is a reconstruction for visualisation, not a survey. The parcel line is the county GIS line and is not a legal boundary."
  }
 }

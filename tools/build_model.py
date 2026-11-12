@@ -393,6 +393,10 @@ class Builder:
             elif kind == "box":
                 p = self.part(name, mat, info)
                 p.box(el["center"], el["size"], el.get("yaw", 0), uv_scale=uv)
+            elif kind == "wall_panel":
+                self._wall_panel(name, mat, info, el)
+            elif kind == "skylight":
+                self._skylight(name, mat, info, el)
             else:
                 raise ValueError(f"unknown element kind {kind!r}")
 
@@ -402,6 +406,72 @@ class Builder:
             if p.name == name:
                 return p
         return self.part(name, material, info)
+
+    def _wall_panel(self, name, mat, info, el):
+        """A vertical slab between plan points a and b with an arbitrary elevation outline
+        (s = metres from a, h = absolute z) - gable infill, screens, arched porch fronts."""
+        p = self.part(name, mat, info)
+        a = np.asarray(el["a"], dtype=float)
+        b_ = np.asarray(el["b"], dtype=float)
+        L = float(np.hypot(*(b_ - a)))
+        t = (b_ - a) / L
+        n = np.array([t[1], -t[0]])
+        th = el.get("thickness", 0.14)
+        geom = Polygon(el["outline"]) if el.get("outline") else box(0, el["z0"], L, el["z1"])
+        for h in el.get("holes", []):
+            geom = geom.difference(Polygon(h))
+        for ar in el.get("arches", []):
+            s0, s1, sill, spring, rise = ar["s0"], ar["s1"], ar["sill_z"], ar["spring_z"], ar.get("rise", 0.0)
+            pts = [(s0, sill), (s1, sill), (s1, spring)]
+            if rise > 0:
+                cx, rx = (s0 + s1) / 2, (s1 - s0) / 2
+                pts += [(cx + rx * np.cos(k), spring + rise * np.sin(k)) for k in np.linspace(0, np.pi, 18)[1:-1]]
+            pts += [(s0, spring)]
+            geom = geom.difference(Polygon(pts))
+        if not geom.is_valid:
+            geom = geom.buffer(0)
+        uv = self.uv(mat)
+        for sign in (1, -1):
+            o = a + n * (th / 2) * sign
+            p.planar(geom, (o[0], o[1], 0.0), (t[0], t[1], 0), (0, 0, 1), normal=(n[0] * sign, n[1] * sign, 0), uv_scale=uv)
+        from shapely.geometry.polygon import orient
+        for poly in polygon_parts(geom):
+            poly = orient(poly, 1.0)
+            for ring in [poly.exterior, *poly.interiors]:
+                c = np.asarray(ring.coords)
+                for k in range(len(c) - 1):
+                    (sa, ha), (sb, hb) = c[k], c[k + 1]
+                    ds, dh = sb - sa, hb - ha
+                    ln = np.hypot(ds, dh)
+                    if ln < 1e-6:
+                        continue
+                    out2 = np.array([dh, -ds]) / ln                  # outward for CCW exterior / CW holes
+                    facing = np.array([t[0] * out2[0], t[1] * out2[0], out2[1]])
+                    def P3(sv, hv, off):
+                        xy = a + t * sv + n * off
+                        return np.array([xy[0], xy[1], hv])
+                    q = [P3(sa, ha, th / 2), P3(sb, hb, th / 2), P3(sb, hb, -th / 2), P3(sa, ha, -th / 2)]
+                    nn = np.cross(q[1] - q[0], q[2] - q[0])
+                    if np.dot(nn, facing) < 0:
+                        q = q[::-1]
+                    p.polygon3d(q, uv_scale=uv)
+
+    def _skylight(self, name, mat, info, el):
+        """Curb + glass lying on a wing's roof plane at a plan position."""
+        wing = next(w for w in self.wings if w.id == el["wing"])
+        x, y = el["at"]
+        plane = min(wing.planes, key=lambda pl: pl[0] * x + pl[1] * y + pl[2])
+        u, v, n = plane_basis(plane)
+        w_, l_ = el.get("size", [0.6, 1.2])
+        c = np.array([x, y, plane[0] * x + plane[1] * y + plane[2]])
+        curb = self.part(name, mat, info)
+        h = el.get("curb", 0.1)
+        corners = [c + u * sx * w_ / 2 + v * sy * l_ / 2 for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+        for k in range(4):
+            curb.beam(corners[k] + n * h / 2, corners[(k + 1) % 4] + n * h / 2, 0.07, h)
+        glass = self.part(name + "_glass", el.get("glass_material", "glass"), info)
+        g = [q + n * (h * 0.85) for q in corners]
+        glass.polygon3d(g)
 
     def _railing(self, name, mat, info, el):
         p = self.part(name, mat, info)

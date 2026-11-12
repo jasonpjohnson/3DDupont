@@ -32,7 +32,7 @@ def main():
         path = f"{b['id']}.glb"
         if not os.path.exists(os.path.join(out_dir, path)):
             continue
-        models.append({"id": b["id"], "file": path, "label": b.get("label", b["id"])})
+        models.append({"id": b["id"], "file": path, "label": b.get("label", b["id"]), "since": b.get("since", 0)})
         layer_list.append({"id": b["id"], "label": b.get("label", b["id"]), "note": b.get("layer_note", ""), "on": True})
 
     trees = layers["trees"]
@@ -63,6 +63,7 @@ def main():
         "focus": site.get("focus", [0, 0, z0]),
         "terrain": layers["terrain"],
         "ortho": layers.get("ortho"),
+        "ortho_epochs": layers.get("ortho_epochs", []),
         "trees": trees,
         "points": layers["points"],
         "models": models,
