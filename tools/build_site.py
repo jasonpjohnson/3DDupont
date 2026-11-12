@@ -321,7 +321,10 @@ def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
                 kind = it.get("kind", "asphalt")
                 poly = Polygon(it["polygon"], it.get("holes")).buffer(0)
                 part = model.part(base, kind)
-                drape(part, poly, dem, extent, cell, float(it.get("lift", 0.03)), model.uv_scale(kind))
+                # each kind sits at its own height so overlapping surfaces never z-fight
+                lift = {"lawn": 0.015, "asphalt_old": 0.02, "asphalt": 0.03, "mulch": 0.035, "gravel": 0.04,
+                        "river_rock": 0.045, "concrete": 0.055}.get(kind, 0.03)
+                drape(part, poly, dem, extent, cell, float(it.get("lift", lift)), model.uv_scale(kind))
                 parts_info[base] = {**info, "material": SURFACE_MATERIALS[kind]["label"]}
             else:
                 h = float(it.get("height", 1.8))
