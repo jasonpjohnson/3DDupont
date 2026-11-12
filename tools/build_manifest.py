@@ -35,6 +35,16 @@ def main():
         models.append({"id": b["id"], "file": path, "label": b.get("label", b["id"]), "since": b.get("since", 0)})
         layer_list.append({"id": b["id"], "label": b.get("label", b["id"]), "note": b.get("layer_note", ""), "on": True})
 
+    surf_path = os.path.join(out_dir, "surfaces.json")
+    if os.path.exists(surf_path):
+        surf = json.load(open(surf_path))
+        present = [m for m in surf["models"] if os.path.exists(os.path.join(out_dir, m["file"]))]
+        if present:
+            models += present
+            parts = {**parts, **surf["parts"]}
+            layer_list.append({"id": "sitework", "label": site.get("sitework_label", "Drive, yard and fence"),
+                               "note": site.get("sitework_note", ""), "on": True})
+
     trees = layers["trees"]
     layer_list += [
         {"id": "trees", "label": "Trees", "note": f"{trees['count']} from LiDAR", "on": True},
@@ -67,7 +77,7 @@ def main():
         "trees": trees,
         "points": layers["points"],
         "models": models,
-        "download": f"assets/{models[0]['file']}" if models else None,
+        "download": f"assets/{spec['buildings'][0]['id']}.glb" if spec["buildings"] else None,
         "parts": parts,
         "parcel": site.get("parcel"),
         "parcel_corners": site.get("parcel_corners", []),

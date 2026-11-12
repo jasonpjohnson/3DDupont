@@ -222,6 +222,139 @@ def apply_pads(dem, pads, extent=EXTENT, cell=CELL):
     return out
 
 
+def apply_grading(dem, gradings, extent=EXTENT, cell=CELL):
+    """Level the terrain to ``z`` inside each polygon (cut and fill), blending back to the
+    surveyed ground over ``feather`` metres outside it. For ground reshaped after the survey."""
+    xmin, ymin, _, _ = extent
+    ny, nx = dem.shape
+    out = dem.copy()
+    for g in gradings:
+        poly = Polygon(g["polygon"]).buffer(0)
+        z = float(g["z"])
+        feather = float(g.get("feather", 3.0))
+        bx0, by0, bx1, by1 = poly.buffer(feather).bounds
+        i0, i1 = max(int((bx0 - xmin) / cell), 0), min(int((bx1 - xmin) / cell) + 2, nx)
+        j0, j1 = max(int((by0 - ymin) / cell), 0), min(int((by1 - ymin) / cell) + 2, ny)
+        for j in range(j0, j1):
+            for i in range(i0, i1):
+                d = poly.distance(Point(xmin + i * cell, ymin + j * cell))
+                if d >= feather:
+                    continue
+                w = 1.0 if d <= 0 else 0.5 * (1 + np.cos(np.pi * d / feather))
+                out[j, i] = w * z + (1 - w) * out[j, i]
+    return out
+
+
+def tri_z(dem, extent, cell, x, y):
+    """Ground height on the SAME triangulation the viewer draws (cell split a-b-c / b-d-c)."""
+    xmin, ymin, _, _ = extent
+    fx = min(max((x - xmin) / cell, 0.0), dem.shape[1] - 1.000001)
+    fy = min(max((y - ymin) / cell, 0.0), dem.shape[0] - 1.000001)
+    i, j = int(fx), int(fy)
+    tx, ty = fx - i, fy - j
+    za, zb, zc, zd = dem[j, i], dem[j, i + 1], dem[j + 1, i], dem[j + 1, i + 1]
+    if tx + ty <= 1.0:
+        return za + tx * (zb - za) + ty * (zc - za)
+    return zd + (1 - tx) * (zc - zd) + (1 - ty) * (zb - zd)
+
+
+SURFACE_MATERIALS = {
+    "asphalt": dict(color="#2e2f31", texture="granular", texture_args=dict(grain=0.05, blotch=0.03), roughness=0.92, label="Asphalt"),
+    "asphalt_old": dict(color="#414244", texture="granular", texture_args=dict(grain=0.06, blotch=0.05), roughness=0.95, label="Asphalt (older)"),
+    "gravel": dict(color="#a29f98", texture="granular", texture_args=dict(grain=0.13, blotch=0.04, speck=0.12, tile_m=2.0), roughness=1.0, label="Crushed stone"),
+    "concrete": dict(color="#cfcbc4", texture="concrete", roughness=0.9, label="Concrete"),
+    "mulch": dict(color="#5a4332", texture="granular", texture_args=dict(grain=0.16, blotch=0.06, tile_m=2.0), roughness=1.0, label="Mulch"),
+    "river_rock": dict(color="#9a948a", texture="granular", texture_args=dict(grain=0.16, blotch=0.03, speck=0.15, tile_m=1.5), roughness=1.0, label="River rock"),
+    "lawn": dict(color="#5d7a3a", texture="granular", texture_args=dict(grain=0.07, blotch=0.06), roughness=1.0, label="Lawn"),
+    "fence": dict(color="#9a6a3f", texture="pickets", roughness=0.9, double_sided=True, label="Cedar privacy fence"),
+    "fence_post": dict(color="#7d5733", roughness=0.9, label="Fence post"),
+}
+
+
+def drape(part, poly, dem, extent, cell, lift, uv_scale):
+    """Add ``poly`` to ``part`` cut along the terrain's own triangles, so it lies exactly on the ground."""
+    from build_model import plane_polygon
+    xmin, ymin, _, _ = extent
+    bx0, by0, bx1, by1 = poly.bounds
+    i0, i1 = max(int((bx0 - xmin) / cell), 0), min(int((bx1 - xmin) / cell) + 1, dem.shape[1] - 1)
+    j0, j1 = max(int((by0 - ymin) / cell), 0), min(int((by1 - ymin) / cell) + 1, dem.shape[0] - 1)
+    pp = prep(poly)
+    for j in range(j0, j1):
+        for i in range(i0, i1):
+            x0, y0 = xmin + i * cell, ymin + j * cell
+            a, b, c, d = (x0, y0), (x0 + cell, y0), (x0, y0 + cell), (x0 + cell, y0 + cell)
+            za, zb, zc, zd = dem[j, i], dem[j, i + 1], dem[j + 1, i], dem[j + 1, i + 1]
+            for tri, (p0, z0_), (p1, z1_), (p2, z2_) in ((Polygon([a, b, c]), (a, za), (b, zb), (c, zc)),
+                                                         (Polygon([b, d, c]), (b, zb), (d, zd), (c, zc))):
+                if not pp.intersects(tri):
+                    continue
+                piece = tri if pp.contains(tri) else poly.intersection(tri)
+                if piece.is_empty or piece.area < 1e-6:
+                    continue
+                # plane through the three corners: z = A x + B y + D
+                m = np.array([[p0[0], p0[1], 1.0], [p1[0], p1[1], 1.0], [p2[0], p2[1], 1.0]])
+                A, B, D = np.linalg.solve(m, np.array([z0_, z1_, z2_]))
+                plane_polygon(part, piece, (A, B, D), dz=lift, uv_scale=uv_scale)
+
+
+def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
+    """Ground surfaces and fences that postdate (or are missing from) the aerial photo.
+    One GLB per 'since' year so the viewer can hide them for older photographs."""
+    import textures
+    from meshkit import Model
+    site = spec.get("site", {})
+    items = [dict(s, _type="surface") for s in site.get("surfaces", [])] + [dict(f, _type="fence") for f in site.get("fences", [])]
+    for stale in [f for f in os.listdir(out_dir) if f.startswith("surfaces_") and f.endswith(".glb")]:
+        os.remove(os.path.join(out_dir, stale))
+    models, parts_info = [], {}
+    for year in sorted({int(it.get("since", 0)) for it in items}):
+        model = Model(z0=spec["z0"])
+        for name, m in SURFACE_MATERIALS.items():
+            tex, size = (textures.make(m["texture"], m["color"], **m.get("texture_args", {})) if m.get("texture") else (None, 1.0))
+            model.material(name, color=m["color"], roughness=m.get("roughness", 0.9), texture=tex, tex_size_m=size,
+                           double_sided=m.get("double_sided", False))
+        for k, it in enumerate(x for x in items if int(x.get("since", 0)) == year):
+            base = (it.get("id") or f"{it['_type']}_{year}_{k}").lower()
+            info = {key: it.get(key) for key in ("label", "desc", "dims", "evidence", "source", "confidence") if it.get(key)}
+            info["building"] = f"surfaces_{year}"
+            if it["_type"] == "surface":
+                kind = it.get("kind", "asphalt")
+                poly = Polygon(it["polygon"], it.get("holes")).buffer(0)
+                part = model.part(base, kind)
+                drape(part, poly, dem, extent, cell, float(it.get("lift", 0.03)), model.uv_scale(kind))
+                parts_info[base] = {**info, "material": SURFACE_MATERIALS[kind]["label"]}
+            else:
+                h = float(it.get("height", 1.8))
+                path = np.asarray(it["path"], dtype=float)
+                part = model.part(base, "fence")
+                posts = model.part(base + "_posts", "fence_post")
+                uv = model.uv_scale("fence")
+                run = 0.0
+                for a, b in zip(path[:-1], path[1:]):
+                    seg = float(np.hypot(*(b - a)))
+                    n = max(1, int(np.ceil(seg / 0.6)))
+                    for q in range(n):
+                        p0, p1 = a + (b - a) * q / n, a + (b - a) * (q + 1) / n
+                        g0, g1 = tri_z(dem, extent, cell, *p0), tri_z(dem, extent, cell, *p1)
+                        quad = [[p0[0], p0[1], g0 + 0.04], [p1[0], p1[1], g1 + 0.04], [p1[0], p1[1], g1 + h], [p0[0], p0[1], g0 + h]]
+                        d = (p1 - p0) / max(np.hypot(*(p1 - p0)), 1e-9)
+                        s0, s1 = run + seg * q / n, run + seg * (q + 1) / n
+                        part.add(quad, (d[1], -d[0], 0.0), np.array([[s0, 0], [s1, 0], [s1, h], [s0, h]]) * uv, [[0, 1, 2], [0, 2, 3]])
+                    for q in range(int(seg // 2.4) + 1):
+                        c = a + (b - a) * min(q * 2.4 / seg, 1.0)
+                        g = tri_z(dem, extent, cell, *c)
+                        posts.box((c[0], c[1], g + (h + 0.1) / 2), (0.1, 0.1, h + 0.1), np.degrees(np.arctan2(b[1] - a[1], b[0] - a[0])))
+                    run += seg
+                parts_info[base] = {**info, "material": "Cedar privacy fence"}
+                parts_info[base + "_posts"] = {**info, "material": "Cedar privacy fence"}
+        name = f"surfaces_{year}.glb"
+        model.write_glb(os.path.join(out_dir, name))
+        models.append({"id": f"surfaces_{year}", "file": name, "label": f"Site works ({year})" if year else "Site works",
+                       "since": year, "layer": "sitework", "quiet": True})
+    json.dump({"models": models, "parts": parts_info}, open(os.path.join(out_dir, "surfaces.json"), "w"), indent=1)
+    return models
+
+
 def build_ortho(ortho_path, out_path, roofs, ortho_extent, extent=EXTENT, quality=84, max_width=None):
     """Crop a north-up site-grid image to the terrain extent and paint out the buildings
     (their roofs would otherwise show on the ground around the 3D model)."""
@@ -290,16 +423,21 @@ def main():
     os.makedirs(args.out_dir, exist_ok=True)
     p = load_local(args.raw_npz)
     dem, X, Y = grid_ground(p)
-    roofs, pads, clearings = [], [], []
+    roofs, pads, clearings, spec = [], [], [], None
     if args.spec:
         spec = json.load(open(args.spec))
         roofs, pads = spec_footprints(spec)
-        # ground cleared since the survey (new buildings, yards, paving): no trees there
-        clearings = [Polygon(c).buffer(0) for c in spec.get("site", {}).get("clearings", [])]
+        site = spec.get("site", {})
+        # ground cleared or rebuilt since the survey (new buildings, yards, paving): no trees there
+        clearings = [Polygon(c).buffer(0) for c in site.get("clearings", [])]
+        clearings += [Polygon(s_["polygon"]).buffer(0) for s_ in site.get("surfaces", []) if s_.get("kind") != "mulch"]
+        clearings += [Polygon(g["polygon"]).buffer(0) for g in site.get("grading", [])]
+        dem = apply_grading(dem, site.get("grading", []))
     trees, _ = find_trees(p, dem, exclude=[r for r, _ in roofs] + clearings)
     if args.cir:
         trees = classify_conifers(trees, args.cir, args.ortho_extent)
     dem = apply_pads(dem, pads)
+    surface_models = build_surfaces(spec, dem, args.out_dir) if spec else []
     zmin = float(np.floor(dem.min() * 10) / 10)
     q = np.clip(np.round((dem - zmin) / 0.001), 0, 65535).astype("<u2")
     q.tofile(os.path.join(args.out_dir, "terrain.bin"))
@@ -308,6 +446,10 @@ def main():
     rec.tofile(os.path.join(args.out_dir, "points.bin"))
     ortho = None
     epochs = []
+    prev_path = os.path.join(args.out_dir, "site_layers.json")
+    if not args.ortho and os.path.exists(prev_path):          # keep the committed photographs
+        prev = json.load(open(prev_path))
+        ortho, epochs = prev.get("ortho"), prev.get("ortho_epochs", [])
     if args.ortho:
         standing = [r for r, since in roofs if since <= args.ortho_year]
         ortho = build_ortho(args.ortho, os.path.join(args.out_dir, "ortho.jpg"), standing, args.ortho_extent)
@@ -335,6 +477,7 @@ def main():
     }
     json.dump(meta, open(os.path.join(args.out_dir, "site_layers.json"), "w"), indent=1)
     print(json.dumps({"terrain": meta["terrain"], "trees": meta["trees"], "points": pmeta["count"], "ortho": ortho,
+                      "surface_models": [m["file"] for m in surface_models],
                       "z_range": [float(dem.min()), float(dem.max())]}, indent=1))
 
 

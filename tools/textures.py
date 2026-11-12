@@ -156,6 +156,22 @@ def ribbed_metal(color="#d9d9d4", rib_m=0.23, ribs=6, size=512, seed=8, horizont
     return _finish(_rgb(color), shade, size), rib_m * ribs
 
 
+def granular(color="#3a3b3d", tile_m=3.0, size=512, seed=10, grain=0.06, blotch=0.04, speck=0.0):
+    """Asphalt, crushed stone, mulch: fine grain + soft blotches (+ light specks for stone)."""
+    rng = np.random.default_rng(seed)
+    n = 512
+    shade = np.ones((n, n), dtype=np.float32) + _noise((n, n), rng, grain) + _noise((n, n), rng, blotch, 14)
+    if speck:
+        shade += (rng.random((n, n)) > 0.93).astype(np.float32) * speck
+    return _finish(_rgb(color), shade, size), tile_m
+
+
+def pickets(color="#9a6a3f", board_m=0.14, count=6, size=512, seed=11):
+    """Vertical fence boards (planks turned on end)."""
+    img, tile = planks(color=color, plank_m=board_m, count=count, size=size, seed=seed, gap=0.07)
+    return img.transpose(Image.ROTATE_90), tile
+
+
 def flat(color="#888888", size=64, grain=0.012, seed=9):
     rng = np.random.default_rng(seed)
     shade = np.ones((64, 64), dtype=np.float32) + _noise((64, 64), rng, grain)
@@ -165,7 +181,7 @@ def flat(color="#888888", size=64, grain=0.012, seed=9):
 GENERATORS = {
     "lap_siding": lap_siding, "board_batten": board_batten, "shingles": shingles,
     "standing_seam": standing_seam, "ledgestone": ledgestone, "planks": planks,
-    "concrete": concrete, "ribbed_metal": ribbed_metal, "flat": flat,
+    "concrete": concrete, "ribbed_metal": ribbed_metal, "flat": flat, "granular": granular, "pickets": pickets,
 }
 
 

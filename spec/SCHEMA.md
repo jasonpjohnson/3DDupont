@@ -127,6 +127,11 @@ info card shows `source`:
   "focus": [x, y, z],                       // what the sun-study shadow camera and views centre on
   "parcel": [[x, y], ...], "parcel_corners": [[x, y], ...], "parcel_note": "11.90 ac",
   "clearings": [ [[x, y], ...] ],           // ground cleared since the 2017 survey: no LiDAR trees are drawn inside
+  "grading": [ { "polygon": [[x, y], ...], "z": 261.3, "feather": 3 } ],   // ground levelled since the survey (cut and fill)
+  "surfaces": [ { "id": "barn_asphalt", "kind": "asphalt|asphalt_old|gravel|concrete|mulch|river_rock|lawn",
+                  "polygon": [[x, y], ...], "since": 2025, "label": "...", "evidence": "photo", "source": "..." } ],
+                                            // ground surfaces newer than (or wrong in) the aerial photo; draped exactly on the terrain
+  "fences": [ { "id": "yard_fence", "path": [[x, y], ...], "height": 1.8, "since": 2023, "label": "...", "evidence": "photo" } ],
   "views": [ { "id": "front", "label": "Front", "pos": [x, y, z], "target": [x, y, z] } ],
   "labels": [ { "text": "House", "note": "1989", "at": [x, y] , "lift": 10 } ],       // lift = metres above ground
   "dimensions": [ { "a": [x, y, z], "b": [x, y, z], "text": "56'" } ],

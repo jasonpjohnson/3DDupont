@@ -311,15 +311,16 @@ function setupEpochs() {
 }
 function markEpoch() {
   for (const b of $('epoch-row').children) b.setAttribute('aria-checked', String(+b.dataset.year === state.year));
-  const hidden = M.models.filter((m) => (m.since || 0) > state.year).map((m) => `${m.label.toLowerCase()} (${m.since})`);
+  const hidden = M.models.filter((m) => !m.quiet && !builtBy(m)).map((m) => `${m.label.toLowerCase()} (${m.since})`);
+  const later = M.models.filter((m) => !m.quiet && builtBy(m) && (m.since || 0) > state.year).map((m) => `${m.label.toLowerCase()} (${m.since})`);
   const e = (M.ortho_epochs || []).find((x) => x.year === state.year);
   const when = e?.date ? `Photo: ${e.date}.` : '';
   const n = $('epoch-note');
-  if (n) n.textContent = hidden.length ? `${when} Not yet built: ${hidden.join(', ')}.` : when;
+  if (n) n.textContent = hidden.length ? `${when} Not yet built: ${hidden.join(', ')}.` : later.length ? `${when} Built since: ${later.join(', ')}.` : when;
   $('mode-hint').textContent = MODE_HINT[state.mode]();
   const aerialNote = document.querySelector('input[data-layer="aerial"]')?.closest('li')?.querySelector('small');
   if (aerialNote) aerialNote.textContent = String(state.year);
-  for (const t of tags) if (t.since) t.visible = t.since <= state.year;
+  for (const t of tags) if (t.since) t.visible = builtBy({ since: t.since });
 }
 async function setEpoch(e) {
   const tex = await loadOrthoFile(e.file);
@@ -332,10 +333,17 @@ async function setEpoch(e) {
   applyTerrainLook();
   state.dirty = true;
 }
+// The newest photograph stands for "today": everything is shown on it, including what was
+// built after it was taken. Older photographs hide whatever did not exist yet.
+function builtBy(m) {
+  const years = (M.ortho_epochs || []).map((e) => e.year);
+  const latest = years.length ? Math.max(...years) : null;
+  return state.year === null || state.year === latest || (m.since || 0) <= state.year;
+}
 function syncModels() {
   for (const m of M.models) {
     const g = groups[m.id];
-    if (g) g.visible = state.layers[m.id] !== false && (state.year === null || (m.since || 0) <= state.year);
+    if (g) g.visible = state.layers[m.layer || m.id] !== false && builtBy(m);
   }
 }
 
@@ -441,6 +449,7 @@ function updateCutaway() {
 // --------------------------------------------------------------- models -----
 const clayMat = new THREE.MeshStandardMaterial({ color: 0xdcd8ce, roughness: 0.95 });
 const clayGlass = new THREE.MeshStandardMaterial({ color: 0x9aa4ab, roughness: 0.35 });
+const clayFlat = new THREE.MeshStandardMaterial({ color: 0xc4c0b5, roughness: 1, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
 const evidenceMats = {};
 
 async function loadModel(m) {
@@ -458,6 +467,11 @@ async function loadModel(m) {
       o.castShadow = false;
     }
     if (mat.map) { mat.map.anisotropy = 8; }
+    if (m.layer === 'sitework' && !/fence/.test(o.name)) {          // paving lies on the ground
+      o.castShadow = false;
+      mat.polygonOffset = true; mat.polygonOffsetFactor = -2; mat.polygonOffsetUnits = -2;
+      o.userData.flat = true;
+    }
     o.userData.photo = mat;
     o.userData.glass = isGlass;
     o.userData.model = m.id;
@@ -659,7 +673,7 @@ function setLayer(id, on, quiet = false) {
     applyTerrainLook();
   } else if (id === 'contours') {
     applyTerrainLook();
-  } else if (M.models.some((m) => m.id === id)) {
+  } else if (M.models.some((m) => (m.layer || m.id) === id)) {
     syncModels();
   } else if (groups[id]) {
     groups[id].visible = on;
@@ -715,7 +729,7 @@ function applyMode(mode) {
 
 function materialFor(o) {
   if (state.mode === 'photo') return o.userData.photo;
-  if (state.mode === 'clay') return o.userData.glass ? clayGlass : clayMat;
+  if (state.mode === 'clay') return o.userData.glass ? clayGlass : o.userData.flat ? clayFlat : clayMat;
   return evidenceMats[o.userData.info.evidence] || evidenceMats._none;
 }
 

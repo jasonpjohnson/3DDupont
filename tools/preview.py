@@ -55,7 +55,9 @@ def main():
         sys.exit("name must be alphanumeric (plus _ or -)")
     out = os.path.join(ROOT, "preview", args.name)
     os.makedirs(out, exist_ok=True)
-    for f in SHARED:
+    import glob
+    extra = [os.path.basename(g) for g in glob.glob(os.path.join(ROOT, "assets", "surfaces*")) + glob.glob(os.path.join(ROOT, "assets", "ortho_*.jpg"))]
+    for f in SHARED + extra:
         src = os.path.join(ROOT, "assets", f)
         dst = os.path.join(out, f)
         if os.path.exists(src) and not os.path.exists(dst):
