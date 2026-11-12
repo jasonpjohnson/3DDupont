@@ -752,7 +752,7 @@ function tintTrees(mode) {
 let tween = null;
 function setupViews() {
   const row = $('views');
-  M.views.forEach((v) => {
+  M.views.filter((v) => !v.hidden).forEach((v) => {
     const b = document.createElement('button');
     b.textContent = v.label;
     b.title = v.title || v.label;
@@ -765,8 +765,10 @@ function goToView(v, animate = true) {
   const pos = v3(...v.pos), target = v3(...v.target);
   // keep the subject clear of the side panels on wide screens / the sheet on phones
   const aspect = window.innerWidth / window.innerHeight;
-  const scale = aspect < 0.8 ? 1.9 : aspect < 1.25 ? 1.35 : 1;
+  const scale = v.fov ? 1 : aspect < 0.8 ? 1.9 : aspect < 1.25 ? 1.35 : 1;       // photo-matched views are exact
   pos.sub(target).multiplyScalar(scale).add(target);
+  const fov = v.fov || 38;
+  if (camera.fov !== fov) { camera.fov = fov; camera.updateProjectionMatrix(); }
   if (!animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     camera.position.copy(pos);
     controls.target.copy(target);

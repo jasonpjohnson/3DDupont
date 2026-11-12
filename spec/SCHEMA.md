@@ -65,6 +65,10 @@ lower roof are kept. Wing footprints should otherwise not overlap.
 }
 ```
 
+`walls.faces` overrides the cladding for the walls facing one compass side, e.g. a stone wainscot on the
+front only: `"faces": { "S": { "bands": [ { "to_z": 262.9, "material": "stone" } ] }, "N": { "material": "siding", "bands": [] } }`
+(keys `N`, `E`, `S`, `W`; each may set `material`, `bands`, `gable_material`, `gable_from_z`; unset keys inherit).
+
 `walls.patches` re-clads a rectangle of one wall, e.g. the finished wall of a walk-out basement:
 `"patches": [ { "from": [x, y], "to": [x, y], "z0": 259.2, "z1": 262.0, "material": "siding" } ]`
 (both points on the same wall of this wing).
@@ -132,7 +136,8 @@ info card shows `source`:
                   "polygon": [[x, y], ...], "since": 2025, "label": "...", "evidence": "photo", "source": "..." } ],
                                             // ground surfaces newer than (or wrong in) the aerial photo; draped exactly on the terrain
   "fences": [ { "id": "yard_fence", "path": [[x, y], ...], "height": 1.8, "since": 2023, "label": "...", "evidence": "photo" } ],
-  "views": [ { "id": "front", "label": "Front", "pos": [x, y, z], "target": [x, y, z] } ],
+  "views": [ { "id": "front", "label": "Front", "pos": [x, y, z], "target": [x, y, z] },
+             { "id": "p29", "pos": [...], "target": [...], "fov": 51, "hidden": true } ],   // hidden + fov: a photo-matched camera for review (fov = vertical degrees)
   "labels": [ { "text": "House", "note": "1989", "at": [x, y] , "lift": 10 } ],       // lift = metres above ground
   "dimensions": [ { "a": [x, y, z], "b": [x, y, z], "text": "56'" } ],
   "about": { "heading": "...", "intro": ["paragraph"], "accuracy": [ { "check", "result", "basis" } ],

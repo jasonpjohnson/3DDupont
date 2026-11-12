@@ -227,17 +227,26 @@ class Builder:
             wcfg = ws.get("walls", {})
             main_mat = wcfg.get("material", "siding")
             bottom = wing.base_z - self.cfg["below_grade"]
-            bands = []
-            lo = bottom - 1.0
-            for band in sorted(wcfg.get("bands", []), key=lambda b_: b_["to_z"]):
-                bands.append((lo, band["to_z"], band["material"], band.get("label")))
-                lo = band["to_z"]
-            top_split = wcfg.get("gable_from_z")
-            if top_split is not None and wcfg.get("gable_material"):
-                bands.append((lo, top_split, main_mat, None))
-                bands.append((top_split, 1e4, wcfg["gable_material"], "gable"))
-            else:
-                bands.append((lo, 1e4, main_mat, None))
+
+            def band_list(cfg):
+                mat0 = cfg.get("material", "siding")
+                out, lo = [], bottom - 1.0
+                for band in sorted(cfg.get("bands", []), key=lambda b_: b_["to_z"]):
+                    out.append((lo, band["to_z"], band["material"], band.get("label")))
+                    lo = band["to_z"]
+                top_split = cfg.get("gable_from_z")
+                if top_split is not None and cfg.get("gable_material"):
+                    out.append((lo, top_split, mat0, None))
+                    out.append((top_split, 1e4, cfg["gable_material"], "gable"))
+                else:
+                    out.append((lo, 1e4, mat0, None))
+                return out
+
+            def facing(nrm2):                                   # compass side a wall faces
+                ang = np.degrees(np.arctan2(nrm2[0], nrm2[1])) % 360     # 0 = north, 90 = east
+                return "NESW"[int(((ang + 45) % 360) // 90)]
+            faces = wcfg.get("faces", {})
+            bands = band_list(wcfg)
             parts = {}
             label = ws.get("label", wing.id)
             patches = {}
@@ -271,7 +280,9 @@ class Builder:
                     rect = box(pt["s0"], pt["z0"], pt["s1"], pt["z1"])
                     emit(poly.intersection(rect), pt["material"])
                     poly = poly.difference(rect)
-                for zlo, zhi, mat, blabel in bands:
+                face_cfg = faces.get(facing(e["normal"]))
+                edge_bands = band_list({**{k: v for k, v in wcfg.items() if k not in ("faces", "patches")}, **face_cfg}) if face_cfg else bands
+                for zlo, zhi, mat, blabel in edge_bands:
                     emit(poly.intersection(box(-1.0, zlo, e["length"] + 1.0, zhi)), per_edge or mat)
             if wing.bottom_z is not None:                                   # underside of a cantilever
                 smat = ws.get("soffit_material", "trim")

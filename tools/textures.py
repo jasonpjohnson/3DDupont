@@ -100,8 +100,8 @@ def ledgestone(color="#8a8478", tile_m=1.2, size=512, seed=5):
         x = -int(rng.integers(0, n // 6))
         while x < n:
             w = int(rng.integers(n // 9, n // 3))
-            tint = 1.0 + rng.normal(0, 0.13)
-            hue = base * tint + rng.normal(0, 7, 3)
+            tint = 1.0 + rng.normal(0, 0.2)                      # light grey to charcoal
+            hue = base * tint + rng.normal(0, 2.5, 3)
             x0, x1 = max(x, 0), min(x + w, n)
             y1 = min(y + h, n)
             arr[y:y1, x0:x1] = hue
