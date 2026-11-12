@@ -290,10 +290,13 @@ def main():
     os.makedirs(args.out_dir, exist_ok=True)
     p = load_local(args.raw_npz)
     dem, X, Y = grid_ground(p)
-    roofs, pads = [], []
+    roofs, pads, clearings = [], [], []
     if args.spec:
-        roofs, pads = spec_footprints(json.load(open(args.spec)))
-    trees, _ = find_trees(p, dem, exclude=[r for r, _ in roofs])
+        spec = json.load(open(args.spec))
+        roofs, pads = spec_footprints(spec)
+        # ground cleared since the survey (new buildings, yards, paving): no trees there
+        clearings = [Polygon(c).buffer(0) for c in spec.get("site", {}).get("clearings", [])]
+    trees, _ = find_trees(p, dem, exclude=[r for r, _ in roofs] + clearings)
     if args.cir:
         trees = classify_conifers(trees, args.cir, args.ortho_extent)
     dem = apply_pads(dem, pads)

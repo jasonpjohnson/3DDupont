@@ -126,6 +126,7 @@ info card shows `source`:
   "location": { "lat": 41.1791121, "lon": -85.1948761, "grid_convergence_deg": 1.19 },
   "focus": [x, y, z],                       // what the sun-study shadow camera and views centre on
   "parcel": [[x, y], ...], "parcel_corners": [[x, y], ...], "parcel_note": "11.90 ac",
+  "clearings": [ [[x, y], ...] ],           // ground cleared since the 2017 survey: no LiDAR trees are drawn inside
   "views": [ { "id": "front", "label": "Front", "pos": [x, y, z], "target": [x, y, z] } ],
   "labels": [ { "text": "House", "note": "1989", "at": [x, y] , "lift": 10 } ],       // lift = metres above ground
   "dimensions": [ { "a": [x, y, z], "b": [x, y, z], "text": "56'" } ],
