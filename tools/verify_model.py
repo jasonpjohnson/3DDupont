@@ -36,8 +36,10 @@ def load_wings(spec, building_id):
             continue
         fp = Polygon(w["footprint"]).buffer(0) if w.get("footprint") else None
         eave = Polygon(w["eave"]).buffer(0) if w.get("eave") else None
-        wings.append(Wing(w["id"], w["planes"], footprint=fp, eave=eave, overhang=w.get("overhang", 0.4),
-                          solid=w.get("solid", fp is not None), base_z=w.get("base_z", spec["z0"])))
+        wing = Wing(w["id"], w["planes"], footprint=fp, eave=eave, overhang=w.get("overhang", 0.4),
+                    solid=w.get("solid", fp is not None), base_z=w.get("base_z", spec["z0"]))
+        wing.meta["surveyed"] = w.get("evidence") == "lidar"       # built or altered after the survey otherwise
+        wings.append(wing)
     return b, wings
 
 
@@ -85,11 +87,19 @@ def main():
     zm, who = top_surface(wings, x, y)
     on_model = ~np.isnan(zm)
     res = z - zm
-    # roof returns: inside the outline and not far below the model (returns far below are wall / ground hits at the edge)
-    roof = on_model & (res > -1.0) & (res < 1.5)
+    # roof returns: inside the outline and near the model surface (far below = wall / ground hits at an
+    # edge; well above = branches over the roof). Headline figures use only wings fitted to the survey;
+    # parts built or altered after it was flown are reported separately.
+    surveyed = np.array([w.meta.get("surveyed", False) for w in wings] + [False])[who]
+    roof_all = on_model & (res > -1.0) & (res < 0.6)
+    roof = roof_all & surveyed if surveyed.any() else roof_all
     r = res[roof]
+    ra = res[roof_all]
     summary = {
         "building": args.building,
+        "scope": "wings with evidence 'lidar'" if surveyed.any() else "all wings (none marked evidence 'lidar')",
+        "wings_not_surveyed": [w.id for w in wings if not w.meta.get("surveyed")],
+        "all_wings_within_0.15m": round(float(np.mean(np.abs(ra) <= 0.15)), 3) if len(ra) else None,
         "lidar_returns_in_window": int(len(x)),
         "returns_over_model_roof": int(on_model.sum()),
         "roof_returns_used": int(roof.sum()),
@@ -101,7 +111,7 @@ def main():
         "wings": {},
     }
     for k, w in enumerate(wings):
-        m = roof & (who == k)
+        m = roof_all & (who == k)
         if m.sum() < 5:
             summary["wings"][w.id] = {"returns": int(m.sum())}
             continue
@@ -124,7 +134,20 @@ def main():
     zmod, _ = top_surface(wings, cx.ravel(), cy.ravel())
     zmod = zmod.reshape(cx.shape)
     have = ~np.isnan(zmax)
-    phantom = have & ~np.isnan(zmod) & (zmax < zmod - 1.0)
+    # phantom roof is only meaningful well inside enclosed, surveyed wings: oblique beams reach
+    # under eaves, open porches and cantilevers
+    cores = [w.footprint.buffer(-0.75) for w in wings if w.solid and w.footprint is not None and w.meta.get("surveyed", True)]
+    core = np.zeros(cx.shape, dtype=bool)
+    for c in cores:
+        if c.is_empty:
+            continue
+        pc = prep(c)
+        bx0, by0, bx1, by1 = c.bounds
+        cand = np.argwhere((cx >= bx0) & (cx <= bx1) & (cy >= by0) & (cy <= by1))
+        for jj, ii in cand:
+            if pc.contains(Point(cx[jj, ii], cy[jj, ii])):
+                core[jj, ii] = True
+    phantom = have & core & ~np.isnan(zmod) & (zmax < zmod - 1.0)
     missing = have & np.isnan(zmod) & (zmax > ground + 2.2)
     summary["phantom_roof_m2"] = round(float(phantom.sum() * cell * cell), 1)
     summary["elevated_returns_outside_model_m2"] = round(float(missing.sum() * cell * cell), 1)
@@ -171,7 +194,8 @@ def main():
     plt.close(fig)
 
     if args.ortho and args.ortho_bounds:
-        img = plt.imread(args.ortho)
+        from PIL import Image
+        img = np.asarray(Image.open(args.ortho).convert("RGB"))
         ox0, oy0, ox1, oy1 = args.ortho_bounds
         fig, ax = plt.subplots(figsize=(12, 12), dpi=130)
         ax.imshow(img, extent=(ox0, ox1, oy0, oy1))
