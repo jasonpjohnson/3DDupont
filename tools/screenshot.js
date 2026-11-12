@@ -1,4 +1,4 @@
-// usage: node shot.js <url> <out.png> [view] [w] [h] [mode] [layersJSON] [minutes]
+// usage: node tools/screenshot.js <url> <out.png> [view id | camera JSON] [w] [h] [mode] [layersJSON] [minutes]
 const { chromium } = require('playwright');
 (async () => {
   const [url, out, view = 'front', w = '1440', h = '900', mode = 'photo', layers = '{}', minutes = ''] = process.argv.slice(2);
@@ -14,7 +14,8 @@ const { chromium } = require('playwright');
   } catch (e) { logs.push('timeout waiting for viewer: ' + (await page.locator('#loading-msg').textContent())); }
   await page.evaluate(({ view, mode, layers, minutes }) => {
     const v = window.__viewer; if (!v) return;
-    const vv = v.M.views.find((x) => x.id === view) || v.M.views[0];
+    // a view id from the manifest, or a JSON camera: {"pos":[x,y,z],"target":[x,y,z],"fov":51}
+    const vv = view.trim().startsWith('{') ? JSON.parse(view) : (v.M.views.find((x) => x.id === view) || v.M.views[0]);
     v.goToView(vv, false);
     v.applyMode(mode);
     for (const [k, on] of Object.entries(JSON.parse(layers))) v.setLayer(k, on);
