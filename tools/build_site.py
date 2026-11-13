@@ -567,7 +567,18 @@ def main():
     if args.cir:
         trees = classify_conifers(trees, args.cir, args.ortho_extent, density=crown_density(p, dem, trees))
     if spec:
+        n_survey = len(trees)
         trees = add_spec_trees(trees, spec.get("site", {}), dem, [r for r, _ in roofs])
+        # deciduous trees standing in or beside lawn and paving, and trees placed one by one, are open-grown:
+        # kind 0.25 tells the viewer to leave the ground under them clear (no woodland understory)
+        from shapely.ops import unary_union
+        opened = unary_union([Polygon(s_["polygon"]).buffer(0) for s_ in spec.get("site", {}).get("surfaces", [])
+                              if s_.get("kind") not in ("mulch", "meadow", "soil")] or [Polygon()]).buffer(3.0)
+        po = prep(opened)
+        placed = {(round(float(t["at"][0]), 2), round(float(t["at"][1]), 2)) for t in spec.get("site", {}).get("trees", [])}
+        for k in range(len(trees)):
+            if trees[k, 5] < 0.5 and (po.contains(Point(trees[k, 0], trees[k, 1])) or (round(float(trees[k, 0]), 2), round(float(trees[k, 1]), 2)) in placed):
+                trees[k, 5] = 0.25
     dem = apply_pads(dem, pads)
     surface_models = build_surfaces(spec, dem, args.out_dir) if spec else []
     zmin = float(np.floor(dem.min() * 10) / 10)

@@ -449,7 +449,7 @@ async function loadTrees() {
     }
     const bushes = [];
     for (let i = 0; i < n; i++) {
-      if (data[i * 6 + 5] >= 0.5) continue;
+      if (data[i * 6 + 5] >= 0.1) continue;                    // conifers, and open-grown trees on lawn or by paving
       const x = data[i * 6], y = data[i * 6 + 1], gx = Math.floor(x / cellSz), gy = Math.floor(y / cellSz);
       let near = 0;
       for (let a = gx - 1; a <= gx + 1; a++) for (let b = gy - 1; b <= gy + 1; b++) {

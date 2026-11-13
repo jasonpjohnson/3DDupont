@@ -163,7 +163,8 @@ class Builder:
             eave_line = wing.eave.exterior
             for i, poly in vis[wing.id]:
                 plane = wing.planes[i]
-                plane_polygon(roof, poly, plane, uv_scale=self.uv(mat))
+                # facets overlap their neighbours by a few millimetres: exact shared edges leave hairline cracks
+                plane_polygon(roof, poly.buffer(0.006, join_style=2), plane, uv_scale=self.uv(mat))
                 under = poly if not wing.solid or wing.footprint is None else poly.difference(self.solids)
                 if not under.is_empty:
                     plane_polygon(soffit, under, plane, dz=-t, flip=True, uv_scale=self.uv(soffit_mat))
