@@ -317,9 +317,10 @@ SURFACE_MATERIALS = {
     "asphalt": dict(color="#3d3e41", texture="granular", texture_args=dict(grain=0.05, blotch=0.03), roughness=0.92, label="Asphalt"),
     "asphalt_old": dict(color="#55565a", texture="granular", texture_args=dict(grain=0.06, blotch=0.05), roughness=0.95, label="Asphalt (older)"),
     "gravel": dict(color="#989085", texture="granular", texture_args=dict(grain=0.2, blotch=0.05, speck=0.18, tile_m=2.0), roughness=1.0, label="Crushed stone"),
-    "concrete": dict(color="#bcb8b0", texture="concrete", roughness=0.9, label="Concrete"),
+    "concrete": dict(color="#aeaaa2", texture="concrete", roughness=0.9, label="Concrete"),
     "limestone": dict(color="#cdc4ae", texture="granular", texture_args=dict(grain=0.16, blotch=0.04, speck=0.12, tile_m=2.0), roughness=1.0, label="Crushed limestone"),
     "mulch": dict(color="#5a4332", texture="granular", texture_args=dict(grain=0.16, blotch=0.06, tile_m=2.0), roughness=1.0, label="Mulch"),
+    "river_rock_shade": dict(color="#4f4c47", texture="granular", texture_args=dict(grain=0.24, blotch=0.05, speck=0.16, tile_m=1.5), roughness=1.0, label="River rock (under a deck)"),
     "river_rock": dict(color="#7f786d", texture="granular", texture_args=dict(grain=0.22, blotch=0.05, speck=0.2, tile_m=1.5), roughness=1.0, label="River rock"),
     "meadow": dict(color="#66733a", texture="granular", texture_args=dict(grain=0.2, blotch=0.12, tile_m=5.0), roughness=1.0, label="Unmown meadow"),
     "soil": dict(color="#6a5947", texture="granular", texture_args=dict(grain=0.14, blotch=0.08, tile_m=3.0), roughness=1.0, label="Bare soil"),
@@ -327,9 +328,9 @@ SURFACE_MATERIALS = {
     "fence": dict(color="#9a6a3f", texture="pickets", roughness=0.9, double_sided=True, label="Cedar privacy fence"),
     "fence_post": dict(color="#7d5733", roughness=0.9, label="Fence post"),
     # a midpoint between the stain in dry summer shade (warm medium brown) and wet under November cloud (dark red-brown)
-    "fence_stain": dict(color="#6d4b3b", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
-    "fence_stain_post": dict(color="#584033", roughness=0.9, label="Fence post"),
-    "concrete_old": dict(color="#aaa39b", texture="concrete", roughness=0.95, label="Concrete (weathered)"),
+    "fence_stain": dict(color="#503427", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
+    "fence_stain_post": dict(color="#40291f", roughness=0.9, label="Fence post"),
+    "concrete_old": dict(color="#9c958c", texture="concrete", roughness=0.95, label="Concrete (weathered)"),
 }
 
 
@@ -385,7 +386,7 @@ def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
                 part = model.part(base, kind)
                 # each kind sits at its own height so overlapping surfaces never z-fight
                 lift = {"lawn": 0.015, "meadow": 0.012, "soil": 0.02, "asphalt_old": 0.02, "asphalt": 0.03, "mulch": 0.035, "gravel": 0.04, "limestone": 0.042,
-                        "river_rock": 0.045, "concrete": 0.055, "concrete_old": 0.055}.get(kind, 0.03)
+                        "river_rock": 0.045, "river_rock_shade": 0.045, "concrete": 0.055, "concrete_old": 0.055}.get(kind, 0.03)
                 drape(part, poly, dem, extent, cell, float(it.get("lift", lift)), model.uv_scale(kind))
                 parts_info[base] = {**info, "material": SURFACE_MATERIALS[kind]["label"]}
             else:
@@ -573,7 +574,7 @@ def main():
         # kind 0.25 tells the viewer to leave the ground under them clear (no woodland understory)
         from shapely.ops import unary_union
         opened = unary_union([Polygon(s_["polygon"]).buffer(0) for s_ in spec.get("site", {}).get("surfaces", [])
-                              if s_.get("kind") not in ("mulch", "meadow", "soil")] or [Polygon()]).buffer(3.0)
+                              if s_.get("kind") not in ("meadow", "soil")] or [Polygon()]).buffer(0.8)
         po = prep(opened)
         placed = {(round(float(t["at"][0]), 2), round(float(t["at"][1]), 2)) for t in spec.get("site", {}).get("trees", [])}
         for k in range(len(trees)):

@@ -67,8 +67,8 @@
  ],
  "trees": {
   "file": "trees.bin",
-  "count": 1771,
-  "conifers": 17,
+  "count": 1782,
+  "conifers": 19,
   "record": "float32 x, y, ground_z, height, crown_radius, kind (0 deciduous, 1 conifer)"
  },
  "points": {
@@ -188,8 +188,8 @@
    "building": "house",
    "material": "Charcoal asphalt shingles",
    "label": "One-storey north range and west end \u2014 roof",
-   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
-   "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline. Second rear review: the north eave was pulled back 0.155 m to the gutter face the close photograph from below and the owner's overhead view show (0.38 m beyond the rear wall, about 0.08 m), with a level black soffit below; the 2017 outline is kept on the other sides. Second rear review: the west wall stands 0.20 m further west than first drawn - its north-west corner is fixed by two photographs from the rear lawn (0.05 m), leaving a rake overhang of 0.25 m; the wing's walls are therefore partly read from photographs although the roof is the laser survey.",
+   "dims": "rear wall 55 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
    "evidence": "lidar",
    "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
    "confidence": "high"
@@ -198,8 +198,8 @@
    "building": "house",
    "material": "Black trim, fascia and gutters",
    "label": "One-storey north range and west end \u2014 fascia and soffit",
-   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
-   "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline. Second rear review: the north eave was pulled back 0.155 m to the gutter face the close photograph from below and the owner's overhead view show (0.38 m beyond the rear wall, about 0.08 m), with a level black soffit below; the 2017 outline is kept on the other sides. Second rear review: the west wall stands 0.20 m further west than first drawn - its north-west corner is fixed by two photographs from the rear lawn (0.05 m), leaving a rake overhang of 0.25 m; the wing's walls are therefore partly read from photographs although the roof is the laser survey.",
+   "dims": "rear wall 55 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
    "evidence": "lidar",
    "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
    "confidence": "high"
@@ -228,7 +228,7 @@
    "building": "house",
    "material": "Charcoal asphalt shingles",
    "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 roof",
-   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's OUTER face, 0.40 m beyond the clerestory wall (photograph from below the north-east corner, two rear photographs and the owner's overhead view agree within 0.06 m); a level black soffit closes the eave from below. The west wall's north corner was moved 0.10 m west to where the photograph from the north-west lawn shows its corner board; its front corner is as measured from the front.",
    "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
    "evidence": "photo",
    "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
@@ -238,7 +238,7 @@
    "building": "house",
    "material": "Black trim, fascia and gutters",
    "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 fascia and soffit",
-   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's OUTER face, 0.40 m beyond the clerestory wall (photograph from below the north-east corner, two rear photographs and the owner's overhead view agree within 0.06 m); a level black soffit closes the eave from below. The west wall's north corner was moved 0.10 m west to where the photograph from the north-west lawn shows its corner board; its front corner is as measured from the front.",
    "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
    "evidence": "photo",
    "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
@@ -248,7 +248,7 @@
    "building": "house",
    "material": "Charcoal asphalt shingles",
    "label": "Two-storey east block (highest roof) \u2014 roof",
-   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's outer face (y 18.52 at the east end, the point the two east-side photographs fix), 0.40 m beyond the wall, with a level black soffit below.",
    "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
    "evidence": "photo",
    "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
@@ -258,7 +258,7 @@
    "building": "house",
    "material": "Black trim, fascia and gutters",
    "label": "Two-storey east block (highest roof) \u2014 fascia and soffit",
-   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's outer face (y 18.52 at the east end, the point the two east-side photographs fix), 0.40 m beyond the wall, with a level black soffit below.",
    "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
    "evidence": "photo",
    "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
@@ -268,7 +268,7 @@
    "building": "house",
    "material": "White trim",
    "label": "Two-storey east block (highest roof) \u2014 roof",
-   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's outer face (y 18.52 at the east end, the point the two east-side photographs fix), 0.40 m beyond the wall, with a level black soffit below.",
    "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
    "evidence": "photo",
    "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
@@ -478,8 +478,8 @@
    "building": "house",
    "material": "Painted concrete foundation",
    "label": "One-storey north range and west end \u2014 Painted concrete foundation",
-   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
-   "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline. Second rear review: the north eave was pulled back 0.155 m to the gutter face the close photograph from below and the owner's overhead view show (0.38 m beyond the rear wall, about 0.08 m), with a level black soffit below; the 2017 outline is kept on the other sides. Second rear review: the west wall stands 0.20 m further west than first drawn - its north-west corner is fixed by two photographs from the rear lawn (0.05 m), leaving a rake overhang of 0.25 m; the wing's walls are therefore partly read from photographs although the roof is the laser survey.",
+   "dims": "rear wall 55 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
    "evidence": "lidar",
    "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
    "confidence": "high"
@@ -488,8 +488,8 @@
    "building": "house",
    "material": "White lap siding",
    "label": "One-storey north range and west end \u2014 White lap siding",
-   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
-   "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline. Second rear review: the north eave was pulled back 0.155 m to the gutter face the close photograph from below and the owner's overhead view show (0.38 m beyond the rear wall, about 0.08 m), with a level black soffit below; the 2017 outline is kept on the other sides. Second rear review: the west wall stands 0.20 m further west than first drawn - its north-west corner is fixed by two photographs from the rear lawn (0.05 m), leaving a rake overhang of 0.25 m; the wing's walls are therefore partly read from photographs although the roof is the laser survey.",
+   "dims": "rear wall 55 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
    "evidence": "lidar",
    "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
    "confidence": "high"
@@ -498,8 +498,8 @@
    "building": "house",
    "material": "Painted concrete foundation (in the deck's shade)",
    "label": "One-storey north range and west end \u2014 Painted concrete foundation (in the deck's shade)",
-   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
-   "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+   "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline. Second rear review: the north eave was pulled back 0.155 m to the gutter face the close photograph from below and the owner's overhead view show (0.38 m beyond the rear wall, about 0.08 m), with a level black soffit below; the 2017 outline is kept on the other sides. Second rear review: the west wall stands 0.20 m further west than first drawn - its north-west corner is fixed by two photographs from the rear lawn (0.05 m), leaving a rake overhang of 0.25 m; the wing's walls are therefore partly read from photographs although the roof is the laser survey.",
+   "dims": "rear wall 55 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
    "evidence": "lidar",
    "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
    "confidence": "high"
@@ -528,7 +528,7 @@
    "building": "house",
    "material": "Grey ledgestone veneer",
    "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 Grey ledgestone veneer",
-   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's OUTER face, 0.40 m beyond the clerestory wall (photograph from below the north-east corner, two rear photographs and the owner's overhead view agree within 0.06 m); a level black soffit closes the eave from below. The west wall's north corner was moved 0.10 m west to where the photograph from the north-west lawn shows its corner board; its front corner is as measured from the front.",
    "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
    "evidence": "photo",
    "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
@@ -538,7 +538,7 @@
    "building": "house",
    "material": "White lap siding",
    "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 White lap siding",
-   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's OUTER face, 0.40 m beyond the clerestory wall (photograph from below the north-east corner, two rear photographs and the owner's overhead view agree within 0.06 m); a level black soffit closes the eave from below. The west wall's north corner was moved 0.10 m west to where the photograph from the north-west lawn shows its corner board; its front corner is as measured from the front.",
    "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
    "evidence": "photo",
    "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
@@ -548,7 +548,7 @@
    "building": "house",
    "material": "White board-and-batten",
    "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 White board-and-batten",
-   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+   "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's OUTER face, 0.40 m beyond the clerestory wall (photograph from below the north-east corner, two rear photographs and the owner's overhead view agree within 0.06 m); a level black soffit closes the eave from below. The west wall's north corner was moved 0.10 m west to where the photograph from the north-west lawn shows its corner board; its front corner is as measured from the front.",
    "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
    "evidence": "photo",
    "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
@@ -558,7 +558,7 @@
    "building": "house",
    "material": "White lap siding",
    "label": "Two-storey east block (highest roof) \u2014 White lap siding",
-   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's outer face (y 18.52 at the east end, the point the two east-side photographs fix), 0.40 m beyond the wall, with a level black soffit below.",
    "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
    "evidence": "photo",
    "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
@@ -568,7 +568,7 @@
    "building": "house",
    "material": "White board-and-batten",
    "label": "Two-storey east block (highest roof) \u2014 White board-and-batten",
-   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+   "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's outer face (y 18.52 at the east end, the point the two east-side photographs fix), 0.40 m beyond the wall, with a level black soffit below.",
    "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
    "evidence": "photo",
    "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
@@ -608,6 +608,16 @@
    "building": "house",
    "material": "White lap siding",
    "label": "East wing (2023 addition) \u2014 White lap siding",
+   "desc": "One-storey wing with a plain gable roof: the ridge runs east-west, the east wall is a gable end with lap siding to the peak, and the two slopes face the front and the east deck - there is no hip and no vehicle door: it is part of the house, not a garage. Solved cameras put the ridge at 266.5-266.6 m and both eaves at 264.7-264.8 m, about 0.1 m lower than the first reconstruction; ridge position +-0.3 m north-south, heights +-0.1 m. Front eave overhang 0.26 m and south-east rake corner 0.30 m, from the roof corner picked in five front photographs.",
+   "dims": "13' x 27' walls; ridge 4.8 m (15.7 ft) above front grade; 4.8-in-12",
+   "evidence": "photo",
+   "source": "owner's photographs of the east side (from the north-east, the north, the east and the south-east corner), each with its camera solved; 2024 aerial photograph for the roof outline; record card for the 13 ft width",
+   "confidence": "medium"
+  },
+  "east_wing_walls_foundation_shaded": {
+   "building": "house",
+   "material": "Painted concrete foundation (in the deck's shade)",
+   "label": "East wing (2023 addition) \u2014 Painted concrete foundation (in the deck's shade)",
    "desc": "One-storey wing with a plain gable roof: the ridge runs east-west, the east wall is a gable end with lap siding to the peak, and the two slopes face the front and the east deck - there is no hip and no vehicle door: it is part of the house, not a garage. Solved cameras put the ridge at 266.5-266.6 m and both eaves at 264.7-264.8 m, about 0.1 m lower than the first reconstruction; ridge position +-0.3 m north-south, heights +-0.1 m. Front eave overhang 0.26 m and south-east rake corner 0.30 m, from the roof corner picked in five front photographs.",
    "dims": "13' x 27' walls; ridge 4.8 m (15.7 ft) above front grade; 4.8-in-12",
    "evidence": "photo",
@@ -1343,7 +1353,7 @@
    "building": "house",
    "material": "Composite decking (stair treads and risers)",
    "label": "Stairs from the east deck to the hot-tub pad",
-   "desc": "Composite stairs, six risers, about 4 ft wide with white rails, descending east from the gate opening at the deck's south-east corner.",
+   "desc": "Composite stairs, six risers, about 4 ft wide with white rails, descending east from the opening at the deck's south-east corner to the pad at 261.44 m; the foot stands at the pad's west edge (newel bases at x 14.4 in the photograph from the south-east).",
    "dims": "6 risers, about 4' wide",
    "evidence": "photo",
    "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east",
@@ -1353,7 +1363,7 @@
    "building": "house",
    "material": "White deck railing",
    "label": "Stairs from the east deck to the hot-tub pad \u2014 railing",
-   "desc": "Composite stairs, six risers, about 4 ft wide with white rails, descending east from the gate opening at the deck's south-east corner.",
+   "desc": "Composite stairs, six risers, about 4 ft wide with white rails, descending east from the opening at the deck's south-east corner to the pad at 261.44 m; the foot stands at the pad's west edge (newel bases at x 14.4 in the photograph from the south-east).",
    "dims": "6 risers, about 4' wide",
    "evidence": "photo",
    "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east",
@@ -1363,8 +1373,8 @@
    "building": "house",
    "material": "Concrete",
    "label": "Concrete pad east of the deck",
-   "desc": "Poured concrete pad at the foot of the deck stairs, 0.9 m (six risers) below the deck. The concrete starts under the bottom step - it does not run on under the stairs - and north of the stairs it reaches back to the deck's edge. South-east and north-east corners read from three photographs, +-0.15 m. It is newer than the 2024 aerial photograph.",
-   "dims": "about 14' x 19'",
+   "desc": "Poured concrete pad at the foot of the deck stairs, 0.83 m (six risers) below the deck. The concrete starts under the bottom step - it does not run on under the stairs - and north of the stairs it reaches back to the deck's edge. East edge at x 16.85 from three photographs with cameras re-solved on the house (south-east corner 16.9 and 16.7, north-east corner 16.8-16.9), north edge 6 cm south of the deck's north fascia, top at 261.44 m: +-0.1 m. It is newer than the 2024 aerial photograph.",
+   "dims": "about 12' 8\" x 18' 4\"",
    "evidence": "photo",
    "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the hot tub and east deck from the east",
    "confidence": "medium"
@@ -1373,8 +1383,8 @@
    "building": "house",
    "material": "Hot tub",
    "label": "Hot tub cabinet",
-   "desc": "Black hot-tub cabinet standing on the pad right beside the deck, about 7 ft 6 in by 7 ft 10 in and 2 ft 10 in high to the rim. Its faces are placed from five photographs, which agree to about 0.15 m.",
-   "dims": "about 7' 6\" x 7' 10\" x 2' 10\"",
+   "desc": "Black hot-tub cabinet standing on the pad about 0.4 m from the deck, about 7 ft 8 in by 7 ft 10 in and 2 ft 10 in high to the rim (rim level with the deck boards). East-west position from the square-on photograph from the north (north face x 13.47-15.82) and the base corners in the photograph from the south-east (13.59 and 15.88); north-south position from the photograph taken on the deck (y 20.8-23.2). The two photographs from the east disagree by up to 0.4 m on its south-east corner.",
+   "dims": "about 7' 8\" x 7' 10\" x 2' 10\"",
    "evidence": "photo",
    "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east",
    "confidence": "medium"
@@ -2203,7 +2213,7 @@
    "building": "house",
    "material": "Hot tub",
    "label": "Hot tub steps (lower)",
-   "desc": "Black moulded two-step unit standing on the pad against the tub's south side; placed from two photographs, +-0.2 m.",
+   "desc": "Black moulded two-step unit standing on the pad against the middle of the tub's south side (front edge at y 20.28, x 14.4-15.05 in the photograph from the south-east), +-0.1 m.",
    "evidence": "photo",
    "source": "owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph looking down on the hot tub from the head of the deck stairs",
    "confidence": "medium"
@@ -2212,7 +2222,7 @@
    "building": "house",
    "material": "Hot tub",
    "label": "Hot tub steps (upper)",
-   "desc": "Black moulded two-step unit standing on the pad against the tub's south side; placed from two photographs, +-0.2 m.",
+   "desc": "Black moulded two-step unit standing on the pad against the middle of the tub's south side (front edge at y 20.28, x 14.4-15.05 in the photograph from the south-east), +-0.1 m.",
    "evidence": "photo",
    "source": "owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph looking down on the hot tub from the head of the deck stairs",
    "confidence": "medium"
@@ -2395,7 +2405,7 @@
    "building": "house",
    "material": "Hot tub cover",
    "label": "Hot tub cover (west half)",
-   "desc": "Folding insulated cover lying on the tub, overhanging the cabinet by a few centimetres; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line.",
+   "desc": "Folding insulated cover lying on the tub, the same width as the cabinet with a short skirt; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line.",
    "evidence": "photo",
    "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph looking down on the hot tub from the head of the deck stairs",
    "confidence": "medium"
@@ -2404,7 +2414,7 @@
    "building": "house",
    "material": "Hot tub cover",
    "label": "Hot tub cover (east half)",
-   "desc": "Folding insulated cover lying on the tub, overhanging the cabinet by a few centimetres; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line.",
+   "desc": "Folding insulated cover lying on the tub, the same width as the cabinet with a short skirt; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line.",
    "evidence": "photo",
    "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph looking down on the hot tub from the head of the deck stairs",
    "confidence": "medium"
@@ -2426,6 +2436,55 @@
    "evidence": "photo",
    "source": "owner's photograph of the deck stairs and hot tub from the south-east",
    "confidence": "low"
+  },
+  "rear_upper_soffit": {
+   "building": "house",
+   "material": "Black trim, fascia and gutters",
+   "label": "Upper roof's north soffit",
+   "desc": "Level black soffit under the upper roof's north eave, from the gutter back to the clerestory wall, as seen from below in the close photographs.",
+   "dims": "0.40 m deep",
+   "evidence": "photo",
+   "source": "owner's close photographs of the bay and walk-out patio (eaves seen from below); owner's photographs of the rear taken from the lawn; owner's overhead view of the house",
+   "confidence": "high"
+  },
+  "rear_lower_soffit": {
+   "building": "house",
+   "material": "Black trim, fascia and gutters",
+   "label": "Rear eave soffit",
+   "desc": "Level black soffit under the low roof's rear eave, from the gutter back to the rear wall above the deck, as seen from below in the close photographs.",
+   "dims": "0.38 m deep",
+   "evidence": "photo",
+   "source": "owner's close photographs of the bay and walk-out patio (eaves seen from below); owner's photographs of the rear taken from the lawn; owner's overhead view of the house",
+   "confidence": "medium"
+  },
+  "rear_lower_soffit_east": {
+   "building": "house",
+   "material": "Black trim, fascia and gutters",
+   "label": "Rear eave soffit, east of the bay",
+   "desc": "Short piece of the same level black soffit between the bay's roof and the main block's north-east corner.",
+   "evidence": "photo",
+   "source": "owner's close photographs of the bay and walk-out patio (eaves seen from below); owner's photographs of the rear taken from the lawn; owner's overhead view of the house",
+   "confidence": "medium"
+  },
+  "rear_west_rake_soffit": {
+   "building": "house",
+   "material": "White trim",
+   "label": "West gable rake soffit (low roof)",
+   "desc": "White soffit under the low roof's west rake, between the gable wall and the black rake board; pale in the photographs from the north-west lawn.",
+   "dims": "0.24 m overhang",
+   "evidence": "photo",
+   "source": "owner's photographs of the rear taken from the lawn (north-west views)",
+   "confidence": "high"
+  },
+  "rear_upper_west_rake_soffit": {
+   "building": "house",
+   "material": "White trim",
+   "label": "West gable rake soffit (upper roof)",
+   "desc": "White soffit under the upper roof's west rake, between the gable wall and the black rake board; pale in the photographs from the north-west lawn.",
+   "dims": "0.33 m overhang at the north corner",
+   "evidence": "photo",
+   "source": "owner's photographs of the rear taken from the lawn (north-west views)",
+   "confidence": "medium"
   },
   "detached_garage_roof": {
    "building": "garage_detached",
@@ -2847,7 +2906,7 @@
    "building": "greenhouse",
    "material": "Twin-wall polycarbonate roof (reads as a solid sheet)",
    "label": "Greenhouse \u2014 roof",
-   "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs.",
+   "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs. Its place along the arbor row comes from two photographs that show both: beside its north-west corner (the gable stands nearer the lens than the first placing gave) and from the door end (the arbor post seen past its south-west corner): about 0.3 m north of the first placing, on the same line of sight from the court.",
    "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
    "evidence": "photo",
    "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
@@ -2857,7 +2916,7 @@
    "building": "greenhouse",
    "material": "White greenhouse frame",
    "label": "Greenhouse \u2014 fascia and soffit",
-   "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs.",
+   "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs. Its place along the arbor row comes from two photographs that show both: beside its north-west corner (the gable stands nearer the lens than the first placing gave) and from the door end (the arbor post seen past its south-west corner): about 0.3 m north of the first placing, on the same line of sight from the court.",
    "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
    "evidence": "photo",
    "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
@@ -2867,7 +2926,7 @@
    "building": "greenhouse",
    "material": "White panel kneewall",
    "label": "Greenhouse \u2014 White panel kneewall",
-   "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs.",
+   "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs. Its place along the arbor row comes from two photographs that show both: beside its north-west corner (the gable stands nearer the lens than the first placing gave) and from the door end (the arbor post seen past its south-west corner): about 0.3 m north of the first placing, on the same line of sight from the court.",
    "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
    "evidence": "photo",
    "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
@@ -2877,7 +2936,7 @@
    "building": "greenhouse",
    "material": "Frosted twin-wall polycarbonate",
    "label": "Greenhouse \u2014 Frosted twin-wall polycarbonate",
-   "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs.",
+   "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs. Its place along the arbor row comes from two photographs that show both: beside its north-west corner (the gable stands nearer the lens than the first placing gave) and from the door end (the arbor post seen past its south-west corner): about 0.3 m north of the first placing, on the same line of sight from the court.",
    "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
    "evidence": "photo",
    "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
@@ -3403,7 +3462,7 @@
    "evidence": "photo",
    "source": "owner's close photographs of the bay and walk-out patio",
    "building": "surfaces_2023",
-   "material": "River rock"
+   "material": "River rock (under a deck)"
   },
   "site_garden_path": {
    "label": "Gravel path in the vegetable garden",
@@ -3421,7 +3480,7 @@
    "source": "owner's photograph of the east deck from the lawn to the north; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the hot tub and east deck from the east",
    "confidence": "medium",
    "building": "surfaces_2023",
-   "material": "River rock"
+   "material": "River rock (under a deck)"
   },
   "rear_soil_under_deck": {
    "label": "Bare ground under the west end of the rear deck",
@@ -3859,6 +3918,15 @@
    "building": "surfaces_2025",
    "material": "Unmown meadow"
   },
+  "sides_east_meadow_edge": {
+   "label": "Unmown weeds along the lawn's east edge",
+   "desc": "Tall weeds (goldenrod, asters, brush) between the mown lawn and the trees east of the deck, and on north along the edge of the hay field: 3-4 m deep in front of the wood, 5-6 m between the lawn and the field. Its west side is the lawn's edge; its east side is read from the summer photograph and the 2024 aerial photograph, good to about 2 m.",
+   "evidence": "photo",
+   "source": "owner's photograph taken on the east deck looking east; owner's panorama from the east deck; owner's summer photograph looking north-east from the head of the deck stairs (camera re-solved on the far trees and the horizon); 2024 aerial photograph",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Unmown meadow"
+  },
   "site_gh_pad": {
    "label": "Greenhouse pad",
    "desc": "Crushed-limestone pad under the greenhouse, extending 2 to 4 ft beyond its walls (widest on the south and at the door end). Its edges are measured in the photograph of the door end: about 0.6 m beyond the south wall and 0.8 m beyond the door end; the west and north margins (about 0.75 m) are as seen beside the north-west corner. The stone is cream crushed limestone; the site builder has only one grey crushed-stone finish.",
@@ -3965,7 +4033,7 @@
   {
    "id": "trees",
    "label": "Trees",
-   "note": "1771: laser survey, thickened",
+   "note": "1782: laser survey, thickened",
    "on": true
   },
   {
@@ -4149,8 +4217,8 @@
    "text": "Greenhouse",
    "note": "2026",
    "at": [
-    -33.6,
-    17.8
+    -33.68,
+    18.1
    ],
    "lift": 6,
    "since": 2026
@@ -4309,13 +4377,13 @@
   },
   {
    "a": [
-    -36.16,
-    15.42,
+    -36.24,
+    15.72,
     261.1
    ],
    "b": [
-    -31.29,
-    15.12,
+    -31.37,
+    15.42,
     261.1
    ],
    "text": "10' x 16'"
@@ -4371,7 +4439,7 @@
    "Underneath, the geometry is measured rather than drawn by eye: the ground, the tree canopy and the roof planes that predate the renovation come from an airborne laser survey, wall positions from the county's dimensioned record card and the floor plan, and the parcel from county GIS. Switch the display to Evidence and click any part to see what it rests on."
   ],
   "accuracy": [
-   "Roofs of the house that predate the renovation: 437 laser returns hit them in the 2017 survey; 100% lie within 15 cm of the modelled surface and 100% within 30 cm (median offset -0 cm).",
+   "Roofs of the house that predate the renovation: 432 laser returns hit them in the 2017 survey; 100% lie within 15 cm of the modelled surface and 100% within 30 cm (median offset -0 cm).",
    "Roofs of the detached garage that predate the renovation: 182 laser returns hit them in the 2017 survey; 100% lie within 15 cm of the modelled surface and 100% within 30 cm (median offset -0 cm).",
    "Parts built or altered in the 2023 renovation, and the pole barn, greenhouse and garden, were fitted to the owner's photographs: each photograph was matched with a camera placed where it was taken, and corners, roof peaks, doors and windows were adjusted until they landed within a few pixels - typically 5 to 20 cm on the building.",
    "The pole barn's position comes from three independent measurements (two photogrammetric solutions and a 2025 overhead view) that agree to within about 25 cm.",

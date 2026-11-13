@@ -224,7 +224,7 @@
    "roughness": 0.6
   },
   "foundation_shaded": {
-   "color": "#82776a",
+   "color": "#4a443d",
    "label": "Painted concrete foundation (in the deck's shade)",
    "roughness": 0.95
   },
@@ -718,8 +718,8 @@
      "label": "One-storey north range and west end",
      "footprint": [
       [
-       -8.178,
-       12.704
+       -8.38,
+       12.7
       ],
       [
        -3.999,
@@ -738,8 +738,8 @@
        23.597
       ],
       [
-       -8.327,
-       23.366
+       -8.53,
+       23.363
       ]
      ],
      "eave": [
@@ -769,11 +769,11 @@
       ],
       [
        8.514,
-       24.141
+       23.98
       ],
       [
        -8.775,
-       23.9
+       23.745
       ]
      ],
      "planes": [
@@ -827,8 +827,8 @@
      },
      "evidence": "lidar",
      "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
-     "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
-     "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+     "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline. Second rear review: the north eave was pulled back 0.155 m to the gutter face the close photograph from below and the owner's overhead view show (0.38 m beyond the rear wall, about 0.08 m), with a level black soffit below; the 2017 outline is kept on the other sides. Second rear review: the west wall stands 0.20 m further west than first drawn - its north-west corner is fixed by two photographs from the rear lawn (0.05 m), leaving a rake overhang of 0.25 m; the wing's walls are therefore partly read from photographs although the roof is the laser survey.",
+     "dims": "rear wall 55 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
      "confidence": "high"
     },
     {
@@ -922,8 +922,8 @@
        18.061
       ],
       [
-       -4.077,
-       17.943
+       -4.18,
+       17.94
       ]
      ],
      "eave": [
@@ -945,11 +945,11 @@
       ],
       [
        4.326,
-       18.291
+       18.465
       ],
       [
        -4.52,
-       18.168
+       18.35
       ]
      ],
      "planes": [
@@ -989,7 +989,7 @@
      },
      "evidence": "photo",
      "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
-     "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+     "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's OUTER face, 0.40 m beyond the clerestory wall (photograph from below the north-east corner, two rear photographs and the owner's overhead view agree within 0.06 m); a level black soffit closes the eave from below. The west wall's north corner was moved 0.10 m west to where the photograph from the north-west lawn shows its corner board; its front corner is as measured from the front.",
      "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
      "confidence": "high",
      "edge_materials": {
@@ -1029,11 +1029,11 @@
       ],
       [
        8.55,
-       18.35
+       18.52
       ],
       [
        3.88,
-       18.285
+       18.459
       ]
      ],
      "planes": [
@@ -1077,7 +1077,7 @@
      },
      "evidence": "photo",
      "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
-     "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+     "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs. Second rear review: the north eave edge is drawn at the gutter's outer face (y 18.52 at the east end, the point the two east-side photographs fix), 0.40 m beyond the wall, with a level black soffit below.",
      "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
      "confidence": "high",
      "soffit_material": "trim_white"
@@ -1151,7 +1151,7 @@
         "bands": [
          {
           "to_z": 262.0,
-          "material": "foundation"
+          "material": "foundation_shaded"
          }
         ]
        },
@@ -1746,8 +1746,8 @@
      "id": "rear_window_w2",
      "wing": "north_range",
      "at": [
-      -5.497,
-      23.406
+      -5.61,
+      23.404
      ],
      "width": 0.79,
      "height": 1.23,
@@ -1772,8 +1772,8 @@
      "id": "rear_window_w1",
      "wing": "north_range",
      "at": [
-      -6.787,
-      23.388
+      -6.885,
+      23.386
      ],
      "width": 0.79,
      "height": 1.23,
@@ -2391,7 +2391,7 @@
      "kind": "box",
      "id": "sides_west_door_lantern",
      "center": [
-      -8.31,
+      -8.512,
       16.243,
       264.1
      ],
@@ -2701,10 +2701,10 @@
       0.014
      ],
      "z_top": 262.27,
-     "z_bottom": 261.38,
+     "z_bottom": 261.44,
      "width": 1.4000000000000021,
      "solid": true,
-     "riser": 0.148,
+     "riser": 0.138,
      "material": "deck_plain",
      "railing": {
       "material": "rail_white",
@@ -2715,58 +2715,59 @@
      "evidence": "photo",
      "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east",
      "confidence": "high",
-     "desc": "Composite stairs, six risers, about 4 ft wide with white rails, descending east from the gate opening at the deck's south-east corner.",
-     "dims": "6 risers, about 4' wide"
+     "desc": "Composite stairs, six risers, about 4 ft wide with white rails, descending east from the opening at the deck's south-east corner to the pad at 261.44 m; the foot stands at the pad's west edge (newel bases at x 14.4 in the photograph from the south-east).",
+     "dims": "6 risers, about 4' wide",
+     "tread": 0.25
     },
     {
      "kind": "prism",
      "id": "sides_hot_tub_pad",
      "polygon": [
       [
-       14.45,
-       17.92
+       14.43,
+       17.93
       ],
       [
-       17.2,
-       18.08
+       16.85,
+       17.93
       ],
       [
-       17.25,
-       23.68
+       16.85,
+       23.52
       ],
       [
        13.0,
-       23.62
+       23.52
       ],
       [
        13.02,
        19.45
       ],
       [
-       14.45,
+       14.43,
        19.45
       ]
      ],
      "z0": 260.9,
-     "z1": 261.38,
+     "z1": 261.44,
      "material": "concrete",
      "label": "Concrete pad east of the deck",
      "evidence": "photo",
      "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the hot tub and east deck from the east",
      "confidence": "medium",
-     "desc": "Poured concrete pad at the foot of the deck stairs, 0.9 m (six risers) below the deck. The concrete starts under the bottom step - it does not run on under the stairs - and north of the stairs it reaches back to the deck's edge. South-east and north-east corners read from three photographs, +-0.15 m. It is newer than the 2024 aerial photograph.",
-     "dims": "about 14' x 19'"
+     "desc": "Poured concrete pad at the foot of the deck stairs, 0.83 m (six risers) below the deck. The concrete starts under the bottom step - it does not run on under the stairs - and north of the stairs it reaches back to the deck's edge. East edge at x 16.85 from three photographs with cameras re-solved on the house (south-east corner 16.9 and 16.7, north-east corner 16.8-16.9), north edge 6 cm south of the deck's north fascia, top at 261.44 m: +-0.1 m. It is newer than the 2024 aerial photograph.",
+     "dims": "about 12' 8\" x 18' 4\""
     },
     {
      "kind": "box",
      "id": "sides_hot_tub",
      "center": [
-      15.0,
-      22.04,
-      261.81
+      14.72,
+      21.98,
+      261.87
      ],
      "size": [
-      2.28,
+      2.34,
       2.38,
       0.86
      ],
@@ -2776,8 +2777,8 @@
      "evidence": "photo",
      "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east",
      "confidence": "medium",
-     "desc": "Black hot-tub cabinet standing on the pad right beside the deck, about 7 ft 6 in by 7 ft 10 in and 2 ft 10 in high to the rim. Its faces are placed from five photographs, which agree to about 0.15 m.",
-     "dims": "about 7' 6\" x 7' 10\" x 2' 10\""
+     "desc": "Black hot-tub cabinet standing on the pad about 0.4 m from the deck, about 7 ft 8 in by 7 ft 10 in and 2 ft 10 in high to the rim (rim level with the deck boards). East-west position from the square-on photograph from the north (north face x 13.47-15.82) and the base corners in the photograph from the south-east (13.59 and 15.88); north-south position from the photograph taken on the deck (y 20.8-23.2). The two photographs from the east disagree by up to 0.4 m on its south-east corner.",
+     "dims": "about 7' 8\" x 7' 10\" x 2' 10\""
     },
     {
      "kind": "box",
@@ -2804,8 +2805,8 @@
      "kind": "wall_panel",
      "id": "rear_foundation_north",
      "a": [
-      -8.326,
-      23.296
+      -8.529,
+      23.293
      ],
      "b": [
       1.863,
@@ -6442,7 +6443,7 @@
      "kind": "box",
      "id": "p44_west_door_lantern_plate",
      "center": [
-      -8.255,
+      -8.457,
       16.243,
       264.1
      ],
@@ -6490,62 +6491,62 @@
      "segments": [
       [
        [
-        15.0,
-        20.8,
-        262.535
+        14.72,
+        20.74,
+        262.595
        ],
        [
-        15.0,
-        23.28,
-        262.535
+        14.72,
+        23.22,
+        262.595
        ]
       ],
       [
        [
-        15.0,
-        23.29,
-        262.535
+        14.72,
+        23.23,
+        262.595
        ],
        [
-        15.95,
-        23.29,
-        262.45
+        15.67,
+        23.23,
+        262.51
        ]
       ],
       [
        [
-        15.95,
-        23.29,
-        262.45
+        15.67,
+        23.23,
+        262.51
        ],
        [
-        16.0,
-        23.29,
-        262.18
+        15.72,
+        23.23,
+        262.24
        ]
       ],
       [
        [
-        15.0,
-        20.79,
-        262.535
+        14.72,
+        20.73,
+        262.595
        ],
        [
-        15.95,
-        20.79,
-        262.45
+        15.67,
+        20.73,
+        262.51
        ]
       ],
       [
        [
-        15.95,
-        20.79,
-        262.45
+        15.67,
+        20.73,
+        262.51
        ],
        [
-        16.0,
-        20.79,
-        262.18
+        15.72,
+        20.73,
+        262.24
        ]
       ]
      ],
@@ -6564,12 +6565,12 @@
      "kind": "box",
      "id": "sides_hot_tub_step_lower",
      "center": [
-      14.83,
-      20.46,
-      261.535
+      14.72,
+      20.43,
+      261.595
      ],
      "size": [
-      0.85,
+      0.72,
       0.36,
       0.31
      ],
@@ -6579,18 +6580,18 @@
      "evidence": "photo",
      "source": "owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph looking down on the hot tub from the head of the deck stairs",
      "confidence": "medium",
-     "desc": "Black moulded two-step unit standing on the pad against the tub's south side; placed from two photographs, +-0.2 m."
+     "desc": "Black moulded two-step unit standing on the pad against the middle of the tub's south side (front edge at y 20.28, x 14.4-15.05 in the photograph from the south-east), +-0.1 m."
     },
     {
      "kind": "box",
      "id": "sides_hot_tub_step_upper",
      "center": [
-      14.83,
-      20.72,
-      261.615
+      14.72,
+      20.69,
+      261.675
      ],
      "size": [
-      0.85,
+      0.72,
       0.26,
       0.47
      ],
@@ -6600,7 +6601,7 @@
      "evidence": "photo",
      "source": "owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph looking down on the hot tub from the head of the deck stairs",
      "confidence": "medium",
-     "desc": "Black moulded two-step unit standing on the pad against the tub's south side; placed from two photographs, +-0.2 m."
+     "desc": "Black moulded two-step unit standing on the pad against the middle of the tub's south side (front edge at y 20.28, x 14.4-15.05 in the photograph from the south-east), +-0.1 m."
     },
     {
      "kind": "prism",
@@ -7743,7 +7744,7 @@
      "kind": "box",
      "id": "rear_downspout_nw",
      "center": [
-      -8.28,
+      -8.475,
       23.42,
       263.3
      ],
@@ -7876,8 +7877,8 @@
      "id": "rear_corner_board_nw",
      "at_list": [
       [
-       -8.287,
-       23.326
+       -8.49,
+       23.323
       ]
      ],
      "z0": 261.6,
@@ -7921,13 +7922,13 @@
      "kind": "box",
      "id": "sides_hot_tub_cover_w",
      "center": [
-      14.3925,
-      22.031,
-      262.365
+      14.1125,
+      21.971,
+      262.425
      ],
      "size": [
       1.185,
-      2.5,
+      2.42,
       0.25
      ],
      "yaw": 0.8,
@@ -7936,19 +7937,19 @@
      "evidence": "photo",
      "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph looking down on the hot tub from the head of the deck stairs",
      "confidence": "medium",
-     "desc": "Folding insulated cover lying on the tub, overhanging the cabinet by a few centimetres; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line."
+     "desc": "Folding insulated cover lying on the tub, the same width as the cabinet with a short skirt; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line."
     },
     {
      "kind": "box",
      "id": "sides_hot_tub_cover_e",
      "center": [
-      15.6075,
-      22.049,
-      262.365
+      15.3275,
+      21.989,
+      262.425
      ],
      "size": [
       1.185,
-      2.5,
+      2.42,
       0.25
      ],
      "yaw": 0.8,
@@ -7957,7 +7958,7 @@
      "evidence": "photo",
      "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph looking down on the hot tub from the head of the deck stairs",
      "confidence": "medium",
-     "desc": "Folding insulated cover lying on the tub, overhanging the cabinet by a few centimetres; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line."
+     "desc": "Folding insulated cover lying on the tub, the same width as the cabinet with a short skirt; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line."
     },
     {
      "kind": "box",
@@ -8000,6 +8001,183 @@
      "source": "owner's photograph of the deck stairs and hot tub from the south-east",
      "confidence": "low",
      "desc": "Dark board closing the gap under the deck's south edge between the east wing's wall and the stairs; seen in shadow in one photograph."
+    },
+    {
+     "id": "rear_upper_soffit",
+     "kind": "prism",
+     "polygon": [
+      [
+       -4.19,
+       18.349
+      ],
+      [
+       8.55,
+       18.515
+      ],
+      [
+       8.55,
+       18.1
+      ],
+      [
+       -4.19,
+       17.93
+      ]
+     ],
+     "z0": 267.35,
+     "z1": 267.39,
+     "material": "trim",
+     "pad": false,
+     "label": "Upper roof's north soffit",
+     "desc": "Level black soffit under the upper roof's north eave, from the gutter back to the clerestory wall, as seen from below in the close photographs.",
+     "dims": "0.40 m deep",
+     "evidence": "photo",
+     "source": "owner's close photographs of the bay and walk-out patio (eaves seen from below); owner's photographs of the rear taken from the lawn; owner's overhead view of the house",
+     "confidence": "high"
+    },
+    {
+     "id": "rear_lower_soffit",
+     "kind": "prism",
+     "polygon": [
+      [
+       -8.53,
+       23.74
+      ],
+      [
+       1.8,
+       23.885
+      ],
+      [
+       1.8,
+       23.5
+      ],
+      [
+       -8.53,
+       23.36
+      ]
+     ],
+     "z0": 264.77,
+     "z1": 264.81,
+     "material": "trim",
+     "pad": false,
+     "label": "Rear eave soffit",
+     "desc": "Level black soffit under the low roof's rear eave, from the gutter back to the rear wall above the deck, as seen from below in the close photographs.",
+     "dims": "0.38 m deep",
+     "evidence": "photo",
+     "source": "owner's close photographs of the bay and walk-out patio (eaves seen from below); owner's photographs of the rear taken from the lawn; owner's overhead view of the house",
+     "confidence": "medium"
+    },
+    {
+     "id": "rear_lower_soffit_east",
+     "kind": "prism",
+     "polygon": [
+      [
+       7.95,
+       23.97
+      ],
+      [
+       8.505,
+       23.975
+      ],
+      [
+       8.22,
+       23.6
+      ],
+      [
+       7.95,
+       23.6
+      ]
+     ],
+     "z0": 264.77,
+     "z1": 264.81,
+     "material": "trim",
+     "pad": false,
+     "label": "Rear eave soffit, east of the bay",
+     "desc": "Short piece of the same level black soffit between the bay's roof and the main block's north-east corner.",
+     "evidence": "photo",
+     "source": "owner's close photographs of the bay and walk-out patio (eaves seen from below); owner's photographs of the rear taken from the lawn; owner's overhead view of the house",
+     "confidence": "medium"
+    },
+    {
+     "id": "rear_west_rake_soffit",
+     "kind": "beam",
+     "segments": [
+      [
+       [
+        -8.652,
+        23.73,
+        264.784
+       ],
+       [
+        -8.573,
+        18.201,
+        266.6
+       ]
+      ],
+      [
+       [
+        -8.573,
+        18.201,
+        266.6
+       ],
+       [
+        -8.491,
+        12.45,
+        264.828
+       ]
+      ]
+     ],
+     "size": [
+      0.222,
+      0.02
+     ],
+     "material": "trim_white",
+     "label": "West gable rake soffit (low roof)",
+     "desc": "White soffit under the low roof's west rake, between the gable wall and the black rake board; pale in the photographs from the north-west lawn.",
+     "dims": "0.24 m overhang",
+     "evidence": "photo",
+     "source": "owner's photographs of the rear taken from the lawn (north-west views)",
+     "confidence": "high"
+    },
+    {
+     "id": "rear_upper_west_rake_soffit",
+     "kind": "beam",
+     "segments": [
+      [
+       [
+        -4.308,
+        18.33,
+        267.356
+       ],
+       [
+        -4.265,
+        15.378,
+        268.609
+       ]
+      ],
+      [
+       [
+        -4.265,
+        15.378,
+        268.609
+       ],
+       [
+        -4.227,
+        12.83,
+        267.551
+       ]
+      ]
+     ],
+     "size": [
+      0.4,
+      0.02
+     ],
+     "material": "trim_white",
+     "label": "West gable rake soffit (upper roof)",
+     "desc": "White soffit under the upper roof's west rake, between the gable wall and the black rake board; pale in the photographs from the north-west lawn.",
+     "dims": "0.33 m overhang at the north corner",
+     "evidence": "photo",
+     "source": "owner's photographs of the rear taken from the lawn (north-west views)",
+     "confidence": "medium"
     }
    ],
    "since": 1989,
@@ -9645,20 +9823,20 @@
      "label": "Greenhouse",
      "footprint": [
       [
-       -36.1,
-       16.42
+       -36.18,
+       16.72
       ],
       [
-       -31.232,
-       16.122
+       -31.312,
+       16.422
       ],
       [
-       -31.046,
-       19.167
+       -31.126,
+       19.467
       ],
       [
-       -35.914,
-       19.464
+       -35.994,
+       19.764
       ]
      ],
      "overhang": 0.08,
@@ -9666,12 +9844,12 @@
       [
        0.04273,
        0.69869,
-       252.92
+       252.714
       ],
       [
        -0.04273,
        -0.69869,
-       274.915
+       275.121
       ]
      ],
      "base_z": 261.02,
@@ -9692,7 +9870,7 @@
      "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
      "confidence": "medium",
      "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
-     "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs."
+     "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs. Its place along the arbor row comes from two photographs that show both: beside its north-west corner (the gable stands nearer the lens than the first placing gave) and from the door end (the arbor post seen past its south-west corner): about 0.3 m north of the first placing, on the same line of sight from the court."
     }
    ],
    "openings": [
@@ -9700,8 +9878,8 @@
      "id": "site_gh_door",
      "wing": "greenhouse",
      "at": [
-      -31.134,
-      17.724
+      -31.214,
+      18.024
      ],
      "width": 0.86,
      "height": 1.8,
@@ -9730,8 +9908,8 @@
      "id": "site_gh_window_w",
      "wing": "greenhouse",
      "at": [
-      -36.007,
-      17.942
+      -36.087,
+      18.242
      ],
      "width": 0.6,
      "height": 1.0,
@@ -9751,8 +9929,8 @@
      "id": "site_gh_vent_w",
      "wing": "greenhouse",
      "at": [
-      -36.007,
-      17.942
+      -36.087,
+      18.242
      ],
      "width": 0.42,
      "height": 0.35,
@@ -9776,325 +9954,325 @@
      "segments": [
       [
        [
-        -36.101,
-        16.405,
+        -36.181,
+        16.705,
         261.44
        ],
        [
-        -36.101,
-        16.405,
+        -36.181,
+        16.705,
         262.85
        ]
       ],
       [
        [
-        -35.913,
-        19.479,
+        -35.993,
+        19.779,
         261.44
        ],
        [
-        -35.913,
-        19.479,
+        -35.993,
+        19.779,
         262.85
        ]
       ],
       [
        [
-        -35.492,
-        16.368,
+        -35.572,
+        16.668,
         261.44
        ],
        [
-        -35.492,
-        16.368,
+        -35.572,
+        16.668,
         262.85
        ]
       ],
       [
        [
-        -35.304,
-        19.442,
+        -35.384,
+        19.742,
         261.44
        ],
        [
-        -35.304,
-        19.442,
+        -35.384,
+        19.742,
         262.85
        ]
       ],
       [
        [
-        -34.884,
-        16.331,
+        -34.964,
+        16.631,
         261.44
        ],
        [
-        -34.884,
-        16.331,
+        -34.964,
+        16.631,
         262.85
        ]
       ],
       [
        [
-        -34.696,
-        19.405,
+        -34.776,
+        19.705,
         261.44
        ],
        [
-        -34.696,
-        19.405,
+        -34.776,
+        19.705,
         262.85
        ]
       ],
       [
        [
-        -34.276,
-        16.293,
+        -34.356,
+        16.593,
         261.44
        ],
        [
-        -34.276,
-        16.293,
+        -34.356,
+        16.593,
         262.85
        ]
       ],
       [
        [
-        -34.087,
-        19.368,
+        -34.167,
+        19.668,
         261.44
        ],
        [
-        -34.087,
-        19.368,
+        -34.167,
+        19.668,
         262.85
        ]
       ],
       [
        [
-        -33.667,
-        16.256,
+        -33.747,
+        16.556,
         261.44
        ],
        [
-        -33.667,
-        16.256,
+        -33.747,
+        16.556,
         262.85
        ]
       ],
       [
        [
-        -33.479,
-        19.33,
+        -33.559,
+        19.63,
         261.44
        ],
        [
-        -33.479,
-        19.33,
+        -33.559,
+        19.63,
         262.85
        ]
       ],
       [
        [
-        -33.059,
-        16.219,
+        -33.139,
+        16.519,
         261.44
        ],
        [
-        -33.059,
-        16.219,
+        -33.139,
+        16.519,
         262.85
        ]
       ],
       [
        [
-        -32.871,
-        19.293,
+        -32.951,
+        19.593,
         261.44
        ],
        [
-        -32.871,
-        19.293,
+        -32.951,
+        19.593,
         262.85
        ]
       ],
       [
        [
-        -32.45,
-        16.182,
+        -32.53,
+        16.482,
         261.44
        ],
        [
-        -32.45,
-        16.182,
+        -32.53,
+        16.482,
         262.85
        ]
       ],
       [
        [
-        -32.262,
-        19.256,
+        -32.342,
+        19.556,
         261.44
        ],
        [
-        -32.262,
-        19.256,
+        -32.342,
+        19.556,
         262.85
        ]
       ],
       [
        [
-        -31.842,
-        16.145,
+        -31.922,
+        16.445,
         261.44
        ],
        [
-        -31.842,
-        16.145,
+        -31.922,
+        16.445,
         262.85
        ]
       ],
       [
        [
-        -31.654,
-        19.219,
+        -31.734,
+        19.519,
         261.44
        ],
        [
-        -31.654,
-        19.219,
+        -31.734,
+        19.519,
         262.85
        ]
       ],
       [
        [
-        -31.233,
-        16.107,
+        -31.313,
+        16.407,
         261.44
        ],
        [
-        -31.233,
-        16.107,
+        -31.313,
+        16.407,
         262.85
        ]
       ],
       [
        [
-        -31.045,
-        19.182,
+        -31.125,
+        19.482,
         261.44
        ],
        [
-        -31.045,
-        19.182,
+        -31.125,
+        19.482,
         262.85
        ]
       ],
       [
        [
-        -31.184,
-        16.67,
+        -31.264,
+        16.97,
         261.44
        ],
        [
-        -31.184,
-        16.67,
+        -31.264,
+        16.97,
         263.215
        ]
       ],
       [
        [
-        -31.062,
-        18.659,
+        -31.142,
+        18.959,
         261.44
        ],
        [
-        -31.062,
-        18.659,
+        -31.142,
+        18.959,
         263.185
        ]
       ],
       [
        [
-        -31.149,
-        17.244,
+        -31.229,
+        17.544,
         263.0
        ],
        [
-        -31.149,
-        17.244,
+        -31.229,
+        17.544,
         263.618
        ]
       ],
       [
        [
-        -31.09,
-        18.202,
+        -31.17,
+        18.502,
         263.0
        ],
        [
-        -31.09,
-        18.202,
+        -31.17,
+        18.502,
         263.505
        ]
       ],
       [
        [
-        -36.084,
-        16.928,
+        -36.164,
+        17.228,
         261.44
        ],
        [
-        -36.084,
-        16.928,
+        -36.164,
+        17.228,
         263.186
        ]
       ],
       [
        [
-        -36.053,
-        17.436,
+        -36.133,
+        17.736,
         261.44
        ],
        [
-        -36.053,
-        17.436,
+        -36.133,
+        17.736,
         263.542
        ]
       ],
       [
        [
-        -35.991,
-        18.45,
+        -36.071,
+        18.75,
         261.44
        ],
        [
-        -35.991,
-        18.45,
+        -36.071,
+        18.75,
         263.542
        ]
       ],
       [
        [
-        -35.96,
-        18.958,
+        -36.04,
+        19.258,
         261.44
        ],
        [
-        -35.96,
-        18.958,
+        -36.04,
+        19.258,
         263.186
        ]
       ],
       [
        [
-        -36.022,
-        17.943,
+        -36.102,
+        18.243,
         262.8
        ],
        [
-        -36.022,
-        17.943,
+        -36.102,
+        18.243,
         263.22
        ]
       ]
@@ -10116,217 +10294,217 @@
      "segments": [
       [
        [
-        -36.105,
-        16.34,
+        -36.185,
+        16.64,
         262.814
        ],
        [
-        -36.007,
-        17.942,
+        -36.087,
+        18.242,
         263.937
        ]
       ],
       [
        [
-        -35.909,
-        19.544,
+        -35.989,
+        19.844,
         262.814
        ],
        [
-        -36.007,
-        17.942,
+        -36.087,
+        18.242,
         263.937
        ]
       ],
       [
        [
-        -35.496,
-        16.303,
+        -35.576,
+        16.603,
         262.814
        ],
        [
-        -35.398,
-        17.905,
+        -35.478,
+        18.205,
         263.937
        ]
       ],
       [
        [
-        -35.3,
-        19.507,
+        -35.38,
+        19.807,
         262.814
        ],
        [
-        -35.398,
-        17.905,
+        -35.478,
+        18.205,
         263.937
        ]
       ],
       [
        [
-        -34.888,
-        16.266,
+        -34.968,
+        16.566,
         262.814
        ],
        [
-        -34.79,
-        17.868,
+        -34.87,
+        18.168,
         263.937
        ]
       ],
       [
        [
-        -34.692,
-        19.47,
+        -34.772,
+        19.77,
         262.814
        ],
        [
-        -34.79,
-        17.868,
+        -34.87,
+        18.168,
         263.937
        ]
       ],
       [
        [
-        -34.279,
-        16.229,
+        -34.359,
+        16.529,
         262.814
        ],
        [
-        -34.182,
-        17.831,
+        -34.262,
+        18.131,
         263.937
        ]
       ],
       [
        [
-        -34.084,
-        19.433,
+        -34.164,
+        19.733,
         262.814
        ],
        [
-        -34.182,
-        17.831,
+        -34.262,
+        18.131,
         263.937
        ]
       ],
       [
        [
-        -33.671,
-        16.191,
+        -33.751,
+        16.491,
         262.814
        ],
        [
-        -33.573,
-        17.793,
+        -33.653,
+        18.093,
         263.937
        ]
       ],
       [
        [
-        -33.475,
-        19.395,
+        -33.555,
+        19.695,
         262.814
        ],
        [
-        -33.573,
-        17.793,
+        -33.653,
+        18.093,
         263.937
        ]
       ],
       [
        [
-        -33.063,
-        16.154,
+        -33.143,
+        16.454,
         262.814
        ],
        [
-        -32.965,
-        17.756,
+        -33.045,
+        18.056,
         263.937
        ]
       ],
       [
        [
-        -32.867,
-        19.358,
+        -32.947,
+        19.658,
         262.814
        ],
        [
-        -32.965,
-        17.756,
+        -33.045,
+        18.056,
         263.937
        ]
       ],
       [
        [
-        -32.454,
-        16.117,
+        -32.534,
+        16.417,
         262.814
        ],
        [
-        -32.356,
-        17.719,
+        -32.436,
+        18.019,
         263.937
        ]
       ],
       [
        [
-        -32.258,
-        19.321,
+        -32.338,
+        19.621,
         262.814
        ],
        [
-        -32.356,
-        17.719,
+        -32.436,
+        18.019,
         263.937
        ]
       ],
       [
        [
-        -31.846,
-        16.08,
+        -31.926,
+        16.38,
         262.814
        ],
        [
-        -31.748,
-        17.682,
+        -31.828,
+        17.982,
         263.937
        ]
       ],
       [
        [
-        -31.65,
-        19.284,
+        -31.73,
+        19.584,
         262.814
        ],
        [
-        -31.748,
-        17.682,
+        -31.828,
+        17.982,
         263.937
        ]
       ],
       [
        [
-        -31.237,
-        16.042,
+        -31.317,
+        16.342,
         262.814
        ],
        [
-        -31.139,
-        17.644,
+        -31.219,
+        17.944,
         263.937
        ]
       ],
       [
        [
-        -31.041,
-        19.246,
+        -31.121,
+        19.546,
         262.814
        ],
        [
-        -31.139,
-        17.644,
+        -31.219,
+        17.944,
         263.937
        ]
       ]
@@ -10348,181 +10526,181 @@
      "segments": [
       [
        [
-        -36.101,
-        16.405,
+        -36.181,
+        16.705,
         261.4
        ],
        [
-        -31.233,
-        16.107,
-        261.4
-       ]
-      ],
-      [
-       [
-        -36.101,
-        16.405,
-        262.81
-       ],
-       [
-        -31.233,
-        16.107,
-        262.81
-       ]
-      ],
-      [
-       [
-        -35.913,
-        19.479,
-        261.4
-       ],
-       [
-        -31.045,
-        19.182,
+        -31.313,
+        16.407,
         261.4
        ]
       ],
       [
        [
-        -35.913,
-        19.479,
+        -36.181,
+        16.705,
         262.81
        ],
        [
-        -31.045,
-        19.182,
+        -31.313,
+        16.407,
         262.81
        ]
       ],
       [
        [
-        -36.115,
+        -35.993,
+        19.779,
+        261.4
+       ],
+       [
+        -31.125,
+        19.482,
+        261.4
+       ]
+      ],
+      [
+       [
+        -35.993,
+        19.779,
+        262.81
+       ],
+       [
+        -31.125,
+        19.482,
+        262.81
+       ]
+      ],
+      [
+       [
+        -36.195,
+        16.721,
+        261.4
+       ],
+       [
+        -36.009,
+        19.765,
+        261.4
+       ]
+      ],
+      [
+       [
+        -36.195,
+        16.721,
+        262.81
+       ],
+       [
+        -36.009,
+        19.765,
+        262.81
+       ]
+      ],
+      [
+       [
+        -31.297,
         16.421,
         261.4
        ],
        [
-        -35.929,
-        19.465,
+        -31.23,
+        17.514,
         261.4
        ]
       ],
       [
        [
-        -36.115,
+        -31.168,
+        18.532,
+        261.4
+       ],
+       [
+        -31.111,
+        19.466,
+        261.4
+       ]
+      ],
+      [
+       [
+        -31.297,
         16.421,
         262.81
        ],
        [
-        -35.929,
-        19.465,
+        -31.23,
+        17.514,
         262.81
        ]
       ],
       [
        [
-        -31.217,
-        16.121,
-        261.4
-       ],
-       [
-        -31.15,
-        17.214,
-        261.4
-       ]
-      ],
-      [
-       [
-        -31.088,
-        18.232,
-        261.4
-       ],
-       [
-        -31.031,
-        19.166,
-        261.4
-       ]
-      ],
-      [
-       [
-        -31.217,
-        16.121,
+        -31.168,
+        18.532,
         262.81
        ],
        [
-        -31.15,
-        17.214,
+        -31.111,
+        19.466,
         262.81
        ]
       ],
       [
        [
-        -31.088,
-        18.232,
-        262.81
+        -36.201,
+        16.701,
+        261.02
        ],
        [
-        -31.031,
-        19.166,
-        262.81
+        -36.201,
+        16.701,
+        262.85
        ]
       ],
       [
        [
-        -36.121,
+        -36.013,
+        19.785,
+        261.02
+       ],
+       [
+        -36.013,
+        19.785,
+        262.85
+       ]
+      ],
+      [
+       [
+        -31.294,
         16.401,
         261.02
        ],
        [
-        -36.121,
+        -31.294,
         16.401,
         262.85
        ]
       ],
       [
        [
-        -35.933,
+        -31.105,
         19.485,
         261.02
        ],
        [
-        -35.933,
+        -31.105,
         19.485,
         262.85
        ]
       ],
       [
        [
-        -31.214,
-        16.101,
-        261.02
-       ],
-       [
-        -31.214,
-        16.101,
-        262.85
-       ]
-      ],
-      [
-       [
-        -31.025,
-        19.185,
-        261.02
-       ],
-       [
-        -31.025,
-        19.185,
-        262.85
-       ]
-      ],
-      [
-       [
-        -36.087,
-        17.947,
+        -36.167,
+        18.247,
         263.947
        ],
        [
-        -31.059,
-        17.64,
+        -31.139,
+        17.94,
         263.947
        ]
       ]
@@ -10544,325 +10722,325 @@
      "segments": [
       [
        [
-        -36.096,
-        16.48,
+        -36.176,
+        16.78,
         261.12
        ],
        [
-        -36.096,
-        16.48,
+        -36.176,
+        16.78,
         262.85
        ]
       ],
       [
        [
-        -36.096,
-        16.48,
+        -36.176,
+        16.78,
         262.85
        ],
        [
-        -36.007,
-        17.942,
+        -36.087,
+        18.242,
         263.887
        ]
       ],
       [
        [
-        -35.917,
-        19.404,
+        -35.997,
+        19.704,
         261.12
        ],
        [
-        -35.917,
-        19.404,
+        -35.997,
+        19.704,
         262.85
        ]
       ],
       [
        [
-        -35.917,
-        19.404,
+        -35.997,
+        19.704,
         262.85
        ],
        [
-        -36.007,
-        17.942,
+        -36.087,
+        18.242,
         263.887
        ]
       ],
       [
        [
-        -34.879,
-        16.405,
+        -34.959,
+        16.705,
         261.12
        ],
        [
-        -34.879,
-        16.405,
+        -34.959,
+        16.705,
         262.85
        ]
       ],
       [
        [
-        -34.879,
-        16.405,
+        -34.959,
+        16.705,
         262.85
        ],
        [
-        -34.79,
-        17.868,
+        -34.87,
+        18.168,
         263.887
        ]
       ],
       [
        [
-        -34.701,
-        19.33,
+        -34.781,
+        19.63,
         261.12
        ],
        [
-        -34.701,
-        19.33,
+        -34.781,
+        19.63,
         262.85
        ]
       ],
       [
        [
-        -34.701,
-        19.33,
+        -34.781,
+        19.63,
         262.85
        ],
        [
-        -34.79,
-        17.868,
+        -34.87,
+        18.168,
         263.887
        ]
       ],
       [
        [
-        -33.662,
-        16.331,
+        -33.742,
+        16.631,
         261.12
        ],
        [
-        -33.662,
-        16.331,
+        -33.742,
+        16.631,
         262.85
        ]
       ],
       [
        [
-        -33.662,
-        16.331,
+        -33.742,
+        16.631,
         262.85
        ],
        [
-        -33.573,
-        17.793,
+        -33.653,
+        18.093,
         263.887
        ]
       ],
       [
        [
-        -33.484,
-        19.256,
+        -33.564,
+        19.556,
         261.12
        ],
        [
-        -33.484,
-        19.256,
+        -33.564,
+        19.556,
         262.85
        ]
       ],
       [
        [
-        -33.484,
-        19.256,
+        -33.564,
+        19.556,
         262.85
        ],
        [
-        -33.573,
-        17.793,
+        -33.653,
+        18.093,
         263.887
        ]
       ],
       [
        [
-        -32.446,
-        16.257,
+        -32.526,
+        16.557,
         261.12
        ],
        [
-        -32.446,
-        16.257,
+        -32.526,
+        16.557,
         262.85
        ]
       ],
       [
        [
-        -32.446,
-        16.257,
+        -32.526,
+        16.557,
         262.85
        ],
        [
-        -32.356,
-        17.719,
+        -32.436,
+        18.019,
         263.887
        ]
       ],
       [
        [
-        -32.267,
-        19.181,
+        -32.347,
+        19.481,
         261.12
        ],
        [
-        -32.267,
-        19.181,
+        -32.347,
+        19.481,
         262.85
        ]
       ],
       [
        [
-        -32.267,
-        19.181,
+        -32.347,
+        19.481,
         262.85
        ],
        [
-        -32.356,
-        17.719,
+        -32.436,
+        18.019,
         263.887
        ]
       ],
       [
        [
-        -31.229,
-        16.182,
+        -31.309,
+        16.482,
         261.12
        ],
        [
-        -31.229,
-        16.182,
+        -31.309,
+        16.482,
         262.85
        ]
       ],
       [
        [
-        -31.229,
-        16.182,
+        -31.309,
+        16.482,
         262.85
        ],
        [
-        -31.139,
-        17.644,
+        -31.219,
+        17.944,
         263.887
        ]
       ],
       [
        [
-        -31.05,
-        19.107,
+        -31.13,
+        19.407,
         261.12
        ],
        [
-        -31.05,
-        19.107,
+        -31.13,
+        19.407,
         262.85
        ]
       ],
       [
        [
-        -31.05,
-        19.107,
+        -31.13,
+        19.407,
         262.85
        ],
        [
-        -31.139,
-        17.644,
+        -31.219,
+        17.944,
         263.887
        ]
       ],
       [
        [
-        -36.036,
-        16.476,
+        -36.116,
+        16.776,
         262.75
        ],
        [
-        -31.289,
-        16.186,
-        262.75
-       ]
-      ],
-      [
-       [
-        -35.858,
-        19.401,
-        262.75
-       ],
-       [
-        -31.11,
-        19.11,
+        -31.369,
+        16.486,
         262.75
        ]
       ],
       [
        [
-        -36.036,
-        16.476,
+        -35.938,
+        19.701,
         262.75
        ],
        [
-        -35.858,
-        19.401,
+        -31.19,
+        19.41,
         262.75
        ]
       ],
       [
        [
-        -31.289,
-        16.186,
+        -36.116,
+        16.776,
         262.75
        ],
        [
-        -31.11,
-        19.11,
+        -35.938,
+        19.701,
         262.75
        ]
       ],
       [
        [
-        -31.24,
-        16.974,
+        -31.369,
+        16.486,
+        262.75
+       ],
+       [
+        -31.19,
+        19.41,
+        262.75
+       ]
+      ],
+      [
+       [
+        -31.32,
+        17.274,
         261.49
        ],
        [
-        -31.286,
-        16.226,
+        -31.366,
+        16.526,
         262.7
        ]
       ],
       [
        [
-        -35.947,
-        17.938,
+        -36.027,
+        18.238,
         262.75
        ],
        [
-        -35.947,
-        17.938,
+        -36.027,
+        18.238,
         263.867
        ]
       ],
       [
        [
-        -31.199,
-        17.648,
+        -31.279,
+        17.948,
         262.75
        ],
        [
-        -31.199,
-        17.648,
+        -31.279,
+        17.948,
         263.867
        ]
       ]
@@ -10882,8 +11060,8 @@
      "kind": "box",
      "id": "site_gh_hinge_1",
      "center": [
-      -31.084,
-      18.052,
+      -31.164,
+      18.352,
       261.25
      ],
      "size": [
@@ -10903,8 +11081,8 @@
      "kind": "box",
      "id": "site_gh_hinge_2",
      "center": [
-      -31.084,
-      18.052,
+      -31.164,
+      18.352,
       261.9
      ],
      "size": [
@@ -10924,8 +11102,8 @@
      "kind": "box",
      "id": "site_gh_hinge_3",
      "center": [
-      -31.084,
-      18.052,
+      -31.164,
+      18.352,
       262.82
      ],
      "size": [
@@ -10945,8 +11123,8 @@
      "id": "site_gh_door_handle",
      "kind": "box",
      "center": [
-      -31.111,
-      17.362,
+      -31.191,
+      17.662,
       262.05
      ],
      "size": [
@@ -21028,8 +21206,8 @@
     "text": "Greenhouse",
     "note": "2026",
     "at": [
-     -33.6,
-     17.8
+     -33.68,
+     18.1
     ],
     "lift": 6,
     "since": 2026
@@ -21188,13 +21366,13 @@
    },
    {
     "a": [
-     -36.16,
-     15.42,
+     -36.24,
+     15.72,
      261.1
     ],
     "b": [
-     -31.29,
-     15.12,
+     -31.37,
+     15.42,
      261.1
     ],
     "text": "10' x 16'"
@@ -21234,7 +21412,7 @@
     "Underneath, the geometry is measured rather than drawn by eye: the ground, the tree canopy and the roof planes that predate the renovation come from an airborne laser survey, wall positions from the county's dimensioned record card and the floor plan, and the parcel from county GIS. Switch the display to Evidence and click any part to see what it rests on."
    ],
    "accuracy": [
-    "Roofs of the house that predate the renovation: 437 laser returns hit them in the 2017 survey; 100% lie within 15 cm of the modelled surface and 100% within 30 cm (median offset -0 cm).",
+    "Roofs of the house that predate the renovation: 432 laser returns hit them in the 2017 survey; 100% lie within 15 cm of the modelled surface and 100% within 30 cm (median offset -0 cm).",
     "Roofs of the detached garage that predate the renovation: 182 laser returns hit them in the 2017 survey; 100% lie within 15 cm of the modelled surface and 100% within 30 cm (median offset -0 cm).",
     "Parts built or altered in the 2023 renovation, and the pole barn, greenhouse and garden, were fitted to the owner's photographs: each photograph was matched with a camera placed where it was taken, and corners, roof peaks, doors and windows were adjusted until they landed within a few pixels - typically 5 to 20 cm on the building.",
     "The pole barn's position comes from three independent measurements (two photogrammetric solutions and a 2025 overhead view) that agree to within about 25 cm.",
@@ -21582,20 +21760,20 @@
     "id": "p45_gh_pad_grade",
     "polygon": [
      [
-      -36.922,
-      15.268
+      -37.002,
+      15.568
      ],
      [
-      -30.307,
-      14.863
+      -30.387,
+      15.163
      ],
      [
-      -30.002,
-      19.854
+      -30.082,
+      20.154
      ],
      [
-      -36.617,
-      20.259
+      -36.697,
+      20.559
      ]
     ],
     "z": 261.0,
@@ -21721,19 +21899,19 @@
       18.0
      ],
      [
-      17.2,
-      18.1
+      16.8,
+      18.0
      ],
      [
-      17.25,
-      23.68
+      16.8,
+      23.5
      ],
      [
       13.8,
-      23.63
+      23.5
      ]
     ],
-    "z": 261.24,
+    "z": 261.3,
     "feather": 1.2,
     "label": "Ground filled under the hot-tub pad",
     "evidence": "photo",
@@ -22220,7 +22398,7 @@
    },
    {
     "id": "rear_river_rock_deck",
-    "kind": "river_rock",
+    "kind": "river_rock_shade",
     "polygon": [
      [
       -4.9,
@@ -24041,20 +24219,20 @@
     "kind": "limestone",
     "polygon": [
      [
-      -36.885,
-      15.867
+      -36.965,
+      16.167
      ],
      [
-      -30.47,
-      15.474
+      -30.55,
+      15.774
      ],
      [
-      -30.201,
-      19.866
+      -30.281,
+      20.166
      ],
      [
-      -36.616,
-      20.258
+      -36.696,
+      20.558
      ]
     ],
     "since": 2026,
@@ -24406,11 +24584,11 @@
      ],
      [
       14.55,
-      18.026
+      18.03
      ],
      [
       15.741,
-      18.095
+      18.03
      ],
      [
       15.59,
@@ -24877,12 +25055,16 @@
       19.345
      ],
      [
-      17.149,
-      23.579
+      16.76,
+      19.215
+     ],
+     [
+      16.76,
+      23.43
      ],
      [
       13.1,
-      23.521
+      23.43
      ],
      [
       13.12,
@@ -25894,11 +26076,15 @@
      ],
      [
       15.727,
-      18.094
+      18.03
      ],
      [
-      17.101,
-      18.174
+      16.76,
+      18.03
+     ],
+     [
+      16.76,
+      19.215
      ],
      [
       17.111,
@@ -26502,7 +26688,7 @@
    },
    {
     "id": "sides_river_rock_deck",
-    "kind": "river_rock",
+    "kind": "river_rock_shade",
     "polygon": [
      [
       8.25,
@@ -27021,6 +27207,130 @@
     "confidence": "medium",
     "source": "owner's close photographs of the bay and walk-out patio",
     "desc": "River rock lying against the foundation and the house end of the east patio wall at the north-east corner, joining the rock slope under the east deck."
+   },
+   {
+    "id": "sides_east_meadow_edge",
+    "kind": "meadow",
+    "polygon": [
+     [
+      25.24,
+      10.01
+     ],
+     [
+      29.5,
+      10.0
+     ],
+     [
+      29.5,
+      25.5
+     ],
+     [
+      33.0,
+      27.0
+     ],
+     [
+      35.5,
+      34.0
+     ],
+     [
+      36.5,
+      45.0
+     ],
+     [
+      36.0,
+      52.0
+     ],
+     [
+      35.0,
+      59.5
+     ],
+     [
+      30.2,
+      59.5
+     ],
+     [
+      26.07,
+      60.91
+     ],
+     [
+      29.49,
+      56.0
+     ],
+     [
+      30.0,
+      45.0
+     ],
+     [
+      28.5,
+      36.0
+     ],
+     [
+      27.64,
+      28.3
+     ],
+     [
+      26.92,
+      20.08
+     ],
+     [
+      26.8,
+      19.91
+     ],
+     [
+      26.21,
+      19.69
+     ],
+     [
+      25.69,
+      19.3
+     ],
+     [
+      25.31,
+      18.79
+     ],
+     [
+      25.14,
+      18.38
+     ],
+     [
+      25.05,
+      17.76
+     ],
+     [
+      25.09,
+      17.31
+     ],
+     [
+      25.22,
+      16.9
+     ],
+     [
+      25.55,
+      16.36
+     ],
+     [
+      25.86,
+      16.05
+     ],
+     [
+      26.46,
+      15.68
+     ],
+     [
+      26.54,
+      15.5
+     ],
+     [
+      26.5,
+      14.98
+     ]
+    ],
+    "since": 2025,
+    "label": "Unmown weeds along the lawn's east edge",
+    "evidence": "photo",
+    "confidence": "medium",
+    "source": "owner's photograph taken on the east deck looking east; owner's panorama from the east deck; owner's summer photograph looking north-east from the head of the deck stairs (camera re-solved on the far trees and the horizon); 2024 aerial photograph",
+    "desc": "Tall weeds (goldenrod, asters, brush) between the mown lawn and the trees east of the deck, and on north along the edge of the hay field: 3-4 m deep in front of the wood, 5-6 m between the lawn and the field. Its west side is the lawn's edge; its east side is read from the summer photograph and the 2024 aerial photograph, good to about 2 m."
    }
   ],
   "fences": [
@@ -27214,18 +27524,10 @@
      -37.4,
      28.5
     ],
-    "height": 24.0,
-    "radius": 7.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     17.2,
-     13.9
-    ],
-    "height": 15.0,
-    "radius": 3.8,
-    "kind": "deciduous"
+    "height": 18.0,
+    "radius": 6.0,
+    "kind": "deciduous",
+    "note": "big hardwood north-west of the greenhouse: 18 m tall with a crown about 13 m across reaching down to about 6 m above the ground, measured in the photograph of the garden from the court (the tree is 32 m from that camera); position from the 2017 survey"
    },
    {
     "at": [
@@ -27246,195 +27548,6 @@
     "radius": 1.5,
     "kind": "conifer",
     "note": "northern, broader spruce behind the berry arbors; placed as above, crown about 3 m across in the photograph from the apron"
-   },
-   {
-    "at": [
-     29.5,
-     -2
-    ],
-    "height": 14.0,
-    "radius": 3.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     31,
-     2.5
-    ],
-    "height": 19.0,
-    "radius": 4.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     29,
-     7
-    ],
-    "height": 17.0,
-    "radius": 4.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     32.5,
-     9.5
-    ],
-    "height": 15.0,
-    "radius": 3.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     30,
-     13.5
-    ],
-    "height": 20.0,
-    "radius": 3.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     33,
-     16
-    ],
-    "height": 18.0,
-    "radius": 4.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     29.5,
-     19
-    ],
-    "height": 16.0,
-    "radius": 4.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     32,
-     22.5
-    ],
-    "height": 14.0,
-    "radius": 3.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     30,
-     26
-    ],
-    "height": 19.0,
-    "radius": 3.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     33.5,
-     28.5
-    ],
-    "height": 17.0,
-    "radius": 4.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     35.5,
-     0
-    ],
-    "height": 15.0,
-    "radius": 4.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     36,
-     5.5
-    ],
-    "height": 20.0,
-    "radius": 3.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     36.5,
-     11
-    ],
-    "height": 18.0,
-    "radius": 3.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     36,
-     19.5
-    ],
-    "height": 16.0,
-    "radius": 4.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     37,
-     24.5
-    ],
-    "height": 14.0,
-    "radius": 4.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     35,
-     31
-    ],
-    "height": 19.0,
-    "radius": 3.5,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     34,
-     52
-    ],
-    "height": 12.0,
-    "radius": 3.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     36,
-     55
-    ],
-    "height": 13.0,
-    "radius": 2.4,
-    "kind": "conifer"
-   },
-   {
-    "at": [
-     38,
-     53
-    ],
-    "height": 14.0,
-    "radius": 3.0,
-    "kind": "deciduous"
-   },
-   {
-    "at": [
-     35.5,
-     58
-    ],
-    "height": 15.0,
-    "radius": 2.4,
-    "kind": "conifer"
-   },
-   {
-    "at": [
-     37.5,
-     57
-    ],
-    "height": 16.0,
-    "radius": 3.0,
-    "kind": "deciduous"
    },
    {
     "at": [
@@ -27625,6 +27738,186 @@
     "radius": 2.5,
     "kind": "deciduous",
     "note": "tree in the bed at the east wing's south-east corner: position and height from the 2017 survey, crown radius 2.5-3 m from the owner's 2025 overhead view (clear of the roof)"
+   },
+   {
+    "at": [
+     18.0,
+     16.95
+    ],
+    "height": 17.5,
+    "radius": 4.2,
+    "kind": "deciduous",
+    "note": "the one big oak beside the hot-tub pad: sight lines to its trunk from four photographs (north lawn, south-east of the stairs, two from the east deck) cross here within 0.3 m, and the photograph from east of the stairs has no trunk in frame; 17.5 m tall with a crown about 11 m across in the November photograph from the drive; it replaces the 2017 surveyed tree 0.4 m away. Crown radius kept at 4.2 m so the drawn canopy stays clear of the east wing's eave, as the owner's overhead view shows"
+   },
+   {
+    "at": [
+     32.0,
+     21.5
+    ],
+    "height": 11.0,
+    "radius": 2.2,
+    "kind": "conifer",
+    "note": "evergreen behind the maples east of the deck: green crown about 4.5 m across in the leaf-off 2024 aerial photograph; height from its shadow, +-2 m"
+   },
+   {
+    "at": [
+     32.5,
+     17.0
+    ],
+    "height": 11.0,
+    "radius": 2.2,
+    "kind": "conifer",
+    "note": "second evergreen behind the maples east of the deck, as above (2024 aerial photograph)"
+   },
+   {
+    "at": [
+     28.0,
+     27.6
+    ],
+    "height": 6.5,
+    "radius": 1.7,
+    "kind": "deciduous",
+    "note": "thin, sparse tree standing alone at the lawn's edge north of the wood east of the deck: bearings from the deck photograph and the summer photograph from the stair head cross here; 6-7 m tall in both. The hay field shows on both sides of it"
+   },
+   {
+    "at": [
+     28.3,
+     48.3
+    ],
+    "height": 5.2,
+    "radius": 2.6,
+    "kind": "conifer",
+    "note": "rounded bushy pine at the lawn's north-east edge, about 5.2 m tall and 5.5 m across, foliage to the ground (owner's summer photograph looking north-east from the head of the deck stairs (camera re-solved on the far trees and the horizon); 2024 aerial photograph; its crown is in the 2024 aerial photograph). The viewer draws conifers as cones, so it reads more pointed than it is"
+   },
+   {
+    "at": [
+     33.5,
+     50.0
+    ],
+    "height": 4.0,
+    "radius": 0.9,
+    "kind": "deciduous",
+    "note": "sapling in the weeds right of the pine in the summer photograph from the stair head; distance approximate (+-4 m)"
+   },
+   {
+    "at": [
+     24.7,
+     57.9
+    ],
+    "height": 5.1,
+    "radius": 1.7,
+    "kind": "deciduous",
+    "note": "small lawn-edge tree with a clear stem left of the pine in the summer photograph from the stair head (trunk base on the mown grass 42 m from the camera, +-3 m)"
+   },
+   {
+    "at": [
+     23.5,
+     60.9
+    ],
+    "height": 5.5,
+    "radius": 1.7,
+    "kind": "deciduous",
+    "note": "second small lawn-edge tree, as above (44 m from the camera, +-3 m)"
+   },
+   {
+    "at": [
+     28.4,
+     63.5
+    ],
+    "height": 8.3,
+    "radius": 1.2,
+    "kind": "conifer",
+    "note": "dark narrow evergreen at the field edge north-east of the lawn: it stands on the 2017 survey's tree here (8.9 m then) and is about 8 m tall and 2 m across in the summer photograph from the stair head; the survey had classed it as a hardwood"
+   },
+   {
+    "at": [
+     3.25,
+     -26.75
+    ],
+    "height": 23.3,
+    "radius": 3.9,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
+   },
+   {
+    "at": [
+     5.75,
+     -20.25
+    ],
+    "height": 24.4,
+    "radius": 2.9,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
+   },
+   {
+    "at": [
+     -7.75,
+     -19.75
+    ],
+    "height": 23.0,
+    "radius": 2.9,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
+   },
+   {
+    "at": [
+     -2.4,
+     -23.82
+    ],
+    "height": 22.0,
+    "radius": 3.8,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
+   },
+   {
+    "at": [
+     -12.22,
+     -18.28
+    ],
+    "height": 19.5,
+    "radius": 2.6,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
+   },
+   {
+    "at": [
+     -1.17,
+     -16.02
+    ],
+    "height": 19.4,
+    "radius": 2.7,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
+   },
+   {
+    "at": [
+     -6.98,
+     -12.71
+    ],
+    "height": 19.9,
+    "radius": 3.0,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
+   },
+   {
+    "at": [
+     -2.27,
+     -11.79
+    ],
+    "height": 21.8,
+    "radius": 2.7,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
+   },
+   {
+    "at": [
+     2.58,
+     -13.35
+    ],
+    "height": 20.3,
+    "radius": 2.9,
+    "kind": "deciduous",
+    "note": "hardwood standing in the cleared, mulched island inside the drive loop (photograph of the island from the drive): position, height and crown from the 2017 survey; listed singly so the ground beneath it is drawn clear of understorey"
    }
   ],
   "woods": [
@@ -27715,6 +28008,102 @@
     "spacing": 3.6,
     "kind": "deciduous",
     "note": "trees along the field edge north-east of the lawn, as the photograph looking north from the bay shows at its right-hand edge; extent from the 2024 aerial photograph"
+   },
+   {
+    "id": "sides_east_woods_edge",
+    "polygon": [
+     [
+      27.3,
+      -6
+     ],
+     [
+      30.3,
+      -6
+     ],
+     [
+      30.3,
+      25.5
+     ],
+     [
+      28.6,
+      25.5
+     ],
+     [
+      27.9,
+      14
+     ],
+     [
+      27.3,
+      14
+     ]
+    ],
+    "height": [
+     4.0,
+     6.5
+    ],
+    "spacing": 2.6,
+    "kind": "deciduous",
+    "note": "low trees and tall shrubs along the west face of the wood east of the lawn: the photographs taken on the east deck show leaves from the weeds upward with no bare stems; listed before the two stands behind it so that it is planted as a continuous row"
+   },
+   {
+    "id": "sides_east_woods_south",
+    "polygon": [
+     [
+      27.5,
+      -6
+     ],
+     [
+      46,
+      -6
+     ],
+     [
+      46,
+      14
+     ],
+     [
+      27.5,
+      14
+     ]
+    ],
+    "height": [
+     7.0,
+     19.0
+    ],
+    "spacing": 3.4,
+    "kind": "deciduous",
+    "note": "mature hardwood east of the lawn, south of the deck: the 2017 survey found only the dominant crowns here (it was flown leaf-off) and the 2024 aerial photograph shows closed canopy; planted as a stand so the viewer closes the gaps between the stems with understory, as the photographs from the east deck show a wall of foliage down to the ground"
+   },
+   {
+    "id": "sides_east_woods_deck",
+    "polygon": [
+     [
+      28.3,
+      14
+     ],
+     [
+      38.5,
+      14
+     ],
+     [
+      37.5,
+      19
+     ],
+     [
+      34.5,
+      25.5
+     ],
+     [
+      28.8,
+      25.5
+     ]
+    ],
+    "height": [
+     5.0,
+     12.0
+    ],
+    "spacing": 3.0,
+    "kind": "deciduous",
+    "note": "maples east of the east deck with branches down to the weeds: nearest trunks about 20 m from the deck's east rail (x 28-30) in the photograph taken on the deck, tops 9-10 m in the panorama; the stand ends at y 25, where the same photographs show the hay field beyond a single thin tree"
    }
   ]
  }

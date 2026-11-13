@@ -19,8 +19,8 @@
  },
  "trees": {
   "file": "trees.bin",
-  "count": 1771,
-  "conifers": 17,
+  "count": 1782,
+  "conifers": 19,
   "record": "float32 x, y, ground_z, height, crown_radius, kind (0 deciduous, 1 conifer)"
  },
  "ortho": {

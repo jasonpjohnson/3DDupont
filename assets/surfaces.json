@@ -32,7 +32,7 @@
    "evidence": "photo",
    "source": "owner's close photographs of the bay and walk-out patio",
    "building": "surfaces_2023",
-   "material": "River rock"
+   "material": "River rock (under a deck)"
   },
   "site_garden_path": {
    "label": "Gravel path in the vegetable garden",
@@ -50,7 +50,7 @@
    "source": "owner's photograph of the east deck from the lawn to the north; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the hot tub and east deck from the east",
    "confidence": "medium",
    "building": "surfaces_2023",
-   "material": "River rock"
+   "material": "River rock (under a deck)"
   },
   "rear_soil_under_deck": {
    "label": "Bare ground under the west end of the rear deck",
@@ -485,6 +485,15 @@
    "evidence": "photo",
    "source": "owner's photographs looking north from the house over the rear lawn; 2024 aerial photograph for its extent",
    "confidence": "low",
+   "building": "surfaces_2025",
+   "material": "Unmown meadow"
+  },
+  "sides_east_meadow_edge": {
+   "label": "Unmown weeds along the lawn's east edge",
+   "desc": "Tall weeds (goldenrod, asters, brush) between the mown lawn and the trees east of the deck, and on north along the edge of the hay field: 3-4 m deep in front of the wood, 5-6 m between the lawn and the field. Its west side is the lawn's edge; its east side is read from the summer photograph and the 2024 aerial photograph, good to about 2 m.",
+   "evidence": "photo",
+   "source": "owner's photograph taken on the east deck looking east; owner's panorama from the east deck; owner's summer photograph looking north-east from the head of the deck stairs (camera re-solved on the far trees and the horizon); 2024 aerial photograph",
+   "confidence": "medium",
    "building": "surfaces_2025",
    "material": "Unmown meadow"
   },
