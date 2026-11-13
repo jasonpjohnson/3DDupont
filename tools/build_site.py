@@ -318,8 +318,9 @@ SURFACE_MATERIALS = {
     "lawn": dict(color="#4f6a33", texture="granular", texture_args=dict(grain=0.09, blotch=0.07, tile_m=4.0), roughness=1.0, label="Lawn"),
     "fence": dict(color="#9a6a3f", texture="pickets", roughness=0.9, double_sided=True, label="Cedar privacy fence"),
     "fence_post": dict(color="#7d5733", roughness=0.9, label="Fence post"),
-    "fence_stain": dict(color="#4a2b20", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
-    "fence_stain_post": dict(color="#3a2119", roughness=0.9, label="Fence post"),
+    # a midpoint between the stain in dry summer shade (warm medium brown) and wet under November cloud (dark red-brown)
+    "fence_stain": dict(color="#6e4532", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
+    "fence_stain_post": dict(color="#573627", roughness=0.9, label="Fence post"),
     "concrete_old": dict(color="#b3a9a1", texture="concrete", roughness=0.95, label="Concrete (weathered)"),
 }
 
@@ -400,7 +401,8 @@ def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
                     for q in range(int(seg // 2.4) + 1):
                         c = a + (b - a) * min(q * 2.4 / seg, 1.0)
                         g = tri_z(dem, extent, cell, *c)
-                        posts.box((c[0], c[1], g + (h + 0.1) / 2), (0.1, 0.1, h + 0.1), np.degrees(np.arctan2(b[1] - a[1], b[0] - a[0])))
+                        ph = max(h - 0.1, 0.3)                                  # posts stop below the picket tops
+                        posts.box((c[0], c[1], g + ph / 2), (0.1, 0.1, ph), np.degrees(np.arctan2(b[1] - a[1], b[0] - a[0])))
                     run += seg
                 parts_info[base] = {**info, "material": SURFACE_MATERIALS[fmat]["label"]}
                 parts_info[base + "_posts"] = {**info, "material": SURFACE_MATERIALS[fmat]["label"]}
