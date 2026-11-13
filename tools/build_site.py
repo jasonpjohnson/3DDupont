@@ -314,10 +314,10 @@ def tri_z(dem, extent, cell, x, y):
 
 
 SURFACE_MATERIALS = {
-    "asphalt": dict(color="#2e2f31", texture="granular", texture_args=dict(grain=0.05, blotch=0.03), roughness=0.92, label="Asphalt"),
-    "asphalt_old": dict(color="#414244", texture="granular", texture_args=dict(grain=0.06, blotch=0.05), roughness=0.95, label="Asphalt (older)"),
+    "asphalt": dict(color="#3d3e41", texture="granular", texture_args=dict(grain=0.05, blotch=0.03), roughness=0.92, label="Asphalt"),
+    "asphalt_old": dict(color="#55565a", texture="granular", texture_args=dict(grain=0.06, blotch=0.05), roughness=0.95, label="Asphalt (older)"),
     "gravel": dict(color="#a29f98", texture="granular", texture_args=dict(grain=0.13, blotch=0.04, speck=0.12, tile_m=2.0), roughness=1.0, label="Crushed stone"),
-    "concrete": dict(color="#cfcbc4", texture="concrete", roughness=0.9, label="Concrete"),
+    "concrete": dict(color="#bcb8b0", texture="concrete", roughness=0.9, label="Concrete"),
     "mulch": dict(color="#5a4332", texture="granular", texture_args=dict(grain=0.16, blotch=0.06, tile_m=2.0), roughness=1.0, label="Mulch"),
     "river_rock": dict(color="#7f786d", texture="granular", texture_args=dict(grain=0.22, blotch=0.05, speck=0.2, tile_m=1.5), roughness=1.0, label="River rock"),
     "lawn": dict(color="#4f6a33", texture="granular", texture_args=dict(grain=0.09, blotch=0.07, tile_m=4.0), roughness=1.0, label="Lawn"),
@@ -326,7 +326,7 @@ SURFACE_MATERIALS = {
     # a midpoint between the stain in dry summer shade (warm medium brown) and wet under November cloud (dark red-brown)
     "fence_stain": dict(color="#6d4b3b", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
     "fence_stain_post": dict(color="#584033", roughness=0.9, label="Fence post"),
-    "concrete_old": dict(color="#b3a9a1", texture="concrete", roughness=0.95, label="Concrete (weathered)"),
+    "concrete_old": dict(color="#aaa39b", texture="concrete", roughness=0.95, label="Concrete (weathered)"),
 }
 
 
