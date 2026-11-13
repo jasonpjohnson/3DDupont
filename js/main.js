@@ -29,7 +29,9 @@ let terrain, terrainMat, skirt, heights;
 const groups = {};           // layer id -> Object3D
 const modelMeshes = [];      // pickable meshes
 const tags = [];             // {el, pos:Vector3, layer}
-const terrainUniforms = { uContour: { value: 0 }, uInterval: { value: FT }, uSummer: { value: 0 } };
+const noCanopy = new THREE.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1);
+noCanopy.needsUpdate = true;
+const terrainUniforms = { uContour: { value: 0 }, uInterval: { value: FT }, uSummer: { value: 0 }, uCanopy: { value: noCanopy }, uCanopyOn: { value: 0 } };
 
 const v3 = (x, y, z) => new THREE.Vector3(x, z - z0, -y);
 
@@ -215,11 +217,13 @@ async function loadTerrain() {
     shader.uniforms.uContour = terrainUniforms.uContour;
     shader.uniforms.uInterval = terrainUniforms.uInterval;
     shader.uniforms.uSummer = terrainUniforms.uSummer;
+    shader.uniforms.uCanopy = terrainUniforms.uCanopy;
+    shader.uniforms.uCanopyOn = terrainUniforms.uCanopyOn;
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying float vHeight;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvHeight = position.y;');
+      .replace('#include <common>', '#include <common>\nvarying float vHeight;\nvarying vec2 vTerrUv;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvHeight = position.y;\nvTerrUv = uv;');
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', '#include <common>\nvarying float vHeight;\nuniform float uContour;\nuniform float uInterval;\nuniform float uSummer;')
+      .replace('#include <common>', '#include <common>\nvarying float vHeight;\nuniform float uContour;\nuniform float uInterval;\nuniform float uSummer;\nuniform sampler2D uCanopy;\nuniform float uCanopyOn;\nvarying vec2 vTerrUv;')
       .replace('#include <color_fragment>', `#include <color_fragment>
         if (uSummer > 0.0) {
           // the aerial photograph is from early March: in the growing season dormant grass, leaf litter and
@@ -230,8 +234,15 @@ async function loadTerrain() {
           float mn = min(c0.r, min(c0.g, c0.b));
           float sat = (mx - mn) / max(mx, 0.001);
           float veg = smoothstep(0.05, 0.17, sat) * (1.0 - smoothstep(0.62, 0.85, lum)) * step(c0.b, max(c0.r, c0.g) + 0.01);
+          // the long blue-violet shadows of bare trees (green is their weakest channel; asphalt is neutral, water is all blue)
+          float violet = smoothstep(1.04, 1.14, (c0.r + c0.b) * 0.5 / max(c0.g, 0.02)) * (1.0 - smoothstep(0.3, 0.55, lum))
+            * (1.0 - smoothstep(1.25, 1.5, c0.b / max(c0.r, 0.02)));
+          veg = max(veg, violet);
           vec3 green = vec3(0.24, 0.36, 0.13) * (0.4 + lum * 1.5);
           diffuseColor.rgb = mix(c0, green, veg * 0.8 * uSummer);
+          // under the trees the floor is in leaf shade, whatever the March photograph shows there
+          float can = texture2D(uCanopy, vTerrUv).r * uCanopyOn * uSummer;
+          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.085, 0.14, 0.06) * (0.75 + lum), can * 0.88);
         }
         if (uContour > 0.0) {
           float f = vHeight / uInterval;
@@ -426,6 +437,25 @@ async function loadTrees() {
     crowns.userData.deciduous = kind === 0;
     g.add(trunks, crowns);
   });
+  // canopy mask over the terrain's extent: where crowns stand, the ground is drawn as shaded woodland floor in leaf
+  const T = M.terrain;
+  const wX = (T.nx - 1) * T.cell, wY = (T.ny - 1) * T.cell;
+  const cw = 768, chh = Math.max(2, Math.round((cw * wY) / wX));
+  const cv = document.createElement('canvas');
+  cv.width = cw; cv.height = chh;
+  const cx = cv.getContext('2d');
+  cx.fillStyle = '#000'; cx.fillRect(0, 0, cw, chh);
+  cx.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < n; i++) {
+    const [x, y, , , r] = data.subarray(i * 6, i * 6 + 5);
+    const px = ((x - T.x0) / wX) * cw, py = (1 - (y - T.y0) / wY) * chh, pr = Math.max(((r * 1.35) / wX) * cw, 1.5);
+    const gr = cx.createRadialGradient(px, py, pr * 0.45, px, py, pr);
+    gr.addColorStop(0, 'rgba(255,255,255,0.9)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    cx.fillStyle = gr; cx.beginPath(); cx.arc(px, py, pr, 0, 6.2832); cx.fill();
+  }
+  const ct = new THREE.CanvasTexture(cv);
+  ct.colorSpace = THREE.NoColorSpace;
+  terrainUniforms.uCanopy.value = ct;
 }
 const fract = (v) => v - Math.floor(v);
 
@@ -1122,6 +1152,7 @@ function tick(now) {
   }
   controls.update();
   if (state.roll) { camera.rotateZ(state.roll); camera.updateMatrixWorld(); }   // orbit controls re-level the camera every frame
+  terrainUniforms.uCanopyOn.value = groups.trees && groups.trees.visible ? 1 : 0;
   if (!state.dirty) return;
   state.dirty = false;
   renderOnce();
