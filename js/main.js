@@ -383,12 +383,13 @@ async function loadTrees() {
       tops[k] = gz + h - z0;
       q.setFromAxisAngle(up, rnd * 6.283);
       if (kind === 0) {
-        const trunkH = h * 0.55;
-        const tr = Math.max(0.12, h * 0.014);
+        const trunkH = h * 0.45;                                   // woodland hardwoods: clear stem, crown over the upper two thirds
+        const tr = Math.max(0.14, h * 0.016);
         m4.compose(v3(x, y, gz), q, new THREE.Vector3(tr, trunkH, tr));
         trunks.setMatrixAt(k, m4);
-        const ch = h * 0.52;
-        m4.compose(v3(x, y, gz + h - ch / 2), q, new THREE.Vector3(r, ch / 2, r));
+        const ch = h * 0.66;
+        const cr = r * (1.05 + rnd * 0.2);
+        m4.compose(v3(x, y, gz + h - ch / 2), q, new THREE.Vector3(cr, ch / 2, cr));
         crowns.setMatrixAt(k, m4);
         col.setHSL(0.24 + rnd * 0.06, 0.36 + rnd * 0.12, 0.27 + rnd * 0.1);     // summer hardwood greens
       } else {
