@@ -29,7 +29,7 @@ let terrain, terrainMat, skirt, heights;
 const groups = {};           // layer id -> Object3D
 const modelMeshes = [];      // pickable meshes
 const tags = [];             // {el, pos:Vector3, layer}
-const terrainUniforms = { uContour: { value: 0 }, uInterval: { value: FT } };
+const terrainUniforms = { uContour: { value: 0 }, uInterval: { value: FT }, uSummer: { value: 0 } };
 
 const v3 = (x, y, z) => new THREE.Vector3(x, z - z0, -y);
 
@@ -214,12 +214,25 @@ async function loadTerrain() {
   terrainMat.onBeforeCompile = (shader) => {
     shader.uniforms.uContour = terrainUniforms.uContour;
     shader.uniforms.uInterval = terrainUniforms.uInterval;
+    shader.uniforms.uSummer = terrainUniforms.uSummer;
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nvarying float vHeight;')
       .replace('#include <begin_vertex>', '#include <begin_vertex>\nvHeight = position.y;');
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', '#include <common>\nvarying float vHeight;\nuniform float uContour;\nuniform float uInterval;')
+      .replace('#include <common>', '#include <common>\nvarying float vHeight;\nuniform float uContour;\nuniform float uInterval;\nuniform float uSummer;')
       .replace('#include <color_fragment>', `#include <color_fragment>
+        if (uSummer > 0.0) {
+          // the aerial photograph is from early March: in the growing season dormant grass, leaf litter and
+          // stubble (warm, some colour) go green; paving, roofs and water (neutral or bright) are left alone
+          vec3 c0 = diffuseColor.rgb;
+          float lum = dot(c0, vec3(0.2126, 0.7152, 0.0722));
+          float mx = max(c0.r, max(c0.g, c0.b));
+          float mn = min(c0.r, min(c0.g, c0.b));
+          float sat = (mx - mn) / max(mx, 0.001);
+          float veg = smoothstep(0.05, 0.17, sat) * (1.0 - smoothstep(0.62, 0.85, lum)) * step(c0.b, max(c0.r, c0.g) + 0.01);
+          vec3 green = vec3(0.24, 0.36, 0.13) * (0.4 + lum * 1.5);
+          diffuseColor.rgb = mix(c0, green, veg * 0.8 * uSummer);
+        }
         if (uContour > 0.0) {
           float f = vHeight / uInterval;
           float w = fwidth(f);
@@ -465,7 +478,8 @@ async function loadModel(m) {
     const mat = o.material;
     const isGlass = /glass/i.test(mat.name);
     if (isGlass) {
-      mat.roughness = 0.12; mat.metalness = 0.0; mat.envMapIntensity = 0.8;   // dark panes from the ground, a soft sheen only
+      mat.color.set(0x5f6f7a); mat.roughness = 0.1; mat.metalness = 0.0; mat.envMapIntensity = 1.1;   // slate panes: frames and mullions read against them
+      mat.emissive.set(0x10161b);
       o.castShadow = false;
     }
     if (mat.map) { mat.map.anisotropy = 8; }
@@ -725,6 +739,7 @@ function applyMode(mode) {
   if (mode === 'photo' && !state._contourTouched) setLayer('contours', false, true);
   applyTerrainLook();
   tintTrees(mode);
+  terrainUniforms.uSummer.value = mode === 'photo' ? (state.leaf ?? 0) : 0;
   if (state.selected) highlight(state.selected);
   state.dirty = true;
 }
@@ -837,6 +852,8 @@ function setSeason() {
     o.castShadow = full;
   });
   if (state.leaf !== leaf) { state.leaf = leaf; tintTrees(state.mode); }
+  terrainUniforms.uSummer.value = state.mode === 'photo' ? leaf : 0;
+  state.dirty = true;
 }
 
 const cDay = new THREE.Color(0xfff6e8), cLow = new THREE.Color(0xffb46b), cTmp = new THREE.Color();
