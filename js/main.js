@@ -777,6 +777,8 @@ function goToView(v, animate = true) {
   controls.maxPolarAngle = v.fov ? Math.PI * 0.98 : Math.PI * 0.495;
   controls.minDistance = v.fov ? 0.5 : 6;
   state.roll = (v.roll || 0) * Math.PI / 180;                  // a hand-held photograph is rarely level
+  const oc = v.overcast ? 1 : 0;
+  if ((state.overcast || 0) !== oc) { state.overcast = oc; if (sun) setSun(); }
   if (!animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     camera.position.copy(pos);
     controls.target.copy(target);
@@ -853,13 +855,16 @@ function setSun() {
   sun.position.copy(focus).addScaledVector(lightDir, 320);
   const day = THREE.MathUtils.smoothstep(altDeg, -4, 8);
   const high = THREE.MathUtils.smoothstep(altDeg, 2, 28);
-  sun.intensity = 2.7 * day;
+  // open shade under a real sky is only two or three stops below full sun, and a white wall stays white in it;
+  // under cloud (a photo-matched view may say "overcast") the sun all but goes and the sky does the lighting
+  const oc = state.overcast || 0;
+  sun.intensity = 2.5 * day * (1 - 0.85 * oc);
   sun.color.copy(cTmp.copy(cLow).lerp(cDay, high));
   sun.castShadow = altDeg > 0.6;
-  hemi.intensity = 0.2 + 0.72 * day + 0.25 * day * (1 - high);
-  hemi.color.setHSL(0.58, 0.35, 0.55 + 0.33 * day);
+  hemi.intensity = (0.3 + 0.95 * day + 0.25 * day * (1 - high)) * (1 + 0.95 * oc);
+  hemi.color.setHSL(0.58, 0.35 * (1 - 0.6 * oc), 0.55 + 0.33 * day);
   fill.position.copy(focus).add(new THREE.Vector3(-dir.x, 0.6, -dir.z).multiplyScalar(200));
-  fill.intensity = 0.1 + 0.22 * day;
+  fill.intensity = (0.14 + 0.3 * day) * (1 + 0.8 * oc);
   scene.environmentIntensity = 0.12 + 0.3 * day;
   renderer.toneMappingExposure = 0.8 + 0.2 * day;
   // backdrop
