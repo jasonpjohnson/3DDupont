@@ -135,7 +135,7 @@ info card shows `source`:
   "trees": [ { "at": [x, y], "height": 24, "radius": 7.5, "kind": "deciduous" } ],   // one tree placed exactly (size known from photographs); replaces surveyed trees under its crown
   "woods": [ { "polygon": [[x, y], ...], "height": [8, 12], "spacing": 3.5, "kind": "deciduous" } ],  // a stand the old survey lacks (growth since 2017); skips spots that already have a tree
   "grading": [ { "polygon": [[x, y], ...], "z": 261.3, "feather": 3 } ],   // ground levelled since the survey (cut and fill)
-  "surfaces": [ { "id": "barn_asphalt", "kind": "asphalt|asphalt_old|gravel|limestone|concrete|concrete_old|mulch|river_rock|lawn",
+  "surfaces": [ { "id": "barn_asphalt", "kind": "asphalt|asphalt_old|gravel|limestone|concrete|concrete_old|mulch|river_rock|lawn|meadow|soil",
                   "polygon": [[x, y], ...], "since": 2025, "label": "...", "evidence": "photo", "source": "..." } ],
                                             // ground surfaces newer than (or wrong in) the aerial photo; draped exactly on the terrain
   "fences": [ { "id": "yard_fence", "path": [[x, y], ...], "height": 1.8, "material": "fence|fence_stain", "since": 2023, "label": "...", "evidence": "photo" } ],

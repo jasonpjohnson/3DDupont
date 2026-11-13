@@ -553,8 +553,8 @@ async function loadModel(m) {
     const mat = o.material;
     const isGlass = /glass/i.test(mat.name);
     if (isGlass) {
-      mat.color.set(0x46535d); mat.roughness = 0.1; mat.metalness = 0.0; mat.envMapIntensity = 1.2;   // dark slate panes: black frames and mullions still read against them
-      mat.emissive.set(0x0c1115);
+      mat.color.set(0x4a5863); mat.roughness = 0.1; mat.metalness = 0.0; mat.envMapIntensity = 1.2;   // slate panes: black frames and mullions read against them
+      mat.emissive.set(0x232d35);                                 // the sky they mirror: panes never go black in shade
       o.castShadow = false;
     }
     if (mat.map) { mat.map.anisotropy = 8; }
@@ -944,20 +944,23 @@ function setSun() {
   const focus = v3(...(M.focus || [0, 12, z0]));
   sun.target.position.copy(focus);
   const up = Math.max(altDeg, 0.5);
-  const lightDir = altDeg > 0.5 ? dir : new THREE.Vector3(dir.x, Math.sin(0.5 * Math.PI / 180), dir.z).normalize();
+  const lightDir = altDeg > 0.5 ? dir.clone() : new THREE.Vector3(dir.x, Math.sin(0.5 * Math.PI / 180), dir.z).normalize();
+  // under cloud the light comes from the whole sky: a weak, nearly overhead key keeps the shade under decks and eaves
+  const ocNow = state.overcast || 0;
+  if (ocNow > 0) lightDir.set(lightDir.x * 0.18, 1, lightDir.z * 0.18).normalize();
   sun.position.copy(focus).addScaledVector(lightDir, 320);
   const day = THREE.MathUtils.smoothstep(altDeg, -4, 8);
   const high = THREE.MathUtils.smoothstep(altDeg, 2, 28);
   // open shade under a real sky is only two or three stops below full sun, and a white wall stays white in it;
   // under cloud (a photo-matched view may say "overcast") the sun all but goes and the sky does the lighting
   const oc = state.overcast || 0;
-  sun.intensity = 2.5 * day * (1 - 0.85 * oc);
-  sun.color.copy(cTmp.copy(cLow).lerp(cDay, high));
+  sun.intensity = 2.5 * day * (1 - 0.62 * oc);
+  sun.color.copy(cTmp.copy(cLow).lerp(cDay, oc > 0 ? 1 : high));
   sun.castShadow = altDeg > 0.6;
-  hemi.intensity = (0.3 + 0.95 * day + 0.25 * day * (1 - high)) * (1 + 0.95 * oc);
+  hemi.intensity = (0.3 + 0.95 * day + 0.25 * day * (1 - high)) * (1 + 0.7 * oc);
   hemi.color.setHSL(0.58, 0.35 * (1 - 0.6 * oc), 0.55 + 0.33 * day);
   fill.position.copy(focus).add(new THREE.Vector3(-dir.x, 0.6, -dir.z).multiplyScalar(200));
-  fill.intensity = (0.14 + 0.3 * day) * (1 + 0.8 * oc);
+  fill.intensity = (0.2 + 0.4 * day) * (1 + 0.5 * oc);
   scene.environmentIntensity = 0.12 + 0.3 * day;
   renderer.toneMappingExposure = 0.8 + 0.2 * day;
   // backdrop

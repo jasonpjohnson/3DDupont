@@ -321,6 +321,8 @@ SURFACE_MATERIALS = {
     "limestone": dict(color="#cdc4ae", texture="granular", texture_args=dict(grain=0.16, blotch=0.04, speck=0.12, tile_m=2.0), roughness=1.0, label="Crushed limestone"),
     "mulch": dict(color="#5a4332", texture="granular", texture_args=dict(grain=0.16, blotch=0.06, tile_m=2.0), roughness=1.0, label="Mulch"),
     "river_rock": dict(color="#7f786d", texture="granular", texture_args=dict(grain=0.22, blotch=0.05, speck=0.2, tile_m=1.5), roughness=1.0, label="River rock"),
+    "meadow": dict(color="#66733a", texture="granular", texture_args=dict(grain=0.2, blotch=0.12, tile_m=5.0), roughness=1.0, label="Unmown meadow"),
+    "soil": dict(color="#6a5947", texture="granular", texture_args=dict(grain=0.14, blotch=0.08, tile_m=3.0), roughness=1.0, label="Bare soil"),
     "lawn": dict(color="#4f6a33", texture="granular", texture_args=dict(grain=0.09, blotch=0.07, tile_m=4.0), roughness=1.0, label="Lawn"),
     "fence": dict(color="#9a6a3f", texture="pickets", roughness=0.9, double_sided=True, label="Cedar privacy fence"),
     "fence_post": dict(color="#7d5733", roughness=0.9, label="Fence post"),
@@ -382,7 +384,7 @@ def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
                 poly = Polygon(it["polygon"], it.get("holes")).buffer(0)
                 part = model.part(base, kind)
                 # each kind sits at its own height so overlapping surfaces never z-fight
-                lift = {"lawn": 0.015, "asphalt_old": 0.02, "asphalt": 0.03, "mulch": 0.035, "gravel": 0.04, "limestone": 0.042,
+                lift = {"lawn": 0.015, "meadow": 0.012, "soil": 0.02, "asphalt_old": 0.02, "asphalt": 0.03, "mulch": 0.035, "gravel": 0.04, "limestone": 0.042,
                         "river_rock": 0.045, "concrete": 0.055, "concrete_old": 0.055}.get(kind, 0.03)
                 drape(part, poly, dem, extent, cell, float(it.get("lift", lift)), model.uv_scale(kind))
                 parts_info[base] = {**info, "material": SURFACE_MATERIALS[kind]["label"]}
@@ -552,7 +554,7 @@ def main():
         site = spec.get("site", {})
         # ground cleared or rebuilt since the survey (new buildings, yards, paving): no trees there
         clearings = [Polygon(c).buffer(0) for c in site.get("clearings", [])]
-        clearings += [Polygon(s_["polygon"]).buffer(0) for s_ in site.get("surfaces", []) if s_.get("kind") != "mulch"]
+        clearings += [Polygon(s_["polygon"]).buffer(0) for s_ in site.get("surfaces", []) if s_.get("kind") not in ("mulch", "meadow", "soil")]
         clearings += [Polygon(g["polygon"]).buffer(0) for g in site.get("grading", [])]
         # trees known to stand inside a cleared area today (a specimen tree in the lawn): [x, y] or [x, y, radius]
         from shapely.geometry import Point
