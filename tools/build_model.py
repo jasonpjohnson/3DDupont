@@ -39,13 +39,20 @@ def plane_basis(plane):
     return u, v, n
 
 
-def plane_polygon(part, poly2d, plane, dz=0.0, flip=False, uv_scale=1.0):
-    """Add a site-frame polygon (x, y) lifted onto ``plane`` (optionally shifted by dz)."""
+def plane_polygon(part, poly2d, plane, dz=0.0, flip=False, uv_scale=1.0, world_uv=False):
+    """Add a site-frame polygon (x, y) lifted onto ``plane`` (optionally shifted by dz).
+    world_uv anchors the texture to the site grid instead of to each piece, so a pattern runs
+    unbroken across the many small pieces of a surface draped over the terrain."""
     a, b, d = plane
     u, v, n = plane_basis(plane)
+    if world_uv:
+        u = np.array([1.0, 0.0, a]) / np.hypot(1.0, a)
+        v = np.cross(n, u)
+        if v[1] < 0:
+            v = -v
     for poly in polygon_parts(poly2d):
         c = poly.representative_point()
-        o = np.array([c.x, c.y, a * c.x + b * c.y + d + dz])
+        o = np.array([0.0, 0.0, d + dz]) if world_uv else np.array([c.x, c.y, a * c.x + b * c.y + d + dz])
 
         def to_st(ring):
             r = np.asarray(ring.coords)

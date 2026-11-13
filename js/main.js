@@ -363,7 +363,7 @@ async function loadTrees() {
   const trunkMat = new THREE.MeshStandardMaterial({ color: 0x5b5246, roughness: 1 });
   const crownGeos = [new THREE.IcosahedronGeometry(1, 1), new THREE.ConeGeometry(1, 1, 9, 1).translate(0, 0.5, 0)];
   const crownMats = [
-    new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, flatShading: true, transparent: true, opacity: 0.5, depthWrite: false }),
+    new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, flatShading: true }),
     new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, flatShading: true }),
   ];
   [trunkMat, ...crownMats].forEach(cutaway);
@@ -389,7 +389,7 @@ async function loadTrees() {
         const ch = h * 0.52;
         m4.compose(v3(x, y, gz + h - ch / 2), q, new THREE.Vector3(r, ch / 2, r));
         crowns.setMatrixAt(k, m4);
-        col.setHSL(0.21 + rnd * 0.05, 0.2 + rnd * 0.1, 0.4 + rnd * 0.1);
+        col.setHSL(0.24 + rnd * 0.06, 0.36 + rnd * 0.12, 0.27 + rnd * 0.1);     // summer hardwood greens
       } else {
         const tr = Math.max(0.12, h * 0.012);
         m4.compose(v3(x, y, gz), q, new THREE.Vector3(tr, h * 0.25, tr));
@@ -733,6 +733,7 @@ function materialFor(o) {
   return evidenceMats[o.userData.info.evidence] || evidenceMats._none;
 }
 
+const TWIG = new THREE.Color(0x6f655b);
 function tintTrees(mode) {
   const g = groups.trees;
   if (!g) return;
@@ -740,8 +741,9 @@ function tintTrees(mode) {
   g.traverse((o) => {
     if (!o.isInstancedMesh || !o.userData.baseColors) return;
     const base = o.userData.baseColors;
+    const bare = o.userData.deciduous ? 1 - (state.leaf ?? 1) : 0;
     for (let i = 0; i < o.count; i++) {
-      if (mode === 'photo') c.fromArray(base, i * 3); else c.setRGB(0.8, 0.79, 0.74);
+      if (mode === 'photo') { c.fromArray(base, i * 3); if (bare > 0) c.lerp(TWIG, bare); } else c.setRGB(0.8, 0.79, 0.74);
       o.setColorAt(i, c);
     }
     o.instanceColor.needsUpdate = true;
@@ -824,9 +826,12 @@ function setSeason() {
   const leaf = THREE.MathUtils.smoothstep(state.day, 105, 135) * (1 - THREE.MathUtils.smoothstep(state.day, 285, 310));
   groups.trees?.traverse((o) => {
     if (!o.isInstancedMesh || !o.userData.deciduous) return;
-    o.material.opacity = 0.16 + 0.36 * leaf;
-    o.castShadow = leaf > 0.5;
+    const full = leaf > 0.5;                                   // in leaf the woods are solid; bare, a faint haze of twigs
+    if (o.material.transparent === full) { o.material.transparent = !full; o.material.depthWrite = full; o.material.needsUpdate = true; }
+    o.material.opacity = full ? 1 : 0.2 + 0.5 * leaf;
+    o.castShadow = full;
   });
+  if (state.leaf !== leaf) { state.leaf = leaf; tintTrees(state.mode); }
 }
 
 const cDay = new THREE.Color(0xfff6e8), cLow = new THREE.Color(0xffb46b), cTmp = new THREE.Color();

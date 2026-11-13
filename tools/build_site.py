@@ -265,7 +265,7 @@ SURFACE_MATERIALS = {
     "concrete": dict(color="#cfcbc4", texture="concrete", roughness=0.9, label="Concrete"),
     "mulch": dict(color="#5a4332", texture="granular", texture_args=dict(grain=0.16, blotch=0.06, tile_m=2.0), roughness=1.0, label="Mulch"),
     "river_rock": dict(color="#9a948a", texture="granular", texture_args=dict(grain=0.16, blotch=0.03, speck=0.15, tile_m=1.5), roughness=1.0, label="River rock"),
-    "lawn": dict(color="#5d7a3a", texture="granular", texture_args=dict(grain=0.07, blotch=0.06), roughness=1.0, label="Lawn"),
+    "lawn": dict(color="#4f6a33", texture="granular", texture_args=dict(grain=0.09, blotch=0.07, tile_m=4.0), roughness=1.0, label="Lawn"),
     "fence": dict(color="#9a6a3f", texture="pickets", roughness=0.9, double_sided=True, label="Cedar privacy fence"),
     "fence_post": dict(color="#7d5733", roughness=0.9, label="Fence post"),
     "fence_stain": dict(color="#4a2b20", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
@@ -297,7 +297,7 @@ def drape(part, poly, dem, extent, cell, lift, uv_scale):
                 # plane through the three corners: z = A x + B y + D
                 m = np.array([[p0[0], p0[1], 1.0], [p1[0], p1[1], 1.0], [p2[0], p2[1], 1.0]])
                 A, B, D = np.linalg.solve(m, np.array([z0_, z1_, z2_]))
-                plane_polygon(part, piece, (A, B, D), dz=lift, uv_scale=uv_scale)
+                plane_polygon(part, piece, (A, B, D), dz=lift, uv_scale=uv_scale, world_uv=True)
 
 
 def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
