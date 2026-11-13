@@ -316,7 +316,7 @@ def tri_z(dem, extent, cell, x, y):
 SURFACE_MATERIALS = {
     "asphalt": dict(color="#3d3e41", texture="granular", texture_args=dict(grain=0.05, blotch=0.03), roughness=0.92, label="Asphalt"),
     "asphalt_old": dict(color="#55565a", texture="granular", texture_args=dict(grain=0.06, blotch=0.05), roughness=0.95, label="Asphalt (older)"),
-    "gravel": dict(color="#a29f98", texture="granular", texture_args=dict(grain=0.13, blotch=0.04, speck=0.12, tile_m=2.0), roughness=1.0, label="Crushed stone"),
+    "gravel": dict(color="#989085", texture="granular", texture_args=dict(grain=0.2, blotch=0.05, speck=0.18, tile_m=2.0), roughness=1.0, label="Crushed stone"),
     "concrete": dict(color="#bcb8b0", texture="concrete", roughness=0.9, label="Concrete"),
     "mulch": dict(color="#5a4332", texture="granular", texture_args=dict(grain=0.16, blotch=0.06, tile_m=2.0), roughness=1.0, label="Mulch"),
     "river_rock": dict(color="#7f786d", texture="granular", texture_args=dict(grain=0.22, blotch=0.05, speck=0.2, tile_m=1.5), roughness=1.0, label="River rock"),

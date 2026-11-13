@@ -437,6 +437,51 @@ async function loadTrees() {
     crowns.userData.deciduous = kind === 0;
     g.add(trunks, crowns);
   });
+  // understory: inside woodland (three or more neighbours within 9 m) the gaps between the stems are closed by
+  // shrubs and saplings, so a wood reads as a wall of green from the lawn, as it does in life
+  {
+    const cellSz = 9, grid = new Map();
+    const key = (a, b) => a + ',' + b;
+    for (let i = 0; i < n; i++) {
+      const k = key(Math.floor(data[i * 6] / cellSz), Math.floor(data[i * 6 + 1] / cellSz));
+      if (!grid.has(k)) grid.set(k, []);
+      grid.get(k).push(i);
+    }
+    const bushes = [];
+    for (let i = 0; i < n; i++) {
+      if (data[i * 6 + 5] >= 0.5) continue;
+      const x = data[i * 6], y = data[i * 6 + 1], gx = Math.floor(x / cellSz), gy = Math.floor(y / cellSz);
+      let near = 0;
+      for (let a = gx - 1; a <= gx + 1; a++) for (let b = gy - 1; b <= gy + 1; b++) {
+        for (const j of grid.get(key(a, b)) || []) if (j !== i && (data[j * 6] - x) ** 2 + (data[j * 6 + 1] - y) ** 2 < 81) near++;
+      }
+      if (near < 3) continue;
+      const r1 = fract(Math.sin(i * 78.233) * 43758.5453), r2 = fract(Math.sin(i * 39.425) * 24634.6345), r3 = fract(Math.sin(i * 11.135) * 96321.9124);
+      bushes.push([x + (r1 - 0.5) * 4.4, y + (r2 - 0.5) * 4.4, data[i * 6 + 2], 1.7 + r3 * 1.5, 1.5 + r1 * 1.4, data[i * 6 + 2] + data[i * 6 + 3], r2]);
+      if (r3 > 0.45) bushes.push([x - (r2 - 0.5) * 5.0, y + (r3 - 0.5) * 5.0, data[i * 6 + 2], 1.5 + r1 * 1.3, 1.3 + r2 * 1.2, data[i * 6 + 2] + data[i * 6 + 3], r1]);
+    }
+    if (bushes.length) {
+      const bm = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, flatShading: true });
+      cutaway(bm);
+      const im = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), bm, bushes.length);
+      const tops = new Float32Array(bushes.length);
+      bushes.forEach(([x, y, gz, rb, hb, top, rnd], k) => {
+        q.setFromAxisAngle(up, rnd * 6.283);
+        m4.compose(v3(x, y, gz + hb * 0.75), q, new THREE.Vector3(rb, hb, rb));
+        im.setMatrixAt(k, m4);
+        col.setHSL(0.26 + rnd * 0.05, 0.36 + rnd * 0.08, 0.17 + rnd * 0.07);
+        im.setColorAt(k, col);
+        tops[k] = top - z0;
+      });
+      im.geometry.setAttribute('aTop', new THREE.InstancedBufferAttribute(tops, 1));
+      im.castShadow = false;
+      im.receiveShadow = true;
+      im.userData.baseColors = im.instanceColor.array.slice();
+      im.userData.deciduous = true;
+      im.userData.understory = true;
+      g.add(im);
+    }
+  }
   // canopy mask over the terrain's extent: where crowns stand, the ground is drawn as shaded woodland floor in leaf
   const T = M.terrain;
   const wX = (T.nx - 1) * T.cell, wY = (T.ny - 1) * T.cell;
@@ -880,7 +925,7 @@ function setSeason() {
     const full = leaf > 0.5;                                   // in leaf the woods are solid; bare, a faint haze of twigs
     if (o.material.transparent === full) { o.material.transparent = !full; o.material.depthWrite = full; o.material.needsUpdate = true; }
     o.material.opacity = full ? 1 : 0.1 + 0.6 * leaf;
-    o.castShadow = full;
+    o.castShadow = full && !o.userData.understory;
   });
   if (state.leaf !== leaf) { state.leaf = leaf; tintTrees(state.mode); }
   terrainUniforms.uSummer.value = state.mode === 'photo' ? leaf : 0;
