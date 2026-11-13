@@ -324,8 +324,8 @@ SURFACE_MATERIALS = {
     "fence": dict(color="#9a6a3f", texture="pickets", roughness=0.9, double_sided=True, label="Cedar privacy fence"),
     "fence_post": dict(color="#7d5733", roughness=0.9, label="Fence post"),
     # a midpoint between the stain in dry summer shade (warm medium brown) and wet under November cloud (dark red-brown)
-    "fence_stain": dict(color="#6e4532", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
-    "fence_stain_post": dict(color="#573627", roughness=0.9, label="Fence post"),
+    "fence_stain": dict(color="#6d4b3b", texture="pickets", roughness=0.9, double_sided=True, label="Stained cedar privacy fence"),
+    "fence_stain_post": dict(color="#584033", roughness=0.9, label="Fence post"),
     "concrete_old": dict(color="#b3a9a1", texture="concrete", roughness=0.95, label="Concrete (weathered)"),
 }
 
@@ -403,7 +403,8 @@ def build_surfaces(spec, dem, out_dir, extent=EXTENT, cell=CELL):
                         d = (p1 - p0) / max(np.hypot(*(p1 - p0)), 1e-9)
                         s0, s1 = run + seg * q / n, run + seg * (q + 1) / n
                         part.add(quad, (d[1], -d[0], 0.0), np.array([[s0, 0], [s1, 0], [s1, h], [s0, h]]) * uv, [[0, 1, 2], [0, 2, 3]])
-                    for q in range(int(seg // 2.4) + 1):
+                    # a board fence shows unbroken pickets; posts are drawn only where asked for ("posts": true)
+                    for q in range(int(seg // 2.4) + 1 if it.get("posts") else 0):
                         c = a + (b - a) * min(q * 2.4 / seg, 1.0)
                         g = tri_z(dem, extent, cell, *c)
                         ph = max(h - 0.1, 0.3)                                  # posts stop below the picket tops
