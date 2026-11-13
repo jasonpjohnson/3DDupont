@@ -391,7 +391,7 @@ async function loadTrees() {
         const cr = r * (1.05 + rnd * 0.2);
         m4.compose(v3(x, y, gz + h - ch / 2), q, new THREE.Vector3(cr, ch / 2, cr));
         crowns.setMatrixAt(k, m4);
-        col.setHSL(0.24 + rnd * 0.06, 0.36 + rnd * 0.12, 0.27 + rnd * 0.1);     // summer hardwood greens
+        col.setHSL(0.25 + rnd * 0.06, 0.36 + rnd * 0.1, 0.22 + rnd * 0.09);     // summer hardwood greens
       } else {
         const tr = Math.max(0.12, h * 0.012);
         m4.compose(v3(x, y, gz), q, new THREE.Vector3(tr, h * 0.25, tr));

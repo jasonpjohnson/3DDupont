@@ -91,9 +91,57 @@ def sample(dem, extent, cell, x, y):
             + dem[iy + 1, ix] * (1 - tx) * ty + dem[iy + 1, ix + 1] * tx * ty)
 
 
-def find_trees(p, dem, extent=EXTENT, cell=CELL, exclude=(), chm_cell=0.5, min_h=4.0):
+def thicken_woods(peaks, x, y, hag, extent, exclude=(), growth_years=9.0, cell=5.0, min_d=4.2, seed=11):
+    """The survey was flown leaf-off, years ago: bare hardwoods return few pulses, so the canopy model finds only the
+    dominant tops, and thickets that were head-high then are woods now. Wherever the survey saw woody growth
+    (two or more returns above 2.5 m in a 5 m cell, small gaps closed) and no tree top was found nearby, add a tree
+    sized from the tallest return around it plus the growth since. These are inferred, not located, stems."""
+    xmin, ymin, xmax, ymax = extent
+    nx, ny = int((xmax - xmin) / cell) + 1, int((ymax - ymin) / cell) + 1
+    hi = hag > 2.5
+    ix, iy = ((x[hi] - xmin) / cell).astype(int), ((y[hi] - ymin) / cell).astype(int)
+    count = np.zeros((ny, nx))
+    np.add.at(count, (iy, ix), 1)
+    top = np.zeros((ny, nx), dtype=np.float32)
+    np.maximum.at(top, (iy, ix), hag[hi].astype(np.float32))
+    woody = ndimage.binary_opening(ndimage.binary_closing(count >= 2, structure=np.ones((3, 3))), structure=np.ones((2, 2)))
+    top = ndimage.maximum_filter(top, size=3)
+    rng = np.random.default_rng(seed)
+    keepout = [prep(poly.buffer(1.5)) for poly in exclude]
+    boxes = [poly.buffer(1.5).bounds for poly in exclude]
+    pts = [tuple(pk[:2]) for pk in peaks]
+    added = []
+    grid = {}                                               # coarse hash of accepted positions for the spacing test
+    def near(px, py):
+        gx, gy = int(px // min_d), int(py // min_d)
+        for a in (gx - 1, gx, gx + 1):
+            for b in (gy - 1, gy, gy + 1):
+                for qx, qy in grid.get((a, b), ()):
+                    if (qx - px) ** 2 + (qy - py) ** 2 < min_d * min_d:
+                        return True
+        return False
+    for px, py in pts:
+        grid.setdefault((int(px // min_d), int(py // min_d)), []).append((px, py))
+    for j, i in np.argwhere(woody):
+        px = xmin + (i + rng.uniform(0.15, 0.85)) * cell
+        py = ymin + (j + rng.uniform(0.15, 0.85)) * cell
+        if near(px, py):
+            continue
+        if any(bx0 <= px <= bx1 and by0 <= py <= by1 and k.contains(Point(px, py)) for k, (bx0, by0, bx1, by1) in zip(keepout, boxes)):
+            continue
+        t = float(top[j, i])
+        grow = 0.5 * growth_years * float(np.clip((20.0 - t) / 8.0, 0.0, 1.0))      # young stands gain about 0.5 m a year
+        h = float(np.clip((t + grow) * rng.uniform(0.82, 1.0), 6.0, 27.0))
+        added.append((px, py, h))
+        grid.setdefault((int(px // min_d), int(py // min_d)), []).append((px, py))
+    if not added:
+        return peaks
+    return np.vstack([peaks, np.array(added, dtype=float)]) if len(peaks) else np.array(added, dtype=float)
+
+
+def find_trees(p, dem, extent=EXTENT, cell=CELL, exclude=(), chm_cell=0.5, min_h=4.0, fill_woods=True, growth_years=9.0):
     """Tree tops = local maxima of a smoothed canopy-height model built from
-    non-ground returns, outside building polygons."""
+    non-ground returns, outside building polygons; woods are then thickened (see thicken_woods)."""
     xmin, ymin, xmax, ymax = extent
     veg = p["classification"] != 2
     x, y, z = p["x"][veg], p["y"][veg], p["z"][veg]
@@ -130,12 +178,14 @@ def find_trees(p, dem, extent=EXTENT, cell=CELL, exclude=(), chm_cell=0.5, min_h
             continue                                  # not the dominant top of a big crown
         peaks.append((xmin + (i + 0.5) * chm_cell, ymin + (j + 0.5) * chm_cell, h))
     peaks = np.array(peaks, dtype=float) if peaks else np.zeros((0, 3))
+    if fill_woods:
+        peaks = thicken_woods(peaks, x, y, hag, extent, exclude, growth_years)
     if len(peaks) == 0:
         return peaks, chm
     # crown radius from local canopy extent: distance to nearest other top, capped by height
     tree = cKDTree(peaks[:, :2])
     dd, _ = tree.query(peaks[:, :2], k=2)
-    radius = np.clip(dd[:, 1] * 0.55, 1.2, None)
+    radius = np.clip(dd[:, 1] * 0.62, 1.4, None)
     radius = np.minimum(radius, np.clip(peaks[:, 2] * 0.33, 1.5, 7.0))
     gz = sample(dem, extent, cell, peaks[:, 0], peaks[:, 1])
     out = np.c_[peaks[:, 0], peaks[:, 1], gz, peaks[:, 2], radius, np.zeros(len(peaks))]
