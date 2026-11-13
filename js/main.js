@@ -734,7 +734,7 @@ function materialFor(o) {
   return evidenceMats[o.userData.info.evidence] || evidenceMats._none;
 }
 
-const TWIG = new THREE.Color(0x6f655b);
+const TWIG = new THREE.Color(0x857b70);
 function tintTrees(mode) {
   const g = groups.trees;
   if (!g) return;
@@ -830,7 +830,7 @@ function setSeason() {
     if (!o.isInstancedMesh || !o.userData.deciduous) return;
     const full = leaf > 0.5;                                   // in leaf the woods are solid; bare, a faint haze of twigs
     if (o.material.transparent === full) { o.material.transparent = !full; o.material.depthWrite = full; o.material.needsUpdate = true; }
-    o.material.opacity = full ? 1 : 0.2 + 0.5 * leaf;
+    o.material.opacity = full ? 1 : 0.1 + 0.6 * leaf;
     o.castShadow = full;
   });
   if (state.leaf !== leaf) { state.leaf = leaf; tintTrees(state.mode); }
