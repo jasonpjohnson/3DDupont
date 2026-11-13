@@ -88,29 +88,43 @@ def standing_seam(color="#8f959a", seam_m=0.41, seams=4, size=512, seed=4):
     return _finish(_rgb(color), shade, size), seam_m * seams
 
 
-def ledgestone(color="#8a8478", tile_m=1.2, size=512, seed=5):
-    """Stacked ledgestone veneer: random courses of long thin stones, dark recessed joints."""
+def ledgestone(color="#8a8478", tile_m=1.6, size=1024, seed=5, accent=None, accent_share=0.0, dark_share=0.36, light_share=0.24):
+    """Stacked ledgestone veneer: thin courses of long, narrow stones in a mix of the base grey,
+    charcoal and a warm accent; each stone is lit along its top edge and shadowed in the joint below."""
     rng = np.random.default_rng(seed)
     n = 1024
+    px = n / tile_m                                              # pixels per metre
     base = _rgb(color)
+    warm = _rgb(accent) if accent else base
     arr = np.zeros((n, n, 3), dtype=np.float32)
     y = 0
     while y < n:
-        h = int(rng.integers(n // 22, n // 10))
-        x = -int(rng.integers(0, n // 6))
+        h = int(rng.uniform(0.035, 0.085) * px)                  # course height 3.5 - 8.5 cm
+        if n - (y + h) < 0.035 * px:
+            h = n - y
+        x = -int(rng.uniform(0, 0.3) * px)
         while x < n:
-            w = int(rng.integers(n // 9, n // 3))
-            tint = 1.0 + rng.normal(0, 0.2)                      # light grey to charcoal
-            hue = base * tint + rng.normal(0, 2.5, 3)
+            w = int(rng.uniform(0.14, 0.46) * px)                # stone length 14 - 46 cm
+            r = rng.random()
+            if r < dark_share:                                   # charcoal stones
+                hue = base * rng.uniform(0.42, 0.66)
+            elif r < dark_share + light_share:                   # pale stones
+                hue = base * rng.uniform(1.2, 1.55)
+            elif r < dark_share + light_share + accent_share:
+                hue = warm * rng.uniform(0.85, 1.1)
+            else:
+                hue = base * rng.uniform(0.74, 1.04)
+            hue = hue + rng.normal(0, 1.2, 3)
             x0, x1 = max(x, 0), min(x + w, n)
             y1 = min(y + h, n)
-            arr[y:y1, x0:x1] = hue
-            arr[y:min(y + 3, n), x0:x1] *= 0.5                      # bed joint
-            arr[y:y1, x0:min(x0 + 3, n)] *= 0.55                    # head joint
-            arr[max(y1 - 2, y):y1, x0:x1] *= 1.08
+            if x1 > x0:
+                rows = np.linspace(1.1, 0.9, y1 - y, dtype=np.float32)[:, None, None]   # rough face: top catches light
+                arr[y:y1, x0:x1] = hue[None, None, :] * rows
+                arr[y:min(y + 2, n), x0:x1] *= 0.42              # shadowed bed joint under the stone above
+                arr[y:y1, x0:min(x0 + 2, n)] *= 0.5              # head joint
             x += w
         y += h
-    arr += _noise((n, n), rng, 9.0)[:, :, None]
+    arr *= (1.0 + _noise((n, n), rng, 0.07) + _noise((n, n), rng, 0.05, 3))[:, :, None]
     img = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGB").resize((size, size), Image.LANCZOS)
     return img, tile_m
 

@@ -463,7 +463,7 @@ async function loadModel(m) {
     const mat = o.material;
     const isGlass = /glass/i.test(mat.name);
     if (isGlass) {
-      mat.roughness = 0.06; mat.metalness = 0.0; mat.envMapIntensity = 3.2;
+      mat.roughness = 0.12; mat.metalness = 0.0; mat.envMapIntensity = 0.8;   // dark panes from the ground, a soft sheen only
       o.castShadow = false;
     }
     if (mat.map) { mat.map.anisotropy = 8; }
