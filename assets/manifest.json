@@ -142,7 +142,8 @@
    "quiet": true
   }
  ],
- "download": "assets/house.glb",
+ "download": "assets/3910-w-dupont-sketchup.zip",
+ "download_label": "Download for SketchUp",
  "parts": {
   "garage_roof": {
    "building": "house",
@@ -4568,5 +4569,5 @@
   ],
   "footer": "The model is a reconstruction for visualisation, not a survey. The parcel line is the county GIS line and is not a legal boundary."
  },
- "build": "8e890e761c"
+ "build": "4a98f604b9"
 }

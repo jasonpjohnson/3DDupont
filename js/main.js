@@ -131,7 +131,10 @@ function setupChrome() {
     panel.dataset.open = String(open);
     toggle.setAttribute('aria-expanded', String(open));
   });
-  if (M.download) { $('download').href = asset(M.download.replace(/^assets\//, '')); } else { $('download').hidden = true; }
+  if (M.download) {
+    $('download').href = asset(M.download.replace(/^assets\//, ''));
+    if (M.download_label) $('download').textContent = M.download_label;
+  } else { $('download').hidden = true; }
 }
 
 // ---------------------------------------------------------------- scene -----

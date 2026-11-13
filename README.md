@@ -18,7 +18,8 @@ the model for what it is and how it is known; click the ground for its surveyed 
   the LiDAR canopy, the aerial photograph, 1 ft contours, the parcel line, the county sketch
   dimensions, and the raw LiDAR returns themselves.
 - **Sun study** for any date and time at this latitude, with leaf-on and leaf-off woods.
-- **Measure** between any two points, and a downloadable `.glb` of the house.
+- **Measure** between any two points, and a **SketchUp download**: a COLLADA (`.dae`) package of every
+  building, the site works and the ground, at true scale in metres, with textures.
 
 ## How it was made
 
@@ -64,6 +65,7 @@ python3 tools/fetch_lidar.py --out data/lidar                      # LiDAR from 
 python3 tools/build_site.py data/lidar/IN_Statewide_B1_2017_raw3857.npz assets/ --spec spec/site_spec.json \
         [--ortho photo.png --cir infrared.png]                     # terrain, trees, points, paving, fence
 python3 tools/build_model.py spec/site_spec.json assets/           # buildings -> .glb + parts catalogue
+python3 tools/export_sketchup.py assets/                           # the SketchUp package behind the download button
 python3 tools/build_manifest.py spec/site_spec.json assets/        # what the viewer loads (stamps a build id)
 python3 tools/stamp_page.py                                        # version the script and stylesheet links
 

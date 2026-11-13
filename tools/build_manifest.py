@@ -77,7 +77,10 @@ def main():
         "trees": trees,
         "points": layers["points"],
         "models": models,
-        "download": f"assets/{spec['buildings'][0]['id']}.glb" if spec["buildings"] else None,
+        # the page's download button: the SketchUp package if tools/export_sketchup.py has made one, else the house as glTF
+        "download": next((f"assets/{f}" for f in sorted(os.listdir(out_dir)) if f.endswith("-sketchup.zip")),
+                         f"assets/{spec['buildings'][0]['id']}.glb" if spec["buildings"] else None),
+        "download_label": "Download for SketchUp" if any(f.endswith("-sketchup.zip") for f in os.listdir(out_dir)) else "Download .glb",
         "parts": parts,
         "parcel": site.get("parcel"),
         "parcel_corners": site.get("parcel_corners", []),
