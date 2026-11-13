@@ -328,6 +328,14 @@ class Builder:
                 o3 = P(0, 0, out)
                 part.planar(geom, (o3[0], o3[1], 0.0), (t[0], t[1], 0), (0, 0, 1), normal=(n[0], n[1], 0), uv_scale=self.uv(mat))
 
+            def vbeam(part, a, b_, face_w, depth, t=t):
+                """Upright member: face_w across the wall face, depth through the wall. (Part.beam lays an
+                upright's width along world y, so the two swap on walls that run east-west.)"""
+                if abs(t[0]) > abs(t[1]):
+                    part.beam(a, b_, depth, face_w)
+                else:
+                    part.beam(a, b_, face_w, depth)
+
             def outline_members(part, geom, width, depth, out, P=P):
                 """Frame members running along the inside of a polygon's edges."""
                 inner = geom.buffer(-width / 2, join_style=2)
@@ -341,7 +349,7 @@ class Builder:
                         if horizontal:
                             part.beam(P(a[0], a[1], out), P(b_[0], b_[1], out), depth, width)
                         else:
-                            part.beam(P(a[0], a[1], out), P(b_[0], b_[1], out), width, depth)
+                            vbeam(part, P(a[0], a[1], out), P(b_[0], b_[1], out), width, depth)
 
             fw, fd, gi = cfg["frame_w"], cfg["frame_depth"], cfg["glass_inset"]
             frame = get("frame", frame_mat, "window frames" if kind == "window" else "frame")
@@ -364,7 +372,7 @@ class Builder:
                     sx = s0 + (s1 - s0) * c / cols
                     seg = shape.intersection(box(sx - 1e-4, h0 - 1, sx + 1e-4, h1 + 1))
                     if not seg.is_empty:
-                        frame.beam(P(sx, seg.bounds[1], -gi + 0.012), P(sx, seg.bounds[3], -gi + 0.012), bar, 0.02)
+                        vbeam(frame, P(sx, seg.bounds[1], -gi + 0.012), P(sx, seg.bounds[3], -gi + 0.012), bar, 0.02)
                 for rr in range(1, rows):
                     hy = h0 + (h1 - h0) * rr / rows
                     seg = shape.intersection(box(s0 - 1, hy - 1e-4, s1 + 1, hy + 1e-4))
@@ -393,7 +401,7 @@ class Builder:
                         cols, rows = o.get("grid", [1, 1])
                         for c in range(1, cols):
                             sx = a + stile + (lw - 2 * stile) * c / cols
-                            frame.beam(P(sx, ha, -gi), P(sx, hb, -gi), 0.02, 0.016)
+                            vbeam(frame, P(sx, ha, -gi), P(sx, hb, -gi), 0.02, 0.016)
                         for rr in range(1, rows):
                             hy = ha + (hb - ha) * rr / rows
                             frame.beam(P(a + stile, hy, -gi), P(b_ - stile, hy, -gi), 0.016, 0.02)

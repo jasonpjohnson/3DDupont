@@ -508,8 +508,8 @@ async function loadModel(m) {
     const mat = o.material;
     const isGlass = /glass/i.test(mat.name);
     if (isGlass) {
-      mat.color.set(0x5f6f7a); mat.roughness = 0.1; mat.metalness = 0.0; mat.envMapIntensity = 1.1;   // slate panes: frames and mullions read against them
-      mat.emissive.set(0x10161b);
+      mat.color.set(0x46535d); mat.roughness = 0.1; mat.metalness = 0.0; mat.envMapIntensity = 1.2;   // dark slate panes: black frames and mullions still read against them
+      mat.emissive.set(0x0c1115);
       o.castShadow = false;
     }
     if (mat.map) { mat.map.anisotropy = 8; }

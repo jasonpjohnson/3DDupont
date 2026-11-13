@@ -226,7 +226,12 @@ def spec_footprints(spec):
             if w.get("footprint"):
                 fp = Polygon(w["footprint"]).buffer(0)
                 polys.append(fp.buffer(w.get("overhang", 0.4), join_style=2))
-                pads.append((fp, float(w.get("base_z", spec["z0"]))))
+                # the ground must stay under the floor, but a wing whose walls run down to a low corner of a
+                # sloping site (base_z) must not drag the whole perimeter down to that level
+                pad_z = float(w.get("base_z", spec["z0"]))
+                if w.get("floor_z") is not None:
+                    pad_z = max(pad_z, float(w["floor_z"]) - 0.35)
+                pads.append((fp, pad_z))
             if w.get("eave"):
                 polys.append(Polygon(w["eave"]).buffer(0))
         for el in b.get("elements", []):
@@ -314,7 +319,7 @@ SURFACE_MATERIALS = {
     "gravel": dict(color="#a29f98", texture="granular", texture_args=dict(grain=0.13, blotch=0.04, speck=0.12, tile_m=2.0), roughness=1.0, label="Crushed stone"),
     "concrete": dict(color="#cfcbc4", texture="concrete", roughness=0.9, label="Concrete"),
     "mulch": dict(color="#5a4332", texture="granular", texture_args=dict(grain=0.16, blotch=0.06, tile_m=2.0), roughness=1.0, label="Mulch"),
-    "river_rock": dict(color="#9a948a", texture="granular", texture_args=dict(grain=0.16, blotch=0.03, speck=0.15, tile_m=1.5), roughness=1.0, label="River rock"),
+    "river_rock": dict(color="#7f786d", texture="granular", texture_args=dict(grain=0.22, blotch=0.05, speck=0.2, tile_m=1.5), roughness=1.0, label="River rock"),
     "lawn": dict(color="#4f6a33", texture="granular", texture_args=dict(grain=0.09, blotch=0.07, tile_m=4.0), roughness=1.0, label="Lawn"),
     "fence": dict(color="#9a6a3f", texture="pickets", roughness=0.9, double_sided=True, label="Cedar privacy fence"),
     "fence_post": dict(color="#7d5733", roughness=0.9, label="Fence post"),
@@ -443,9 +448,25 @@ def build_ortho(ortho_path, out_path, roofs, ortho_extent, extent=EXTENT, qualit
     return {"file": os.path.basename(out_path), "width": int(img.shape[1]), "height": int(img.shape[0]), "mpp": round(mpp, 4)}
 
 
-def classify_conifers(trees, cir_path, ortho_extent, ndvi_min=0.27):
+def crown_density(p, dem, trees, extent=EXTENT, cell=CELL):
+    """Laser returns per square metre in the upper part of each crown. The survey was leaf-off, so an
+    evergreen's crown is dense with returns while a bare hardwood lets most pulses through."""
+    veg = p["classification"] != 2
+    x, y, z = p["x"][veg], p["y"][veg], p["z"][veg]
+    hag = z - sample(dem, extent, cell, x, y)
+    kd = cKDTree(np.c_[x, y])
+    out = np.zeros(len(trees))
+    for k, (tx, ty, _, h, r, _) in enumerate(trees):
+        rq = float(np.clip(r, 1.5, 2.5))
+        idx = kd.query_ball_point([tx, ty], rq)
+        out[k] = float((hag[idx] > 0.35 * h).sum()) / (np.pi * rq * rq)
+    return out
+
+
+def classify_conifers(trees, cir_path, ortho_extent, ndvi_min=0.27, density=None, density_min=1.2):
     """Leaf-off colour-infrared (NIR, R, G): evergreen crowns stay bright in NIR.
-    Sets kind = 1 for trees whose crown is green in a leaf-off image."""
+    Sets kind = 1 for trees whose crown is green in a leaf-off image - and, when crown return densities are
+    given, dense as well: over a lawn the photograph is green through a bare hardwood's branches."""
     import cv2
     cir = cv2.imread(cir_path, cv2.IMREAD_COLOR)            # BGR order = (G, R, NIR)
     if cir is None or not len(trees):
@@ -460,7 +481,7 @@ def classify_conifers(trees, cir_path, ortho_extent, ndvi_min=0.27):
         c, rr = int((x - oxmin) / mpp), int((oymax - y) / mpp)
         w = max(2, int(min(r, 2.5) * 0.6 / mpp))
         patch = ndvi[max(rr - w, 0):rr + w + 1, max(c - w, 0):c + w + 1]
-        if patch.size and float(np.median(patch)) > ndvi_min:
+        if patch.size and float(np.median(patch)) > ndvi_min and (density is None or density[k] >= density_min):
             out[k, 5] = 1.0
     return out
 
@@ -500,7 +521,7 @@ def main():
         dem = apply_grading(dem, site.get("grading", []))
     trees, _ = find_trees(p, dem, exclude=[r for r, _ in roofs] + clearings)
     if args.cir:
-        trees = classify_conifers(trees, args.cir, args.ortho_extent)
+        trees = classify_conifers(trees, args.cir, args.ortho_extent, density=crown_density(p, dem, trees))
     dem = apply_pads(dem, pads)
     surface_models = build_surfaces(spec, dem, args.out_dir) if spec else []
     zmin = float(np.floor(dem.min() * 10) / 10)
