@@ -132,6 +132,8 @@ info card shows `source`:
   "parcel": [[x, y], ...], "parcel_corners": [[x, y], ...], "parcel_note": "11.90 ac",
   "clearings": [ [[x, y], ...] ],           // ground cleared since the 2017 survey: no LiDAR trees are drawn inside
   "keep_trees": [ [x, y, 3.0] ],            // trees still standing inside a clearing / lawn / paving outline: centre and radius (m)
+  "trees": [ { "at": [x, y], "height": 24, "radius": 7.5, "kind": "deciduous" } ],   // one tree placed exactly (size known from photographs); replaces surveyed trees under its crown
+  "woods": [ { "polygon": [[x, y], ...], "height": [8, 12], "spacing": 3.5, "kind": "deciduous" } ],  // a stand the old survey lacks (growth since 2017); skips spots that already have a tree
   "grading": [ { "polygon": [[x, y], ...], "z": 261.3, "feather": 3 } ],   // ground levelled since the survey (cut and fill)
   "surfaces": [ { "id": "barn_asphalt", "kind": "asphalt|asphalt_old|gravel|concrete|concrete_old|mulch|river_rock|lawn",
                   "polygon": [[x, y], ...], "since": 2025, "label": "...", "evidence": "photo", "source": "..." } ],

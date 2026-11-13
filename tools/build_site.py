@@ -106,7 +106,6 @@ def thicken_woods(peaks, x, y, hag, extent, exclude=(), growth_years=9.0, cell=5
     np.maximum.at(top, (iy, ix), hag[hi].astype(np.float32))
     woody = ndimage.binary_opening(ndimage.binary_closing(count >= 2, structure=np.ones((3, 3))), structure=np.ones((2, 2)))
     top = ndimage.maximum_filter(top, size=3)
-    rng = np.random.default_rng(seed)
     keepout = [prep(poly.buffer(1.5)) for poly in exclude]
     boxes = [poly.buffer(1.5).bounds for poly in exclude]
     pts = [tuple(pk[:2]) for pk in peaks]
@@ -123,6 +122,7 @@ def thicken_woods(peaks, x, y, hag, extent, exclude=(), growth_years=9.0, cell=5
     for px, py in pts:
         grid.setdefault((int(px // min_d), int(py // min_d)), []).append((px, py))
     for j, i in np.argwhere(woody):
+        rng = np.random.default_rng(seed * 1000003 + int(j) * nx + int(i))      # per cell: editing one corner of the site does not reshuffle the rest
         px = xmin + (i + rng.uniform(0.15, 0.85)) * cell
         py = ymin + (j + rng.uniform(0.15, 0.85)) * cell
         if near(px, py):
@@ -464,6 +464,46 @@ def crown_density(p, dem, trees, extent=EXTENT, cell=CELL):
     return out
 
 
+def add_spec_trees(trees, site, dem, roofs, extent=EXTENT, cell=CELL):
+    """Trees the survey cannot give: site["woods"] = [{"polygon": [...], "height": [lo, hi], "spacing": 3.5,
+    "kind": "deciduous"|"conifer"}] plants a stand (young growth since the survey, a hedge row), skipping spots
+    that already have a tree; site["trees"] = [{"at": [x, y], "height": h, "radius": r, "kind": ...}] places one
+    tree exactly, replacing any surveyed tree within its crown (a specimen tree whose size is known from photographs)."""
+    rows = [list(t) for t in trees]
+    roof_p = [prep(r.buffer(0.8)) for r in roofs]
+    for wd in site.get("woods", []):
+        poly = Polygon(wd["polygon"]).buffer(0)
+        sp = float(wd.get("spacing", 3.5))
+        lo, hi = wd.get("height", [8.0, 12.0])
+        kind = 1.0 if wd.get("kind") == "conifer" else 0.0
+        pp = prep(poly)
+        x0, y0, x1, y1 = poly.bounds
+        have = cKDTree(np.array([[r[0], r[1]] for r in rows])) if rows else None
+        new = []
+        for j in range(int((y1 - y0) / sp) + 2):
+            for i in range(int((x1 - x0) / sp) + 2):
+                rng = np.random.default_rng(7919 * (i + 1) + 104729 * (j + 1) + int(abs(x0) * 10) + int(abs(y0) * 10) * 31)
+                px = x0 + (i + rng.uniform(0.1, 0.9)) * sp
+                py = y0 + (j + rng.uniform(0.1, 0.9)) * sp
+                if not pp.contains(Point(px, py)) or any(r.contains(Point(px, py)) for r in roof_p):
+                    continue
+                if have is not None and have.query([px, py])[0] < sp * 0.8:
+                    continue
+                if any((px - q[0]) ** 2 + (py - q[1]) ** 2 < (sp * 0.7) ** 2 for q in new):
+                    continue
+                h = float(rng.uniform(lo, hi))
+                new.append([px, py, float(sample(dem, extent, cell, np.array([px]), np.array([py]))[0]), h,
+                            float(np.clip(sp * rng.uniform(0.55, 0.75), 1.2, 0.3 * h + 1.0)), kind])
+        rows += new
+    for t in site.get("trees", []):
+        x, y = t["at"]
+        r = float(t.get("radius", 3.0))
+        rows = [q for q in rows if (q[0] - x) ** 2 + (q[1] - y) ** 2 > (0.6 * r) ** 2]
+        rows.append([float(x), float(y), float(sample(dem, extent, cell, np.array([x]), np.array([y]))[0]),
+                     float(t.get("height", 12.0)), r, 1.0 if t.get("kind") == "conifer" else 0.0])
+    return np.array(rows, dtype=float) if rows else trees
+
+
 def classify_conifers(trees, cir_path, ortho_extent, ndvi_min=0.27, density=None, density_min=1.2):
     """Leaf-off colour-infrared (NIR, R, G): evergreen crowns stay bright in NIR.
     Sets kind = 1 for trees whose crown is green in a leaf-off image - and, when crown return densities are
@@ -523,6 +563,8 @@ def main():
     trees, _ = find_trees(p, dem, exclude=[r for r, _ in roofs] + clearings)
     if args.cir:
         trees = classify_conifers(trees, args.cir, args.ortho_extent, density=crown_density(p, dem, trees))
+    if spec:
+        trees = add_spec_trees(trees, spec.get("site", {}), dem, [r for r, _ in roofs])
     dem = apply_pads(dem, pads)
     surface_models = build_surfaces(spec, dem, args.out_dir) if spec else []
     zmin = float(np.floor(dem.min() * 10) / 10)
