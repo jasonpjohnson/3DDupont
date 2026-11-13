@@ -88,6 +88,16 @@ def main():
         "evidence": evidence,
         "about": site.get("about", {}),
     }
+    # build id: a digest of every asset beside the manifest. The viewer always re-validates the manifest and
+    # asks for the other files as file?v=<build>, so a browser never mixes files from two builds.
+    import hashlib
+    h = hashlib.sha1()
+    for name in sorted(os.listdir(out_dir)):
+        path = os.path.join(out_dir, name)
+        if name != "manifest.json" and os.path.isfile(path):
+            h.update(name.encode())
+            h.update(hashlib.sha1(open(path, "rb").read()).digest())
+    manifest["build"] = h.hexdigest()[:10]
     out = os.path.join(out_dir, "manifest.json")
     json.dump(manifest, open(out, "w"), indent=1)
     print(f"wrote {out}: {len(models)} models, {len(parts)} parts, {len(layer_list)} layers")

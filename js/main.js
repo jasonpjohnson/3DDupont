@@ -88,8 +88,11 @@ async function init() {
 function hasWebGL() {
   try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; }
 }
+// every asset is requested as file?v=<build id from the manifest>: a new build is a new URL, so the browser's
+// cache can never serve part of an older one. The manifest itself is always re-validated.
+const asset = (file) => `${ASSETS}/${file}${M && M.build ? `?v=${M.build}` : ''}`;
 async function fetchJSON(url) {
-  const r = await fetch(url);
+  const r = await fetch(url, { cache: 'no-cache' });
   if (!r.ok) throw new Error(`${url} → HTTP ${r.status}`);
   return r.json();
 }
@@ -128,7 +131,7 @@ function setupChrome() {
     panel.dataset.open = String(open);
     toggle.setAttribute('aria-expanded', String(open));
   });
-  if (M.download) { $('download').href = M.download.replace(/^assets\//, `${ASSETS}/`); } else { $('download').hidden = true; }
+  if (M.download) { $('download').href = asset(M.download.replace(/^assets\//, '')); } else { $('download').hidden = true; }
 }
 
 // ---------------------------------------------------------------- scene -----
@@ -179,7 +182,7 @@ function setupScene() {
 // -------------------------------------------------------------- terrain -----
 async function loadTerrain() {
   const t = M.terrain;
-  const buf = await fetchBuffer(`${ASSETS}/${t.file}`);
+  const buf = await fetchBuffer(asset(t.file));
   const raw = new Uint16Array(buf);
   const { nx, ny } = t;
   heights = new Float32Array(nx * ny);
@@ -302,7 +305,7 @@ let orthoTex = null;
 const orthoCache = {};
 async function loadOrthoFile(file) {
   if (!orthoCache[file]) {
-    orthoCache[file] = new THREE.TextureLoader().loadAsync(`${ASSETS}/${file}`).then((t) => {
+    orthoCache[file] = new THREE.TextureLoader().loadAsync(asset(file)).then((t) => {
       t.colorSpace = THREE.SRGBColorSpace;
       t.anisotropy = renderer.capabilities.getMaxAnisotropy();
       return t;
@@ -382,7 +385,7 @@ async function loadTrees() {
   groups.trees = g;
   scene.add(g);
   if (!t || !t.count) return;
-  const data = new Float32Array(await fetchBuffer(`${ASSETS}/${t.file}`));
+  const data = new Float32Array(await fetchBuffer(asset(t.file)));
   const n = Math.floor(data.length / 6);
   const kinds = [[], []];
   for (let i = 0; i < n; i++) kinds[data[i * 6 + 5] >= 0.5 ? 1 : 0].push(i);
@@ -545,7 +548,7 @@ const clayFlat = new THREE.MeshStandardMaterial({ color: 0xc4c0b5, roughness: 1,
 const evidenceMats = {};
 
 async function loadModel(m) {
-  const gltf = await new GLTFLoader().loadAsync(`${ASSETS}/${m.file}`);
+  const gltf = await new GLTFLoader().loadAsync(asset(m.file));
   const root = gltf.scene;
   root.name = m.id;
   root.traverse((o) => {
@@ -697,7 +700,7 @@ function loadPoints() {
   if (pointsPromise) return pointsPromise;
   pointsPromise = (async () => {
     const p = M.points;
-    const buf = await fetchBuffer(`${ASSETS}/${p.file}`);
+    const buf = await fetchBuffer(asset(p.file));
     const u16 = new Uint16Array(buf);
     const u8 = new Uint8Array(buf);
     const n = p.count;

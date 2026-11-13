@@ -64,7 +64,8 @@ python3 tools/fetch_lidar.py --out data/lidar                      # LiDAR from 
 python3 tools/build_site.py data/lidar/IN_Statewide_B1_2017_raw3857.npz assets/ --spec spec/site_spec.json \
         [--ortho photo.png --cir infrared.png]                     # terrain, trees, points, paving, fence
 python3 tools/build_model.py spec/site_spec.json assets/           # buildings -> .glb + parts catalogue
-python3 tools/build_manifest.py spec/site_spec.json assets/        # what the viewer loads
+python3 tools/build_manifest.py spec/site_spec.json assets/        # what the viewer loads (stamps a build id)
+python3 tools/stamp_page.py                                        # version the script and stylesheet links
 
 python3 -m http.server 8765                                        # then open http://localhost:8765/
 ```
