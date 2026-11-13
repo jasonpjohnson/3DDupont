@@ -156,6 +156,7 @@ function setupScene() {
   controls.maxPolarAngle = Math.PI * 0.495;
   controls.zoomToCursor = true;
   controls.addEventListener('change', () => { state.dirty = true; });
+  controls.addEventListener('start', () => { state.roll = 0; state.dirty = true; });   // taking hold of the view levels it
 
   sun = new THREE.DirectionalLight(0xffffff, 3.0);
   sun.castShadow = true;
@@ -774,6 +775,7 @@ function goToView(v, animate = true) {
   // photo-matched cameras may look upward from eye level and stand close; normal views stay above the ground
   controls.maxPolarAngle = v.fov ? Math.PI * 0.98 : Math.PI * 0.495;
   controls.minDistance = v.fov ? 0.5 : 6;
+  state.roll = (v.roll || 0) * Math.PI / 180;                  // a hand-held photograph is rarely level
   if (!animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     camera.position.copy(pos);
     controls.target.copy(target);
@@ -1096,6 +1098,7 @@ function tick(now) {
     setSun();
   }
   controls.update();
+  if (state.roll) { camera.rotateZ(state.roll); camera.updateMatrixWorld(); }   // orbit controls re-level the camera every frame
   if (!state.dirty) return;
   state.dirty = false;
   renderOnce();
