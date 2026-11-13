@@ -924,7 +924,8 @@ function setSeason() {
     if (!o.isInstancedMesh || !o.userData.deciduous) return;
     const full = leaf > 0.5;                                   // in leaf the woods are solid; bare, a faint haze of twigs
     if (o.material.transparent === full) { o.material.transparent = !full; o.material.depthWrite = full; o.material.needsUpdate = true; }
-    o.material.opacity = full ? 1 : 0.1 + 0.6 * leaf;
+    o.material.opacity = full ? 1 : 0.07 + 0.6 * leaf;
+    if (o.userData.understory) o.visible = leaf > 0.3;          // bare brush is all but invisible; do not draw a grey fog for it
     o.castShadow = full && !o.userData.understory;
   });
   if (state.leaf !== leaf) { state.leaf = leaf; tintTrees(state.mode); }
