@@ -19,8 +19,8 @@
  },
  "trees": {
   "file": "trees.bin",
-  "count": 580,
-  "conifers": 8,
+  "count": 1771,
+  "conifers": 17,
   "record": "float32 x, y, ground_z, height, crown_radius, kind (0 deciduous, 1 conifer)"
  },
  "ortho": {
@@ -28,7 +28,7 @@
   "width": 2480,
   "height": 3200,
   "mpp": 0.125,
-  "credit": "Indiana Geographic Information Office, statewide orthoimagery (CC0)",
+  "credit": "Indiana Geographic Information Office, 2024 statewide orthoimagery (CC0)",
   "year": 2024,
   "date": "March 3, 2024"
  },

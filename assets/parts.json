@@ -1,312 +1,3255 @@
 {
- "main_roof": {
-  "building": "house",
-  "material": "Charcoal asphalt shingles",
-  "label": "Main block \u2014 roof",
-  "desc": "Draft massing",
-  "evidence": "record"
- },
- "main_fascia": {
-  "building": "house",
-  "material": "Black trim",
-  "label": "Main block \u2014 fascia and soffit",
-  "desc": "Draft massing",
-  "evidence": "record"
- },
- "two_storey_roof": {
-  "building": "house",
-  "material": "Charcoal asphalt shingles",
-  "label": "Two-storey block \u2014 roof",
-  "evidence": "record"
- },
- "two_storey_fascia": {
-  "building": "house",
-  "material": "Black trim",
-  "label": "Two-storey block \u2014 fascia and soffit",
-  "evidence": "record"
- },
- "east_roof": {
-  "building": "house",
-  "material": "Charcoal asphalt shingles",
-  "label": "East wing \u2014 roof",
-  "evidence": "record"
- },
- "east_fascia": {
-  "building": "house",
-  "material": "Black trim",
-  "label": "East wing \u2014 fascia and soffit",
-  "evidence": "record"
- },
- "link_roof": {
-  "building": "house",
-  "material": "Charcoal asphalt shingles",
-  "label": "Garage link \u2014 roof",
-  "evidence": "record"
- },
- "link_fascia": {
-  "building": "house",
-  "material": "Black trim",
-  "label": "Garage link \u2014 fascia and soffit",
-  "evidence": "record"
- },
  "garage_roof": {
   "building": "house",
   "material": "Charcoal asphalt shingles",
   "label": "Attached garage \u2014 roof",
-  "evidence": "record"
+  "desc": "One-storey garage wing with a gable roof whose ridge runs east-west; the west gable end holds the vehicle door. The surveyed roof was checked against the owner's photograph from the south-west: peak and three eave corners fall within 8 px (about 6 cm) of the photographed ones, so the roof is unchanged.",
+  "dims": "25' x 28' walls; ridge 4.6 m (15 ft) above the drive; 3.9-in-12",
+  "evidence": "lidar",
+  "source": "2017 laser survey for the roof (both slopes, ridge running east-west) and the record card for the 25 x 28 ft walls; owner's photograph from the south-west for the west wall, its door and cladding",
+  "confidence": "high"
  },
  "garage_fascia": {
   "building": "house",
-  "material": "Black trim",
+  "material": "Black trim, fascia and gutters",
   "label": "Attached garage \u2014 fascia and soffit",
-  "evidence": "record"
+  "desc": "One-storey garage wing with a gable roof whose ridge runs east-west; the west gable end holds the vehicle door. The surveyed roof was checked against the owner's photograph from the south-west: peak and three eave corners fall within 8 px (about 6 cm) of the photographed ones, so the roof is unchanged.",
+  "dims": "25' x 28' walls; ridge 4.6 m (15 ft) above the drive; 3.9-in-12",
+  "evidence": "lidar",
+  "source": "2017 laser survey for the roof (both slopes, ridge running east-west) and the record card for the 25 x 28 ft walls; owner's photograph from the south-west for the west wall, its door and cladding",
+  "confidence": "high"
+ },
+ "link_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Link between garage and house \u2014 roof",
+  "desc": "One-storey link with its own small north-south ridge between the garage roof and the house (surveyed in 2017). Its west wall faces the fenced yard and is not in any photograph; plain white siding there is inferred.",
+  "dims": "13' x 8' (card); ridge 3.70 m above front grade",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (29 returns); wall lines from the Allen County property record card sketch (dimensions in whole feet)",
+  "confidence": "medium"
+ },
+ "link_fascia": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Link between garage and house \u2014 fascia and soffit",
+  "desc": "One-storey link with its own small north-south ridge between the garage roof and the house (surveyed in 2017). Its west wall faces the fenced yard and is not in any photograph; plain white siding there is inferred.",
+  "dims": "13' x 8' (card); ridge 3.70 m above front grade",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (29 returns); wall lines from the Allen County property record card sketch (dimensions in whole feet)",
+  "confidence": "medium"
+ },
+ "north_range_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "One-storey north range and west end \u2014 roof",
+  "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
+  "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
+  "confidence": "high"
+ },
+ "north_range_fascia": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "One-storey north range and west end \u2014 fascia and soffit",
+  "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
+  "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
+  "confidence": "high"
+ },
+ "north_bay_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Rear bay with glazed gable (2 ft cantilever) \u2014 roof",
+  "desc": "North-facing gabled bay that projects 2 ft beyond the rear wall at main-floor level only (cantilevered over the walk-out wall). Roof planes and ridge are the 2017 LiDAR fit, which the owner's photographs reproduce (peak 266.1 m, slopes 4.9-in-12); width, glazing and eaves are measured in the photographs.",
+  "dims": "17 ft 9 in wide, projects 2 ft; peak 3.8 m above the main floor; 4.9-in-12",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes, 37 returns); owner's photographs of the rear and of the bay; owner's main-floor plan (16 ft 8 in inside width)",
+  "confidence": "high"
+ },
+ "north_bay_fascia": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Rear bay with glazed gable (2 ft cantilever) \u2014 fascia and soffit",
+  "desc": "North-facing gabled bay that projects 2 ft beyond the rear wall at main-floor level only (cantilevered over the walk-out wall). Roof planes and ridge are the 2017 LiDAR fit, which the owner's photographs reproduce (peak 266.1 m, slopes 4.9-in-12); width, glazing and eaves are measured in the photographs.",
+  "dims": "17 ft 9 in wide, projects 2 ft; peak 3.8 m above the main floor; 4.9-in-12",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes, 37 returns); owner's photographs of the rear and of the bay; owner's main-floor plan (16 ft 8 in inside width)",
+  "confidence": "high"
+ },
+ "core_west_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 roof",
+  "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+  "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
+  "evidence": "photo",
+  "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
+  "confidence": "high"
+ },
+ "core_west_fascia": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 fascia and soffit",
+  "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+  "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
+  "evidence": "photo",
+  "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
+  "confidence": "high"
+ },
+ "core_east_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Two-storey east block (highest roof) \u2014 roof",
+  "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+  "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
+  "evidence": "photo",
+  "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
+  "confidence": "high"
+ },
+ "core_east_fascia": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Two-storey east block (highest roof) \u2014 fascia and soffit",
+  "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+  "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
+  "evidence": "photo",
+  "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
+  "confidence": "high"
+ },
+ "core_east_soffit": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Two-storey east block (highest roof) \u2014 roof",
+  "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+  "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
+  "evidence": "photo",
+  "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
+  "confidence": "high"
+ },
+ "east_wing_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "East wing (2023 addition) \u2014 roof",
+  "desc": "One-storey wing with a plain gable roof: the ridge runs east-west, the east wall is a gable end with lap siding to the peak, and the two slopes face the front and the east deck - there is no hip and no vehicle door: it is part of the house, not a garage. Solved cameras put the ridge at 266.5-266.6 m and both eaves at 264.7-264.8 m, about 0.1 m lower than the first reconstruction; ridge position +-0.3 m north-south, heights +-0.1 m. Front eave overhang 0.26 m and south-east rake corner 0.30 m, from the roof corner picked in five front photographs.",
+  "dims": "13' x 27' walls; ridge 4.8 m (15.7 ft) above front grade; 4.8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the east side (from the north-east, the north, the east and the south-east corner), each with its camera solved; 2024 aerial photograph for the roof outline; record card for the 13 ft width",
+  "confidence": "medium"
+ },
+ "east_wing_fascia": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "East wing (2023 addition) \u2014 fascia and soffit",
+  "desc": "One-storey wing with a plain gable roof: the ridge runs east-west, the east wall is a gable end with lap siding to the peak, and the two slopes face the front and the east deck - there is no hip and no vehicle door: it is part of the house, not a garage. Solved cameras put the ridge at 266.5-266.6 m and both eaves at 264.7-264.8 m, about 0.1 m lower than the first reconstruction; ridge position +-0.3 m north-south, heights +-0.1 m. Front eave overhang 0.26 m and south-east rake corner 0.30 m, from the roof corner picked in five front photographs.",
+  "dims": "13' x 27' walls; ridge 4.8 m (15.7 ft) above front grade; 4.8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the east side (from the north-east, the north, the east and the south-east corner), each with its camera solved; 2024 aerial photograph for the roof outline; record card for the 13 ft width",
+  "confidence": "medium"
+ },
+ "b_gable_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Stone tower - front gable \u2014 roof",
+  "desc": "Front-facing gable of the stone tower, ridge running back into the upper roof; grey ledgestone to the peak, black rake boards. Ridge and eave heights measured in two of the owner's front photographs (they agree within 0.1 m).",
+  "dims": "about 10.6 ft wide; peak 21.6 ft, eaves 17 ft above the porch floor; about 7.5-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "b_gable_fascia": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Stone tower - front gable \u2014 fascia and soffit",
+  "desc": "Front-facing gable of the stone tower, ridge running back into the upper roof; grey ledgestone to the peak, black rake boards. Ridge and eave heights measured in two of the owner's front photographs (they agree within 0.1 m).",
+  "dims": "about 10.6 ft wide; peak 21.6 ft, eaves 17 ft above the porch floor; about 7.5-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "c_gable_roof": {
+  "building": "house",
+  "material": "Charcoal asphalt shingles",
+  "label": "Tall front gable \u2014 roof",
+  "desc": "The tall white gable right of the entry: board-and-batten up to a white trim band, grey lap siding in the peak, black rake boards. Peak and eave heights measured in the owner's front photographs.",
+  "dims": "13 ft wide; peak 22.5 ft above the porch floor (the highest point of the front); about 8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "c_gable_fascia": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Tall front gable \u2014 fascia and soffit",
+  "desc": "The tall white gable right of the entry: board-and-batten up to a white trim band, grey lap siding in the peak, black rake boards. Peak and eave heights measured in the owner's front photographs.",
+  "dims": "13 ft wide; peak 22.5 ft above the porch floor (the highest point of the front); about 8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
  },
  "porch_roof": {
   "building": "house",
-  "material": "Standing-seam metal",
-  "label": "Front porch \u2014 roof",
-  "evidence": "record"
+  "material": "Standing-seam metal, dark bronze",
+  "label": "Front porch roof (standing-seam metal) \u2014 roof",
+  "desc": "Low-slope dark standing-seam metal roof over the porch, from the entry portico to the east end; white soffit, black gutter. Heights measured in the owner's front photographs.",
+  "dims": "about 21 ft long, 9.5 ft deep; about 3.7-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
  },
  "porch_fascia": {
   "building": "house",
-  "material": "Black trim",
-  "label": "Front porch \u2014 fascia and soffit",
-  "evidence": "record"
+  "material": "Black trim, fascia and gutters",
+  "label": "Front porch roof (standing-seam metal) \u2014 fascia and soffit",
+  "desc": "Low-slope dark standing-seam metal roof over the porch, from the entry portico to the east end; white soffit, black gutter. Heights measured in the owner's front photographs.",
+  "dims": "about 21 ft long, 9.5 ft deep; about 3.7-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
  },
- "main_walls_stone": {
+ "porch_soffit": {
   "building": "house",
-  "material": "Stone veneer",
-  "label": "Main block \u2014 Stone veneer",
-  "desc": "Draft massing",
-  "evidence": "record"
+  "material": "White trim",
+  "label": "Front porch roof (standing-seam metal) \u2014 roof",
+  "desc": "Low-slope dark standing-seam metal roof over the porch, from the entry portico to the east end; white soffit, black gutter. Heights measured in the owner's front photographs.",
+  "dims": "about 21 ft long, 9.5 ft deep; about 3.7-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
  },
- "main_walls": {
+ "portico_roof": {
   "building": "house",
-  "material": "White lap siding",
-  "label": "Main block \u2014 White lap siding",
-  "desc": "Draft massing",
-  "evidence": "record"
+  "material": "Standing-seam metal, dark bronze",
+  "label": "Entry portico roof (small front gable) \u2014 roof",
+  "desc": "Small gable over the front doors at the west (left) end of the porch, same dark standing-seam metal as the porch roof, black rake boards.",
+  "dims": "about 10.5 ft wide; peak 12 ft above the porch floor; about 8.5-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
  },
- "two_storey_walls": {
+ "portico_fascia": {
   "building": "house",
-  "material": "White lap siding",
-  "label": "Two-storey block \u2014 White lap siding",
-  "evidence": "record"
+  "material": "Black trim, fascia and gutters",
+  "label": "Entry portico roof (small front gable) \u2014 fascia and soffit",
+  "desc": "Small gable over the front doors at the west (left) end of the porch, same dark standing-seam metal as the porch roof, black rake boards.",
+  "dims": "about 10.5 ft wide; peak 12 ft above the porch floor; about 8.5-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
  },
- "two_storey_walls_board_batten": {
+ "portico_soffit": {
   "building": "house",
-  "material": "White board-and-batten",
-  "label": "Two-storey block \u2014 White board-and-batten",
-  "evidence": "record"
+  "material": "White trim",
+  "label": "Entry portico roof (small front gable) \u2014 roof",
+  "desc": "Small gable over the front doors at the west (left) end of the porch, same dark standing-seam metal as the porch roof, black rake boards.",
+  "dims": "about 10.5 ft wide; peak 12 ft above the porch floor; about 8.5-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
  },
- "two_storey_walls_stone": {
+ "garage_walls_stone_tan": {
   "building": "house",
-  "material": "Stone veneer",
-  "label": "Two-storey block \u2014 Stone veneer",
-  "evidence": "record"
- },
- "east_walls_stone": {
-  "building": "house",
-  "material": "Stone veneer",
-  "label": "East wing \u2014 Stone veneer",
-  "evidence": "record"
- },
- "east_walls": {
-  "building": "house",
-  "material": "White lap siding",
-  "label": "East wing \u2014 White lap siding",
-  "evidence": "record"
- },
- "link_walls_stone": {
-  "building": "house",
-  "material": "Stone veneer",
-  "label": "Garage link \u2014 Stone veneer",
-  "evidence": "record"
- },
- "link_walls": {
-  "building": "house",
-  "material": "White lap siding",
-  "label": "Garage link \u2014 White lap siding",
-  "evidence": "record"
+  "material": "Tan-grey stone base (garage west end)",
+  "label": "Attached garage \u2014 Tan-grey stone base (garage west end)",
+  "desc": "One-storey garage wing with a gable roof whose ridge runs east-west; the west gable end holds the vehicle door. The surveyed roof was checked against the owner's photograph from the south-west: peak and three eave corners fall within 8 px (about 6 cm) of the photographed ones, so the roof is unchanged.",
+  "dims": "25' x 28' walls; ridge 4.6 m (15 ft) above the drive; 3.9-in-12",
+  "evidence": "lidar",
+  "source": "2017 laser survey for the roof (both slopes, ridge running east-west) and the record card for the 25 x 28 ft walls; owner's photograph from the south-west for the west wall, its door and cladding",
+  "confidence": "high"
  },
  "garage_walls_stone": {
   "building": "house",
-  "material": "Stone veneer",
-  "label": "Attached garage \u2014 Stone veneer",
-  "evidence": "record"
+  "material": "Grey ledgestone veneer",
+  "label": "Attached garage \u2014 Grey ledgestone veneer",
+  "desc": "One-storey garage wing with a gable roof whose ridge runs east-west; the west gable end holds the vehicle door. The surveyed roof was checked against the owner's photograph from the south-west: peak and three eave corners fall within 8 px (about 6 cm) of the photographed ones, so the roof is unchanged.",
+  "dims": "25' x 28' walls; ridge 4.6 m (15 ft) above the drive; 3.9-in-12",
+  "evidence": "lidar",
+  "source": "2017 laser survey for the roof (both slopes, ridge running east-west) and the record card for the 25 x 28 ft walls; owner's photograph from the south-west for the west wall, its door and cladding",
+  "confidence": "high"
+ },
+ "garage_walls_stone_cap": {
+  "building": "house",
+  "material": "Cast stone cap",
+  "label": "Attached garage \u2014 Cast stone cap",
+  "desc": "One-storey garage wing with a gable roof whose ridge runs east-west; the west gable end holds the vehicle door. The surveyed roof was checked against the owner's photograph from the south-west: peak and three eave corners fall within 8 px (about 6 cm) of the photographed ones, so the roof is unchanged.",
+  "dims": "25' x 28' walls; ridge 4.6 m (15 ft) above the drive; 3.9-in-12",
+  "evidence": "lidar",
+  "source": "2017 laser survey for the roof (both slopes, ridge running east-west) and the record card for the 25 x 28 ft walls; owner's photograph from the south-west for the west wall, its door and cladding",
+  "confidence": "high"
  },
  "garage_walls": {
   "building": "house",
   "material": "White lap siding",
   "label": "Attached garage \u2014 White lap siding",
-  "evidence": "record"
+  "desc": "One-storey garage wing with a gable roof whose ridge runs east-west; the west gable end holds the vehicle door. The surveyed roof was checked against the owner's photograph from the south-west: peak and three eave corners fall within 8 px (about 6 cm) of the photographed ones, so the roof is unchanged.",
+  "dims": "25' x 28' walls; ridge 4.6 m (15 ft) above the drive; 3.9-in-12",
+  "evidence": "lidar",
+  "source": "2017 laser survey for the roof (both slopes, ridge running east-west) and the record card for the 25 x 28 ft walls; owner's photograph from the south-west for the west wall, its door and cladding",
+  "confidence": "high"
+ },
+ "garage_walls_concrete": {
+  "building": "house",
+  "material": "Concrete",
+  "label": "Attached garage \u2014 Concrete",
+  "desc": "One-storey garage wing with a gable roof whose ridge runs east-west; the west gable end holds the vehicle door. The surveyed roof was checked against the owner's photograph from the south-west: peak and three eave corners fall within 8 px (about 6 cm) of the photographed ones, so the roof is unchanged.",
+  "dims": "25' x 28' walls; ridge 4.6 m (15 ft) above the drive; 3.9-in-12",
+  "evidence": "lidar",
+  "source": "2017 laser survey for the roof (both slopes, ridge running east-west) and the record card for the 25 x 28 ft walls; owner's photograph from the south-west for the west wall, its door and cladding",
+  "confidence": "high"
+ },
+ "link_walls_stone": {
+  "building": "house",
+  "material": "Grey ledgestone veneer",
+  "label": "Link between garage and house \u2014 Grey ledgestone veneer",
+  "desc": "One-storey link with its own small north-south ridge between the garage roof and the house (surveyed in 2017). Its west wall faces the fenced yard and is not in any photograph; plain white siding there is inferred.",
+  "dims": "13' x 8' (card); ridge 3.70 m above front grade",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (29 returns); wall lines from the Allen County property record card sketch (dimensions in whole feet)",
+  "confidence": "medium"
+ },
+ "link_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Link between garage and house \u2014 White lap siding",
+  "desc": "One-storey link with its own small north-south ridge between the garage roof and the house (surveyed in 2017). Its west wall faces the fenced yard and is not in any photograph; plain white siding there is inferred.",
+  "dims": "13' x 8' (card); ridge 3.70 m above front grade",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (29 returns); wall lines from the Allen County property record card sketch (dimensions in whole feet)",
+  "confidence": "medium"
+ },
+ "link_walls_stone_cap": {
+  "building": "house",
+  "material": "Cast stone cap",
+  "label": "Link between garage and house \u2014 Cast stone cap",
+  "desc": "One-storey link with its own small north-south ridge between the garage roof and the house (surveyed in 2017). Its west wall faces the fenced yard and is not in any photograph; plain white siding there is inferred.",
+  "dims": "13' x 8' (card); ridge 3.70 m above front grade",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (29 returns); wall lines from the Allen County property record card sketch (dimensions in whole feet)",
+  "confidence": "medium"
+ },
+ "north_range_walls_foundation": {
+  "building": "house",
+  "material": "Painted concrete foundation",
+  "label": "One-storey north range and west end \u2014 Painted concrete foundation",
+  "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
+  "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
+  "confidence": "high"
+ },
+ "north_range_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "One-storey north range and west end \u2014 White lap siding",
+  "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
+  "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
+  "confidence": "high"
+ },
+ "north_range_walls_foundation_shaded": {
+  "building": "house",
+  "material": "Painted concrete foundation (in the deck's shade)",
+  "label": "One-storey north range and west end \u2014 Painted concrete foundation (in the deck's shade)",
+  "desc": "Long low roof over the north side and the west end, fitted to 205 LiDAR returns; its north slope carries the two skylights and dies into the clerestory wall of the upper roof. The north-west corner is enclosed: the rear wall runs straight from the bay to the west end of the house (owner's photographs and floor plan). West wall position from LiDAR wall hits and the photographs. The east rake stands 0.3 m proud of the east wall (photographs from the east); the other eaves are the surveyed outline.",
+  "dims": "rear wall 54 ft long; ridge 4.97 m above front grade; 3.7-in-12 south / 3.9-in-12 north",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes and eaves); owner's photographs of the rear and owner's main-floor plan (wall line, enclosed north-west corner)",
+  "confidence": "high"
+ },
+ "north_bay_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Rear bay with glazed gable (2 ft cantilever) \u2014 White lap siding",
+  "desc": "North-facing gabled bay that projects 2 ft beyond the rear wall at main-floor level only (cantilevered over the walk-out wall). Roof planes and ridge are the 2017 LiDAR fit, which the owner's photographs reproduce (peak 266.1 m, slopes 4.9-in-12); width, glazing and eaves are measured in the photographs.",
+  "dims": "17 ft 9 in wide, projects 2 ft; peak 3.8 m above the main floor; 4.9-in-12",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes, 37 returns); owner's photographs of the rear and of the bay; owner's main-floor plan (16 ft 8 in inside width)",
+  "confidence": "high"
+ },
+ "north_bay_underside": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Rear bay with glazed gable (2 ft cantilever) \u2014 underside",
+  "desc": "North-facing gabled bay that projects 2 ft beyond the rear wall at main-floor level only (cantilevered over the walk-out wall). Roof planes and ridge are the 2017 LiDAR fit, which the owner's photographs reproduce (peak 266.1 m, slopes 4.9-in-12); width, glazing and eaves are measured in the photographs.",
+  "dims": "17 ft 9 in wide, projects 2 ft; peak 3.8 m above the main floor; 4.9-in-12",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (roof planes, 37 returns); owner's photographs of the rear and of the bay; owner's main-floor plan (16 ft 8 in inside width)",
+  "confidence": "high"
+ },
+ "core_west_walls_stone": {
+  "building": "house",
+  "material": "Grey ledgestone veneer",
+  "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 Grey ledgestone veneer",
+  "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+  "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
+  "evidence": "photo",
+  "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
+  "confidence": "high"
+ },
+ "core_west_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 White lap siding",
+  "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+  "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
+  "evidence": "photo",
+  "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
+  "confidence": "high"
+ },
+ "core_west_walls_board_batten": {
+  "building": "house",
+  "material": "White board-and-batten",
+  "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 White board-and-batten",
+  "desc": "Upper roof with an east-west ridge; its front slope runs down over the entry block to an eave above a band of white board-and-batten wall with two small windows. Ridge and slopes are the 2017 survey planes (unchanged in the photographs); the stone-faced two-storey tower is the west end of this block. The roof planes are the 2017 laser fit; the north eave was pulled back 0.39 m to the line of the present (2023) gutter, whose east end is fixed by two photographs - eave overhang about 0.23 m on the north side - which is why this part is marked as read from photographs.",
+  "dims": "tower face 10.6 ft wide, set back 8 ft behind the entry wall; front eave 14 ft above the porch floor",
+  "evidence": "photo",
+  "source": "2017 laser survey for the roof planes; owner's photographs of the front (straight on from the walk, and from the drive) for the walls, cladding and the tower's west corner; north eave line: owner's photographs of the east side from the north-east and from the north (the upper roof's gutter runs in one straight line across this block and the east block)",
+  "confidence": "high"
+ },
+ "core_east_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Two-storey east block (highest roof) \u2014 White lap siding",
+  "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+  "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
+  "evidence": "photo",
+  "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
+  "confidence": "high"
+ },
+ "core_east_walls_board_batten": {
+  "building": "house",
+  "material": "White board-and-batten",
+  "label": "Two-storey east block (highest roof) \u2014 White board-and-batten",
+  "desc": "Highest roof of the house: gable over the card's 13 x 25 ft two-storey block, its south slope 1.0 m above the west part's. The roof planes are the 2017 laser fit; the north eave and the north-east corner of the roof were moved to where two photographs of the present (2023) roof put the gutter's end - the eave 0.23 m beyond the wall instead of the 0.62 m of the 2017 outline, the rake 0.25 m beyond the gable wall - which is why this part is marked as read from photographs.",
+  "dims": "13' x 25' (card); ridge 7.50 m (24.6 ft) above front grade; 5.0-in-12 south",
+  "evidence": "photo",
+  "source": "roof planes: USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the building frame (131 returns); wall lines from the Allen County property record card sketch; north eave and north-east rake corner: owner's photographs of the east side from the north-east and from the north, both cameras solved",
+  "confidence": "high"
+ },
+ "east_wing_walls_foundation": {
+  "building": "house",
+  "material": "Painted concrete foundation",
+  "label": "East wing (2023 addition) \u2014 Painted concrete foundation",
+  "desc": "One-storey wing with a plain gable roof: the ridge runs east-west, the east wall is a gable end with lap siding to the peak, and the two slopes face the front and the east deck - there is no hip and no vehicle door: it is part of the house, not a garage. Solved cameras put the ridge at 266.5-266.6 m and both eaves at 264.7-264.8 m, about 0.1 m lower than the first reconstruction; ridge position +-0.3 m north-south, heights +-0.1 m. Front eave overhang 0.26 m and south-east rake corner 0.30 m, from the roof corner picked in five front photographs.",
+  "dims": "13' x 27' walls; ridge 4.8 m (15.7 ft) above front grade; 4.8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the east side (from the north-east, the north, the east and the south-east corner), each with its camera solved; 2024 aerial photograph for the roof outline; record card for the 13 ft width",
+  "confidence": "medium"
+ },
+ "east_wing_walls_stone": {
+  "building": "house",
+  "material": "Grey ledgestone veneer",
+  "label": "East wing (2023 addition) \u2014 Grey ledgestone veneer",
+  "desc": "One-storey wing with a plain gable roof: the ridge runs east-west, the east wall is a gable end with lap siding to the peak, and the two slopes face the front and the east deck - there is no hip and no vehicle door: it is part of the house, not a garage. Solved cameras put the ridge at 266.5-266.6 m and both eaves at 264.7-264.8 m, about 0.1 m lower than the first reconstruction; ridge position +-0.3 m north-south, heights +-0.1 m. Front eave overhang 0.26 m and south-east rake corner 0.30 m, from the roof corner picked in five front photographs.",
+  "dims": "13' x 27' walls; ridge 4.8 m (15.7 ft) above front grade; 4.8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the east side (from the north-east, the north, the east and the south-east corner), each with its camera solved; 2024 aerial photograph for the roof outline; record card for the 13 ft width",
+  "confidence": "medium"
+ },
+ "east_wing_walls_stone_cap": {
+  "building": "house",
+  "material": "Cast stone cap",
+  "label": "East wing (2023 addition) \u2014 Cast stone cap",
+  "desc": "One-storey wing with a plain gable roof: the ridge runs east-west, the east wall is a gable end with lap siding to the peak, and the two slopes face the front and the east deck - there is no hip and no vehicle door: it is part of the house, not a garage. Solved cameras put the ridge at 266.5-266.6 m and both eaves at 264.7-264.8 m, about 0.1 m lower than the first reconstruction; ridge position +-0.3 m north-south, heights +-0.1 m. Front eave overhang 0.26 m and south-east rake corner 0.30 m, from the roof corner picked in five front photographs.",
+  "dims": "13' x 27' walls; ridge 4.8 m (15.7 ft) above front grade; 4.8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the east side (from the north-east, the north, the east and the south-east corner), each with its camera solved; 2024 aerial photograph for the roof outline; record card for the 13 ft width",
+  "confidence": "medium"
+ },
+ "east_wing_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "East wing (2023 addition) \u2014 White lap siding",
+  "desc": "One-storey wing with a plain gable roof: the ridge runs east-west, the east wall is a gable end with lap siding to the peak, and the two slopes face the front and the east deck - there is no hip and no vehicle door: it is part of the house, not a garage. Solved cameras put the ridge at 266.5-266.6 m and both eaves at 264.7-264.8 m, about 0.1 m lower than the first reconstruction; ridge position +-0.3 m north-south, heights +-0.1 m. Front eave overhang 0.26 m and south-east rake corner 0.30 m, from the roof corner picked in five front photographs.",
+  "dims": "13' x 27' walls; ridge 4.8 m (15.7 ft) above front grade; 4.8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the east side (from the north-east, the north, the east and the south-east corner), each with its camera solved; 2024 aerial photograph for the roof outline; record card for the 13 ft width",
+  "confidence": "medium"
+ },
+ "b_gable_walls": {
+  "building": "house",
+  "material": "Grey ledgestone veneer",
+  "label": "Stone tower - front gable \u2014 Grey ledgestone veneer",
+  "desc": "Front-facing gable of the stone tower, ridge running back into the upper roof; grey ledgestone to the peak, black rake boards. Ridge and eave heights measured in two of the owner's front photographs (they agree within 0.1 m).",
+  "dims": "about 10.6 ft wide; peak 21.6 ft, eaves 17 ft above the porch floor; about 7.5-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "c_gable_walls": {
+  "building": "house",
+  "material": "White board-and-batten",
+  "label": "Tall front gable \u2014 White board-and-batten",
+  "desc": "The tall white gable right of the entry: board-and-batten up to a white trim band, grey lap siding in the peak, black rake boards. Peak and eave heights measured in the owner's front photographs.",
+  "dims": "13 ft wide; peak 22.5 ft above the porch floor (the highest point of the front); about 8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "c_gable_walls_siding_grey": {
+  "building": "house",
+  "material": "Slate-grey lap siding (gable peak)",
+  "label": "Tall front gable \u2014 Slate-grey lap siding (gable peak)",
+  "desc": "The tall white gable right of the entry: board-and-batten up to a white trim band, grey lap siding in the peak, black rake boards. Peak and eave heights measured in the owner's front photographs.",
+  "dims": "13 ft wide; peak 22.5 ft above the porch floor (the highest point of the front); about 8-in-12",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "rear_walkout_walls": {
+  "building": "house",
+  "material": "White lap siding",
+  "label": "Walk-out basement wall under the bay \u2014 White lap siding",
+  "desc": "The finished wall of the walk-out level below the bay: white lap siding from the patio slab up to the underside of the bay, on the line of the main rear wall.",
+  "dims": "21 ft long, 7 ft 9 in high",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio; floor level from the 2017 LiDAR survey (flat ground at 259.62 m)",
+  "confidence": "high"
+ },
+ "sides_garage_door_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Garage door",
+  "desc": "One black carriage-style overhead door centred in the west gable wall: four sections, the top one glazed in four groups of eight small panes, the three below with four recessed panels each, white surround (the frame and window bars are drawn as a separate lattice part). Measured in the photograph at 5.4 m (17.7 ft) wide by 2.15 m high, i.e. an 18 x 7 ft door; +-0.15 m on the width.",
+  "dims": "18' x 7'",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage taken from the drive to the south-west",
+  "confidence": "high"
+ },
+ "sides_garage_door_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Garage door",
+  "desc": "One black carriage-style overhead door centred in the west gable wall: four sections, the top one glazed in four groups of eight small panes, the three below with four recessed panels each, white surround (the frame and window bars are drawn as a separate lattice part). Measured in the photograph at 5.4 m (17.7 ft) wide by 2.15 m high, i.e. an 18 x 7 ft door; +-0.15 m on the width.",
+  "dims": "18' x 7'",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage taken from the drive to the south-west",
+  "confidence": "high"
+ },
+ "sides_garage_door_slab": {
+  "building": "house",
+  "material": "Black overhead door",
+  "label": "Garage door",
+  "desc": "One black carriage-style overhead door centred in the west gable wall: four sections, the top one glazed in four groups of eight small panes, the three below with four recessed panels each, white surround (the frame and window bars are drawn as a separate lattice part). Measured in the photograph at 5.4 m (17.7 ft) wide by 2.15 m high, i.e. an 18 x 7 ft door; +-0.15 m on the width.",
+  "dims": "18' x 7'",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage taken from the drive to the south-west",
+  "confidence": "high"
+ },
+ "sides_garage_door_groove": {
+  "building": "house",
+  "material": "Panel line",
+  "label": "Garage door",
+  "desc": "One black carriage-style overhead door centred in the west gable wall: four sections, the top one glazed in four groups of eight small panes, the three below with four recessed panels each, white surround (the frame and window bars are drawn as a separate lattice part). Measured in the photograph at 5.4 m (17.7 ft) wide by 2.15 m high, i.e. an 18 x 7 ft door; +-0.15 m on the width.",
+  "dims": "18' x 7'",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage taken from the drive to the south-west",
+  "confidence": "high"
+ },
+ "sides_garage_door_jamb": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Garage door",
+  "desc": "One black carriage-style overhead door centred in the west gable wall: four sections, the top one glazed in four groups of eight small panes, the three below with four recessed panels each, white surround (the frame and window bars are drawn as a separate lattice part). Measured in the photograph at 5.4 m (17.7 ft) wide by 2.15 m high, i.e. an 18 x 7 ft door; +-0.15 m on the width.",
+  "dims": "18' x 7'",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage taken from the drive to the south-west",
+  "confidence": "high"
+ },
+ "sides_west_door_frame": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Side door on the house's west wall",
+  "desc": "Single white door, white frame, with a glazed upper half on the west gable wall: the glass is 0.47 m wide and starts about 0.17 m below the top of the door; the fence hides the door below that in one photograph, and the other shows at least 0.8 m of glass height, so it is a tall half-lite rather than a small square one. Measured: slab 0.89 m wide inside a surround about 5 cm wide (0.99 m overall), head 2.07 m above the floor, centred 4.4 m from the south end of the wall.",
+  "dims": "about 3' 0\" x 6' 8\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron; also the owner's photograph of the attached garage from the drive to the south-west; position along the wall agrees with the owner's main-floor plan within 0.2 m",
+  "confidence": "medium"
+ },
+ "sides_west_door_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Side door on the house's west wall",
+  "desc": "Single white door, white frame, with a glazed upper half on the west gable wall: the glass is 0.47 m wide and starts about 0.17 m below the top of the door; the fence hides the door below that in one photograph, and the other shows at least 0.8 m of glass height, so it is a tall half-lite rather than a small square one. Measured: slab 0.89 m wide inside a surround about 5 cm wide (0.99 m overall), head 2.07 m above the floor, centred 4.4 m from the south end of the wall.",
+  "dims": "about 3' 0\" x 6' 8\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron; also the owner's photograph of the attached garage from the drive to the south-west; position along the wall agrees with the owner's main-floor plan within 0.2 m",
+  "confidence": "medium"
+ },
+ "sides_west_door_slab": {
+  "building": "house",
+  "material": "White door",
+  "label": "Side door on the house's west wall",
+  "desc": "Single white door, white frame, with a glazed upper half on the west gable wall: the glass is 0.47 m wide and starts about 0.17 m below the top of the door; the fence hides the door below that in one photograph, and the other shows at least 0.8 m of glass height, so it is a tall half-lite rather than a small square one. Measured: slab 0.89 m wide inside a surround about 5 cm wide (0.99 m overall), head 2.07 m above the floor, centred 4.4 m from the south end of the wall.",
+  "dims": "about 3' 0\" x 6' 8\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron; also the owner's photograph of the attached garage from the drive to the south-west; position along the wall agrees with the owner's main-floor plan within 0.2 m",
+  "confidence": "medium"
+ },
+ "sides_west_door_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Side door on the house's west wall",
+  "desc": "Single white door, white frame, with a glazed upper half on the west gable wall: the glass is 0.47 m wide and starts about 0.17 m below the top of the door; the fence hides the door below that in one photograph, and the other shows at least 0.8 m of glass height, so it is a tall half-lite rather than a small square one. Measured: slab 0.89 m wide inside a surround about 5 cm wide (0.99 m overall), head 2.07 m above the floor, centred 4.4 m from the south end of the wall.",
+  "dims": "about 3' 0\" x 6' 8\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron; also the owner's photograph of the attached garage from the drive to the south-west; position along the wall agrees with the owner's main-floor plan within 0.2 m",
+  "confidence": "medium"
+ },
+ "north_range_windows_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "One-storey north range and west end \u2014 window frames",
+  "desc": "Black-framed window with a white surround, south of the side door near the garage: 0.83 m wide, its head 2.13 m above the floor (level with the top of the door surround), centred 1.4 m from the south end of the wall - measured in the photograph. The fence hides everything below 1.45 m above the floor, so the sill height (and with it the 1.07 m height) is assumed; no meeting rail shows in the visible part, so it is drawn as a single sash.",
+  "dims": "about 2' 9\" wide",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron; owner's main-floor plan",
+  "confidence": "medium"
+ },
+ "north_range_windows_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "One-storey north range and west end \u2014 casing",
+  "desc": "Black-framed window with a white surround, south of the side door near the garage: 0.83 m wide, its head 2.13 m above the floor (level with the top of the door surround), centred 1.4 m from the south end of the wall - measured in the photograph. The fence hides everything below 1.45 m above the floor, so the sill height (and with it the 1.07 m height) is assumed; no meeting rail shows in the visible part, so it is drawn as a single sash.",
+  "dims": "about 2' 9\" wide",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron; owner's main-floor plan",
+  "confidence": "medium"
+ },
+ "north_range_windows_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "One-storey north range and west end \u2014 glazing",
+  "desc": "Black-framed window with a white surround, south of the side door near the garage: 0.83 m wide, its head 2.13 m above the floor (level with the top of the door surround), centred 1.4 m from the south end of the wall - measured in the photograph. The fence hides everything below 1.45 m above the floor, so the sill height (and with it the 1.07 m height) is assumed; no meeting rail shows in the visible part, so it is drawn as a single sash.",
+  "dims": "about 2' 9\" wide",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron; owner's main-floor plan",
+  "confidence": "medium"
+ },
+ "sides_east_french_doors_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "French doors from the main block onto the east deck",
+  "desc": "Pair of black full-glass doors centred on the 18 ft of wall above the east deck.",
+  "dims": "6' x 6' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east side taken from the lawn east of the deck stairs; position along the wall agrees with the owner's main-floor plan",
+  "confidence": "high"
+ },
+ "sides_east_french_doors_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "French doors from the main block onto the east deck",
+  "desc": "Pair of black full-glass doors centred on the 18 ft of wall above the east deck.",
+  "dims": "6' x 6' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east side taken from the lawn east of the deck stairs; position along the wall agrees with the owner's main-floor plan",
+  "confidence": "high"
+ },
+ "sides_east_french_doors_slab": {
+  "building": "house",
+  "material": "Black door",
+  "label": "French doors from the main block onto the east deck",
+  "desc": "Pair of black full-glass doors centred on the 18 ft of wall above the east deck.",
+  "dims": "6' x 6' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east side taken from the lawn east of the deck stairs; position along the wall agrees with the owner's main-floor plan",
+  "confidence": "high"
+ },
+ "sides_east_french_doors_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "French doors from the main block onto the east deck",
+  "desc": "Pair of black full-glass doors centred on the 18 ft of wall above the east deck.",
+  "dims": "6' x 6' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east side taken from the lawn east of the deck stairs; position along the wall agrees with the owner's main-floor plan",
+  "confidence": "high"
+ },
+ "sides_wing_n_french_doors_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "French doors from the east wing onto the east deck",
+  "desc": "Pair of black full-glass doors east of centre on the wing's north wall; white blinds between the panes are drawn in every photograph, so the doors read pale.",
+  "dims": "6' x 6' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east deck from the lawn to the north; owner's main-floor plan",
+  "confidence": "high"
+ },
+ "sides_wing_n_french_doors_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "French doors from the east wing onto the east deck",
+  "desc": "Pair of black full-glass doors east of centre on the wing's north wall; white blinds between the panes are drawn in every photograph, so the doors read pale.",
+  "dims": "6' x 6' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east deck from the lawn to the north; owner's main-floor plan",
+  "confidence": "high"
+ },
+ "sides_wing_n_french_doors_slab": {
+  "building": "house",
+  "material": "Black door",
+  "label": "French doors from the east wing onto the east deck",
+  "desc": "Pair of black full-glass doors east of centre on the wing's north wall; white blinds between the panes are drawn in every photograph, so the doors read pale.",
+  "dims": "6' x 6' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east deck from the lawn to the north; owner's main-floor plan",
+  "confidence": "high"
+ },
+ "sides_wing_n_french_doors_glass": {
+  "building": "house",
+  "material": "Door glazing with white blinds drawn",
+  "label": "French doors from the east wing onto the east deck",
+  "desc": "Pair of black full-glass doors east of centre on the wing's north wall; white blinds between the panes are drawn in every photograph, so the doors read pale.",
+  "dims": "6' x 6' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east deck from the lawn to the north; owner's main-floor plan",
+  "confidence": "high"
+ },
+ "east_wing_windows_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "East wing (2023 addition) \u2014 window frames",
+  "desc": "Single black-framed window near the north end of the east gable wall; measured about 3 ft 1 in wide by 5 ft tall in the photograph taken square to the wall (the floor plan draws it 3 ft 9 in wide).",
+  "dims": "about 3' x 5'",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's main-floor plan for its place along the wall",
+  "confidence": "high"
+ },
+ "east_wing_windows_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "East wing (2023 addition) \u2014 casing",
+  "desc": "Single black-framed window near the north end of the east gable wall; measured about 3 ft 1 in wide by 5 ft tall in the photograph taken square to the wall (the floor plan draws it 3 ft 9 in wide).",
+  "dims": "about 3' x 5'",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's main-floor plan for its place along the wall",
+  "confidence": "high"
+ },
+ "east_wing_windows_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "East wing (2023 addition) \u2014 glazing",
+  "desc": "Single black-framed window near the north end of the east gable wall; measured about 3 ft 1 in wide by 5 ft tall in the photograph taken square to the wall (the floor plan draws it 3 ft 9 in wide).",
+  "dims": "about 3' x 5'",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's main-floor plan for its place along the wall",
+  "confidence": "high"
+ },
+ "rear_french_door_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "French doors from the main floor to the rear deck",
+  "desc": "Black French doors from the main floor onto the rear deck, immediately west of the bay; their head lines up with the window heads.",
+  "dims": "5 ft 10 in wide",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn; position along the wall from the owner's main-floor plan",
+  "confidence": "high"
+ },
+ "rear_french_door_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "French doors from the main floor to the rear deck",
+  "desc": "Black French doors from the main floor onto the rear deck, immediately west of the bay; their head lines up with the window heads.",
+  "dims": "5 ft 10 in wide",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn; position along the wall from the owner's main-floor plan",
+  "confidence": "high"
+ },
+ "rear_french_door_slab": {
+  "building": "house",
+  "material": "Black door",
+  "label": "French doors from the main floor to the rear deck",
+  "desc": "Black French doors from the main floor onto the rear deck, immediately west of the bay; their head lines up with the window heads.",
+  "dims": "5 ft 10 in wide",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn; position along the wall from the owner's main-floor plan",
+  "confidence": "high"
+ },
+ "rear_french_door_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "French doors from the main floor to the rear deck",
+  "desc": "Black French doors from the main floor onto the rear deck, immediately west of the bay; their head lines up with the window heads.",
+  "dims": "5 ft 10 in wide",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn; position along the wall from the owner's main-floor plan",
+  "confidence": "high"
+ },
+ "rear_walkout_slider_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Walk-out sliding glass door",
+  "desc": "Black sliding glass door at the east end of the walk-out wall, opening onto the patio slab.",
+  "dims": "6 ft x 6 ft 8 in",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_walkout_slider_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Walk-out sliding glass door",
+  "desc": "Black sliding glass door at the east end of the walk-out wall, opening onto the patio slab.",
+  "dims": "6 ft x 6 ft 8 in",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_walkout_slider_slab": {
+  "building": "house",
+  "material": "Black door",
+  "label": "Walk-out sliding glass door",
+  "desc": "Black sliding glass door at the east end of the walk-out wall, opening onto the patio slab.",
+  "dims": "6 ft x 6 ft 8 in",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_walkout_slider_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Walk-out sliding glass door",
+  "desc": "Black sliding glass door at the east end of the walk-out wall, opening onto the patio slab.",
+  "dims": "6 ft x 6 ft 8 in",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_walkout_windows_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Walk-out basement wall under the bay \u2014 window frames",
+  "desc": "Black two-lite window in the walk-out wall, west of the sliding door.",
+  "dims": "4'9\" wide x 4'7\" high",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_walkout_windows_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Walk-out basement wall under the bay \u2014 casing",
+  "desc": "Black two-lite window in the walk-out wall, west of the sliding door.",
+  "dims": "4'9\" wide x 4'7\" high",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_walkout_windows_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Walk-out basement wall under the bay \u2014 glazing",
+  "desc": "Black two-lite window in the walk-out wall, west of the sliding door.",
+  "dims": "4'9\" wide x 4'7\" high",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "north_bay_windows_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Rear bay with glazed gable (2 ft cantilever) \u2014 window frames",
+  "desc": "West unit of the bay's window wall: two tall fixed panes side by side in black frames with a slim white surround.",
+  "dims": "5 ft x 5 ft 1 in",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio (straight-on view of the bay)",
+  "confidence": "high"
+ },
+ "north_bay_windows_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Rear bay with glazed gable (2 ft cantilever) \u2014 casing",
+  "desc": "West unit of the bay's window wall: two tall fixed panes side by side in black frames with a slim white surround.",
+  "dims": "5 ft x 5 ft 1 in",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio (straight-on view of the bay)",
+  "confidence": "high"
+ },
+ "north_bay_windows_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Rear bay with glazed gable (2 ft cantilever) \u2014 glazing",
+  "desc": "West unit of the bay's window wall: two tall fixed panes side by side in black frames with a slim white surround.",
+  "dims": "5 ft x 5 ft 1 in",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio (straight-on view of the bay)",
+  "confidence": "high"
  },
  "front_door_frame": {
   "building": "house",
-  "material": "Black window frame",
-  "label": "Front door",
-  "dims": "3'3\" wide x 6'11\" high",
-  "evidence": "photo"
+  "material": "Stained wood door (dark espresso)",
+  "label": "Front doors (pair, stained wood, glass in the upper part)",
+  "desc": "Pair of stained-wood doors, each leaf glazed in its upper part with four lites; counted in the owner's photographs.",
+  "dims": "6' wide x 6'8\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
  "front_door_casing": {
   "building": "house",
-  "material": "Black trim",
-  "label": "Front door",
-  "dims": "3'3\" wide x 6'11\" high",
-  "evidence": "photo"
+  "material": "White trim",
+  "label": "Front doors (pair, stained wood, glass in the upper part)",
+  "desc": "Pair of stained-wood doors, each leaf glazed in its upper part with four lites; counted in the owner's photographs.",
+  "dims": "6' wide x 6'8\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
  "front_door_slab": {
   "building": "house",
-  "material": "Wood door",
-  "label": "Front door",
-  "dims": "3'3\" wide x 6'11\" high",
-  "evidence": "photo"
+  "material": "Stained wood door (dark espresso)",
+  "label": "Front doors (pair, stained wood, glass in the upper part)",
+  "desc": "Pair of stained-wood doors, each leaf glazed in its upper part with four lites; counted in the owner's photographs.",
+  "dims": "6' wide x 6'8\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
  "front_door_glass": {
   "building": "house",
   "material": "Glass",
-  "label": "Front door",
-  "dims": "3'3\" wide x 6'11\" high",
-  "evidence": "photo"
+  "label": "Front doors (pair, stained wood, glass in the upper part)",
+  "desc": "Pair of stained-wood doors, each leaf glazed in its upper part with four lites; counted in the owner's photographs.",
+  "dims": "6' wide x 6'8\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
- "two_storey_windows_frame": {
+ "core_west_windows_frame": {
   "building": "house",
   "material": "Black window frame",
-  "label": "Two-storey block \u2014 window frames",
-  "dims": "5'11\" wide x 5'3\" high"
+  "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 window frames",
+  "desc": "Wide two-lite black window high in the stone tower, set toward its right-hand side; stone sill.",
+  "dims": "4'11\" wide x 3'10\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
- "two_storey_windows_casing": {
-  "building": "house",
-  "material": "Black trim",
-  "label": "Two-storey block \u2014 casing",
-  "dims": "5'11\" wide x 5'3\" high"
- },
- "two_storey_windows_glass": {
+ "core_west_windows_glass": {
   "building": "house",
   "material": "Glass",
-  "label": "Two-storey block \u2014 glazing",
-  "dims": "5'11\" wide x 5'3\" high"
+  "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 glazing",
+  "desc": "Wide two-lite black window high in the stone tower, set toward its right-hand side; stone sill.",
+  "dims": "4'11\" wide x 3'10\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
- "east_windows_frame": {
+ "core_west_windows_casing": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Entry block and upper roof between the stone tower and the tall gable \u2014 casing",
+  "desc": "Small black transom window in the board-and-batten band above the porch roof (left of two).",
+  "dims": "2'11\" wide x 1'4\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "core_east_windows_frame": {
   "building": "house",
   "material": "Black window frame",
-  "label": "East wing \u2014 window frames",
-  "dims": "7'3\" wide x 4'7\" high"
+  "label": "Two-storey east block (highest roof) \u2014 window frames",
+  "desc": "Large two-lite black window with white casing in the tall board-and-batten gable.",
+  "dims": "4'11\" wide x 4' high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
- "east_windows_casing": {
+ "core_east_windows_casing": {
   "building": "house",
-  "material": "Black trim",
-  "label": "East wing \u2014 casing",
-  "dims": "7'3\" wide x 4'7\" high"
+  "material": "White trim",
+  "label": "Two-storey east block (highest roof) \u2014 casing",
+  "desc": "Large two-lite black window with white casing in the tall board-and-batten gable.",
+  "dims": "4'11\" wide x 4' high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
- "east_windows_glass": {
-  "building": "house",
-  "material": "Glass",
-  "label": "East wing \u2014 glazing",
-  "dims": "7'3\" wide x 4'7\" high"
- },
- "garage_door_w_frame": {
-  "building": "house",
-  "material": "Black window frame",
-  "label": "Garage door",
-  "dims": "16'1\" wide x 7'10\" high"
- },
- "garage_door_w_slab": {
-  "building": "house",
-  "material": "Garage door",
-  "label": "Garage door",
-  "dims": "16'1\" wide x 7'10\" high"
- },
- "garage_door_w_groove": {
-  "building": "house",
-  "material": "Panel line",
-  "label": "Garage door",
-  "dims": "16'1\" wide x 7'10\" high"
- },
- "garage_door_w_glass": {
+ "core_east_windows_glass": {
   "building": "house",
   "material": "Glass",
-  "label": "Garage door",
-  "dims": "16'1\" wide x 7'10\" high"
+  "label": "Two-storey east block (highest roof) \u2014 glazing",
+  "desc": "Large two-lite black window with white casing in the tall board-and-batten gable.",
+  "dims": "4'11\" wide x 4' high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
  },
  "garage_windows_frame": {
   "building": "house",
   "material": "Black window frame",
   "label": "Attached garage \u2014 window frames",
-  "dims": "2'11\" wide x 4'3\" high"
+  "desc": "Tall narrow black window near the west end of the attached garage's south wall: its glass measures 1.97 to 2.65 m from the south-west corner in the photograph taken from the drive (about 0.1 m).",
+  "dims": "2'4\" wide x 4'2\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west (position along the wall); owner's photograph of the attached garage from the south-west",
+  "confidence": "medium"
  },
  "garage_windows_casing": {
   "building": "house",
-  "material": "Black trim",
+  "material": "White trim",
   "label": "Attached garage \u2014 casing",
-  "dims": "2'11\" wide x 4'3\" high"
+  "desc": "Tall narrow black window near the west end of the attached garage's south wall: its glass measures 1.97 to 2.65 m from the south-west corner in the photograph taken from the drive (about 0.1 m).",
+  "dims": "2'4\" wide x 4'2\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west (position along the wall); owner's photograph of the attached garage from the south-west",
+  "confidence": "medium"
  },
  "garage_windows_glass": {
   "building": "house",
   "material": "Glass",
   "label": "Attached garage \u2014 glazing",
-  "dims": "2'11\" wide x 4'3\" high"
+  "desc": "Tall narrow black window near the west end of the attached garage's south wall: its glass measures 1.97 to 2.65 m from the south-west corner in the photograph taken from the drive (about 0.1 m).",
+  "dims": "2'4\" wide x 4'2\" high",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west (position along the wall); owner's photograph of the attached garage from the south-west",
+  "confidence": "medium"
  },
- "main_windows_frame": {
+ "link_windows_frame": {
   "building": "house",
   "material": "Black window frame",
-  "label": "Main block \u2014 window frames",
-  "dims": "5'11\" wide x 4'7\" high"
+  "label": "Link between garage and house \u2014 window frames",
+  "desc": "Tall narrow fixed window on the east wall of the recess between the garage and the stone tower; 2 ft 6 in. wide.",
+  "dims": "2'6\" wide x 4'3\" high",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the drive",
+  "confidence": "medium"
  },
- "main_windows_casing": {
-  "building": "house",
-  "material": "Black trim",
-  "label": "Main block \u2014 casing",
-  "dims": "5'11\" wide x 4'7\" high"
- },
- "main_windows_glass": {
-  "building": "house",
-  "material": "Glass",
-  "label": "Main block \u2014 glazing",
-  "dims": "5'11\" wide x 4'7\" high"
- },
- "porch_floor": {
-  "building": "house",
-  "material": "Concrete",
-  "label": "Front porch floor",
-  "dims": "30' x 9'",
-  "evidence": "record"
- },
- "porch_posts": {
+ "link_windows_casing": {
   "building": "house",
   "material": "White trim",
-  "label": "Porch posts",
-  "evidence": "photo"
+  "label": "Link between garage and house \u2014 casing",
+  "desc": "Tall narrow fixed window on the east wall of the recess between the garage and the stone tower; 2 ft 6 in. wide.",
+  "dims": "2'6\" wide x 4'3\" high",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the drive",
+  "confidence": "medium"
  },
- "porch_posts_base": {
+ "link_windows_glass": {
   "building": "house",
-  "material": "Stone veneer",
-  "label": "Porch posts",
-  "evidence": "photo"
+  "material": "Glass",
+  "label": "Link between garage and house \u2014 glazing",
+  "desc": "Tall narrow fixed window on the east wall of the recess between the garage and the stone tower; 2 ft 6 in. wide.",
+  "dims": "2'6\" wide x 4'3\" high",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the drive",
+  "confidence": "medium"
  },
- "porch_posts_base_cap": {
+ "sides_garage_lantern_plate_north": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Lantern mounting block (north)",
+  "desc": "White mounting block behind the lantern.",
+  "evidence": "photo",
+  "source": "owner's photographs of the attached garage from the drive to the south-west and of the fence and planter from the detached garage's apron",
+  "confidence": "high"
+ },
+ "sides_garage_lantern_north": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Lantern beside the garage door (north)",
+  "desc": "Black wall lantern on a white block beside the garage door, 0.55 m north of the door opening and 1.7 m above the floor (the two photographs agree within 3 cm).",
+  "evidence": "photo",
+  "source": "owner's photographs of the attached garage from the drive to the south-west and of the fence and planter from the detached garage's apron",
+  "confidence": "high"
+ },
+ "sides_garage_lantern_plate_south": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Lantern mounting block (south)",
+  "desc": "White mounting block behind the lantern.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage taken from the drive to the south-west",
+  "confidence": "high"
+ },
+ "sides_garage_lantern_south": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Lantern beside the garage door (south)",
+  "desc": "Black wall lantern on a white block beside the garage door.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage taken from the drive to the south-west",
+  "confidence": "high"
+ },
+ "sides_garage_floodlight": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Floodlight under the garage gable peak",
+  "desc": "Twin-head floodlight just below the peak of the west gable.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage taken from the drive to the south-west",
+  "confidence": "high"
+ },
+ "sides_west_door_lantern": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Lantern beside the west side door",
+  "desc": "Black wall lantern on a white block just south of the side door: its centre is 0.29 m from the door surround and its top is level with the top of the door.",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "medium"
+ },
+ "sides_east_lantern_main": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Lantern beside the east French doors",
+  "desc": "Black wall lantern just north of the doors.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs",
+  "confidence": "high"
+ },
+ "sides_wing_n_lantern": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Lantern on the east wing's north wall",
+  "desc": "Black wall lantern west of the wing's French doors.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck from the lawn to the north",
+  "confidence": "high"
+ },
+ "sides_wing_n_speaker_east": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Outdoor speaker (east)",
+  "desc": "Black outdoor speaker mounted high on the wall beside the doors.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck from the lawn to the north",
+  "confidence": "medium"
+ },
+ "sides_wing_n_speaker_west": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Outdoor speaker (west)",
+  "desc": "Black outdoor speaker mounted high on the wall beside the doors.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck from the lawn to the north",
+  "confidence": "medium"
+ },
+ "sides_wing_downspout_ne": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the east wing's north-east corner",
+  "desc": "Black downspout from the north gutter: it runs back along the east wall under the rake and then drops to the ground.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east",
+  "confidence": "high"
+ },
+ "sides_deck_east": {
+  "building": "house",
+  "material": "Composite decking",
+  "label": "East deck",
+  "desc": "Composite deck at main-floor level in the corner between the main block's east wall and the east wing's north wall; it runs 0.9 m (3 ft) past the wing's east wall. East edge from the owner's overhead view and the 2024 aerial photograph, the floor-plan dimension (16 ft 3 3/4 in) and the five-baluster return rail beside the stair head: +-0.1 m. The boards themselves are drawn by the thin layer on top of this slab so that they run north-south, as the photographs taken on the deck show.",
+  "dims": "about 16' x 17' 9\"",
+  "evidence": "photo",
+  "source": "owner's main-floor plan (16 ft 3 3/4 in x 17 ft 8 in inside the rails) and owner's photographs from the north-east, the north and the east, cameras solved",
+  "confidence": "high"
+ },
+ "sides_deck_east_edge": {
+  "building": "house",
+  "material": "Composite deck fascia",
+  "label": "East deck",
+  "desc": "Composite deck at main-floor level in the corner between the main block's east wall and the east wing's north wall; it runs 0.9 m (3 ft) past the wing's east wall. East edge from the owner's overhead view and the 2024 aerial photograph, the floor-plan dimension (16 ft 3 3/4 in) and the five-baluster return rail beside the stair head: +-0.1 m. The boards themselves are drawn by the thin layer on top of this slab so that they run north-south, as the photographs taken on the deck show.",
+  "dims": "about 16' x 17' 9\"",
+  "evidence": "photo",
+  "source": "owner's main-floor plan (16 ft 3 3/4 in x 17 ft 8 in inside the rails) and owner's photographs from the north-east, the north and the east, cameras solved",
+  "confidence": "high"
+ },
+ "sides_deck_east_posts": {
+  "building": "house",
+  "material": "Treated wood post",
+  "label": "East deck posts",
+  "desc": "Treated 6x6 posts under the deck, set about 0.5 m in from its east edge as two photographs show (the north-east one and the next one south of it are both seen; their set-back from the fascia corner is measured, +-0.05 m); the southern one stands in shadow behind the stairs and is inferred.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck from the lawn to the north; owner's photograph of the east deck and east wing from the lawn to the north-east",
+  "confidence": "medium"
+ },
+ "sides_deck_east_beam": {
+  "building": "house",
+  "material": "Treated wood post",
+  "label": "East deck beam",
+  "desc": "Timber beam about 0.5 m in from the deck's east edge, carried by the posts.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck from the lawn to the north",
+  "confidence": "medium"
+ },
+ "sides_deck_east_rail": {
+  "building": "house",
+  "material": "White deck railing",
+  "label": "East deck railing",
+  "desc": "White railing with square balusters and capped posts along the north and east edges. On the east side the posts stand at the corner, 1.8 m south of it, and either end of a short fixed panel beside the stair head; the opening at the head of the stairs has no gate.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photographs taken standing on the east deck",
+  "confidence": "high"
+ },
+ "sides_deck_east_rail_s": {
+  "building": "house",
+  "material": "White deck railing",
+  "label": "East deck railing (south return)",
+  "desc": "Short length of railing along the deck's south edge, from its south-east corner back to the east wing's corner.",
+  "evidence": "photo",
+  "source": "owner's photograph of the deck stairs and hot tub from the south-east",
+  "confidence": "high"
+ },
+ "sides_deck_east_stairs": {
+  "building": "house",
+  "material": "Composite decking (stair treads and risers)",
+  "label": "Stairs from the east deck to the hot-tub pad",
+  "desc": "Composite stairs, six risers, about 4 ft wide with white rails, descending east from the gate opening at the deck's south-east corner.",
+  "dims": "6 risers, about 4' wide",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east",
+  "confidence": "high"
+ },
+ "sides_deck_east_stairs_rail": {
+  "building": "house",
+  "material": "White deck railing",
+  "label": "Stairs from the east deck to the hot-tub pad \u2014 railing",
+  "desc": "Composite stairs, six risers, about 4 ft wide with white rails, descending east from the gate opening at the deck's south-east corner.",
+  "dims": "6 risers, about 4' wide",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east",
+  "confidence": "high"
+ },
+ "sides_hot_tub_pad": {
   "building": "house",
   "material": "Concrete",
-  "label": "Porch posts",
-  "evidence": "photo"
+  "label": "Concrete pad east of the deck",
+  "desc": "Poured concrete pad at the foot of the deck stairs, 0.9 m (six risers) below the deck. The concrete starts under the bottom step - it does not run on under the stairs - and north of the stairs it reaches back to the deck's edge. South-east and north-east corners read from three photographs, +-0.15 m. It is newer than the 2024 aerial photograph.",
+  "dims": "about 14' x 19'",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the hot tub and east deck from the east",
+  "confidence": "medium"
+ },
+ "sides_hot_tub": {
+  "building": "house",
+  "material": "Hot tub",
+  "label": "Hot tub cabinet",
+  "desc": "Black hot-tub cabinet standing on the pad right beside the deck, about 7 ft 6 in by 7 ft 10 in and 2 ft 10 in high to the rim. Its faces are placed from five photographs, which agree to about 0.15 m.",
+  "dims": "about 7' 6\" x 7' 10\" x 2' 10\"",
+  "evidence": "photo",
+  "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east",
+  "confidence": "medium"
+ },
+ "sides_ac_condenser": {
+  "building": "house",
+  "material": "A/C condenser",
+  "label": "A/C condenser",
+  "desc": "Outdoor A/C unit on the ground beside the east wall near its south end; it shows only at a distance, half hidden by the corner, so its position is good to about 1 m.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the south-west and of the south-east corner (seen on the ground just beyond the east wing's south-east corner)",
+  "confidence": "low"
+ },
+ "rear_foundation_north": {
+  "building": "house",
+  "material": "Painted concrete foundation (in the deck's shade)",
+  "label": "Exposed foundation under the rear deck",
+  "desc": "Tan painted concrete foundation under the rear deck, exposed where the lawn falls toward the walk-out (it is NOT sided: the close photographs show bare painted concrete west of the white walk-out wall). Drawn in the darker tone it has in the deck's shade.",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_foundation_east": {
+  "building": "house",
+  "material": "Painted concrete foundation",
+  "label": "Exposed foundation, east wall of the main block",
+  "desc": "Tan painted concrete foundation below the east deck; it reads light tan, like the rest of the foundation, in the photographs from the north and north-east.",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio; owner's photographs of the east deck from the lawn to the north and north-east",
+  "confidence": "medium"
  },
  "rear_deck": {
   "building": "house",
-  "material": "Wood decking",
+  "material": "Composite decking",
   "label": "Rear deck",
-  "dims": "36' x 13'",
-  "evidence": "record"
+  "desc": "Composite deck at main-floor level between the bay and the west end of the house, with a 14 in fascia band. Size from the owner's floor plan (33 ft 11 1/2 in x 12 ft 11 1/4 in clear), checked in the rear photographs and the overhead view (north edge within 0.1 m).",
+  "dims": "34 ft 3 in x 13 ft 2 in",
+  "evidence": "photo",
+  "source": "owner's main-floor plan; owner's photographs of the rear taken from the lawn; owner's overhead view of the house and the 2024 aerial photographs",
+  "confidence": "high"
  },
- "rear_deck_rail": {
+ "rear_deck_edge": {
   "building": "house",
-  "material": "Black trim",
-  "label": "Deck railing",
-  "evidence": "inferred"
+  "material": "Composite deck fascia",
+  "label": "Rear deck",
+  "desc": "Composite deck at main-floor level between the bay and the west end of the house, with a 14 in fascia band. Size from the owner's floor plan (33 ft 11 1/2 in x 12 ft 11 1/4 in clear), checked in the rear photographs and the overhead view (north edge within 0.1 m).",
+  "dims": "34 ft 3 in x 13 ft 2 in",
+  "evidence": "photo",
+  "source": "owner's main-floor plan; owner's photographs of the rear taken from the lawn; owner's overhead view of the house and the 2024 aerial photographs",
+  "confidence": "high"
  },
- "porch_steps": {
+ "rear_deck_posts": {
+  "building": "house",
+  "material": "Treated wood post",
+  "label": "Deck posts (6 x 6)",
+  "desc": "Five natural wood posts under the north edge of the rear deck, set just behind the fascia. The three western ones are measured in the two photographs from the lawn, the two eastern ones by triangulation with the close photographs from the north-east (+-0.1 m).",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn; owner's close photographs of the bay and walk-out patio",
+  "confidence": "medium"
+ },
+ "rear_deck_railing": {
+  "building": "house",
+  "material": "White deck railing",
+  "label": "Rear deck railing",
+  "desc": "White balustrade, 3 ft high, with square balusters on the north side and the east end; the west end is open to the steps. Five bays of 6 ft 10 in along the north side and two on the east end, as counted in the photographs from the lawn.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "high"
+ },
+ "rear_deck_stairs": {
+  "building": "house",
+  "material": "Composite decking",
+  "label": "Deck steps (west end)",
+  "desc": "Steps the full depth of the deck at its west end, descending west to the lawn: three treads / four risers, white rail on both sides. Both rails are measured in the photograph from the north-west lawn; the overhead view shows the steps across the whole west end.",
+  "dims": "12 ft wide, 4 risers",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn; owner's overhead view of the house and the 2024 aerial photographs",
+  "confidence": "medium"
+ },
+ "rear_deck_stairs_rail": {
+  "building": "house",
+  "material": "White deck railing",
+  "label": "Deck steps (west end) \u2014 railing",
+  "desc": "Steps the full depth of the deck at its west end, descending west to the lawn: three treads / four risers, white rail on both sides. Both rails are measured in the photograph from the north-west lawn; the overhead view shows the steps across the whole west end.",
+  "dims": "12 ft wide, 4 risers",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn; owner's overhead view of the house and the 2024 aerial photographs",
+  "confidence": "medium"
+ },
+ "rear_patio": {
   "building": "house",
   "material": "Concrete",
-  "label": "Porch steps",
-  "evidence": "inferred"
+  "label": "Walk-out patio",
+  "desc": "Poured concrete slab at basement-floor level with a curved outer edge. Outline solved from three of the owner's close photographs (wall ends triangulated to +-0.1 m, curved edge +-0.2 m) and checked against the owner's overhead view. The real slab falls about 0.2 m from the walk-out door (259.62 m, the 2017 survey level) to its outer edge; it is drawn flat at the mean level.",
+  "dims": "about 19 ft wide x 21 ft 9 in deep",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio; owner's overhead view of the house and the 2024 aerial photographs; 2017 LiDAR survey",
+  "confidence": "medium"
+ },
+ "rear_patio_wall_e": {
+  "building": "house",
+  "material": "Concrete",
+  "label": "Patio retaining wall, east",
+  "desc": "Board-formed concrete wall, 8 in thick, running north from the house's north-east corner and toeing in about 3 degrees toward the patio; top level, about 2 ft 5 in above the slab. Its free end is solved from its four corners in four of the close photographs (+-0.1 m), one of which looks straight along the wall.",
+  "dims": "15 ft 9 in long",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio; owner's overhead view of the house and the 2024 aerial photographs",
+  "confidence": "medium"
+ },
+ "rear_patio_wall_w": {
+  "building": "house",
+  "material": "Concrete",
+  "label": "Patio retaining wall, west",
+  "desc": "Board-formed concrete wall under the east end of the rear deck; it runs north from the house and ends in a short leg angled to the north-east. Top level with the east wall. The angle lies about as far north as the end of the east wall (fixed to +-0.3 m by the oblique photographs); the angled leg is about 8 ft long, at 45 degrees (its end is triangulated from two photographs to +-0.1 m and agrees with the overhead view).",
+  "dims": "15 ft 8 in + 8 ft",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "medium"
+ },
+ "rear_fire_pit": {
+  "building": "house",
+  "material": "Stainless steel",
+  "label": "Fire pit",
+  "desc": "Stainless smokeless fire pit standing on the patio (movable; position as photographed).",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "low"
+ },
+ "rear_lantern_door": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Wall lantern beside the French doors",
+  "desc": "Black wall lantern beside the rear French doors, at door-head height.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_lantern_west": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Wall lantern near the north-west corner",
+  "desc": "Black wall lantern on the rear wall near the north-west corner, beside the pair of windows.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_lantern_walkout": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Wall lantern between the walk-out door and window",
+  "desc": "Black wall lantern on the walk-out wall between the sliding door and the window.",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "medium"
+ },
+ "rear_speaker_east": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Outdoor speaker (east)",
+  "desc": "Black outdoor speaker mounted high on the rear wall, east of the single window.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_speaker_west": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Outdoor speaker (west)",
+  "desc": "Black outdoor speaker mounted high on the rear wall at the north-west corner.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_downspout_ne": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the north-east corner",
+  "desc": "Black downspout from the east end of the rear gutter down the north-east corner to the walk-out patio.",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "medium"
+ },
+ "rear_skylight_w": {
+  "building": "house",
+  "material": "Stainless steel",
+  "label": "Skylight on the north roof (west)",
+  "desc": "One of the two skylights side by side on the low north slope. Plan position from the owner's overhead view, the county's 2024 aerial and the two photographs from the lawn (all within 0.15 m); size about 2 ft 7 in x 3 ft 7 in.",
+  "evidence": "photo",
+  "source": "owner's overhead view of the house and the 2024 aerial photographs; owner's photographs of the rear taken from the lawn",
+  "confidence": "high"
+ },
+ "rear_skylight_w_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Skylight on the north roof (west)",
+  "desc": "One of the two skylights side by side on the low north slope. Plan position from the owner's overhead view, the county's 2024 aerial and the two photographs from the lawn (all within 0.15 m); size about 2 ft 7 in x 3 ft 7 in.",
+  "evidence": "photo",
+  "source": "owner's overhead view of the house and the 2024 aerial photographs; owner's photographs of the rear taken from the lawn",
+  "confidence": "high"
+ },
+ "rear_skylight_e": {
+  "building": "house",
+  "material": "Stainless steel",
+  "label": "Skylight on the north roof (east)",
+  "desc": "One of the two skylights side by side on the low north slope. Plan position from the owner's overhead view, the county's 2024 aerial and the two photographs from the lawn (all within 0.15 m); size about 2 ft 7 in x 3 ft 7 in.",
+  "evidence": "photo",
+  "source": "owner's overhead view of the house and the 2024 aerial photographs; owner's photographs of the rear taken from the lawn",
+  "confidence": "high"
+ },
+ "rear_skylight_e_glass": {
+  "building": "house",
+  "material": "Glass",
+  "label": "Skylight on the north roof (east)",
+  "desc": "One of the two skylights side by side on the low north slope. Plan position from the owner's overhead view, the county's 2024 aerial and the two photographs from the lawn (all within 0.15 m); size about 2 ft 7 in x 3 ft 7 in.",
+  "evidence": "photo",
+  "source": "owner's overhead view of the house and the 2024 aerial photographs; owner's photographs of the rear taken from the lawn",
+  "confidence": "high"
+ },
+ "rear_roof_vent_low": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Roof vent beside the skylights",
+  "desc": "Low box vent on the north slope of the lower roof, beside the two skylights.",
+  "evidence": "photo",
+  "source": "owner's overhead view of the house and the 2024 aerial photographs; owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_vent_pipe_low": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Plumbing vent on the north roof",
+  "desc": "Plumbing vent pipe on the north slope of the lower roof.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_flue_flashing": {
+  "building": "house",
+  "material": "Stainless steel",
+  "label": "Flue flashing cone",
+  "desc": "Conical metal flashing at the foot of the steel flue on the upper roof.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_flue": {
+  "building": "house",
+  "material": "Stainless steel",
+  "label": "Stainless steel flue",
+  "desc": "Stainless flue pipe, about 7 in across, standing 2 ft 6 in above the north slope of the upper roof on a conical flashing, with a rain cap - the only chimney. Height measured in the photographs from the lawn; position triangulated from three photographs taken from the north and the north-east (+-0.15 m).",
+  "evidence": "photo",
+  "source": "owner's overhead view of the house and the 2024 aerial photographs; owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_flue_cap": {
+  "building": "house",
+  "material": "Stainless steel",
+  "label": "Flue rain cap",
+  "desc": "Rain cap on top of the steel flue.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_vent_pipe_a": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Plumbing vent on the upper roof",
+  "desc": "Plumbing vent pipe on the upper roof.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_vent_pipe_b": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Plumbing vent on the upper roof",
+  "desc": "Plumbing vent pipe on the upper roof.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "front_porch_floor": {
+  "building": "house",
+  "material": "Concrete",
+  "label": "Front porch floor (concrete)",
+  "desc": "Concrete porch slab, one step above the walk; 30 ft long (county record and photographs agree).",
+  "dims": "30 ft long, about 8 ft deep",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "high"
+ },
+ "front_portico_columns": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Entry portico columns on stone piers",
+  "desc": "Two square white panelled columns carrying the portico gable, on ledgestone piers with pale caps.",
+  "dims": "columns about 19 in. square; piers 22 in. square, 3 ft 3 in. high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_portico_columns_base": {
+  "building": "house",
+  "material": "Grey ledgestone veneer",
+  "label": "Entry portico columns on stone piers",
+  "desc": "Two square white panelled columns carrying the portico gable, on ledgestone piers with pale caps.",
+  "dims": "columns about 19 in. square; piers 22 in. square, 3 ft 3 in. high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_portico_columns_base_cap": {
+  "building": "house",
+  "material": "Cast stone cap",
+  "label": "Entry portico columns on stone piers",
+  "desc": "Two square white panelled columns carrying the portico gable, on ledgestone piers with pale caps.",
+  "dims": "columns about 19 in. square; piers 22 in. square, 3 ft 3 in. high",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_porch_columns": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Porch columns on stone piers",
+  "desc": "Two more square white panelled columns on ledgestone piers: one mid-way along the porch and one at its east end.",
+  "dims": "columns 18 in. square; piers 22 in. square, 3 ft 3 in. high",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "high"
+ },
+ "front_porch_columns_base": {
+  "building": "house",
+  "material": "Grey ledgestone veneer",
+  "label": "Porch columns on stone piers",
+  "desc": "Two more square white panelled columns on ledgestone piers: one mid-way along the porch and one at its east end.",
+  "dims": "columns 18 in. square; piers 22 in. square, 3 ft 3 in. high",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "high"
+ },
+ "front_porch_columns_base_cap": {
+  "building": "house",
+  "material": "Cast stone cap",
+  "label": "Porch columns on stone piers",
+  "desc": "Two more square white panelled columns on ledgestone piers: one mid-way along the porch and one at its east end.",
+  "dims": "columns 18 in. square; piers 22 in. square, 3 ft 3 in. high",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "high"
+ },
+ "front_portico_gable": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Entry portico - white gable face",
+  "desc": "White panelled gable face under the portico roof, carried on the two portico columns.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_portico_header": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Entry portico - arched header",
+  "desc": "White header across the two portico columns with a shallow segmental arch over the entry.",
+  "dims": "opening about 5 ft wide, arch rises 15 in.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_portico_keystone": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Entry portico - keystone block at the top of the arch",
+  "desc": "Small keystone block at the crown of the portico arch.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_porch_beam": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Porch beam (white)",
+  "desc": "White boxed beam along the front of the porch under the metal roof.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "front_lantern_left": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Black lantern on the left portico column",
+  "desc": "Black wall lantern: cap, four corner bars and base plate around a clear glass body (drawn as four parts).",
+  "dims": "about 6 x 17 in.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_lantern_right": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Black lantern on the right portico column",
+  "desc": "Black wall lantern: cap, four corner bars and base plate around a clear glass body (drawn as four parts).",
+  "dims": "about 6 x 17 in.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_tower_sill_upper": {
+  "building": "house",
+  "material": "Cast stone cap",
+  "label": "Stone sill under the tower's upper window",
+  "desc": "Pale stone sill under the upper tower window.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_tower_sill_lower": {
+  "building": "house",
+  "material": "Cast stone cap",
+  "label": "Stone sill under the tower's lower window",
+  "desc": "Pale stone sill under the lower tower window.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_gable_trim": {
+  "building": "house",
+  "material": "White trim",
+  "label": "White trim band below the grey gable peak",
+  "desc": "White trim band across the tall gable where the board-and-batten ends and the grey lap siding of the peak begins.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "high"
+ },
+ "front_skylight_main": {
+  "building": "house",
+  "material": "Skylight frame and flashing (aluminium)",
+  "label": "Skylight on the roof above the entry",
+  "desc": "Low-profile skylight about a third of the way up the front slope of the upper roof. Plan position from the owner's overhead view and the 2024 aerial photograph; frame height chosen so that it also falls where five of the owner's front photographs show it.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_skylight_main_glass": {
+  "building": "house",
+  "material": "Skylight glazing (reflects the sky)",
+  "label": "Skylight on the roof above the entry",
+  "desc": "Low-profile skylight about a third of the way up the front slope of the upper roof. Plan position from the owner's overhead view and the 2024 aerial photograph; frame height chosen so that it also falls where five of the owner's front photographs show it.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_skylight_east": {
+  "building": "house",
+  "material": "Skylight frame and flashing (aluminium)",
+  "label": "Skylight on the east wing's front roof slope",
+  "desc": "Low-profile skylight on the front slope of the east wing's roof, about a third of the way up from the eave; pale glass in a light frame as photographed. Plan position from the 2024 aerial photograph, checked in six of the owner's front photographs.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the south-east",
+  "confidence": "medium"
+ },
+ "front_skylight_east_glass": {
+  "building": "house",
+  "material": "Skylight glazing (reflects the sky)",
+  "label": "Skylight on the east wing's front roof slope",
+  "desc": "Low-profile skylight on the front slope of the east wing's roof, about a third of the way up from the eave; pale glass in a light frame as photographed. Plan position from the 2024 aerial photograph, checked in six of the owner's front photographs.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the south-east",
+  "confidence": "medium"
+ },
+ "front_metal_roof_seams": {
+  "building": "house",
+  "material": "Standing-seam metal, dark bronze",
+  "label": "Standing seams of the porch and portico roofs",
+  "desc": "Raised seams of the metal roofing at about 16 in. spacing (spacing estimated from the photographs).",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "front_gutter_entry_roof": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Gutter of the roof above the entry",
+  "desc": "Black gutter along the front eave of the upper roof above the entry.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_gutter_porch": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Gutter of the porch roof",
+  "desc": "Black gutter along the front eave of the metal porch roof.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_gutter_tower": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Gutter at the stone tower's west eave",
+  "desc": "Black gutter return at the stone tower's west eave.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_gutter_gable_west": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Gutter at the tall gable's west eave",
+  "desc": "Black gutter return at the tall gable's west eave.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_gutter_gable_east": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Gutter at the tall gable's east eave",
+  "desc": "Black gutter return at the tall gable's east eave.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_gutter_garage_south": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Gutter of the garage's front eave",
+  "desc": "Black gutter along the attached garage's south eave.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the south-west",
+  "confidence": "medium"
+ },
+ "front_downspout_tower": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the stone tower's west corner",
+  "desc": "Black downspout at the stone tower's west corner.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_downspout_band": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the west end of the roof above the entry",
+  "desc": "Black downspout from the west end of the upper roof's gutter down to the portico roof.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_downspout_gable_west": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout from the tall gable's west eave",
+  "desc": "Black downspout from the tall gable's west gutter return down to the lower roof.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_downspout_gable_east": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the tall gable's east corner",
+  "desc": "Black downspout from the tall gable's east gutter return down to the lower roof.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the south-east",
+  "confidence": "medium"
+ },
+ "front_downspout_porch_east": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the east end of the porch",
+  "desc": "Black downspout at the east end of the porch gutter.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the south-east",
+  "confidence": "medium"
+ },
+ "front_downspout_garage_ne": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the garage's north-east corner",
+  "desc": "Black downspout at the attached garage's north-east corner.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_downspout_garage_sw": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the garage's south-west corner",
+  "desc": "Black downspout at the attached garage's south-west corner.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the south-west",
+  "confidence": "medium"
+ },
+ "p44_downspout_garage_nw": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the garage's north-west corner",
+  "desc": "Black downspout from the west end of the garage's north gutter, running down the north wall right at the corner (it shows just left of the corner in two photographs).",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "medium"
+ },
+ "front_lantern_left_base": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Black lantern on the left portico column - base plate",
+  "desc": "Base plate of the wall lantern.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_lantern_left_cage": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Black lantern on the left portico column - cage bars",
+  "desc": "Four corner bars of the wall lantern.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_lantern_left_glass": {
+  "building": "house",
+  "material": "Lantern glass",
+  "label": "Black lantern on the left portico column - glass",
+  "desc": "Clear glass body of the wall lantern (drawn pale).",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_lantern_right_base": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Black lantern on the right portico column - base plate",
+  "desc": "Base plate of the wall lantern.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_lantern_right_cage": {
+  "building": "house",
+  "material": "Black lantern",
+  "label": "Black lantern on the right portico column - cage bars",
+  "desc": "Four corner bars of the wall lantern.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_lantern_right_glass": {
+  "building": "house",
+  "material": "Lantern glass",
+  "label": "Black lantern on the right portico column - glass",
+  "desc": "Clear glass body of the wall lantern (drawn pale).",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_column_panels": {
+  "building": "house",
+  "material": "Recessed panel edge",
+  "label": "Recessed panels of the porch and portico columns",
+  "desc": "Each column shaft has one tall recessed panel per face; drawn as its outline on the south, east and west faces.",
+  "evidence": "photo",
+  "source": "owner's photographs of the finished front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "front_porch_ceiling": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Porch ceiling (white, flat)",
+  "desc": "Flat white ceiling under the porch roof at the underside of the beam; its line against the back wall was measured in the straight-on photograph.",
+  "dims": "ceiling 7 ft 5 in. above the porch floor",
+  "evidence": "photo",
+  "source": "owner's photographs of the front (straight on from the walk, and from the drive)",
+  "confidence": "medium"
+ },
+ "front_porch_end_panel": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Closed east end of the porch roof",
+  "desc": "The east end of the porch roof above the ceiling reads as a dark closed triangle in the photographs; drawn as a plain dark panel.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the south-east",
+  "confidence": "low"
+ },
+ "front_gutter_east_wing": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Gutter of the east wing's front eave",
+  "desc": "Black gutter along the front eave of the east wing.",
+  "evidence": "photo",
+  "source": "owner's photographs of the south-east corner and of the front from the drive",
+  "confidence": "medium"
+ },
+ "front_downspout_wing_se": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the east wing's south-east corner",
+  "desc": "Black downspout from the front gutter down the south-east wall corner to the ground.",
+  "evidence": "photo",
+  "source": "owner's photographs of the south-east corner and of the front from the drive",
+  "confidence": "medium"
+ },
+ "front_gable_window_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Tall gable - large upstairs window - black frame",
+  "desc": "Black frame members of this window with its wide centre mullion, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_east_wing_window_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "East wing - front window - black frame",
+  "desc": "Black frame members of this window with its wide centre mullion, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the south-east",
+  "confidence": "medium"
+ },
+ "front_tower_window_upper_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Stone tower - upstairs window - black frame",
+  "desc": "Black frame members of this window with its wide centre mullion, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_tower_window_lower_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Stone tower - ground-floor window - black frame",
+  "desc": "Black frame members of this window with its wide centre mullion, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_transom_left_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Small window above the porch roof - black frame",
+  "desc": "Black frame members of this window, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_transom_right_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Small window above the porch roof - black frame",
+  "desc": "Black frame members of this window, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photograph of the finished front, straight on from the walk",
+  "confidence": "medium"
+ },
+ "front_garage_window_1_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Garage - narrow front window - black frame",
+  "desc": "Black frame members of this window, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the south-west",
+  "confidence": "medium"
+ },
+ "front_garage_window_2_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Garage - narrow front window - black frame",
+  "desc": "Black frame members of this window, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the south-west",
+  "confidence": "medium"
+ },
+ "front_link_window_frame": {
+  "building": "house",
+  "material": "Black window frame",
+  "label": "Narrow window in the recess between garage and tower - black frame",
+  "desc": "Black frame members of this window, drawn at the width the photographs show.",
+  "evidence": "photo",
+  "source": "owner's photographs of the front from the drive",
+  "confidence": "medium"
+ },
+ "front_east_wing_bed_fill": {
+  "building": "house",
+  "material": "Mulch",
+  "label": "Planting bed against the east wing's front wall",
+  "desc": "Ground of the planting bed where it meets the front wall of the east wing, at the level the photograph shows (about 0.1 m below the bottom of the stone).",
+  "evidence": "photo",
+  "source": "owner's photograph of the south-east corner from the drive",
+  "confidence": "medium"
+ },
+ "p44_west_door_lantern_plate": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Lantern mounting block (west side door)",
+  "desc": "White mounting block behind the lantern beside the west side door.",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "medium"
+ },
+ "sides_deck_east_boards": {
+  "building": "house",
+  "material": "Composite decking",
+  "label": "East deck boards",
+  "desc": "Grey-taupe composite boards about 5.5 in wide running north-south, parallel to the main block's east wall, even in tone. Drawn as a 2 cm layer over the deck slab (with an imperceptible 4 mm fall to the east, which is what makes the builder lay the boards this way).",
+  "dims": "boards about 5.5 in wide",
+  "evidence": "photo",
+  "source": "owner's photographs taken standing on the east deck",
+  "confidence": "high"
+ },
+ "sides_hot_tub_lifter": {
+  "building": "house",
+  "material": "Hot tub",
+  "label": "Hot tub cover lifter",
+  "desc": "Black tubular cover lifter: a bar lying along the cover's fold with an arm running along the north and south sides to a pivot near each east corner. Simplified from three photographs.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph looking down on the hot tub from the head of the deck stairs",
+  "confidence": "medium"
+ },
+ "sides_hot_tub_step_lower": {
+  "building": "house",
+  "material": "Hot tub",
+  "label": "Hot tub steps (lower)",
+  "desc": "Black moulded two-step unit standing on the pad against the tub's south side; placed from two photographs, +-0.2 m.",
+  "evidence": "photo",
+  "source": "owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph looking down on the hot tub from the head of the deck stairs",
+  "confidence": "medium"
+ },
+ "sides_hot_tub_step_upper": {
+  "building": "house",
+  "material": "Hot tub",
+  "label": "Hot tub steps (upper)",
+  "desc": "Black moulded two-step unit standing on the pad against the tub's south side; placed from two photographs, +-0.2 m.",
+  "evidence": "photo",
+  "source": "owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph looking down on the hot tub from the head of the deck stairs",
+  "confidence": "medium"
+ },
+ "sides_old_slab": {
+  "building": "house",
+  "material": "Old weathered concrete",
+  "label": "Old concrete slab under the east deck",
+  "desc": "Older concrete slab left under the east deck, at the level of the new pad; its broken north edge is solved from two photographs (+-0.05 m), how far it runs back toward the east wing is not visible and is assumed.",
+  "dims": "about 7' 6\" wide",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck from the lawn to the north; owner's photograph of the east deck and east wing from the lawn to the north-east",
+  "confidence": "medium"
+ },
+ "sides_wing_hood_s": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Exhaust hood high on the east gable wall",
+  "desc": "Small white louvred exhaust hood high in the east gable wall, one of two side by side; along the wall +-0.2 m (photographed at a grazing angle).",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east",
+  "confidence": "medium"
+ },
+ "sides_wing_hood_n": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Exhaust hood high on the east gable wall",
+  "desc": "Small white louvred exhaust hood high in the east gable wall, one of two side by side; along the wall +-0.2 m (photographed at a grazing angle).",
+  "evidence": "photo",
+  "source": "owner's photograph of the east deck and east wing from the lawn to the north-east",
+  "confidence": "medium"
+ },
+ "sides_wing_hood_low": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Vent hood low on the east wall",
+  "desc": "Small white vent hood just above the foundation, south of the north-east downspout.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east",
+  "confidence": "high"
+ },
+ "sides_gas_meter": {
+  "building": "house",
+  "material": "Utility meter and electrical boxes",
+  "label": "Gas meter",
+  "desc": "Grey gas meter and regulator standing just off the east wall above the foundation; its north end is measured, its south end is cut off by the edge of the photograph.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs",
+  "confidence": "medium"
+ },
+ "sides_gas_meter_riser": {
+  "building": "house",
+  "material": "Utility meter and electrical boxes",
+  "label": "Gas meter pipework",
+  "desc": "Grey riser pipe looping up beside the gas meter to about 0.6 m above the foundation.",
+  "evidence": "photo",
+  "source": "owner's photograph of the east side taken from the lawn east of the deck stairs",
+  "confidence": "medium"
+ },
+ "sides_wing_disconnect": {
+  "building": "house",
+  "material": "Utility meter and electrical boxes",
+  "label": "Electrical box by the deck corner",
+  "desc": "Grey outdoor electrical box on the east wall just south of the deck, its top level with the deck boards.",
+  "evidence": "photo",
+  "source": "owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east side taken from the lawn east of the deck stairs",
+  "confidence": "medium"
+ },
+ "sides_upper_downspout_ne": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the upper roof's north-east corner",
+  "desc": "Short black downspout from the east end of the upper roof's north gutter down onto the lower roof.",
+  "evidence": "photo",
+  "source": "owner's photographs of the east side from the north-east and from the north, both cameras solved",
+  "confidence": "high"
+ },
+ "rear_deck_rail_posts": {
+  "building": "house",
+  "material": "White deck railing",
+  "label": "Rear deck railing posts",
+  "desc": "Capped white post sleeves, about 5 in square, standing 6 in above the top rail; positions measured in the photograph from the north-west lawn.",
+  "dims": "5 in square, 3 ft 6 in high",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "high"
+ },
+ "sides_garage_door_lattice": {
+  "building": "house",
+  "material": "Black overhead door",
+  "label": "Garage door - rails, stiles and window bars",
+  "desc": "The raised frame of the carriage-style door: three rows of four recessed panels under a top row of four windows, each divided into eight small panes (4 x 2), as counted in the photograph (the same pattern as the detached garage door). The builder draws a plain slab, so the frame is a separate thin part; rail and stile widths are good to about 3 cm.",
+  "dims": "four bays about 3' 7\" wide; panes about 10 x 7 in.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west",
+  "confidence": "medium"
+ },
+ "sides_garage_door_lites": {
+  "building": "house",
+  "material": "Dark glazing of the garage door",
+  "label": "Garage door - glazing",
+  "desc": "Glass of the four paned windows across the top section of the door; it reads near-black in the photograph, so it is drawn darker than the house windows.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west",
+  "confidence": "medium"
+ },
+ "rear_downspout_nw": {
+  "building": "house",
+  "material": "Black trim, fascia and gutters",
+  "label": "Downspout at the north-west corner",
+  "desc": "Black downspout from the west end of the rear gutter down the corner of the house beside the deck steps.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_wall_fixture": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Small white fixture on the rear wall",
+  "desc": "Small white wall-mounted unit at window-head height between the single rear window and the pair, seen in both photographs from the lawn.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_bay_floodlight": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Floodlight on the bay",
+  "desc": "White twin-head floodlight at the upper east corner of the bay's window wall, beside the low end of the east transom.",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_bay_vent_hood": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Vent hood on the bay",
+  "desc": "White louvred vent hood low on the bay's north face, just above its bottom edge.",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_eave_floodlight_nw": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Floodlight at the north-west eave corner",
+  "desc": "Round white floodlight at the north-west corner of the low roof, under the end of the rear gutter; its exact mounting is not visible (placed from one photograph, about 0.3 m).",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "low"
+ },
+ "rear_corner_boards_bay": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Corner boards of the bay",
+  "desc": "White corner boards, about 4 in on each face, on the bay's two outer corners.",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "high"
+ },
+ "rear_corner_board_nw": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Corner board, north-west corner",
+  "desc": "White corner board on the main block's north-west corner.",
+  "evidence": "photo",
+  "source": "owner's photographs of the rear taken from the lawn",
+  "confidence": "medium"
+ },
+ "rear_corner_board_ne": {
+  "building": "house",
+  "material": "White trim",
+  "label": "Corner board, north-east corner",
+  "desc": "White corner board on the main block's north-east corner, from the walk-out slab to the eave (the downspout runs down beside it).",
+  "evidence": "photo",
+  "source": "owner's close photographs of the bay and walk-out patio",
+  "confidence": "medium"
+ },
+ "sides_hot_tub_cover_w": {
+  "building": "house",
+  "material": "Hot tub cover",
+  "label": "Hot tub cover (west half)",
+  "desc": "Folding insulated cover lying on the tub, overhanging the cabinet by a few centimetres; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line.",
+  "evidence": "photo",
+  "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph looking down on the hot tub from the head of the deck stairs",
+  "confidence": "medium"
+ },
+ "sides_hot_tub_cover_e": {
+  "building": "house",
+  "material": "Hot tub cover",
+  "label": "Hot tub cover (east half)",
+  "desc": "Folding insulated cover lying on the tub, overhanging the cabinet by a few centimetres; its top is about 0.2 m above the deck boards. The fold runs north-south along the tub's centre line.",
+  "evidence": "photo",
+  "source": "owner's photograph of the hot tub and east deck from the east; owner's photograph of the east side taken from the lawn east of the deck stairs; owner's photograph of the deck stairs and hot tub from the south-east; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph looking down on the hot tub from the head of the deck stairs",
+  "confidence": "medium"
+ },
+ "rear_walkout_backing": {
+  "building": "house",
+  "material": "Panel line",
+  "label": "Dark backing behind the walk-out door and window",
+  "desc": "Dark panel inside the thickness of the walk-out wall so that nothing shows through the fine gaps round the door leaves; not a real building part.",
+  "evidence": "inferred",
+  "source": "modelling aid, not a measured part",
+  "confidence": "low"
+ },
+ "sides_deck_east_skirt_s": {
+  "building": "house",
+  "material": "Dark skirt board under the deck",
+  "label": "Skirt board under the east deck's south edge",
+  "desc": "Dark board closing the gap under the deck's south edge between the east wing's wall and the stairs; seen in shadow in one photograph.",
+  "evidence": "photo",
+  "source": "owner's photograph of the deck stairs and hot tub from the south-east",
+  "confidence": "low"
+ },
+ "detached_garage_roof": {
+  "building": "garage_detached",
+  "material": "Charcoal asphalt shingles",
+  "label": "Detached garage (2009) \u2014 roof",
+  "desc": "Gable roof with charcoal shingles, ridge running east-south-east, exactly as surveyed. White lap siding in 6 in. courses (wider than the house's 4 in.) with white corner boards, black fascia, rakes and soffits, on a bare concrete foundation that shows below the siding on the south side. The county's 30 x 28 ft is the size of the roof; the photographs put the walls at about 28 ft (door end) x 26.7 ft.",
+  "dims": "roof 30' x 28'; walls 28' x 26.7'; ridge 4.74 m above the floor; 4.9-in-12",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the garage's own frame (190 returns, rms 0.023 m); size from the county record; wall lines 0.25-0.37 m inside the roof edge from the owner's photographs (two independent photogrammetric solutions)",
+  "confidence": "high"
+ },
+ "detached_garage_fascia": {
+  "building": "garage_detached",
+  "material": "Black trim, fascia and gutters",
+  "label": "Detached garage (2009) \u2014 fascia and soffit",
+  "desc": "Gable roof with charcoal shingles, ridge running east-south-east, exactly as surveyed. White lap siding in 6 in. courses (wider than the house's 4 in.) with white corner boards, black fascia, rakes and soffits, on a bare concrete foundation that shows below the siding on the south side. The county's 30 x 28 ft is the size of the roof; the photographs put the walls at about 28 ft (door end) x 26.7 ft.",
+  "dims": "roof 30' x 28'; walls 28' x 26.7'; ridge 4.74 m above the floor; 4.9-in-12",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the garage's own frame (190 returns, rms 0.023 m); size from the county record; wall lines 0.25-0.37 m inside the roof edge from the owner's photographs (two independent photogrammetric solutions)",
+  "confidence": "high"
+ },
+ "detached_garage_walls_foundation_grey": {
+  "building": "garage_detached",
+  "material": "Bare concrete foundation",
+  "label": "Detached garage (2009) \u2014 Bare concrete foundation",
+  "desc": "Gable roof with charcoal shingles, ridge running east-south-east, exactly as surveyed. White lap siding in 6 in. courses (wider than the house's 4 in.) with white corner boards, black fascia, rakes and soffits, on a bare concrete foundation that shows below the siding on the south side. The county's 30 x 28 ft is the size of the roof; the photographs put the walls at about 28 ft (door end) x 26.7 ft.",
+  "dims": "roof 30' x 28'; walls 28' x 26.7'; ridge 4.74 m above the floor; 4.9-in-12",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the garage's own frame (190 returns, rms 0.023 m); size from the county record; wall lines 0.25-0.37 m inside the roof edge from the owner's photographs (two independent photogrammetric solutions)",
+  "confidence": "high"
+ },
+ "detached_garage_walls": {
+  "building": "garage_detached",
+  "material": "White lap siding (6 in. courses)",
+  "label": "Detached garage (2009) \u2014 White lap siding (6 in. courses)",
+  "desc": "Gable roof with charcoal shingles, ridge running east-south-east, exactly as surveyed. White lap siding in 6 in. courses (wider than the house's 4 in.) with white corner boards, black fascia, rakes and soffits, on a bare concrete foundation that shows below the siding on the south side. The county's 30 x 28 ft is the size of the roof; the photographs put the walls at about 28 ft (door end) x 26.7 ft.",
+  "dims": "roof 30' x 28'; walls 28' x 26.7'; ridge 4.74 m above the floor; 4.9-in-12",
+  "evidence": "lidar",
+  "source": "USGS 3DEP IN_Statewide_B1_2017 LiDAR (flown 2017-03-12), plane fit in the garage's own frame (190 returns, rms 0.023 m); size from the county record; wall lines 0.25-0.37 m inside the roof edge from the owner's photographs (two independent photogrammetric solutions)",
+  "confidence": "high"
+ },
+ "dg_overhead_door_frame": {
+  "building": "garage_detached",
+  "material": "Black window frame",
+  "label": "Detached garage overhead door",
+  "desc": "Black carriage-style sectional door in the east gable end, in a white surround: four sections, the top one with four windows of eight small panes each, the three below with four recessed beaded panels each (the frame and window bars are drawn as a separate lattice part).",
+  "dims": "about 18' x 8'",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "high"
+ },
+ "dg_overhead_door_casing": {
+  "building": "garage_detached",
+  "material": "White trim",
+  "label": "Detached garage overhead door",
+  "desc": "Black carriage-style sectional door in the east gable end, in a white surround: four sections, the top one with four windows of eight small panes each, the three below with four recessed beaded panels each (the frame and window bars are drawn as a separate lattice part).",
+  "dims": "about 18' x 8'",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "high"
+ },
+ "dg_overhead_door_slab": {
+  "building": "garage_detached",
+  "material": "Black overhead door (beaded recessed panels)",
+  "label": "Detached garage overhead door",
+  "desc": "Black carriage-style sectional door in the east gable end, in a white surround: four sections, the top one with four windows of eight small panes each, the three below with four recessed beaded panels each (the frame and window bars are drawn as a separate lattice part).",
+  "dims": "about 18' x 8'",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "high"
+ },
+ "dg_overhead_door_groove": {
+  "building": "garage_detached",
+  "material": "Panel line",
+  "label": "Detached garage overhead door",
+  "desc": "Black carriage-style sectional door in the east gable end, in a white surround: four sections, the top one with four windows of eight small panes each, the three below with four recessed beaded panels each (the frame and window bars are drawn as a separate lattice part).",
+  "dims": "about 18' x 8'",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "high"
+ },
+ "dg_overhead_door_jamb": {
+  "building": "garage_detached",
+  "material": "White trim",
+  "label": "Detached garage overhead door",
+  "desc": "Black carriage-style sectional door in the east gable end, in a white surround: four sections, the top one with four windows of eight small panes each, the three below with four recessed beaded panels each (the frame and window bars are drawn as a separate lattice part).",
+  "dims": "about 18' x 8'",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "high"
+ },
+ "dg_man_door_frame": {
+  "building": "garage_detached",
+  "material": "White trim",
+  "label": "Detached garage side door",
+  "desc": "White panel door on the north wall, about 0.6 m from the north-east corner.",
+  "dims": "2'8\" x 6'8\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "medium"
+ },
+ "dg_man_door_casing": {
+  "building": "garage_detached",
+  "material": "White trim",
+  "label": "Detached garage side door",
+  "desc": "White panel door on the north wall, about 0.6 m from the north-east corner.",
+  "dims": "2'8\" x 6'8\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "medium"
+ },
+ "dg_man_door_slab": {
+  "building": "garage_detached",
+  "material": "White door",
+  "label": "Detached garage side door",
+  "desc": "White panel door on the north wall, about 0.6 m from the north-east corner.",
+  "dims": "2'8\" x 6'8\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "medium"
+ },
+ "dg_corner_boards": {
+  "building": "garage_detached",
+  "material": "White trim",
+  "label": "Detached garage corner boards",
+  "desc": "White corner boards.",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025"
+ },
+ "dg_gutters": {
+  "building": "garage_detached",
+  "material": "Black trim, fascia and gutters",
+  "label": "Detached garage gutters",
+  "desc": "Black gutters along both eaves.",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025"
+ },
+ "dg_downspouts": {
+  "building": "garage_detached",
+  "material": "Black trim, fascia and gutters",
+  "label": "Detached garage downspouts",
+  "desc": "Black downspouts at the west ends of both gutters.",
+  "evidence": "photo",
+  "source": "owner's photograph from the garden looking south, 2026"
+ },
+ "dg_gable_floodlight": {
+  "building": "garage_detached",
+  "material": "Black lantern",
+  "label": "Floodlights at the garage gable",
+  "desc": "Pair of black floodlights under the peak of the east gable.",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025"
+ },
+ "dg_door_camera": {
+  "building": "garage_detached",
+  "material": "White trim",
+  "label": "Camera beside the garage door",
+  "desc": "Small white camera on the east wall, left of the overhead door.",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025"
+ },
+ "dg_side_floodlight": {
+  "building": "garage_detached",
+  "material": "Black lantern",
+  "label": "Floodlights over the side door",
+  "desc": "Pair of black floodlights on the north wall, tucked under the soffit about 1.0 m from the north-east corner and 2.5 m above the floor (two photographs agree within 0.07 m).",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "high"
+ },
+ "dg_minisplit": {
+  "building": "garage_detached",
+  "material": "Heat-pump unit",
+  "label": "Mini-split heat pump",
+  "desc": "Outdoor unit of a mini-split heat pump on a stand against the west gable wall, about 1.5 m from its south-west corner (position along the wall +-0.7 m: the one photograph that shows it looks almost along that wall).",
+  "dims": "about 0.9 x 0.35 x 0.85 m",
+  "evidence": "photo",
+  "source": "owner's photograph from the garden looking south, 2026",
+  "confidence": "medium"
+ },
+ "dg_minisplit_stand": {
+  "building": "garage_detached",
+  "material": "Black trim, fascia and gutters",
+  "label": "Mini-split stand",
+  "desc": "Stand under the heat-pump unit.",
+  "evidence": "photo",
+  "source": "owner's photograph from the garden looking south, 2026"
+ },
+ "dg_lineset": {
+  "building": "garage_detached",
+  "material": "Black trim, fascia and gutters",
+  "label": "Heat-pump line covers",
+  "desc": "Two black line covers running up the west wall north of the heat pump; their tops are hidden in the photograph.",
+  "evidence": "photo",
+  "source": "owner's photograph from the garden looking south, 2026",
+  "confidence": "low"
+ },
+ "dg_north_round_light": {
+  "building": "garage_detached",
+  "material": "White trim",
+  "label": "Round white wall fixture",
+  "desc": "Small rounded white fixture high on the north wall, about 4.1 m west of the north-east corner and 2.55 m above the floor; back-projected from one photograph (about 0.2 m along the wall).",
+  "dims": "about 0.2 m across",
+  "evidence": "photo",
+  "source": "owner's photograph of the outbuildings from the attached garage's apron, 2025",
+  "confidence": "medium"
+ },
+ "dg_door_lattice": {
+  "building": "garage_detached",
+  "material": "Black overhead door",
+  "label": "Detached garage overhead door - rails, stiles and window bars",
+  "desc": "The raised frame of the carriage-style door: three rows of four recessed panels under a top row of four windows, each divided into eight small panes (4 x 2). Panel and window edges back-projected from a photograph onto the door (about 2 cm).",
+  "dims": "four bays about 3' 7\" wide; panes about 9.5 x 7 in.",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "high"
+ },
+ "dg_door_glass": {
+  "building": "garage_detached",
+  "material": "Glass",
+  "label": "Detached garage overhead door - glazing",
+  "desc": "Glass of the four paned windows across the top section of the overhead door.",
+  "evidence": "photo",
+  "source": "owner's photographs of the detached garage from the drive and the barn yard, 2025",
+  "confidence": "medium"
+ },
+ "pole_barn_roof": {
+  "building": "pole_barn",
+  "material": "Light grey ribbed steel roof",
+  "label": "Pole barn \u2014 light grey steel roof",
+  "desc": "Post-frame building with white ribbed steel walls, black trim and a light grey ribbed steel roof, ridge running east-south-east parallel to the detached garage. Built in 2025, so it is in no survey: its place is measured from photographs to about 0.25 m and 0.4 degrees. The south and west walls are in none of the photographs and are drawn plain.",
+  "dims": "44' x 60', 16' eave; ridge 7.45 m above the floor; 4-in-12",
+  "evidence": "photo",
+  "source": "position: weighted mean of three independent measurements - two photogrammetric solutions from the owner's photographs of the barn beside the LiDAR-surveyed detached garage, and the owner's 2025 overhead view georeferenced on the garage roof (they agree within 0.35 m); size 44 x 60 ft and 16 ft eave from the county record",
+  "confidence": "medium"
+ },
+ "pole_barn_fascia": {
+  "building": "pole_barn",
+  "material": "Black trim, fascia and gutters",
+  "label": "Pole barn (2025) \u2014 fascia and soffit",
+  "desc": "Post-frame building with white ribbed steel walls, black trim and a light grey ribbed steel roof, ridge running east-south-east parallel to the detached garage. Built in 2025, so it is in no survey: its place is measured from photographs to about 0.25 m and 0.4 degrees. The south and west walls are in none of the photographs and are drawn plain.",
+  "dims": "44' x 60', 16' eave; ridge 7.45 m above the floor; 4-in-12",
+  "evidence": "photo",
+  "source": "position: weighted mean of three independent measurements - two photogrammetric solutions from the owner's photographs of the barn beside the LiDAR-surveyed detached garage, and the owner's 2025 overhead view georeferenced on the garage roof (they agree within 0.35 m); size 44 x 60 ft and 16 ft eave from the county record",
+  "confidence": "medium"
+ },
+ "pole_barn_soffit": {
+  "building": "pole_barn",
+  "material": "Ribbed steel soffit",
+  "label": "Pole barn \u2014 light grey steel roof",
+  "desc": "Post-frame building with white ribbed steel walls, black trim and a light grey ribbed steel roof, ridge running east-south-east parallel to the detached garage. Built in 2025, so it is in no survey: its place is measured from photographs to about 0.25 m and 0.4 degrees. The south and west walls are in none of the photographs and are drawn plain.",
+  "dims": "44' x 60', 16' eave; ridge 7.45 m above the floor; 4-in-12",
+  "evidence": "photo",
+  "source": "position: weighted mean of three independent measurements - two photogrammetric solutions from the owner's photographs of the barn beside the LiDAR-surveyed detached garage, and the owner's 2025 overhead view georeferenced on the garage roof (they agree within 0.35 m); size 44 x 60 ft and 16 ft eave from the county record",
+  "confidence": "medium"
+ },
+ "pole_barn_walls": {
+  "building": "pole_barn",
+  "material": "White ribbed steel",
+  "label": "Pole barn (2025) \u2014 White ribbed steel",
+  "desc": "Post-frame building with white ribbed steel walls, black trim and a light grey ribbed steel roof, ridge running east-south-east parallel to the detached garage. Built in 2025, so it is in no survey: its place is measured from photographs to about 0.25 m and 0.4 degrees. The south and west walls are in none of the photographs and are drawn plain.",
+  "dims": "44' x 60', 16' eave; ridge 7.45 m above the floor; 4-in-12",
+  "evidence": "photo",
+  "source": "position: weighted mean of three independent measurements - two photogrammetric solutions from the owner's photographs of the barn beside the LiDAR-surveyed detached garage, and the owner's 2025 overhead view georeferenced on the garage roof (they agree within 0.35 m); size 44 x 60 ft and 16 ft eave from the county record",
+  "confidence": "medium"
+ },
+ "barn_overhead_door_frame": {
+  "building": "pole_barn",
+  "material": "Black window frame",
+  "label": "Barn overhead door",
+  "desc": "Black sectional door in the east gable end, its centre 0.2 m south of the wall centre; measured in two photographs as 4.9 m wide and 4.3 m high.",
+  "dims": "16' x 14'",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025",
+  "confidence": "high"
+ },
+ "barn_overhead_door_slab": {
+  "building": "pole_barn",
+  "material": "Black overhead door",
+  "label": "Barn overhead door",
+  "desc": "Black sectional door in the east gable end, its centre 0.2 m south of the wall centre; measured in two photographs as 4.9 m wide and 4.3 m high.",
+  "dims": "16' x 14'",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025",
+  "confidence": "high"
+ },
+ "barn_overhead_door_groove": {
+  "building": "pole_barn",
+  "material": "Panel line",
+  "label": "Barn overhead door",
+  "desc": "Black sectional door in the east gable end, its centre 0.2 m south of the wall centre; measured in two photographs as 4.9 m wide and 4.3 m high.",
+  "dims": "16' x 14'",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025",
+  "confidence": "high"
+ },
+ "barn_overhead_door_jamb": {
+  "building": "pole_barn",
+  "material": "Black trim, fascia and gutters",
+  "label": "Barn overhead door",
+  "desc": "Black sectional door in the east gable end, its centre 0.2 m south of the wall centre; measured in two photographs as 4.9 m wide and 4.3 m high.",
+  "dims": "16' x 14'",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025",
+  "confidence": "high"
+ },
+ "barn_man_door_frame": {
+  "building": "pole_barn",
+  "material": "Unpainted door frame",
+  "label": "Barn man door",
+  "desc": "White six-panel steel door with a pale unpainted frame at the east end of the north wall, 0.25 m from the corner.",
+  "dims": "3'0\" x 6'8\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025",
+  "confidence": "high"
+ },
+ "barn_man_door_casing": {
+  "building": "pole_barn",
+  "material": "Unpainted door frame",
+  "label": "Barn man door",
+  "desc": "White six-panel steel door with a pale unpainted frame at the east end of the north wall, 0.25 m from the corner.",
+  "dims": "3'0\" x 6'8\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025",
+  "confidence": "high"
+ },
+ "barn_man_door_slab": {
+  "building": "pole_barn",
+  "material": "White door",
+  "label": "Barn man door",
+  "desc": "White six-panel steel door with a pale unpainted frame at the east end of the north wall, 0.25 m from the corner.",
+  "dims": "3'0\" x 6'8\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025",
+  "confidence": "high"
+ },
+ "barn_corner_trim": {
+  "building": "pole_barn",
+  "material": "Black trim, fascia and gutters",
+  "label": "Barn corner trim",
+  "desc": "Black steel corner trim; seen at the north-east, south-east and north-west corners, assumed at the south-west.",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025"
+ },
+ "barn_gable_light": {
+  "building": "pole_barn",
+  "material": "Black lantern",
+  "label": "Barn gable light",
+  "desc": "Wall light under the peak of the east gable, above the overhead door.",
+  "evidence": "photo",
+  "source": "owner's night photograph of the barn and garage",
+  "confidence": "medium"
+ },
+ "barn_door_light": {
+  "building": "pole_barn",
+  "material": "Black lantern",
+  "label": "Light over the barn man door",
+  "desc": "Wall light just above the man door.",
+  "evidence": "photo",
+  "source": "owner's night photograph of the barn and garage",
+  "confidence": "medium"
+ },
+ "barn_meter": {
+  "building": "pole_barn",
+  "material": "Stainless steel",
+  "label": "Electric meter",
+  "desc": "Meter socket on the north wall about 3.4 m west of the corner, opposite the transformer; position back-projected from one photograph.",
+  "evidence": "photo",
+  "source": "owner's night photograph of the barn and garage",
+  "confidence": "medium"
+ },
+ "barn_meter_conduit": {
+  "building": "pole_barn",
+  "material": "Stainless steel",
+  "label": "Meter conduit",
+  "desc": "Conduit from the meter down to the ground.",
+  "evidence": "photo",
+  "source": "owner's night photograph of the barn and garage",
+  "confidence": "medium"
+ },
+ "outb_transformer_pad": {
+  "building": "pole_barn",
+  "material": "Transformer base (dark fibreglass)",
+  "label": "Transformer base",
+  "desc": "Low dark base under the transformer, a little wider than the unit with a lip at the front (east); about 0.15 m of it shows above the stone.",
+  "evidence": "photo",
+  "source": "owner's photographs of the barn from the drive and the yard, 2025",
+  "confidence": "medium"
+ },
+ "outb_transformer": {
+  "building": "pole_barn",
+  "material": "Pad-mount transformer",
+  "label": "Pad-mount transformer",
+  "desc": "Grey-olive utility transformer in the crushed-stone yard between the barn and the detached garage, 5.5 m north of the barn's north wall; its labelled door faces east. Width and depth from the apparent face widths in five photographs (about 0.05 m).",
+  "dims": "about 0.8 x 0.8 x 0.7 m",
+  "evidence": "photo",
+  "source": "position triangulated from two owner photographs (two returns of the 2017 LiDAR survey lie on its top); proportions from five owner photographs, 2025",
+  "confidence": "high"
+ },
+ "barn_north_fixture": {
+  "building": "pole_barn",
+  "material": "White trim",
+  "label": "Small white wall fixture",
+  "desc": "Small white fixture on the barn's north wall between the man door and the meter, about 2.1 m west of the corner and 2.45 m above the floor; back-projected from one photograph (about 0.2 m).",
+  "evidence": "photo",
+  "source": "owner's night photograph of the barn and garage",
+  "confidence": "medium"
+ },
+ "outb_transformer_label": {
+  "building": "pole_barn",
+  "material": "Caution label",
+  "label": "Caution label on the transformer",
+  "desc": "Yellow caution label on the transformer's east face.",
+  "evidence": "photo",
+  "source": "owner's photographs of the gap between the barn and the detached garage, 2025",
+  "confidence": "high"
+ },
+ "greenhouse_roof": {
+  "building": "greenhouse",
+  "material": "Twin-wall polycarbonate roof (reads as a solid sheet)",
+  "label": "Greenhouse \u2014 roof",
+  "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs.",
+  "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "greenhouse_fascia": {
+  "building": "greenhouse",
+  "material": "White greenhouse frame",
+  "label": "Greenhouse \u2014 fascia and soffit",
+  "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs.",
+  "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "greenhouse_walls_greenhouse_panel": {
+  "building": "greenhouse",
+  "material": "White panel kneewall",
+  "label": "Greenhouse \u2014 White panel kneewall",
+  "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs.",
+  "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "greenhouse_walls": {
+  "building": "greenhouse",
+  "material": "Frosted twin-wall polycarbonate",
+  "label": "Greenhouse \u2014 Frosted twin-wall polycarbonate",
+  "desc": "Gable greenhouse about 16 ft long and 10 ft wide: white panel kneewall, twin-wall polycarbonate above and on the roof (about 8-in-12), eight glazed bays on each long side, door in the east gable, sash window and vent in the west gable. It is newer than every overhead view: its position (about 0.5 m), size and heights are measured in the photograph taken from the court, where its south wall and door end are both in view, with the bay width taken as 2 ft; it stands a few degrees off the compass, parallel to the garden cage. The panels are frosted: the walls only hint at the timber frame inside, and the roof reads as a solid pale blue-grey sheet between white battens, as in all three photographs.",
+  "dims": "about 10' x 16'; eave 6', ridge 9'6\"",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse and of the garden, and the photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "site_gh_door_frame": {
+  "building": "greenhouse",
+  "material": "White greenhouse frame",
+  "label": "Greenhouse door",
+  "desc": "White door in the east gable, a little north of centre, about 6 ft high, with a window of eight small panes (2 x 4) in its upper half that reads light against the frosted wall; three black strap hinges on its north edge and a black lever handle on the south edge.",
+  "dims": "2'10\" wide x 5'11\" high",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_door_casing": {
+  "building": "greenhouse",
+  "material": "White greenhouse frame",
+  "label": "Greenhouse door",
+  "desc": "White door in the east gable, a little north of centre, about 6 ft high, with a window of eight small panes (2 x 4) in its upper half that reads light against the frosted wall; three black strap hinges on its north edge and a black lever handle on the south edge.",
+  "dims": "2'10\" wide x 5'11\" high",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_door_slab": {
+  "building": "greenhouse",
+  "material": "White door",
+  "label": "Greenhouse door",
+  "desc": "White door in the east gable, a little north of centre, about 6 ft high, with a window of eight small panes (2 x 4) in its upper half that reads light against the frosted wall; three black strap hinges on its north edge and a black lever handle on the south edge.",
+  "dims": "2'10\" wide x 5'11\" high",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_door_glass": {
+  "building": "greenhouse",
+  "material": "Greenhouse door panes",
+  "label": "Greenhouse door",
+  "desc": "White door in the east gable, a little north of centre, about 6 ft high, with a window of eight small panes (2 x 4) in its upper half that reads light against the frosted wall; three black strap hinges on its north edge and a black lever handle on the south edge.",
+  "dims": "2'10\" wide x 5'11\" high",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "greenhouse_windows_frame": {
+  "building": "greenhouse",
+  "material": "White greenhouse frame",
+  "label": "Greenhouse \u2014 window frames",
+  "desc": "Double-hung sash window in the west gable end.",
+  "dims": "2' wide x 3'3\" high",
+  "evidence": "photo",
+  "source": "owner's photograph at the greenhouse's north-west corner",
+  "confidence": "medium"
+ },
+ "greenhouse_windows_casing": {
+  "building": "greenhouse",
+  "material": "White greenhouse frame",
+  "label": "Greenhouse \u2014 casing",
+  "desc": "Double-hung sash window in the west gable end.",
+  "dims": "2' wide x 3'3\" high",
+  "evidence": "photo",
+  "source": "owner's photograph at the greenhouse's north-west corner",
+  "confidence": "medium"
+ },
+ "greenhouse_windows_glass": {
+  "building": "greenhouse",
+  "material": "Glass",
+  "label": "Greenhouse \u2014 glazing",
+  "desc": "Double-hung sash window in the west gable end.",
+  "dims": "2' wide x 3'3\" high",
+  "evidence": "photo",
+  "source": "owner's photograph at the greenhouse's north-west corner",
+  "confidence": "medium"
+ },
+ "site_gh_battens": {
+  "building": "greenhouse",
+  "material": "White greenhouse frame",
+  "label": "Greenhouse wall battens",
+  "desc": "White battens between the glazing panels at about 2 ft centres.",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_roof_battens": {
+  "building": "greenhouse",
+  "material": "White greenhouse frame",
+  "label": "Greenhouse roof battens",
+  "desc": "White battens up both roof slopes at about 2 ft centres.",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_trim": {
+  "building": "greenhouse",
+  "material": "White greenhouse frame",
+  "label": "Greenhouse corner boards, rails and ridge cap",
+  "desc": "White corner boards, the rails at the top of the kneewall and at the eaves, and the ridge cap.",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_frame": {
+  "building": "greenhouse",
+  "material": "Treated wood post",
+  "label": "Greenhouse timber frame",
+  "desc": "Timber studs, rafters, plates and braces showing through the glazing; their spacing is assumed (every second batten).",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "low"
+ },
+ "site_gh_hinge_1": {
+  "building": "greenhouse",
+  "material": "Black lantern",
+  "label": "Greenhouse door hinge",
+  "desc": "Black strap hinge on the north edge of the door; the three stand about 0.15, 0.8 and 1.7 m above the sill in the photograph of the door end.",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_hinge_2": {
+  "building": "greenhouse",
+  "material": "Black lantern",
+  "label": "Greenhouse door hinge",
+  "desc": "Black strap hinge on the north edge of the door; the three stand about 0.15, 0.8 and 1.7 m above the sill in the photograph of the door end.",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_hinge_3": {
+  "building": "greenhouse",
+  "material": "Black lantern",
+  "label": "Greenhouse door hinge",
+  "desc": "Black strap hinge on the north edge of the door; the three stand about 0.15, 0.8 and 1.7 m above the sill in the photograph of the door end.",
+  "evidence": "photo",
+  "source": "owner's photographs of the greenhouse",
+  "confidence": "medium"
+ },
+ "site_gh_door_handle": {
+  "building": "greenhouse",
+  "material": "Black lantern",
+  "label": "Greenhouse door handle",
+  "desc": "Black lever handle on the south edge of the door, about 0.95 m above the sill.",
+  "evidence": "photo",
+  "source": "owner's photograph of the greenhouse's door end",
+  "confidence": "medium"
+ },
+ "site_cage_posts": {
+  "building": "garden",
+  "material": "Stained timber (garden cage)",
+  "label": "Vegetable garden cage posts",
+  "desc": "East posts of the timber frame around the vegetable garden, about 6 ft high and stained brown: the two corner posts and the two posts of the entrance in the middle of the east side, placed from their bearings in the photograph taken from the court (about 0.3 m); the frame stands a few degrees off the compass, parallel to the greenhouse.",
+  "dims": "about 15'6\" x 17'3\", 6' high",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court; owner's earlier photographs of the garden (from the apron, from the air, from beside the greenhouse); 2024 state aerial photograph",
+  "confidence": "medium"
+ },
+ "site_cage_rails": {
+  "building": "garden",
+  "material": "Stained timber (garden cage)",
+  "label": "Vegetable garden cage top rails",
+  "desc": "Top rails of the garden cage, stained brown; two cross rails run back from the entrance posts.",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court; owner's earlier photographs of the garden",
+  "confidence": "medium"
+ },
+ "site_cage_beds": {
+  "building": "garden",
+  "material": "Stained timber (garden cage)",
+  "label": "Raised beds around the garden cage",
+  "desc": "Ring of timber raised beds, three boards high, forming the foot of the cage inside its frame, open at the entrance; the boards are stained brown like the frame. Height (about 0.5 m) measured in the photograph from the court; the aerial photograph shows the ring divided into compartments, which are not modelled.",
+  "dims": "about 2 ft 6 in wide, 1 ft 9 in high",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court; owner's aerial photograph of the garden",
+  "confidence": "medium"
+ },
+ "site_cage_beds_soil": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Raised beds around the garden cage (soil)",
+  "desc": "Soil in the bed, a little below the rim.",
+  "evidence": "photo",
+  "source": "owner's photographs of the garden (from the apron, from the air and from beside the greenhouse); 2025 overhead view",
+  "confidence": "medium"
+ },
+ "site_cage_bed_centre": {
+  "building": "garden",
+  "material": "Weathered timber",
+  "label": "Centre raised bed",
+  "desc": "Square raised bed in the middle of the cage, about 6 ft across (aerial photograph).",
+  "evidence": "photo",
+  "source": "owner's photographs of the garden (from the apron, from the air and from beside the greenhouse); 2025 overhead view",
+  "confidence": "medium"
+ },
+ "site_cage_bed_centre_soil": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Centre raised bed (soil)",
+  "desc": "Soil in the bed, a little below the rim.",
+  "evidence": "photo",
+  "source": "owner's photographs of the garden (from the apron, from the air and from beside the greenhouse); 2025 overhead view",
+  "confidence": "medium"
+ },
+ "site_arbor_bed_1": {
+  "building": "garden",
+  "material": "Stained cedar (berry arbors)",
+  "label": "Berry arbor bed",
+  "desc": "Open timber bed box, two boards high, at the foot of a berry arbor; the posts stand inside it on its centre line. The northernmost box is measured in the photograph taken beside the greenhouse: rim at 261.2 m, about 0.2 m above the grass, soil at 261.11 m, east board 0.4 m east of the post line; the other two are assumed alike.",
+  "evidence": "photo",
+  "source": "owner's photograph taken beside the greenhouse's north-west corner (the latest of the garden; camera solved on the detached garage and the barn beyond)",
+  "confidence": "medium"
+ },
+ "site_arbor_bed_1_soil": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Berry arbor bed (soil)",
+  "desc": "Soil in the bed, a little below the rim.",
+  "evidence": "photo",
+  "source": "owner's photographs of the garden (from the apron, from the air and from beside the greenhouse); 2025 overhead view",
+  "confidence": "medium"
+ },
+ "site_arbor_bed_2": {
+  "building": "garden",
+  "material": "Stained cedar (berry arbors)",
+  "label": "Berry arbor bed",
+  "desc": "Open timber bed box, two boards high, at the foot of a berry arbor; the posts stand inside it on its centre line. The northernmost box is measured in the photograph taken beside the greenhouse: rim at 261.2 m, about 0.2 m above the grass, soil at 261.11 m, east board 0.4 m east of the post line; the other two are assumed alike.",
+  "evidence": "photo",
+  "source": "owner's photograph taken beside the greenhouse's north-west corner (the latest of the garden; camera solved on the detached garage and the barn beyond)",
+  "confidence": "medium"
+ },
+ "site_arbor_bed_2_soil": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Berry arbor bed (soil)",
+  "desc": "Soil in the bed, a little below the rim.",
+  "evidence": "photo",
+  "source": "owner's photographs of the garden (from the apron, from the air and from beside the greenhouse); 2025 overhead view",
+  "confidence": "medium"
+ },
+ "site_arbor_bed_3": {
+  "building": "garden",
+  "material": "Stained cedar (berry arbors)",
+  "label": "Berry arbor bed",
+  "desc": "Open timber bed box, two boards high, at the foot of a berry arbor; the posts stand inside it on its centre line. The northernmost box is measured in the photograph taken beside the greenhouse: rim at 261.2 m, about 0.2 m above the grass, soil at 261.11 m, east board 0.4 m east of the post line; the other two are assumed alike.",
+  "evidence": "photo",
+  "source": "owner's photograph taken beside the greenhouse's north-west corner (the latest of the garden; camera solved on the detached garage and the barn beyond)",
+  "confidence": "medium"
+ },
+ "site_arbor_bed_3_soil": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Berry arbor bed (soil)",
+  "desc": "Soil in the bed, a little below the rim.",
+  "evidence": "photo",
+  "source": "owner's photographs of the garden (from the apron, from the air and from beside the greenhouse); 2025 overhead view",
+  "confidence": "medium"
+ },
+ "site_arbor_posts": {
+  "building": "garden",
+  "material": "Stained cedar (berry arbors)",
+  "label": "Berry arbor posts",
+  "desc": "Three berry arbors in a north-south row west of the greenhouse, in line with the west side of the garden cage: pairs of 4x4 posts about 6 ft high, stained brown. The row is placed from the bearings of three of its posts in the photograph from the court and the photograph taken beside the greenhouse (about 0.4 m). In the latest photograph the posts stand free above the rails: the top rails that earlier photographs show have been taken off (a pale, unstained patch near the top of the northern post marks where one was clamped), so none are drawn.",
+  "evidence": "photo",
+  "source": "owner's photographs of the garden (from the apron, from the air and from beside the greenhouse); 2025 overhead view",
+  "confidence": "medium"
+ },
+ "site_arbor_rails": {
+  "building": "garden",
+  "material": "Stained cedar (berry arbors)",
+  "label": "Berry arbor rails",
+  "desc": "Two pairs of rails clamped either side of the posts of each arbor: an upper pair whose top is 1.0 m above the lawn (z 261.98 at the northern post) carrying a flat wire shelf, and a lower pair just above the bed box (top at z 261.34) carrying a second wire panel. Heights measured at the northern post; the other two arbors are assumed alike.",
+  "evidence": "photo",
+  "source": "owner's photograph taken beside the greenhouse's north-west corner (the latest of the garden; camera solved on the detached garage and the barn beyond)",
+  "confidence": "medium"
+ },
+ "site_arbor_wire": {
+  "building": "garden",
+  "material": "Galvanised wire panel",
+  "label": "Berry arbor wire panels",
+  "desc": "Welded-wire panels lying flat on the upper and the lower rails of each arbor, as in the latest photograph; mesh size and extent are approximate.",
+  "evidence": "photo",
+  "source": "owner's photographs of the garden (from the apron, from the air and from beside the greenhouse); 2025 overhead view",
+  "confidence": "low"
+ },
+ "p44_planter_wall": {
+  "building": "garden",
+  "material": "Grey tumbled wall block",
+  "label": "Planter wall",
+  "desc": "Low straight wall of grey tumbled retaining-wall blocks, two courses and about 0.17 m high, along the north edge of the garage apron in front of the privacy fence: it starts at the corner of the trash-cart screen and runs west to the corner of the fenced yard. Height and east end measured in the photograph; its face is about 0.3 m in front of the screen panels (triangulated from two photographs, about 0.15 m).",
+  "dims": "about 34' long, 7 in. high, 8 in. thick",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron; its run west of the photograph from the summer 2025 photograph across the court and the 2025 overhead view",
+  "confidence": "medium"
+ },
+ "p44_planter_cap": {
+  "building": "garden",
+  "material": "Grey tumbled wall block (top course)",
+  "label": "Planter wall (top course)",
+  "desc": "Top course of the planter wall, the same tumbled grey block.",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "medium"
+ },
+ "p44_planter_wall_end": {
+  "building": "garden",
+  "material": "Grey tumbled wall block",
+  "label": "Planter wall (west end)",
+  "desc": "West end of the planter: the wall turns back to the fence just outside the corner of the fenced yard, with a slightly taller corner block, as the photograph taken from the court shows.",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p44_planting_back": {
+  "building": "garden",
+  "material": "Planting",
+  "label": "Planting in the planter (indicative)",
+  "desc": "Indicative only: in summer the bed is full of flowering plants, about 1 to 1.5 m tall along the fence (heights measured in the photograph for the east half of the bed; the west half is outside the photograph and assumed alike, a little lower). A row of rounded green masses stands in for them; individual plants, the hollyhocks and sunflowers that reach 1.7 to 1.9 m, and the flowers themselves are not modelled.",
+  "dims": "about 3 to 5 ft tall",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "low"
+ },
+ "p44_planting_front": {
+  "building": "garden",
+  "material": "Planting",
+  "label": "Planting in the planter (indicative)",
+  "desc": "Indicative only: the low plants along the front of the bed, just behind the block wall - a row of rounded green masses stands in for them.",
+  "dims": "about 1.5 ft tall",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "low"
+ },
+ "p45_cage_mesh": {
+  "building": "garden",
+  "material": "Galvanised wire panel",
+  "label": "Vegetable garden cage wire mesh",
+  "desc": "Welded-wire mesh panels on all four sides of the cage, from the top of the raised beds to the top rail, open at the entrance; the mesh is drawn coarser than the real 2 x 4 in. wire.",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p45_cage_arch": {
+  "building": "garden",
+  "material": "Galvanised wire panel",
+  "label": "Arched wire trellis over the garden entrance",
+  "desc": "Low arch of wire panel standing on the top rails over the entrance, rising about 0.35 m above them; its span and rise are measured in the photograph, its depth (about 2 ft) is estimated.",
+  "dims": "about 5 ft span, top about 7 ft above the ground",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p45_cage_bed_north": {
+  "building": "garden",
+  "material": "Stained timber (garden cage)",
+  "label": "Raised bed outside the north side of the garden cage",
+  "desc": "Timber raised bed about 3 ft wide outside the cage along its north side, as the aerial photograph of the garden shows it; it is hidden behind the cage in the photograph from the court, so its present state is assumed unchanged.",
+  "evidence": "photo",
+  "source": "owner's aerial photograph of the garden",
+  "confidence": "low"
+ },
+ "p45_cage_bed_north_soil": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Raised bed outside the north side of the garden cage (soil)",
+  "desc": "Soil in the bed, a little below the rim.",
+  "evidence": "photo",
+  "source": "owner's aerial photograph of the garden",
+  "confidence": "low"
+ },
+ "p45_ground_planter": {
+  "building": "garden",
+  "material": "New pine timber",
+  "label": "Ground planter",
+  "desc": "Low box of new, unstained timber lying on the ground south of the west half of the greenhouse; position (about 0.3 m) and size (about 2.1 x 0.85 m, 0.3 m high) measured in the photograph from the court.",
+  "dims": "about 2'9\" x 7', 1' high",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p45_ground_planter_soil": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Ground planter (soil)",
+  "desc": "Soil in the planter, a little below the rim (assumed filled).",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "low"
+ },
+ "p45_path_edging": {
+  "building": "garden",
+  "material": "Dark timber edging",
+  "label": "Timber edging of the garden path",
+  "desc": "Timber edge along both sides of the path to the garden cage.",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p44_planting_mid_a": {
+  "building": "garden",
+  "material": "Planting",
+  "label": "Planting in the planter (indicative)",
+  "desc": "Indicative only: the second rank of planting in the bed, drawn as a row of rounded green masses.",
+  "dims": "about 2 ft tall",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "low"
+ },
+ "p44_planting_mid_b": {
+  "building": "garden",
+  "material": "Planting",
+  "label": "Planting in the planter (indicative)",
+  "desc": "Indicative only: the third rank of planting in the bed, drawn as a row of rounded green masses.",
+  "dims": "about 2.5 ft tall",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "low"
+ },
+ "p44_planting_mid_c": {
+  "building": "garden",
+  "material": "Planting",
+  "label": "Planting in the planter (indicative)",
+  "desc": "Indicative only: the fourth rank of planting in the bed, drawn as a row of rounded green masses.",
+  "dims": "about 3 ft tall",
+  "evidence": "photo",
+  "source": "owner's photograph of the fence and planter from the detached garage's apron",
+  "confidence": "low"
+ },
+ "p45_cage_posts_west": {
+  "building": "garden",
+  "material": "Stained timber (garden cage)",
+  "label": "Vegetable garden cage posts (west side)",
+  "desc": "West posts of the garden cage. The frame follows the ground and stands about 0.1 m lower here than on the east side (south-west post measured in the photograph from the court); the two intermediate posts under the cross rails are assumed.",
+  "dims": "about 6' high",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court; owner's aerial photograph of the garden",
+  "confidence": "medium"
+ },
+ "p45_cage_bed_south": {
+  "building": "garden",
+  "material": "Stained timber (garden cage)",
+  "label": "Raised bed outside the south side of the garden cage",
+  "desc": "Timber raised bed, three boards high, standing outside the cage along the whole of its south side; with the bed inside the frame it makes the L round the south-east corner. Its south-east corner, width (0.75 m) and rim height (falling about 0.13 m to the west with the ground) are measured in the photograph from the court.",
+  "dims": "about 2'6\" wide, 16' long, three boards high",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p45_cage_bed_south_e": {
+  "building": "garden",
+  "material": "Stained timber (garden cage)",
+  "label": "Raised bed outside the south side of the garden cage (east end)",
+  "desc": "East end of the bed along the cage's south side, flush with the cage's east face as the photograph from the court shows.",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p45_cage_bed_south_w": {
+  "building": "garden",
+  "material": "Stained timber (garden cage)",
+  "label": "Raised bed outside the south side of the garden cage (west end)",
+  "desc": "West end of the bed along the cage's south side.",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p45_cage_bed_south_soil": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Raised bed outside the south side of the garden cage (soil)",
+  "desc": "Soil in the east half of the bed, a little below the rim.",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "p45_cage_bed_south_soil_w": {
+  "building": "garden",
+  "material": "Garden soil",
+  "label": "Raised bed outside the south side of the garden cage (soil)",
+  "desc": "Soil in the west half of the bed, a little below the rim.",
+  "evidence": "photo",
+  "source": "owner's photograph of the garden from the court",
+  "confidence": "medium"
+ },
+ "site_gate_hinge_1": {
+  "building": "garden",
+  "material": "Black lantern",
+  "label": "Gate hinge",
+  "desc": "Black strap hinge of the fence gate, on the gate post side; four show in the photograph, at about 0.2, 0.7, 1.1 and 1.65 m above the paving.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west",
+  "confidence": "medium"
+ },
+ "site_gate_hinge_2": {
+  "building": "garden",
+  "material": "Black lantern",
+  "label": "Gate hinge",
+  "desc": "Black strap hinge of the fence gate, on the gate post side; four show in the photograph, at about 0.2, 0.7, 1.1 and 1.65 m above the paving.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west",
+  "confidence": "medium"
+ },
+ "site_gate_hinge_3": {
+  "building": "garden",
+  "material": "Black lantern",
+  "label": "Gate hinge",
+  "desc": "Black strap hinge of the fence gate, on the gate post side; four show in the photograph, at about 0.2, 0.7, 1.1 and 1.65 m above the paving.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west",
+  "confidence": "medium"
+ },
+ "site_gate_hinge_4": {
+  "building": "garden",
+  "material": "Black lantern",
+  "label": "Gate hinge",
+  "desc": "Black strap hinge of the fence gate, on the gate post side; four show in the photograph, at about 0.2, 0.7, 1.1 and 1.65 m above the paving.",
+  "evidence": "photo",
+  "source": "owner's photograph of the attached garage from the drive to the south-west",
+  "confidence": "medium"
  }
 }

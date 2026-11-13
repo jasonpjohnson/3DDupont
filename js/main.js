@@ -522,7 +522,7 @@ function cutaway(mat) {
           float tt = clamp(dot(io - uCutA.xz, ab) / max(dot(ab, ab), 1e-4), 0.0, 1.0);
           float dd = distance(io, uCutA.xz + ab * tt);
           float sight = mix(uCutA.y, uCutB.y, tt);
-          float corridor = mix(5.0, 17.0, tt) * uCutK;
+          float corridor = mix(9.0, 17.0, tt) * uCutK;
           if (dd < corridor && sight < aTop + 2.5) gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
         }
         #endif`);

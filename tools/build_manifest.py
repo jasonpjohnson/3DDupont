@@ -47,7 +47,7 @@ def main():
 
     trees = layers["trees"]
     layer_list += [
-        {"id": "trees", "label": "Trees", "note": f"{trees['count']} from LiDAR", "on": True},
+        {"id": "trees", "label": "Trees", "note": f"{trees['count']}: laser survey, thickened", "on": True},
         {"id": "aerial", "label": "Aerial photo", "note": site.get("ortho_note", "2024"), "on": True},
         {"id": "contours", "label": "Contours", "note": "1 ft", "on": False},
         {"id": "parcel", "label": "Parcel boundary", "note": site.get("parcel_note", ""), "on": True},

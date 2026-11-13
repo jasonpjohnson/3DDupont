@@ -1,0 +1,521 @@
+{
+ "models": [
+  {
+   "id": "surfaces_2023",
+   "file": "surfaces_2023.glb",
+   "label": "Site works (2023)",
+   "since": 2023,
+   "layer": "sitework",
+   "quiet": true
+  },
+  {
+   "id": "surfaces_2025",
+   "file": "surfaces_2025.glb",
+   "label": "Site works (2025)",
+   "since": 2025,
+   "layer": "sitework",
+   "quiet": true
+  },
+  {
+   "id": "surfaces_2026",
+   "file": "surfaces_2026.glb",
+   "label": "Site works (2026)",
+   "since": 2026,
+   "layer": "sitework",
+   "quiet": true
+  }
+ ],
+ "parts": {
+  "rear_river_rock_deck": {
+   "label": "River rock under the rear deck",
+   "desc": "River-rock slope under the east part of the rear deck, from the house wall out past the deck's north edge beside the west patio wall. Its limit is read in the two close photographs from the north-east: grass reaches the deck edge about 6 m west of the patio wall, and under the deck the rock runs on to about the fourth post.",
+   "evidence": "photo",
+   "source": "owner's close photographs of the bay and walk-out patio",
+   "building": "surfaces_2023",
+   "material": "River rock"
+  },
+  "site_garden_path": {
+   "label": "Gravel path in the vegetable garden",
+   "desc": "Gravel between the raised beds inside the garden cage, running out through the entrance.",
+   "evidence": "photo",
+   "source": "owner's aerial photograph of the garden",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Crushed stone"
+  },
+  "sides_river_rock_deck": {
+   "label": "River rock under the east deck",
+   "desc": "River rock under the east deck and on the slope just north of it, down to the top of the east patio wall; its outer edge on the slope is read from three photographs, about 0.5 m.",
+   "evidence": "photo",
+   "source": "owner's photograph of the east deck from the lawn to the north; owner's photograph of the east deck and east wing from the lawn to the north-east; owner's photograph of the hot tub and east deck from the east",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "River rock"
+  },
+  "rear_soil_under_deck": {
+   "label": "Bare ground under the west end of the rear deck",
+   "desc": "Shaded bare soil with weeds under the low west end of the deck (no river rock here in the photographs from the lawn); drawn with the builder's dark mulch ground, the nearest it has to bare earth.",
+   "evidence": "photo",
+   "source": "owner's photographs of the rear taken from the lawn",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Bare soil"
+  },
+  "rear_river_rock_wall_e": {
+   "label": "River rock at the house's north-east corner",
+   "desc": "River rock lying against the foundation and the house end of the east patio wall at the north-east corner, joining the rock slope under the east deck.",
+   "evidence": "photo",
+   "source": "owner's close photographs of the bay and walk-out patio",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "River rock"
+  },
+  "site_fence": {
+   "label": "Privacy fence",
+   "desc": "Cedar privacy fence, stained dark brown, about 6 ft high, enclosing the yard west of the house: from the attached garage along the north edge of the apron (seen from the drive; the gate by the garage and the taller run west of it are separate parts), up the west side (overhead views only) and back along the rear lawn to the corner of the house by the deck stairs (seen from the lawn). South-west corner placed from its bearing in the photograph of the garden taken from the court.",
+   "dims": "about 6' high",
+   "evidence": "photo",
+   "source": "owner's photographs from the drive and from the rear lawn; overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_posts": {
+   "label": "Privacy fence",
+   "desc": "Cedar privacy fence, stained dark brown, about 6 ft high, enclosing the yard west of the house: from the attached garage along the north edge of the apron (seen from the drive; the gate by the garage and the taller run west of it are separate parts), up the west side (overhead views only) and back along the rear lawn to the corner of the house by the deck stairs (seen from the lawn). South-west corner placed from its bearing in the photograph of the garden taken from the court.",
+   "dims": "about 6' high",
+   "evidence": "photo",
+   "source": "owner's photographs from the drive and from the rear lawn; overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_low_a": {
+   "label": "Trash-cart screen (west panel and side return)",
+   "desc": "West half of the low screen that hides the trash carts: a stained dog-ear picket panel about 1.5 m long and 1.25 m high standing 1.25 m in front (south) of the privacy fence, with a side return running back to the fence at its west end (the planter ends against it). Ends triangulated from two photographs, about 0.1 m; the 0.95 m gap east of it is the way in.",
+   "dims": "panel about 5' long x 4' high; return about 4' deep",
+   "evidence": "photo",
+   "source": "owner's photograph of the fence and planter from the detached garage's apron; cross-checked against the owner's photograph of the garage door end and the summer 2025 photograph across the court",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_low_a_posts": {
+   "label": "Trash-cart screen (west panel and side return)",
+   "desc": "West half of the low screen that hides the trash carts: a stained dog-ear picket panel about 1.5 m long and 1.25 m high standing 1.25 m in front (south) of the privacy fence, with a side return running back to the fence at its west end (the planter ends against it). Ends triangulated from two photographs, about 0.1 m; the 0.95 m gap east of it is the way in.",
+   "dims": "panel about 5' long x 4' high; return about 4' deep",
+   "evidence": "photo",
+   "source": "owner's photograph of the fence and planter from the detached garage's apron; cross-checked against the owner's photograph of the garage door end and the summer 2025 photograph across the court",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_low_b": {
+   "label": "Trash-cart screen (east panel)",
+   "desc": "East half of the low screen: a stained dog-ear picket panel about 1.9 m long and 1.25 m high, in line with the west panel, ending against the stone base of the garage wall about 0.25 m north of the garage door surround. No side return on its west end (the photograph shows the privacy fence through the gap).",
+   "dims": "about 6' 4\" long x 4' high",
+   "evidence": "photo",
+   "source": "owner's photograph of the fence and planter from the detached garage's apron; cross-checked against the owner's photograph of the garage door end and the summer 2025 photograph across the court",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_low_b_posts": {
+   "label": "Trash-cart screen (east panel)",
+   "desc": "East half of the low screen: a stained dog-ear picket panel about 1.9 m long and 1.25 m high, in line with the west panel, ending against the stone base of the garage wall about 0.25 m north of the garage door surround. No side return on its west end (the photograph shows the privacy fence through the gap).",
+   "dims": "about 6' 4\" long x 4' high",
+   "evidence": "photo",
+   "source": "owner's photograph of the fence and planter from the detached garage's apron; cross-checked against the owner's photograph of the garage door end and the summer 2025 photograph across the court",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_gate": {
+   "label": "Privacy fence - gate by the garage",
+   "desc": "East end of the privacy fence, between the garage corner and the gate post: a picket gate hung on four black strap hinges on the post at its west side, and a short fixed panel to the garage wall. Its top stands about 1.8 m above the paving and 0.1-0.2 m below the fence west of the post (measured in two photographs); the gate leaf itself is not cut out of the pickets.",
+   "dims": "about 8' long, 5' 11\" high; gate about 3' wide",
+   "evidence": "photo",
+   "source": "owner's photographs of the attached garage from the drive to the south-west and of the fence and planter from the detached garage's apron",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_gate_posts": {
+   "label": "Privacy fence - gate by the garage",
+   "desc": "East end of the privacy fence, between the garage corner and the gate post: a picket gate hung on four black strap hinges on the post at its west side, and a short fixed panel to the garage wall. Its top stands about 1.8 m above the paving and 0.1-0.2 m below the fence west of the post (measured in two photographs); the gate leaf itself is not cut out of the pickets.",
+   "dims": "about 8' long, 5' 11\" high; gate about 3' wide",
+   "evidence": "photo",
+   "source": "owner's photographs of the attached garage from the drive to the south-west and of the fence and planter from the detached garage's apron",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_south": {
+   "label": "Privacy fence - south side, west of the gate",
+   "desc": "The run of the privacy fence behind the flower planter, west of the gate post. Its picket tops stand 0.1-0.2 m higher than the gate section (about 1.9-2.0 m above the ground in the photograph from the drive, 1.9 m in the one from the detached garage); the fence is back to about 1.85 m at the yard corner, and where it steps down between is not seen in any photograph - mid-run is assumed.",
+   "dims": "about 6' 4\" high",
+   "evidence": "photo",
+   "source": "owner's photographs of the attached garage from the drive to the south-west and of the fence and planter from the detached garage's apron",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "site_fence_south_posts": {
+   "label": "Privacy fence - south side, west of the gate",
+   "desc": "The run of the privacy fence behind the flower planter, west of the gate post. Its picket tops stand 0.1-0.2 m higher than the gate section (about 1.9-2.0 m above the ground in the photograph from the drive, 1.9 m in the one from the detached garage); the fence is back to about 1.85 m at the yard corner, and where it steps down between is not seen in any photograph - mid-run is assumed.",
+   "dims": "about 6' 4\" high",
+   "evidence": "photo",
+   "source": "owner's photographs of the attached garage from the drive to the south-west and of the fence and planter from the detached garage's apron",
+   "confidence": "medium",
+   "building": "surfaces_2023",
+   "material": "Stained cedar privacy fence"
+  },
+  "rear_patio_lawn_edge": {
+   "label": "Grass bank around the walk-out patio",
+   "desc": "Grass bank running down to the edge of the patio slab, along the outside of its retaining walls and up to the east deck, as in the close photographs (the aerial photograph underneath predates the regrading). It lies under any paving or rock drawn by the other site works.",
+   "evidence": "photo",
+   "source": "owner's close photographs of the bay and walk-out patio",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "outb_barn_apron": {
+   "label": "Barn apron and door stoop",
+   "desc": "Concrete apron about 1.4 m deep along the door end of the barn, wrapping the north-east corner as a stoop in front of the man door.",
+   "evidence": "photo",
+   "source": "owner's photographs of the barn from the drive and the yard, 2025; outer corners back-projected from a photograph taken beside the barn",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Concrete"
+  },
+  "outb_barn_asphalt": {
+   "label": "Asphalt at the barn apron",
+   "desc": "The new asphalt runs right up to the barn's concrete apron; this strip joins the apron to the drive.",
+   "evidence": "photo",
+   "source": "owner's photographs of the barn from the drive and the yard, 2025",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Asphalt"
+  },
+  "outb_gravel_yard": {
+   "label": "Crushed-stone yard",
+   "desc": "Pale crushed limestone between the detached garage and the barn, along the barn's north wall and about 6 m out from its west end. Its outline is traced from the overhead view; the edge under the trees to the south-west is approximate.",
+   "evidence": "photo",
+   "source": "owner's overhead view of the barn area (2025 satellite image, georeferenced on the detached garage roof) and owner's photographs",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Crushed stone"
+  },
+  "site_drive": {
+   "label": "Driveway from W Dupont Rd",
+   "desc": "Single-lane asphalt drive climbing about 130 m from the road through the woods; the centre line is traced from the aerials, the width (about 10 ft) is the median of five epochs. Its present surface is not shown in any photograph.",
+   "dims": "about 10' wide",
+   "evidence": "photo",
+   "source": "2024 state aerial photograph and the 2012 to 2021 aerials where trees hide it",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Asphalt (older)"
+  },
+  "site_drive_east": {
+   "label": "Drive, east arm of the loop",
+   "desc": "East arm of the loop that brings the drive up to the front of the house; edges traced from the aerial, partly under tree shadow.",
+   "evidence": "photo",
+   "source": "2024 state aerial photograph; owner's photograph of the south-east corner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Asphalt"
+  },
+  "site_drive_barn": {
+   "label": "Drive to the barn and west arm of the loop",
+   "desc": "Asphalt laid in 2025 toward the pole barn, with the rounded lobe by the detached garage; its north edge and the island edge are back-projected from an owner photograph, the part south-east of the barn is approximate.",
+   "evidence": "photo",
+   "source": "owner's photographs of the outbuildings from the drive, 2025; 2024 state aerial photograph",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Asphalt"
+  },
+  "site_court": {
+   "label": "Asphalt court between the house and the garages",
+   "desc": "Court in front of the house and both garages, with the strip west of the concrete apron. A summer 2025 photograph shows it weathered and pale, meeting the new barn drive on a straight joint south of the detached garage; the latest photographs show it black right up to the apron, so it is drawn as resurfaced.",
+   "evidence": "photo",
+   "source": "owner's photographs from the drive (garage door end, south-east corner, court from the barn drive); 2024 state aerial photograph; overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Asphalt"
+  },
+  "site_apron": {
+   "label": "Concrete apron of the attached garage",
+   "desc": "Old concrete apron in front of the west-facing garage door, about 38 ft by 29 ft; the asphalt meets its south-east corner in a curve where a tree bed used to be (edge back-projected from two photographs, agreeing within 0.3 m). Its south-east edge against the newer asphalt is traced in the photograph taken from the drive: straight to a corner about 5.6 m west of the garage wall, then a shallow curve to the south jamb of the garage door (about 0.3 m).",
+   "dims": "about 38' x 29'",
+   "evidence": "photo",
+   "source": "owner's photographs of the garage door end; 2024 state aerial photograph; overhead views supplied by the owner",
+   "confidence": "high",
+   "building": "surfaces_2025",
+   "material": "Concrete"
+  },
+  "site_walk": {
+   "label": "Front walk",
+   "desc": "Concrete walk about 6 ft wide from the court to the entry portico, flaring where it meets the asphalt.",
+   "dims": "about 6' wide",
+   "evidence": "photo",
+   "source": "owner's photographs of the front; 2024 state aerial photograph",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Concrete"
+  },
+  "site_dg_apron": {
+   "label": "Concrete strip at the detached garage door",
+   "desc": "Narrow concrete strip along the door end of the detached garage, running a little past its north-east corner.",
+   "evidence": "photo",
+   "source": "overhead views supplied by the owner; owner's photographs across the court",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Concrete"
+  },
+  "site_west_terrace": {
+   "label": "Concrete terrace west of the house",
+   "desc": "Pale concrete terrace along the west wall inside the fenced yard; outline from the overhead views, not seen in any ground photograph.",
+   "evidence": "photo",
+   "source": "overhead views supplied by the owner; 2024 state aerial photograph",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Concrete"
+  },
+  "site_island": {
+   "label": "Wooded island inside the drive loop",
+   "desc": "The trees inside the loop stand in cleared, mulched ground; the north-west corner (where the basketball hoop stands) is fixed by photographs, the rest follows the drive edges.",
+   "evidence": "photo",
+   "source": "owner's photographs from the drive; 2024 state aerial photograph",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Mulch"
+  },
+  "site_rock_garage": {
+   "label": "River-rock border by the garage",
+   "desc": "River rock wrapping the south-west corner of the attached garage and running along the shrub bed on its south wall: 3-4 ft wide, its lawn edge about 7 ft from the wall, curving in to the wall near the south-east corner. Edges back-projected from the photograph taken along the wall (about 0.3 m).",
+   "evidence": "photo",
+   "source": "owner's photographs along the garage's south wall and of its south-west corner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "River rock"
+  },
+  "site_bed_garage": {
+   "label": "Shrub bed along the garage",
+   "desc": "Planting bed with clipped shrubs against the south wall of the attached garage (the shrubs themselves are not modelled); widest (about 4 ft) near the west window, tapering toward the south-east corner.",
+   "evidence": "photo",
+   "source": "owner's photographs along the garage's south wall",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Mulch"
+  },
+  "site_bed_entry": {
+   "label": "Planting bed beside the entry",
+   "desc": "Mulched planting bed between the garage's east wall and the front walk, carrying on north into the recess in front of the stone tower (shrubs and a small maple in the owner's front photographs; no grass).",
+   "evidence": "photo",
+   "source": "owner's photographs of the front (straight on from the walk; along the garage's south wall); 2024 state aerial photograph",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Mulch"
+  },
+  "site_bed_porch": {
+   "label": "Planting bed along the porch",
+   "desc": "Narrow bed with a low paver edging in front of the porch.",
+   "evidence": "photo",
+   "source": "owner's photograph of the front from the walk",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Mulch"
+  },
+  "site_bed_east": {
+   "label": "Curved planting bed at the south-east corner",
+   "desc": "Curved bed with paver edging in front of the east wing, wrapping its corner; outline from one photograph (about 0.7 m: the photograph looks along the ground).",
+   "evidence": "photo",
+   "source": "owner's photograph of the south-east corner from the drive",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Mulch"
+  },
+  "site_lawn_1": {
+   "label": "Mown lawn",
+   "desc": "Mown lawn as the photographs show it, green; drawn because the aerial photograph underneath was taken in March with the grass dormant. Its outer edge against the woods and the meadow is traced from the overhead views (about 2 m).",
+   "evidence": "photo",
+   "source": "owner's photographs; extent from the 2024 state aerial photograph and the overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_lawn_2": {
+   "label": "Mown lawn",
+   "desc": "Mown lawn as the photographs show it, green; drawn because the aerial photograph underneath was taken in March with the grass dormant. Its outer edge against the woods and the meadow is traced from the overhead views (about 2 m).",
+   "evidence": "photo",
+   "source": "owner's photographs; extent from the 2024 state aerial photograph and the overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_lawn_3": {
+   "label": "Mown lawn",
+   "desc": "Mown lawn as the photographs show it, green; drawn because the aerial photograph underneath was taken in March with the grass dormant. Its outer edge against the woods and the meadow is traced from the overhead views (about 2 m).",
+   "evidence": "photo",
+   "source": "owner's photographs; extent from the 2024 state aerial photograph and the overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_lawn_4": {
+   "label": "Mown lawn",
+   "desc": "Mown lawn as the photographs show it, green; drawn because the aerial photograph underneath was taken in March with the grass dormant. Its outer edge against the woods and the meadow is traced from the overhead views (about 2 m).",
+   "evidence": "photo",
+   "source": "owner's photographs; extent from the 2024 state aerial photograph and the overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_lawn_5": {
+   "label": "Mown lawn",
+   "desc": "Mown lawn as the photographs show it, green; drawn because the aerial photograph underneath was taken in March with the grass dormant. Its outer edge against the woods and the meadow is traced from the overhead views (about 2 m).",
+   "evidence": "photo",
+   "source": "owner's photographs; extent from the 2024 state aerial photograph and the overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_lawn_6": {
+   "label": "Mown lawn",
+   "desc": "Mown lawn as the photographs show it, green; drawn because the aerial photograph underneath was taken in March with the grass dormant. Its outer edge against the woods and the meadow is traced from the overhead views (about 2 m).",
+   "evidence": "photo",
+   "source": "owner's photographs; extent from the 2024 state aerial photograph and the overhead views supplied by the owner",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_tree_ring_1": {
+   "label": "Lawn",
+   "desc": "Lawn under a tree that still stands in the clearing.",
+   "evidence": "photo",
+   "source": "2017 airborne laser survey (tree position); the ring itself is assumed",
+   "confidence": "low",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_tree_ring_2": {
+   "label": "Lawn",
+   "desc": "Lawn under a tree that still stands in the clearing.",
+   "evidence": "photo",
+   "source": "2017 airborne laser survey (tree position); the ring itself is assumed",
+   "confidence": "low",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_tree_ring_3": {
+   "label": "Lawn",
+   "desc": "Lawn under a tree that still stands in the clearing.",
+   "evidence": "photo",
+   "source": "2017 airborne laser survey (tree position); the ring itself is assumed",
+   "confidence": "low",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_tree_ring_5": {
+   "label": "Lawn north of the hot-tub pad",
+   "desc": "Open lawn: the tree the 2017 survey recorded at this spot is gone - four of the owner's photographs look across it and show grass.",
+   "evidence": "photo",
+   "source": "owner's photographs of the east deck and hot tub from the north-east, the north and the east (open lawn here); 2017 airborne laser survey for the tree that stood here then",
+   "confidence": "high",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "site_tree_ring_6": {
+   "label": "Lawn",
+   "desc": "Lawn under a tree that still stands in the clearing.",
+   "evidence": "photo",
+   "source": "2017 airborne laser survey (tree position); the ring itself is assumed",
+   "confidence": "low",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "p44_screen_floor": {
+   "label": "Paved floor of the trash-cart enclosure",
+   "desc": "Pale paving continues from the apron through the gap in the screen to the gate in the privacy fence; its extent behind the panels is assumed to be the whole enclosure.",
+   "evidence": "photo",
+   "source": "owner's photograph of the fence and planter from the detached garage's apron; the paving itself shows through the screen's gap in the owner's photograph of the garage door end",
+   "confidence": "low",
+   "building": "surfaces_2025",
+   "material": "Concrete"
+  },
+  "p44_planter_bed": {
+   "label": "Planter bed",
+   "desc": "Raised bed behind the planter wall, filled to just below its top course and reaching back to the privacy fence; densely planted with flowers in summer.",
+   "dims": "about 4' 6\" deep",
+   "evidence": "photo",
+   "source": "owner's photograph of the fence and planter from the detached garage's apron",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Mulch"
+  },
+  "site_bed_walk_east": {
+   "label": "Planting strip along the east side of the front walk",
+   "desc": "Mulched strip with boxwoods and flowers along the east edge of the walk, about 2 ft wide, widening to about 3 ft where the walk curves to the drive; its lawn edge back-projected from one photograph (about 0.3 m).",
+   "evidence": "photo",
+   "source": "owner's photograph of the front, straight on from the walk",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Mulch"
+  },
+  "site_lawn_front_fill": {
+   "label": "Mown lawn",
+   "desc": "Lawn under and around the curved bed at the south-east corner, so that the bed can be redrawn without leaving bare ground.",
+   "evidence": "photo",
+   "source": "owner's photograph of the south-east corner from the drive",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "rear_lawn_deck_edge": {
+   "label": "Lawn along the rear deck",
+   "desc": "Grass running up to the north edge of the rear deck west of the river rock, as in the photographs from the lawn.",
+   "evidence": "photo",
+   "source": "owner's close photographs of the bay and walk-out patio; owner's photographs of the rear taken from the lawn",
+   "confidence": "medium",
+   "building": "surfaces_2025",
+   "material": "Lawn"
+  },
+  "rear_meadow_strip": {
+   "label": "Unmown meadow strip north of the lawn",
+   "desc": "Tall unmown grass between the mown lawn and the young woods to the north. It is drawn with the builder's lawn surface (it has no meadow kind), so the mown edge does not show; its depth, about 7 m, is read from the aerial photograph and is good to a few metres.",
+   "evidence": "photo",
+   "source": "owner's photographs looking north from the house over the rear lawn; 2024 aerial photograph for its extent",
+   "confidence": "low",
+   "building": "surfaces_2025",
+   "material": "Unmown meadow"
+  },
+  "site_gh_pad": {
+   "label": "Greenhouse pad",
+   "desc": "Crushed-limestone pad under the greenhouse, extending 2 to 4 ft beyond its walls (widest on the south and at the door end). Its edges are measured in the photograph of the door end: about 0.6 m beyond the south wall and 0.8 m beyond the door end; the west and north margins (about 0.75 m) are as seen beside the north-west corner. The stone is cream crushed limestone; the site builder has only one grey crushed-stone finish.",
+   "evidence": "photo",
+   "source": "owner's photographs of the greenhouse; photograph of the garden from the court",
+   "confidence": "medium",
+   "building": "surfaces_2026",
+   "material": "Crushed limestone"
+  },
+  "p45_garden_path": {
+   "label": "Path to the vegetable garden",
+   "desc": "Straight path of crushed stone with square stepping pavers and a timber edge, from the edge of the asphalt to the entrance of the garden cage. Its east end and line are measured in the photograph from the court; an overhead view of 2025 shows the same strip.",
+   "dims": "about 3 ft wide, 26 ft long",
+   "evidence": "photo",
+   "source": "owner's photograph of the garden from the court",
+   "confidence": "medium",
+   "building": "surfaces_2026",
+   "material": "Crushed stone"
+  },
+  "p45_path_pavers": {
+   "label": "Stepping pavers on the garden path",
+   "desc": "Square concrete stepping pavers set alternately left and right in the crushed stone; six are visible in the photograph, the rest of the row is continued at the same spacing. Drawn as one flat outline (the squares are joined by a hairline along the middle of the path).",
+   "dims": "about 18 in. square",
+   "evidence": "photo",
+   "source": "owner's photograph of the garden from the court",
+   "confidence": "medium",
+   "building": "surfaces_2026",
+   "material": "Concrete"
+  }
+ }
+}
