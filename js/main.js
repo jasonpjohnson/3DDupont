@@ -261,7 +261,9 @@ async function loadTerrain() {
   scene.add(terrain);
 
   // model-base skirt: the site reads as a physical block cut out of the ground
-  const base = Math.min(...heights) - z0 - 7;
+  let lowest = Infinity;                                       // a loop, not Math.min(...heights): 125,000 arguments overflow the call stack in some browsers
+  for (let i = 0; i < heights.length; i++) if (heights[i] < lowest) lowest = heights[i];
+  const base = lowest - z0 - 7;
   const ring = [];
   for (let i = 0; i < nx; i++) ring.push(i);
   for (let j = 1; j < ny; j++) ring.push(j * nx + nx - 1);
