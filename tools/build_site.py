@@ -439,6 +439,12 @@ def main():
         clearings = [Polygon(c).buffer(0) for c in site.get("clearings", [])]
         clearings += [Polygon(s_["polygon"]).buffer(0) for s_ in site.get("surfaces", []) if s_.get("kind") != "mulch"]
         clearings += [Polygon(g["polygon"]).buffer(0) for g in site.get("grading", [])]
+        # trees known to stand inside a cleared area today (a specimen tree in the lawn): [x, y] or [x, y, radius]
+        from shapely.geometry import Point
+        for kt in site.get("keep_trees", []):
+            disc = Point(kt[0], kt[1]).buffer((kt[2] if len(kt) > 2 else 3.0) + 1.0)     # + the 1 m margin find_trees adds
+            clearings = [c.difference(disc) for c in clearings]
+        clearings = [c for c in clearings if not c.is_empty]
         dem = apply_grading(dem, site.get("grading", []))
     trees, _ = find_trees(p, dem, exclude=[r for r, _ in roofs] + clearings)
     if args.cir:
