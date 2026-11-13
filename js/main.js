@@ -158,7 +158,7 @@ function setupScene() {
   controls.maxPolarAngle = Math.PI * 0.495;
   controls.zoomToCursor = true;
   controls.addEventListener('change', () => { state.dirty = true; });
-  controls.addEventListener('start', () => { state.roll = 0; state.dirty = true; });   // taking hold of the view levels it
+  controls.addEventListener('start', () => { state.roll = 0; state.exact = false; state.dirty = true; });   // taking hold of the view levels it
 
   sun = new THREE.DirectionalLight(0xffffff, 3.0);
   sun.castShadow = true;
@@ -488,7 +488,7 @@ function updateCutaway() {
   cut.b.value.copy(controls.target);
   const d = camera.position.clone().sub(controls.target);
   const pitch = Math.atan2(d.y, Math.hypot(d.x, d.z)) * (180 / Math.PI);
-  cut.k.value = 1 - THREE.MathUtils.smoothstep(pitch, 32, 55);
+  cut.k.value = state.exact ? 0 : 1 - THREE.MathUtils.smoothstep(pitch, 32, 55);      // a photo-matched view keeps every tree the photograph has
 }
 
 // --------------------------------------------------------------- models -----
@@ -822,6 +822,7 @@ function goToView(v, animate = true) {
   controls.maxPolarAngle = v.fov ? Math.PI * 0.98 : Math.PI * 0.495;
   controls.minDistance = v.fov ? 0.5 : 6;
   state.roll = (v.roll || 0) * Math.PI / 180;                  // a hand-held photograph is rarely level
+  state.exact = !!v.fov;
   const oc = v.overcast ? 1 : 0;
   if ((state.overcast || 0) !== oc) { state.overcast = oc; if (sun) setSun(); }
   if (!animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
