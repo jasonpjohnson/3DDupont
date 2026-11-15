@@ -1,36 +1,55 @@
 #!/usr/bin/env python3
-"""Stamp index.html's script and stylesheet links with a digest of the viewer's code:
+"""Point index.html at copies of the viewer's code whose NAMES carry a digest of their content:
 
   python3 tools/stamp_page.py
 
-  css/style.css?v=<digest>     js/main.js?v=<digest>
+  css/style.css   -> css/style.<digest>.css
+  js/*.js         -> js/v/<digest>/*.js      (copied together, so their relative imports keep working)
 
-A browser may keep a file for as long as the host's cache headers allow (ten minutes on GitHub Pages) and would
-otherwise run an old script against a new build. A changed file gets a new URL, so a plain reload is enough.
-Run it after editing anything under js/ or css/ and before publishing. (Model files are versioned separately,
-by the build id that tools/build_manifest.py writes into assets/manifest.json.)
+GitHub Pages' CDN ignores query strings when it caches, so `file?v=<digest>` is not enough: for up to ten
+minutes after a deploy it can serve the previous file under the new URL, and the browser then keeps that stale
+copy. A new file NAME can't be confused with an old one. Edit css/style.css and js/*.js as usual and run this
+before publishing; it removes the copies of earlier builds. (Model files are versioned separately, by the build
+id that tools/build_manifest.py writes into assets/manifest.json.)
 """
-import hashlib, os, re, sys
+import glob, hashlib, os, re, shutil, sys
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def digest(folder):
+def digest(paths):
     h = hashlib.sha1()
-    for name in sorted(os.listdir(os.path.join(root, folder))):
-        path = os.path.join(root, folder, name)
-        if os.path.isfile(path):
-            h.update(name.encode())
-            h.update(open(path, "rb").read())
+    for path in sorted(paths):
+        h.update(os.path.basename(path).encode())
+        h.update(open(path, "rb").read())
     return h.hexdigest()[:10]
 
 
+css_src = os.path.join(root, "css", "style.css")
+js_src = sorted(glob.glob(os.path.join(root, "js", "*.js")))
+dc, dj = digest([css_src]), digest(js_src)
+
+# this build's copies
+css_out = os.path.join(root, "css", f"style.{dc}.css")
+shutil.copyfile(css_src, css_out)
+js_dir = os.path.join(root, "js", "v", dj)
+os.makedirs(js_dir, exist_ok=True)
+for f in js_src:
+    shutil.copyfile(f, os.path.join(js_dir, os.path.basename(f)))
+# earlier builds' copies
+for old in glob.glob(os.path.join(root, "css", "style.*.css")):
+    if old != css_out:
+        os.remove(old)
+for old in glob.glob(os.path.join(root, "js", "v", "*")):
+    if os.path.abspath(old) != os.path.abspath(js_dir):
+        shutil.rmtree(old)
+
 page = os.path.join(root, "index.html")
 html = open(page, encoding="utf-8").read()
-new = re.sub(r'(href="css/style\.css)(\?v=[0-9a-f]+)?(")', rf'\g<1>?v={digest("css")}\g<3>', html)
-new = re.sub(r'(src="js/main\.js)(\?v=[0-9a-f]+)?(")', rf'\g<1>?v={digest("js")}\g<3>', new)
-if 'css/style.css?v=' not in new or 'js/main.js?v=' not in new:
+new = re.sub(r'href="css/style(?:\.[0-9a-f]+)?\.css(?:\?v=[0-9a-f]+)?"', f'href="css/style.{dc}.css"', html)
+new = re.sub(r'src="js/(?:v/[0-9a-f]+/)?main\.js(?:\?v=[0-9a-f]+)?"', f'src="js/v/{dj}/main.js"', new)
+if f"css/style.{dc}.css" not in new or f"js/v/{dj}/main.js" not in new:
     sys.exit("index.html: could not find the stylesheet link or the module script to stamp")
 if new != html:
     open(page, "w", encoding="utf-8").write(new)
-print("index.html:", ", ".join(re.findall(r'(?:css/style\.css|js/main\.js)\?v=[0-9a-f]+', new)))
+print(f"index.html: css/style.{dc}.css, js/v/{dj}/main.js")

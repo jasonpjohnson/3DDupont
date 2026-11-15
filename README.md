@@ -105,7 +105,7 @@ python3 tools/export_sketchup.py assets/                           # the SketchU
 python3 tools/build_interior.py spec/site_spec.json assets/        # the game's invented main floor
 python3 tools/build_nav.py spec/site_spec.json assets/             # walkable-ground grid and doors for the game
 python3 tools/build_manifest.py spec/site_spec.json assets/        # what the viewer loads (stamps a build id)
-python3 tools/stamp_page.py                                        # version the script and stylesheet links
+python3 tools/stamp_page.py                                        # copy the code to content-named files and point the page at them
 
 python3 -m http.server 8765                                        # then open http://localhost:8765/
 ```
