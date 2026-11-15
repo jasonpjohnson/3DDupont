@@ -958,8 +958,8 @@ class Game {
   preview(w) {
     const cv = $('cas-view');
     if (!this.pv) {
-      const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.outputColorSpace = THREE.SRGBColorSpace;
+      const r = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'low-power' });
+      r.setPixelRatio(Math.min(devicePixelRatio, 1.5)); r.outputColorSpace = THREE.SRGBColorSpace;
       const sc = new THREE.Scene();
       sc.add(new THREE.HemisphereLight(0xffffff, 0x8a8674, 1.6));
       const dl = new THREE.DirectionalLight(0xffffff, 2.2); dl.position.set(2, 3, 4); sc.add(dl);
@@ -989,7 +989,14 @@ class Game {
     el2.onpointerdown = (e) => { const x0 = e.clientX, a0 = pv.a; el2.setPointerCapture(e.pointerId); el2.onpointermove = (m) => { pv.a = a0 + (m.clientX - x0) / 80; }; };
     el2.onpointerup = () => { el2.onpointermove = null; };
   }
-  stopPreview() { if (this.pv) cancelAnimationFrame(this.pv.raf); }
+  // the preview has its own WebGL context: give it back as soon as the editor closes (phones have few to spare)
+  stopPreview() {
+    if (!this.pv) return;
+    cancelAnimationFrame(this.pv.raf);
+    this.pv.sc.traverse((o) => { if (o.isMesh) { o.geometry.dispose(); [].concat(o.material).forEach((m) => m.dispose()); } });
+    this.pv.r.dispose(); this.pv.r.forceContextLoss();
+    this.pv = null;
+  }
   // mid-game: change how someone looks
   restylePerson(p) {
     const was = this.speed;
@@ -1731,7 +1738,9 @@ class Game {
         return `<div class="life-need" data-l="${v > 55 ? 'hi' : v > 25 ? 'mid' : 'lo'}"><span>${ic} ${label}</span><i style="--v:${v}%"></i></div>`;
       }).join('')}</div>
       <div class="life-skills">${SKILLS.map(([k, label]) => `<span title="${label} ${p.skills[k].toFixed(1)} / 5">${label} <b>${'●'.repeat(Math.floor(p.skills[k]))}${'○'.repeat(5 - Math.floor(p.skills[k]))}</b></span>`).join('')}</div>`;
-    $('life-edit').onclick = () => this.restylePerson(p);
+    $('life-edit').onclick = (e) => { e.stopPropagation(); this.restylePerson(p); };
+    card.classList.toggle('open', !!this.cardOpen);
+    card.querySelector('header').onclick = () => { this.cardOpen = !this.cardOpen; card.classList.toggle('open', this.cardOpen); };
     card.querySelectorAll('.life-q').forEach((b) => {
       b.onclick = () => {
         const i = +b.dataset.i;

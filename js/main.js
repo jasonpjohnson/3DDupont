@@ -165,7 +165,18 @@ function setupChrome() {
 function setupScene() {
   const canvas = $('scene');
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  // phones: fewer pixels (their graphics memory is small, and a lost context leaves the view blank)
+  const touch = window.matchMedia?.('(pointer: coarse)').matches;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, touch ? 1.5 : 2));
+  canvas.addEventListener('webglcontextlost', () => {
+    try { state.game?.save?.(); } catch { /* ignore */ }
+    const m = document.createElement('button');
+    m.className = 'ctx-lost';
+    m.innerHTML = '<b>The 3D view stopped</b><span>This device ran out of graphics memory. Your game is saved.</span><em>Tap to reload</em>';
+    m.onclick = () => location.reload();
+    document.body.append(m);
+  });
+  canvas.addEventListener('webglcontextrestored', () => { document.querySelector('.ctx-lost')?.remove(); state.dirty = true; });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.toneMappingExposure = 1.0;

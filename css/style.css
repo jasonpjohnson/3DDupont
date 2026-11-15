@@ -322,9 +322,20 @@ body.life-on .sheet, body.life-on #labels { display: none; }
 .life-row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
 .life-row .primary { background: var(--accent); color: #fff; font-weight: 700; }
 @media (max-width: 720px) {
-  .life-clock span { font-size: 16px; }
-  .life-speed button { min-width: 36px; }
-  .life-follow { display: none; }
+  .life-top { gap: 5px; }
+  .life-clock { min-width: 0; padding: 4px 8px; }
+  .life-clock span { font-size: 15px; }
+  .life-speed button { min-width: 34px; padding: 5px 6px; }
+  .life-money, .life-produce { padding: 4px 8px; font-size: 14px; }
+  .life-follow, .life-exit { padding: 5px 8px; font-size: 11px; }
+  .life-exit { margin-left: 0; }
+  #life-follow { display: none; }
+  .life-toasts { top: auto; bottom: 120px; }
+  .life-card:not(.open) .life-needs, .life-card:not(.open) .life-skills, .life-card:not(.open) .life-queue { display: none; }
+  .life-card header { cursor: pointer; }
+  .life-card header::after { content: "▴ needs"; position: absolute; right: 0; bottom: -2px; font: 600 10px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-ink); }
+  .life-card.open header::after { content: "▾ hide"; }
+  .life-face { width: 38px; height: 38px; font-size: 16px; }
   .life-card { padding: 8px 10px; }
   .life-needs { gap: 4px 10px; }
   .life-skills { display: none; }
@@ -373,3 +384,9 @@ body.life-on .sheet, body.life-on #labels { display: none; }
 .life-cheat[hidden] { display: none; }
 .life-cheat input { width: min(320px, calc(100vw - 40px)); font: 500 16px var(--mono); padding: 10px 12px; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
 .life-clock { cursor: default; user-select: none; }
+
+.ctx-lost { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: rgba(243, 240, 232, .96); border: 0; text-transform: none; letter-spacing: 0; padding: 24px; text-align: center; }
+.ctx-lost b { font: 700 24px/1.1 var(--display); text-transform: uppercase; }
+.ctx-lost span { font: 400 15px/1.4 var(--body); color: var(--ink-2); max-width: 320px; }
+.ctx-lost em { font: 700 14px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; font-style: normal; background: var(--accent); color: #fff; padding: 10px 16px; margin-top: 8px; }
+.ctx-lost, .ctx-lost:hover { background: rgba(243, 240, 232, .97); color: var(--ink); }
