@@ -21,6 +21,33 @@ the model for what it is and how it is known; click the ground for its surveyed 
 - **Measure** between any two points, and a **SketchUp download**: a COLLADA (`.dae`) package of every
   building, the site works and the ground, at true scale in metres, with textures.
 
+## Play house
+
+**▶ Play house** in the footer turns the model into a small life-simulation game. Up to four
+people move in and live on the real grounds: they walk the lot on a grid built from the model
+(`tools/build_nav.py` → `assets/nav.json`, so decks are reached by their stairs and buildings by
+their doors). They also look after six needs and pick up skills, using what the property actually has:
+
+| Place | Things to do |
+|---|---|
+| House (any exterior door) | cook, snack, shower, sleep, nap, TV, read, call a friend |
+| Front porch chairs | sit and watch the road |
+| Rear deck | grill out |
+| Hot tub | soak (the cover comes off) |
+| Walk-out patio fire pit | sit by the fire, toast marshmallows |
+| Vegetable cage, berry arbors, greenhouse | tend, pick, start seedlings (produce feeds salads) |
+| Pole barn | build furniture to sell, work out |
+| Detached garage | tinker with the car |
+| Attached garage | drive to work (weekdays) |
+| Back lawn | watch clouds, stargaze, jog, play catch |
+
+Click a person or their portrait to control them, click a place (or its marker) for its actions,
+and click the ground to walk there; shift-click queues. Left alone, people choose for themselves.
+Space pauses, 1–3 set the speed, F toggles the follow camera, Tab cycles people. The game clock
+drives the sun, nights get dark, and the windows light up when someone is home. The household
+is saved in the browser (localStorage). The inside of the house is not modelled: people go in by
+a door and come back out of it.
+
 ## How it was made
 
 | Source | Used for |
@@ -50,7 +77,7 @@ than measured.
 ## Repository layout
 
 ```
-index.html, css/, js/     the viewer (three.js, vendored in vendor/ — no CDN, no build step)
+index.html, css/, js/     the viewer (three.js, vendored in vendor/ — no CDN, no build step); js/life.js is the game
 assets/                   generated: models (.glb), terrain, trees, point cloud, aerial photo, manifest
 spec/site_spec.json       the description the model is generated from; spec/SCHEMA.md documents it
 tools/                    the pipeline (Python) and review helpers
@@ -66,6 +93,7 @@ python3 tools/build_site.py data/lidar/IN_Statewide_B1_2017_raw3857.npz assets/ 
         [--ortho photo.png --cir infrared.png]                     # terrain, trees, points, paving, fence
 python3 tools/build_model.py spec/site_spec.json assets/           # buildings -> .glb + parts catalogue
 python3 tools/export_sketchup.py assets/                           # the SketchUp package behind the download button
+python3 tools/build_nav.py spec/site_spec.json assets/             # walkable-ground grid and doors for the game
 python3 tools/build_manifest.py spec/site_spec.json assets/        # what the viewer loads (stamps a build id)
 python3 tools/stamp_page.py                                        # version the script and stylesheet links
 

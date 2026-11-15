@@ -82,6 +82,8 @@ def main():
                          f"assets/{spec['buildings'][0]['id']}.glb" if spec["buildings"] else None),
         "download_label": "Download for SketchUp" if any(f.endswith("-sketchup.zip") for f in os.listdir(out_dir)) else "Download .glb",
         "parts": parts,
+        # walkable-ground grid for the life-sim mode (tools/build_nav.py)
+        "nav": "nav.json" if os.path.exists(os.path.join(out_dir, "nav.json")) else None,
         "parcel": site.get("parcel"),
         "parcel_corners": site.get("parcel_corners", []),
         "layers": layer_list,

@@ -82,7 +82,31 @@ async function init() {
   window.addEventListener('resize', onResize);
   renderer.setAnimationLoop(tick);
   requestAnimationFrame(() => $('loading').classList.add('done'));
-  window.__viewer = { state, M, scene, camera, controls, goToView, applyMode, setLayer, setSun, renderOnce };
+  window.__viewer = { state, M, scene, camera, controls, goToView, applyMode, setLayer, setSun, renderOnce,
+    v3, asset, groups, modelMeshes, terrain, groundZ, select, toggleMeasure };
+  setupLife();
+}
+
+// ------------------------------------------------------------ life mode ----
+// The game lives in its own module, loaded only when someone presses Play.
+function setupLife() {
+  const b = $('play-life');
+  if (!b || !M.nav) { if (b) b.hidden = true; return; }
+  b.hidden = false;
+  b.addEventListener('click', async () => {
+    b.disabled = true;
+    try {
+      const v = new URL(import.meta.url).searchParams.get('v');
+      const mod = await import(`./life.js${v ? `?v=${v}` : ''}`);
+      select(null);
+      if (state.measuring) toggleMeasure(false);
+      applyMode('photo');
+      await mod.start(window.__viewer);
+    } catch (err) {
+      console.error(err);
+      alert(`Could not start the game: ${err.message}`);
+    } finally { b.disabled = false; }
+  });
 }
 
 function hasWebGL() {
@@ -1010,6 +1034,7 @@ function setupPicking() {
     pointerNDC(e);
     ray.setFromCamera(ndc, camera);
     if (state.measuring) { measureClick(); return; }
+    if (state.game && state.game.click(ray, e)) return;
     const visible = modelMeshes.filter((o) => groups[o.userData.model]?.visible !== false);
     const hit = ray.intersectObjects(visible, false)[0];
     if (hit) { select(hit.object); return; }
@@ -1211,6 +1236,7 @@ function tick(now) {
   controls.update();
   if (state.roll) { camera.rotateZ(state.roll); camera.updateMatrixWorld(); }   // orbit controls re-level the camera every frame
   terrainUniforms.uCanopyOn.value = groups.trees && groups.trees.visible ? 1 : 0;
+  if (state.game) { state.game.update(dt); state.dirty = true; }
   if (!state.dirty) return;
   state.dirty = false;
   renderOnce();
