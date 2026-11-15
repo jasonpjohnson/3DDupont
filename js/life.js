@@ -727,7 +727,7 @@ class Game {
         <div class="life-card" id="life-card"></div>
       </div>
       <div class="life-menu" id="life-menu" hidden></div>
-      <form class="life-cheat" id="life-cheat" hidden><input type="text" id="life-cheat-in" placeholder="Enter a code" autocomplete="off" spellcheck="false" aria-label="Code"></form>
+      <form class="life-cheat" id="life-cheat" hidden><input type="text" id="life-cheat-in" placeholder="Enter a code" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" aria-label="Code"></form>
       <dialog class="life-dialog" id="life-dialog"></dialog>`;
     document.body.append(root);
     root.querySelectorAll('.life-speed button').forEach((b) => b.addEventListener('click', () => this.setSpeed(+b.dataset.s)));
@@ -807,7 +807,7 @@ class Game {
       this.toast('🔓 Unlocked! Select a grown-up, then click the Bathroom marker (or the sink) and choose 💊 Do drugs.', 'good');
     }
     else if ((m = code.match(/^cash (\d{1,6})$/))) { this.money += +m[1]; this.toast(`💵 ${money(+m[1])} appeared in the household account.`, 'good'); }
-    else if (code) this.toast('Nothing happens.');
+    else if (code) this.toast(`Nothing happens. (The code box got “${esc(raw.trim())}”.)`);
     this.renderHUD();
   }
   setFollow(on) {
