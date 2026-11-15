@@ -24,7 +24,10 @@ the model for what it is and how it is known; click the ground for its surveyed 
 ## Play house
 
 **▶ Play house** in the footer turns the model into a small life-simulation game. Up to four
-people move in and live on the real grounds: they walk the lot on a grid built from the model
+people move in, each made in a character editor with a live 3D preview: age, body, skin tone,
+hairstyle and colour, facial hair, glasses, top, bottoms, shoes and their colours, name and
+personality. **✏️ Edit** on a person's card changes their look mid-game; **New game** deletes
+the household and starts over. People live on the real grounds: they walk the lot on a grid built from the model
 (`tools/build_nav.py` → `assets/nav.json`, so decks are reached by their stairs and buildings by
 their doors). They also look after six needs and pick up skills, using what the property actually has:
 

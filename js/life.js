@@ -42,9 +42,123 @@ const TRAITS = {
   outdoorsy: { label: 'Outdoorsy', hint: 'hot tub, fire pit, lawn - anywhere outside' },
   nightowl: { label: 'Night owl', hint: 'stays up late, fun at night counts double' },
 };
+const SKINS = ['#fbe0cc', '#f1c9a5', '#e8b98f', '#d9a273', '#c68a5e', '#a86e48', '#8d5a3b', '#70452c', '#5c3a24', '#3f281a'];
+const HAIRS = ['#0f0d0c', '#2b1d14', '#4a2e1c', '#6b4226', '#9a5b2e', '#b5763c', '#d9b26a', '#ecd9a8', '#9a9a9a', '#ececec', '#c0392b', '#5b6ee1', '#e07ab6', '#2fa38a'];
+const CLOTHES = ['#ffffff', '#1c2630', '#7a8b99', '#c9b79c', '#e4572e', '#d1495b', '#f7a8b8', '#f2c14e', '#3d9970', '#556b2f', '#2e86ab', '#3b5bdb', '#3a5a80', '#8e5ea2', '#8b5a2b', '#4a3226'];
 const SHIRTS = ['#e4572e', '#2e86ab', '#3d9970', '#f2c14e', '#8e5ea2', '#d1495b', '#1c2630', '#f7f4ec'];
-const SKINS = ['#f1c9a5', '#e0ac7e', '#c68a5e', '#8d5a3b', '#5c3a24'];
-const HAIRS = ['#2b1d14', '#6b4226', '#b5763c', '#d9b26a', '#9a9a9a', '#1a1a1a'];
+const SHOES = ['#20262c', '#ffffff', '#8b5a2b', '#d1495b', '#3b5bdb', '#c9b79c'];
+// what a person can look like; labels are what the editor shows
+const LOOK = {
+  body: [['masc', 'Masculine'], ['fem', 'Feminine']],
+  hair: [['short', 'Short'], ['buzz', 'Buzz'], ['long', 'Long'], ['ponytail', 'Ponytail'], ['bun', 'Bun'], ['curly', 'Curly'], ['afro', 'Afro'], ['braids', 'Braids'], ['bald', 'Bald']],
+  facial: [['none', 'None'], ['stubble', 'Stubble'], ['mustache', 'Mustache'], ['beard', 'Beard']],
+  glasses: [['none', 'None'], ['round', 'Round'], ['square', 'Square'], ['shades', 'Shades']],
+  top: [['tee', 'T-shirt'], ['long', 'Long sleeve'], ['tank', 'Tank'], ['hoodie', 'Hoodie'], ['flannel', 'Flannel'], ['dress', 'Dress']],
+  bottom: [['jeans', 'Jeans'], ['pants', 'Trousers'], ['shorts', 'Shorts'], ['skirt', 'Skirt']],
+};
+function randomLook(kid = false) {
+  const body = pick(['masc', 'fem']);
+  const fem = body === 'fem';
+  return {
+    body, skin: pick(SKINS),
+    hair: pick(fem ? ['long', 'ponytail', 'bun', 'curly', 'afro', 'braids', 'short'] : ['short', 'buzz', 'curly', 'afro', 'short', 'bald', 'long']),
+    hairColor: pick(HAIRS.slice(0, 9)),
+    facial: !fem && !kid && Math.random() < 0.45 ? pick(['stubble', 'beard', 'mustache']) : 'none',
+    glasses: Math.random() < 0.25 ? pick(['round', 'square']) : 'none',
+    top: fem && Math.random() < 0.2 ? 'dress' : pick(['tee', 'tee', 'long', 'hoodie', 'flannel', 'tank']),
+    topColor: pick(CLOTHES), bottom: fem && Math.random() < 0.25 ? 'skirt' : pick(['jeans', 'jeans', 'pants', 'shorts']),
+    bottomColor: pick(['#3a5a80', '#1c2630', '#7a8b99', '#c9b79c', '#556b2f', '#4a3226']), shoes: pick(SHOES),
+  };
+}
+// a look for people saved before looks existed
+function legacyLook(d) {
+  return { body: 'masc', skin: d.skin || SKINS[2], hair: 'short', hairColor: d.hair || HAIRS[1], facial: 'none', glasses: 'none',
+    top: 'long', topColor: d.shirt || SHIRTS[0], bottom: 'pants', bottomColor: d.pants || '#3a4655', shoes: '#20262c' };
+}
+// Low-poly figure. Returns the parts the animation moves: hips (legs), shoulders (arms), upper body.
+function buildAvatar(look, kid) {
+  const L = look, fem = L.body === 'fem';
+  const mats = {};
+  const mat = (c, r = 0.75) => (mats[c + r] ||= new THREE.MeshStandardMaterial({ color: c, roughness: r }));
+  const skin = mat(L.skin), top = mat(L.topColor), bot = mat(L.bottomColor), hair = mat(L.hairColor, 0.9), shoe = mat(L.shoes, 0.6), ink = mat('#111418', 0.4);
+  const mesh = (geo, m) => { const o = new THREE.Mesh(geo, m); o.castShadow = true; return o; };
+  const box = (w, h, d, m, x = 0, y = 0, z = 0) => { const o = mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(x, y, z); return o; };
+  const root = new THREE.Group();
+  const body = new THREE.Group(); body.scale.setScalar((kid ? 0.72 : 1) * (fem ? 0.97 : 1)); root.add(body);
+  const dress = L.top === 'dress', skirt = !dress && L.bottom === 'skirt';
+  const thighM = dress || skirt ? skin : bot, shinM = dress || skirt || L.bottom === 'shorts' ? skin : bot;
+  const legs = [];
+  const lw = fem ? 0.13 : 0.14, hx = fem ? 0.085 : 0.095;
+  for (const sx of [-hx, hx]) {
+    const hip = new THREE.Group(); hip.position.set(sx, 0.88, 0);
+    hip.add(box(lw, 0.44, lw + 0.02, thighM, 0, -0.22, 0));
+    hip.add(box(lw - 0.01, 0.4, lw + 0.01, shinM, 0, -0.64, 0));
+    hip.add(box(lw, 0.07, 0.26, shoe, 0, -0.85, 0.05));
+    body.add(hip); legs.push(hip);
+  }
+  if (dress || skirt) {
+    const sk = mesh(new THREE.CylinderGeometry(fem ? 0.17 : 0.19, dress ? 0.3 : 0.26, dress ? 0.5 : 0.36, 14), dress ? top : bot);
+    sk.position.y = dress ? 0.66 : 0.72; body.add(sk);
+  } else {
+    body.add(box(fem ? 0.32 : 0.36, 0.14, 0.21, bot, 0, 0.86, 0));           // seat of the trousers
+  }
+  const upper = new THREE.Group(); upper.position.y = 0.88; body.add(upper);
+  if (fem) {
+    upper.add(box(0.31, 0.3, 0.2, top, 0, 0.15, 0));
+    upper.add(box(0.36, 0.32, 0.22, top, 0, 0.44, 0));
+    upper.add(box(0.28, 0.12, 0.05, top, 0, 0.44, 0.12));
+  } else {
+    upper.add(box(0.42, 0.62, 0.23, top, 0, 0.31, 0));
+  }
+  if (L.top === 'flannel') { for (const y of [0.18, 0.36, 0.54]) upper.add(box(fem ? 0.37 : 0.43, 0.035, 0.24, mat('#1c2630'), 0, y, 0)); }
+  if (L.top === 'hoodie') { upper.add(box(0.3, 0.16, 0.1, top, 0, 0.62, -0.13)); upper.add(box(0.22, 0.1, 0.03, top, 0, 0.2, 0.125)); }
+  const sleeveUp = L.top === 'tank' || dress ? skin : top;
+  const sleeveLo = ['long', 'hoodie', 'flannel'].includes(L.top) ? top : skin;
+  const arms = [];
+  const ax = fem ? 0.225 : 0.255;
+  for (const sx of [-ax, ax]) {
+    const sh = new THREE.Group(); sh.position.set(sx, 0.56, 0);
+    sh.add(box(0.1, 0.3, 0.11, sleeveUp, 0, -0.14, 0));
+    sh.add(box(0.09, 0.28, 0.1, sleeveLo, 0, -0.43, 0));
+    sh.add(box(0.085, 0.1, 0.095, skin, 0, -0.62, 0));
+    upper.add(sh); arms.push(sh);
+  }
+  upper.add(box(0.08, 0.08, 0.08, skin, 0, 0.64, 0));
+  const head = mesh(new THREE.SphereGeometry(0.125, 18, 14), skin); head.position.y = 0.77; upper.add(head);
+  for (const ex of [-0.045, 0.045]) upper.add(box(0.025, 0.03, 0.01, ink, ex, 0.785, 0.12));
+  upper.add(box(0.03, 0.04, 0.04, skin, 0, 0.755, 0.125));
+  // hair: a cap over the crown that stops at the hairline, and a piece down the back of the head to the nape
+  const cap = (back = 0.7, r = 0.135, top = 0.42) => {
+    const gr = new THREE.Group();
+    const a = mesh(new THREE.SphereGeometry(r, 20, 8, 0, Math.PI * 2, 0, Math.PI * top), hair); a.position.set(0, 0.785, -0.008); gr.add(a);
+    const b = mesh(new THREE.SphereGeometry(r, 20, 10, Math.PI, Math.PI, 0, Math.PI * back), hair); b.position.set(0, 0.785, -0.008); gr.add(b);
+    return gr;
+  };
+  switch (L.hair) {
+    case 'short': upper.add(cap()); break;
+    case 'buzz': upper.add(cap(0.6, 0.129, 0.38)); break;
+    case 'long': upper.add(cap(0.75)); upper.add(box(0.27, 0.4, 0.08, hair, 0, 0.63, -0.1)); for (const x of [-0.125, 0.125]) upper.add(box(0.04, 0.32, 0.12, hair, x, 0.68, -0.02)); break;
+    case 'ponytail': { upper.add(cap(0.7)); const t = mesh(new THREE.CylinderGeometry(0.035, 0.05, 0.28, 8), hair); t.position.set(0, 0.7, -0.17); t.rotation.x = 0.35; upper.add(t); break; }
+    case 'bun': { upper.add(cap(0.7)); const b = mesh(new THREE.SphereGeometry(0.07, 12, 10), hair); b.position.set(0, 0.9, -0.08); upper.add(b); break; }
+    case 'curly': { const c = mesh(new THREE.IcosahedronGeometry(0.152, 1), hair); c.position.set(0, 0.835, -0.045); c.scale.set(1, 0.8, 1); upper.add(c); break; }
+    case 'afro': { const c = mesh(new THREE.IcosahedronGeometry(0.2, 1), hair); c.position.set(0, 0.86, -0.07); upper.add(c); break; }
+    case 'braids': upper.add(cap(0.72)); for (const x of [-0.1, 0.1]) { const b = mesh(new THREE.CylinderGeometry(0.025, 0.02, 0.36, 6), hair); b.position.set(x, 0.62, -0.06); upper.add(b); } break;
+    default: break;                                                     // bald
+  }
+  if (L.facial === 'stubble') { const m = new THREE.MeshStandardMaterial({ color: L.hairColor, transparent: true, opacity: 0.45, roughness: 1 }); upper.add(box(0.2, 0.09, 0.07, m, 0, 0.705, 0.085)); }
+  if (L.facial === 'beard') { upper.add(box(0.2, 0.075, 0.07, hair, 0, 0.683, 0.085)); for (const x of [-0.098, 0.098]) upper.add(box(0.03, 0.09, 0.09, hair, x, 0.72, 0.06)); }
+  if (L.facial === 'mustache' || L.facial === 'beard') upper.add(box(0.1, 0.025, 0.03, hair, 0, 0.732, 0.126));
+  if (L.glasses !== 'none') {
+    const lens = L.glasses === 'shades' ? ink : new THREE.MeshStandardMaterial({ color: 0xcfe4ea, transparent: true, opacity: 0.3, roughness: 0.1 });
+    for (const ex of [-0.047, 0.047]) {
+      if (L.glasses === 'round') { const r = mesh(new THREE.TorusGeometry(0.03, 0.006, 6, 16), ink); r.position.set(ex, 0.785, 0.128); upper.add(r); }
+      else upper.add(box(0.065, 0.045, 0.006, ink, ex, 0.785, 0.128));
+      upper.add(box(0.05, 0.034, 0.004, lens, ex, 0.785, 0.132));
+    }
+    upper.add(box(0.03, 0.006, 0.006, ink, 0, 0.79, 0.13));
+  }
+  return { root, body, upper, legs, arms, head };
+}
 const NAMES = ['Avery', 'Jordan', 'Riley', 'Morgan', 'Casey', 'Quinn', 'Rowan', 'Sage', 'Emery', 'Harper', 'Reese', 'Skyler'];
 
 // ------------------------------------------------------------------ nav -----
@@ -273,12 +387,13 @@ function placeDefs(nav, inter) {
   });
   const indoor = {};
   for (const q of inter?.places || []) indoor[q.id] = { label: q.label, icon: q.icon, room: q.room, indoor: true, cap: q.cap, at: q.at, stand: q.stand.map((t) => ({ ...t })) };
+  if (indoor.tub) for (const t of indoor.tub.stand) t.water = inter.floor_z + 0.55;     // the bath's water line
   return {
     ...indoor,
     porch: { label: 'Porch chairs', icon: '🪑', at: [6.0, 9.6], cap: 2, stand: [{ x: 5.55, y: 9.75, face: -90, sit: true, z: 262.15 }, { x: 6.55, y: 9.75, face: -90, sit: true, z: 262.15 }] },
     grill: { label: 'Grill on the deck', icon: '🍖', at: [-1.2, 26.95], cap: 1, stand: [{ x: -1.2, y: 26.25, face: 90 }] },
     hottub: { label: 'Hot tub', icon: '♨️', at: [14.72, 21.98], cap: 3, approach: { x: 14.72, y: 19.55 },
-      stand: [{ x: 14.15, y: 21.55, face: 45, soak: true }, { x: 15.3, y: 21.55, face: 135, soak: true }, { x: 14.72, y: 22.55, face: -90, soak: true }] },
+      stand: [{ x: 14.15, y: 21.55, face: 45, soak: true, water: 262.315 }, { x: 15.3, y: 21.55, face: 135, soak: true, water: 262.315 }, { x: 14.72, y: 22.55, face: -90, soak: true, water: 262.315 }] },
     firepit: { label: 'Fire pit', icon: '🔥', at: fp, cap: 4, stand: ring },
     veg: { label: 'Vegetable garden', icon: '🥕', at: [-36.7, 7.95], cap: 2, stand: [{ x: -33.65, y: 7.35, face: 180 }, { x: -33.65, y: 8.25, face: 180 }] },
     berries: { label: 'Berry arbors', icon: '🫐', at: [-38.4, 17.2], cap: 3, stand: [{ x: -37.35, y: 14.3, face: 180 }, { x: -37.15, y: 17.0, face: 180 }, { x: -36.95, y: 19.8, face: 180 }] },
@@ -336,7 +451,7 @@ const tmpV = new THREE.Vector3();
 class Person {
   constructor(d) {
     Object.assign(this, {
-      id: d.id, name: d.name, trait: d.trait, shirt: d.shirt, pants: d.pants || '#3a4655', skin: d.skin, hair: d.hair, kid: !!d.kid,
+      id: d.id, name: d.name, trait: d.trait, look: d.look || legacyLook(d), kid: !!d.kid,
       needs: d.needs || { hunger: 80, energy: 85, hygiene: 85, bladder: 80, fun: 70, social: 70 },
       skills: d.skills || { cooking: 0, gardening: 0, handiness: 0, fitness: 0 },
       career: d.career || { level: 1, days: 0, lastDay: -1 },
@@ -345,40 +460,32 @@ class Person {
     this.queue = []; this.cur = null; this.idle = 0; this.hidden = false; this.anim = Math.random() * 10; this.bubble = '';
     this.build();
   }
+  get shirt() { return this.look.topColor; }
   build() {
-    const g = new THREE.Group(), s = this.kid ? 0.72 : 1;
-    const mat = (c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.75 });
-    const skin = mat(this.skin), shirt = mat(this.shirt), pants = mat(this.pants), hair = mat(this.hair), shoe = mat('#20262c');
-    const box = (w, h, d, m) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.castShadow = true; return o; };
-    const body = new THREE.Group(); body.scale.setScalar(s); g.add(body);
-    this.legs = [];
-    for (const sx of [-0.095, 0.095]) {
-      const hip = new THREE.Group(); hip.position.set(sx, 0.88, 0);
-      const leg = box(0.14, 0.82, 0.16, pants); leg.position.y = -0.41; hip.add(leg);
-      const foot = box(0.14, 0.07, 0.26, shoe); foot.position.set(0, -0.85, 0.05); hip.add(foot);
-      body.add(hip); this.legs.push(hip);
-    }
-    const upper = new THREE.Group(); upper.position.y = 0.88; body.add(upper); this.upper = upper;
-    const torso = box(0.4, 0.6, 0.23, shirt); torso.position.y = 0.3; upper.add(torso);
-    this.arms = [];
-    for (const sx of [-0.255, 0.255]) {
-      const sh = new THREE.Group(); sh.position.set(sx, 0.56, 0);
-      const arm = box(0.1, 0.58, 0.11, shirt); arm.position.y = -0.26; sh.add(arm);
-      const hand = box(0.09, 0.1, 0.1, skin); hand.position.y = -0.6; sh.add(hand);
-      upper.add(sh); this.arms.push(sh);
-    }
-    const head = new THREE.Mesh(new THREE.SphereGeometry(0.125, 16, 12), skin); head.position.y = 0.77; head.castShadow = true; upper.add(head);
-    const cap = new THREE.Mesh(new THREE.SphereGeometry(0.133, 16, 10, 0, Math.PI * 2, 0, Math.PI * 0.55), hair); cap.position.set(0, 0.79, -0.012); upper.add(cap);
-    const nose = box(0.03, 0.04, 0.04, skin); nose.position.set(0, 0.76, 0.125); upper.add(nose);
-    this.head = head;
+    const g = new THREE.Group();
+    const a = buildAvatar(this.look, this.kid);
+    g.add(a.root);
+    Object.assign(this, { legs: a.legs, arms: a.arms, upper: a.upper, head: a.head });
+    const body = a.body;
     const ring = new THREE.Mesh(new THREE.RingGeometry(0.42, 0.52, 40), new THREE.MeshBasicMaterial({ color: 0xe4572e, transparent: true, opacity: 0.9, depthWrite: false, toneMapped: false }));
     ring.rotation.x = -Math.PI / 2; ring.position.y = 0.03; ring.visible = false; g.add(ring); this.ring = ring;
     g.traverse((o) => { if (o.isMesh) o.userData.person = this; });
     this.body = body; this.group = g;
     V.scene.add(g);
-    this.tag = el('button', 'life-tag');
-    this.tag.addEventListener('click', (e) => { e.stopPropagation(); G.clickPerson(this, e); });
-    $('life-overlay').append(this.tag);
+    if (!this.tag) {
+      this.tag = el('button', 'life-tag');
+      this.tag.addEventListener('click', (e) => { e.stopPropagation(); G.clickPerson(this, e); });
+      $('life-overlay').append(this.tag);
+    }
+  }
+  // a new look (or age) mid-game: swap the figure, keep everything else
+  restyle(d) {
+    const sel = this.ring.visible, vis = this.group.visible;
+    Object.assign(this, { name: d.name, trait: d.trait, look: d.look, kid: !!d.kid });
+    V.scene.remove(this.group);
+    this.build();
+    this.ring.visible = sel; this.group.visible = vis;
+    this.tagHtml = null;
   }
   get mood() {
     const n = this.needs;
@@ -392,7 +499,7 @@ class Person {
   setPos(x, y) { this.x = x; this.y = y; }
   remove() { V.scene.remove(this.group); this.tag.remove(); }
   save() {
-    return { id: this.id, name: this.name, trait: this.trait, shirt: this.shirt, pants: this.pants, skin: this.skin, hair: this.hair, kid: this.kid,
+    return { id: this.id, name: this.name, trait: this.trait, look: this.look, kid: this.kid,
       needs: this.needs, skills: this.skills, career: this.career, x: this.cur?.inside ? this.cur.door.x : this.x, y: this.cur?.inside ? this.cur.door.y : this.y };
   }
 }
@@ -607,7 +714,8 @@ class Game {
         <div class="life-produce" id="life-produce" title="Fresh produce from the garden"></div>
         <button class="life-follow" id="life-walls" aria-pressed="true" title="Cut the walls away to see inside (C)">Walls cut</button>
         <button class="life-follow" id="life-follow" aria-pressed="false" title="Camera follows the selected person (F)">Follow</button>
-        <button class="life-exit" id="life-exit">Exit</button>
+        <button class="life-exit" id="life-reset" title="Delete this household and start again">New game</button>
+        <button class="life-follow" id="life-exit">Exit</button>
       </div>
       <div class="life-toasts" id="life-toasts" aria-live="polite"></div>
       <div class="life-help" id="life-help">Drag to turn · right-drag or <b>WASD</b>/arrows to move · scroll to zoom · <b>C</b> walls · <b>F</b> follow</div>
@@ -620,6 +728,7 @@ class Game {
     document.body.append(root);
     root.querySelectorAll('.life-speed button').forEach((b) => b.addEventListener('click', () => this.setSpeed(+b.dataset.s)));
     $('life-exit').addEventListener('click', () => this.exit());
+    $('life-reset').addEventListener('click', () => this.confirmReset());
     $('life-follow').addEventListener('click', () => this.setFollow(!this.follow));
     $('life-walls').addEventListener('click', () => this.setCut(!this.cut));
     // taking hold of the camera stops it following anyone
@@ -715,7 +824,7 @@ class Game {
       <div class="life-row"><button class="primary" id="ld-cont">Continue</button><button id="ld-new">New household</button></div>`;
     d.showModal();
     $('ld-cont').onclick = () => { d.close(); this.load(s); };
-    $('ld-new').onclick = () => { d.close(); this.setupDialog(); };
+    $('ld-new').onclick = () => { try { localStorage.removeItem(SAVE_KEY); } catch { /* ignore */ } this.setupDialog(); };
   }
   load(s) {
     Object.assign(this, { t: s.t, money: s.money, produce: s.produce || 0, rel: s.rel || {}, billsDay: s.billsDay || 0 });
@@ -724,47 +833,159 @@ class Game {
   }
   setupDialog() {
     const d = $('life-dialog');
-    const rows = [];
     const used = new Set();
     let made = 0;
     const traits = Object.keys(TRAITS).sort(() => Math.random() - 0.5);
     const mk = (kid = false) => {
       let n; do { n = pick(NAMES); } while (used.has(n)); used.add(n);
-      const i = made++;
-      return { name: n, trait: traits[i % traits.length], shirt: SHIRTS[(i * 3) % SHIRTS.length], skin: pick(SKINS), hair: pick(HAIRS), kid };
+      return { name: n, trait: traits[made++ % traits.length], look: randomLook(kid), kid };
     };
-    rows.push(mk(), mk());
+    const rows = [mk(), mk()];
     const draw = () => {
-      d.innerHTML = `<h2>Move in</h2><p class="lead">Who lives at 3910 W Dupont Rd? Up to four people.</p>
-        <div class="life-setup">${rows.map((r, i) => `
-          <div class="life-setup-row" data-i="${i}">
-            <span class="life-face" style="--c:${r.shirt}">${esc(r.name[0] || '?')}</span>
-            <input type="text" maxlength="14" value="${esc(r.name)}" aria-label="Name">
-            <select aria-label="Trait">${Object.entries(TRAITS).map(([k, t]) => `<option value="${k}" ${k === r.trait ? 'selected' : ''}>${t.label}</option>`).join('')}</select>
-            <label class="life-kid"><input type="checkbox" ${r.kid ? 'checked' : ''}> child</label>
-            <span class="life-swatches">${SHIRTS.map((c) => `<button type="button" style="--c:${c}" aria-label="Shirt colour" aria-pressed="${c === r.shirt}"></button>`).join('')}</span>
-            ${rows.length > 1 ? '<button type="button" class="life-x" aria-label="Remove">×</button>' : ''}
-          </div>`).join('')}</div>
-        <div class="life-row">${rows.length < 4 ? '<button type="button" id="ld-add">+ Add someone</button>' : ''}<button class="primary" id="ld-go">Move in</button></div>`;
-      d.querySelectorAll('.life-setup-row').forEach((row) => {
-        const r = rows[+row.dataset.i];
-        row.querySelector('input[type=text]').oninput = (e) => { r.name = e.target.value.trim() || r.name; row.querySelector('.life-face').textContent = r.name[0]; };
-        row.querySelector('select').onchange = (e) => { r.trait = e.target.value; };
-        row.querySelector('.life-kid input').onchange = (e) => { r.kid = e.target.checked; };
-        row.querySelectorAll('.life-swatches button').forEach((b, k) => { b.onclick = () => { r.shirt = SHIRTS[k]; draw(); }; });
-        row.querySelector('.life-x')?.addEventListener('click', () => { rows.splice(+row.dataset.i, 1); draw(); });
+      d.innerHTML = `<h2>Move in</h2><p class="lead">Who lives at 3910 W Dupont Rd? Up to four people. Tap someone to change how they look.</p>
+        <div class="life-house">${rows.map((r, i) => `
+          <div class="life-member" data-i="${i}">
+            <button type="button" class="life-member-edit" title="Customize ${esc(r.name)}">
+              <span class="life-face" style="--c:${r.look.topColor}">${esc(r.name[0] || '?')}</span>
+              <b>${esc(r.name)}</b><small>${r.kid ? 'Child' : 'Adult'} · ${esc(TRAITS[r.trait].label)}</small><em>✏️ Customize</em>
+            </button>
+            ${rows.length > 1 ? `<button type="button" class="life-x" aria-label="Remove ${esc(r.name)}">×</button>` : ''}
+          </div>`).join('')}
+          ${rows.length < 4 ? '<button type="button" class="life-member add" id="ld-add">＋<small>Add someone</small></button>' : ''}
+        </div>
+        <div class="life-row"><button class="primary" id="ld-go">Move in</button></div>`;
+      d.querySelectorAll('.life-member[data-i]').forEach((row) => {
+        const i = +row.dataset.i;
+        row.querySelector('.life-member-edit').onclick = () => this.editLook(rows[i], (r) => { rows[i] = r; draw(); }, () => draw(), 'Create');
+        row.querySelector('.life-x')?.addEventListener('click', () => { rows.splice(i, 1); draw(); });
       });
-      $('ld-add')?.addEventListener('click', () => { rows.push(mk(true)); draw(); });
+      $('ld-add')?.addEventListener('click', () => { const r = mk(rows.length >= 2); rows.push(r); this.editLook(r, (n) => { rows[rows.length - 1] = n; draw(); }, () => draw(), 'Create'); });
       $('ld-go').onclick = () => {
         d.close();
-        rows.forEach((r, i) => this.people.push(new Person({ ...r, id: `p${i}`, x: 0.6 + i * 0.7, y: 6.6, face: 90 })));
-        this.t = 7 * 60 + 30; this.money = 900; this.produce = 0; this.rel = {};
+        rows.forEach((r, i) => this.people.push(new Person({ ...r, id: `p${Date.now() % 1e6}-${i}`, x: 0.6 + i * 0.7, y: 6.6, face: 90 })));
+        this.t = 7 * 60 + 30; this.money = 900; this.produce = 0; this.rel = {}; this.billsDay = 0;
         this.afterMoveIn();
-        this.toast(`Welcome home, ${esc(this.people.map((p) => p.name).join(' & '))}! Click a place or the ground to give orders.`);
+        this.save();
+        this.toast(`Welcome home, ${esc(this.people.map((p) => p.name).join(' & '))}! Click a place, a room or the ground to give orders.`);
       };
     };
     draw();
+    if (!d.open) d.showModal();
+  }
+
+  // Create-a-person: a live 3D preview beside swatches and chips. `src` is {name, trait, kid, look};
+  // done(copy) gets the edited copy, back() is called on cancel.
+  editLook(src, done, back, verb = 'Edit') {
+    const d = $('life-dialog');
+    const w = JSON.parse(JSON.stringify(src));
+    const chips = (key, opts, val) => `<div class="life-chips" data-k="${key}">${opts.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${v === val}">${l}</button>`).join('')}</div>`;
+    const sw = (key, cols, val) => `<div class="life-sw" data-k="${key}">${cols.map((c) => `<button type="button" data-v="${c}" style="--c:${c}" aria-label="${c}" aria-pressed="${c === val}"></button>`).join('')}</div>`;
+    const draw = () => {
+      const L = w.look;
+      d.innerHTML = `<div class="life-cas">
+        <div class="life-cas-left"><canvas id="cas-view" width="240" height="320"></canvas>
+          <button type="button" id="cas-dice">🎲 Surprise me</button></div>
+        <div class="life-cas-right">
+          <h2>${verb} ${esc(w.name)}</h2>
+          <div class="life-cas-sec"><label>Name <input type="text" id="cas-name" maxlength="14" value="${esc(w.name)}"></label>
+            <label>Personality <select id="cas-trait">${Object.entries(TRAITS).map(([k, t]) => `<option value="${k}" ${k === w.trait ? 'selected' : ''}>${t.label}</option>`).join('')}</select></label></div>
+          <div class="life-cas-sec"><h3>Age</h3>${chips('age', [['adult', 'Adult'], ['kid', 'Child']], w.kid ? 'kid' : 'adult')}
+            <h3>Body</h3>${chips('body', LOOK.body, L.body)}</div>
+          <div class="life-cas-sec"><h3>Skin tone</h3>${sw('skin', SKINS, L.skin)}</div>
+          <div class="life-cas-sec"><h3>Hair</h3>${chips('hair', LOOK.hair, L.hair)}${sw('hairColor', HAIRS, L.hairColor)}</div>
+          <div class="life-cas-sec"><h3>Face</h3>${chips('facial', LOOK.facial, L.facial)}<h3>Glasses</h3>${chips('glasses', LOOK.glasses, L.glasses)}</div>
+          <div class="life-cas-sec"><h3>Top</h3>${chips('top', LOOK.top, L.top)}${sw('topColor', CLOTHES, L.topColor)}</div>
+          <div class="life-cas-sec" ${L.top === 'dress' ? 'hidden' : ''}><h3>Bottoms</h3>${chips('bottom', LOOK.bottom, L.bottom)}${sw('bottomColor', CLOTHES, L.bottomColor)}</div>
+          <div class="life-cas-sec"><h3>Shoes</h3>${sw('shoes', SHOES, L.shoes)}</div>
+        </div></div>
+        <div class="life-row"><button type="button" id="cas-cancel">Cancel</button><button type="button" class="primary" id="cas-done">Done</button></div>`;
+      $('cas-name').oninput = (e) => { w.name = e.target.value.trim() || w.name; };
+      $('cas-trait').onchange = (e) => { w.trait = e.target.value; };
+      d.querySelectorAll('.life-chips, .life-sw').forEach((grp) => grp.querySelectorAll('button').forEach((b) => {
+        b.onclick = () => {
+          const k = grp.dataset.k, v = b.dataset.v;
+          if (k === 'age') w.kid = v === 'kid'; else w.look[k] = v;
+          if (k === 'age' && w.kid) w.look.facial = 'none';
+          const keepScroll = d.querySelector('.life-cas-right').scrollTop;
+          draw();
+          d.querySelector('.life-cas-right').scrollTop = keepScroll;
+        };
+      }));
+      $('cas-dice').onclick = () => { w.look = randomLook(w.kid); draw(); };
+      $('cas-cancel').onclick = () => { this.stopPreview(); back?.(); };
+      $('cas-done').onclick = () => { this.stopPreview(); w.name = $('cas-name').value.trim() || w.name; done(w); };
+      this.preview(w);
+    };
+    draw();
+    if (!d.open) d.showModal();
+  }
+  // a small renderer of its own, turning the figure slowly
+  preview(w) {
+    const cv = $('cas-view');
+    if (!this.pv) {
+      const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.outputColorSpace = THREE.SRGBColorSpace;
+      const sc = new THREE.Scene();
+      sc.add(new THREE.HemisphereLight(0xffffff, 0x8a8674, 1.6));
+      const dl = new THREE.DirectionalLight(0xffffff, 2.2); dl.position.set(2, 3, 4); sc.add(dl);
+      const cam = new THREE.PerspectiveCamera(30, 240 / 320, 0.1, 20);
+      const floor = new THREE.Mesh(new THREE.CircleGeometry(0.55, 40), new THREE.MeshStandardMaterial({ color: 0xe9e5da }));
+      floor.rotation.x = -Math.PI / 2; sc.add(floor);
+      this.pv = { r, sc, cam, fig: null, a: 0.5 };
+    }
+    const pv = this.pv;
+    pv.r.setSize(240, 320, false);
+    cv.replaceWith(pv.r.domElement); pv.r.domElement.id = 'cas-view';
+    if (pv.fig) pv.sc.remove(pv.fig);
+    pv.fig = buildAvatar(w.look, w.kid).root; pv.sc.add(pv.fig);
+    const h = w.kid ? 1.3 : 1.8;
+    pv.cam.position.set(0, h * 0.6, 4.1 * (w.kid ? 0.78 : 1)); pv.cam.lookAt(0, h * 0.5, 0);
+    let last = performance.now();
+    cancelAnimationFrame(pv.raf);
+    const spin = (now) => {
+      pv.a += (now - last) / 1000 * 0.6; last = now;
+      pv.fig.rotation.y = Math.sin(pv.a) * 0.9;
+      pv.r.render(pv.sc, pv.cam);
+      pv.raf = requestAnimationFrame(spin);
+    };
+    pv.raf = requestAnimationFrame(spin);
+    // drag to turn
+    const el2 = pv.r.domElement;
+    el2.onpointerdown = (e) => { const x0 = e.clientX, a0 = pv.a; el2.setPointerCapture(e.pointerId); el2.onpointermove = (m) => { pv.a = a0 + (m.clientX - x0) / 80; }; };
+    el2.onpointerup = () => { el2.onpointermove = null; };
+  }
+  stopPreview() { if (this.pv) cancelAnimationFrame(this.pv.raf); }
+  // mid-game: change how someone looks
+  restylePerson(p) {
+    const was = this.speed;
+    this.setSpeed(0);
+    const d = $('life-dialog');
+    this.editLook({ name: p.name, trait: p.trait, kid: p.kid, look: p.look },
+      (w) => { d.close(); p.restyle(w); this.setSpeed(was); this.renderHUD(); this.save(); },
+      () => { d.close(); this.setSpeed(was); });
+  }
+  // start over: everyone moves out, the save is deleted
+  confirmReset() {
+    const d = $('life-dialog'), was = this.speed;
+    this.setSpeed(0);
+    d.innerHTML = `<h2>Start a new game?</h2><p>${esc(this.people.map((p) => p.name).join(', '))} will move out and the saved game will be deleted.</p>
+      <div class="life-row"><button type="button" id="rs-no">Keep playing</button><button type="button" class="primary" id="rs-yes">Start over</button></div>`;
     d.showModal();
+    $('rs-no').onclick = () => { d.close(); this.setSpeed(was); };
+    $('rs-yes').onclick = () => { d.close(); this.reset(); this.setSpeed(was || 1); };
+  }
+  reset() {
+    for (const p of this.people) { this.cancel(p); p.remove(); }
+    this.people = [];
+    this.sel = null;
+    for (const pl of Object.values(this.places)) pl.users.clear();
+    this.updateTub();
+    this.setGlow(false);
+    try { localStorage.removeItem(SAVE_KEY); } catch { /* ignore */ }
+    Object.assign(this, { t: 7 * 60 + 30, money: 900, produce: 0, rel: {}, billsDay: 0 });
+    $('life-toasts').innerHTML = '';
+    this.renderHUD();
+    this.setupDialog();
   }
   afterMoveIn() {
     if (!this.pins.length) this.makePins();
@@ -1319,7 +1540,7 @@ class Game {
       let tz = k >= 0 ? this.nav.z[k] : V.groundZ(p.x, p.y);
       const c = p.cur;
       if (c?.seat?.z && c.phase === 'do') tz = c.seat.z;
-      if (c?.soak && c.phase === 'do') tz = 261.5;            // seated on the tub's bench, shoulders at the water
+      if (c?.seat?.water && c.phase === 'do') tz = c.seat.water - 0.82 * (p.kid ? 0.72 : 1) * (p.look.body === 'fem' ? 0.97 : 1);   // chest-deep
       if (c?.jog && c.phase === 'do') this.jogStep(p, dt);
       p.z = Math.abs(p.z - tz) > 2 ? tz : lerp(p.z, tz, Math.min(1, dt * 12));
       p.group.position.copy(V.v3(p.x, p.y, p.z));
@@ -1403,6 +1624,7 @@ class Game {
   // --------------------------------------------------------------- HUD
   renderHUD(light = false) {
     if (!$('life')) return;
+    if (!this.people.length) { $('life-faces').innerHTML = ''; $('life-card').innerHTML = ''; }
     const d = this.dayIndex, h = this.hour;
     const hh = Math.floor(h), mm = Math.floor((h - hh) * 60);
     $('life-day').textContent = `Day ${d + 1} · ${DAYS[d % 7]}`;
@@ -1441,6 +1663,7 @@ class Game {
     const moodWord = p.mood > 80 ? 'Very happy' : p.mood > 62 ? 'Happy' : p.mood > 42 ? 'Fine' : p.mood > 25 ? 'Uncomfortable' : 'Miserable';
     card.innerHTML = `
       <header><span class="life-face big" style="--c:${p.shirt}">${esc(p.name[0])}</span>
+        <button type="button" class="life-edit" id="life-edit" title="Change how ${esc(p.name)} looks">✏️ Edit</button>
         <div><b>${esc(p.name)}</b><small>${esc(TRAITS[p.trait]?.label || '')}${p.kid ? ' · child' : ` · career level ${p.career.level}`} · ${moodWord}</small></div></header>
       <div class="life-now">${icon} <b>${esc(now)}</b>${phase}${c ? '<button class="life-q cur" data-i="-1" title="Cancel">×</button>' : ''}</div>
       ${q ? `<div class="life-queue">${q}</div>` : ''}
@@ -1449,6 +1672,7 @@ class Game {
         return `<div class="life-need" data-l="${v > 55 ? 'hi' : v > 25 ? 'mid' : 'lo'}"><span>${ic} ${label}</span><i style="--v:${v}%"></i></div>`;
       }).join('')}</div>
       <div class="life-skills">${SKILLS.map(([k, label]) => `<span title="${label} ${p.skills[k].toFixed(1)} / 5">${label} <b>${'●'.repeat(Math.floor(p.skills[k]))}${'○'.repeat(5 - Math.floor(p.skills[k]))}</b></span>`).join('')}</div>`;
+    $('life-edit').onclick = () => this.restylePerson(p);
     card.querySelectorAll('.life-q').forEach((b) => {
       b.onclick = () => {
         const i = +b.dataset.i;
