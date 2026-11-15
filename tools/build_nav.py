@@ -201,7 +201,7 @@ def main():
             jj, ii = cells(LineString([w["a"], w["b"]]).buffer(inter["wall_t"] / 2 + 0.16, cap_style=2))
             walk[jj, ii] = False
         for it in inter["items"]:
-            if it["type"] in ("rug", "tv", "lamp"):
+            if it["type"] in ("rug", "tv", "lamp", "petbowl", "petbed"):
                 continue
             jj, ii = cells(box_poly({"center": [it["x"], it["y"]], "size": [it["w"], it["d"]], "yaw": it["yaw"]}, 0.12))
             walk[jj, ii] = False

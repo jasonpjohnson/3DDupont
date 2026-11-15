@@ -45,7 +45,11 @@ init().catch((err) => {
 
 async function init() {
   if (new URLSearchParams(location.search).get('ui') === '0') document.body.classList.add('bare');
-  if (!hasWebGL()) throw new Error('this browser has WebGL turned off or unavailable');
+  if (!hasWebGL()) {
+    throw new Error('the browser would not give this page 3D graphics (WebGL 2). If the page stopped or went blank earlier, '
+      + 'the browser has probably paused 3D for it: close this tab (or quit and reopen the browser) and open the link again. '
+      + 'If that does not help, check that hardware acceleration is on in the browser settings.');
+  }
   M = await fetchJSON(`${ASSETS}/manifest.json`);
   z0 = M.z0;
   setupChrome();
@@ -109,8 +113,13 @@ function setupLife() {
   });
 }
 
+// the check hands its test context straight back: phones allow only a few at once
 function hasWebGL() {
-  try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; }
+  try {
+    const gl = document.createElement('canvas').getContext('webgl2');
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    return !!gl;
+  } catch { return false; }
 }
 // every asset is requested as file?v=<build id from the manifest>: a new build is a new URL, so the browser's
 // cache can never serve part of an older one. The manifest itself is always re-validated.
@@ -164,7 +173,8 @@ function setupChrome() {
 // ---------------------------------------------------------------- scene -----
 function setupScene() {
   const canvas = $('scene');
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  const coarse = window.matchMedia?.('(pointer: coarse)').matches;
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: !coarse, alpha: true, powerPreference: 'high-performance' });
   // phones: fewer pixels (their graphics memory is small, and a lost context leaves the view blank)
   const touch = window.matchMedia?.('(pointer: coarse)').matches;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, touch ? 1.5 : 2));
@@ -204,7 +214,8 @@ function setupScene() {
   sun = new THREE.DirectionalLight(0xffffff, 3.0);
   sun.castShadow = true;
   const small = Math.min(window.innerWidth, window.innerHeight) < 700;
-  sun.shadow.mapSize.set(small ? 2048 : 4096, small ? 2048 : 4096);
+  const sm = coarse ? 1024 : small ? 2048 : 4096;            // phones: a quarter of the shadow memory
+  sun.shadow.mapSize.set(sm, sm);
   const sc = sun.shadow.camera;
   sc.left = -75; sc.right = 75; sc.top = 75; sc.bottom = -75; sc.near = 10; sc.far = 700;
   sun.shadow.bias = -0.0004;

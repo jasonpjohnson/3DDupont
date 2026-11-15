@@ -370,6 +370,9 @@ function furniture(it, mat) {
     case 'desk': box(w, 0.04, d, 0, 0.73, 0, WOOD_D, 0.5); legs(0.73, 0.04, BLACK, 0.04); box(0.05, 0.38, 0.6, -w / 2 + 0.12, 0.77, 0, '#101214', 0.2); break;
     case 'treadmill': box(w, 0.18, d, 0, 0, 0, '#2a2e33'); box(w - 0.3, 0.02, d - 0.25, 0.1, 0.18, 0, '#111'); box(0.06, 1.1, d, -w / 2 + 0.05, 0.18, 0, '#2a2e33'); box(0.25, 0.08, d, -w / 2 + 0.12, 1.25, 0, '#2a2e33'); break;
     case 'lockers': box(w, 0.45, d, 0, 0, 0, WHITE); box(w, 0.04, d, 0, 0.45, 0, WOOD_D); box(0.05, 1.7, d, w / 2 - 0.03, 0.49, 0, WHITE); box(w, 0.5, d, 0, 1.75, 0, WHITE); break;
+    case 'petbowl': for (const x of [-0.12, 0.12]) { cyl(0.1, 0.08, 0.06, x, 0, 0, '#9aa3ab'); } cyl(0.08, 0.08, 0.01, -0.12, 0.05, 0, '#7a4e2a'); cyl(0.08, 0.08, 0.01, 0.12, 0.05, 0, '#9cd3e0'); break;
+    case 'petbed': { const o = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.14, 24), mat('#8e5ea2', 0.95)); o.scale.set(w, 1, d); o.position.y = 0.07; g.add(o);
+      const c2 = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.04, 24), mat('#e9e3f0', 0.95)); c2.scale.set(w, 1, d); c2.position.y = 0.13; g.add(c2); break; }
     default: box(w, 0.6, d, 0, 0, 0, '#999');
   }
   return g;
@@ -424,6 +427,7 @@ const ACTIONS = {
   pool: { place: 'pool', label: 'Shoot some pool', icon: '🎱', mins: 40, gain: { fun: 26 }, company: { social: 20 }, pose: 'work' },
   games: { place: 'games', label: 'Play video games', icon: '🎮', mins: 45, gain: { fun: 30, energy: -3 }, company: { social: 12 }, pose: 'sit' },
   freelance: { place: 'computer', label: 'Freelance online', icon: '💻', mins: 120, gain: { fun: -6, energy: -8 }, earn: () => 70, pose: 'sit' },
+  feed: { place: 'petbowl', label: 'Fill the food bowls', icon: '🥣', mins: 5, cost: 4, fillBowl: true, gain: { fun: 2 }, pose: 'tend' },
   party: { place: 'vanity', label: 'Do drugs', icon: '💊', mins: 15, gain: { fun: 45, social: 8, hygiene: -6 }, cost: 40,
     locked: true, adult: true, playerOnly: true, high: true, pose: 'work' },
   treadmill: { place: 'treadmill', label: 'Run on the treadmill', icon: '🏃', mins: 30, gain: { fun: 6, energy: -12, hygiene: -20 }, skill: ['fitness', 0.35], pose: 'jog' },
@@ -507,6 +511,91 @@ class Person {
   }
 }
 
+// ------------------------------------------------------------------ pets ----
+const PET_COATS = {
+  dog: ['#d9b26a', '#f1e2c2', '#a0522d', '#6b4226', '#1d1d1d', '#8a8a8a', '#f4f4f4'],
+  cat: ['#d9823b', '#1d1d1d', '#8a8a8a', '#f4f4f4', '#e8d8c0', '#6b4226'],
+};
+const PET_NAMES = { dog: ['Biscuit', 'Maple', 'Scout', 'Juniper', 'Rocket', 'Waffles', 'Ziggy', 'Pepper'], cat: ['Mochi', 'Pickles', 'Olive', 'Noodle', 'Smudge', 'Clementine', 'Pixel', 'Beans'] };
+const PET_ACTIONS = {
+  petpet: { label: 'Pet', icon: '🤚', mins: 8, gain: { fun: 10, social: 8 }, petGain: { fun: 30 }, pose: 'tend' },
+  fetch: { label: 'Play fetch', icon: '🎾', mins: 20, gain: { fun: 24, energy: -4 }, skill: ['fitness', 0.1], petGain: { fun: 55, energy: -15 }, dog: true, day: true, fetch: true, pose: 'catch' },
+  walkdog: { label: 'Take for a walk', icon: '🦮', mins: 30, gain: { fun: 16, energy: -6, social: 6 }, skill: ['fitness', 0.2], petGain: { fun: 45, energy: -20 }, dog: true, walkdog: true, pose: 'walk' },
+  string: { label: 'Play with a string toy', icon: '🧶', mins: 15, gain: { fun: 18 }, petGain: { fun: 50, energy: -8 }, cat: true, pose: 'tend' },
+};
+function randomPet(species = pick(['dog', 'cat'])) {
+  return { name: pick(PET_NAMES[species]), species, size: species === 'dog' ? pick(['s', 'm', 'l']) : 'm', coat: pick(PET_COATS[species]) };
+}
+// Low-poly dog or cat. Front is +z. Returns the parts the animation moves.
+function buildPet(spec) {
+  const dog = spec.species === 'dog';
+  const mats = {};
+  const mat = (c, r = 0.85) => (mats[c + r] ||= new THREE.MeshStandardMaterial({ color: c, roughness: r }));
+  const coat = mat(spec.coat), dark = mat(new THREE.Color(spec.coat).multiplyScalar(0.62).getStyle()), ink = mat('#111', 0.4);
+  const box = (w, h, d, m, x = 0, y = 0, z = 0) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(x, y, z); o.castShadow = true; return o; };
+  const root = new THREE.Group(), body = new THREE.Group(); root.add(body);
+  const legs = [];
+  let head, tail;
+  if (dog) {
+    body.scale.setScalar({ s: 0.65, m: 0.9, l: 1.15 }[spec.size] || 0.9);
+    body.add(box(0.26, 0.24, 0.62, coat, 0, 0.44, 0));
+    for (const [x, z] of [[-0.09, 0.22], [0.09, 0.22], [-0.09, -0.22], [0.09, -0.22]]) {
+      const g = new THREE.Group(); g.position.set(x, 0.34, z);
+      g.add(box(0.08, 0.32, 0.08, coat, 0, -0.16, 0)); g.add(box(0.085, 0.04, 0.1, dark, 0, -0.32, 0.01));
+      body.add(g); legs.push(g);
+    }
+    head = new THREE.Group(); head.position.set(0, 0.6, 0.34); body.add(head);
+    head.add(box(0.2, 0.2, 0.2, coat)); head.add(box(0.12, 0.1, 0.15, coat, 0, -0.04, 0.15)); head.add(box(0.05, 0.04, 0.03, ink, 0, -0.01, 0.23));
+    for (const x of [-0.05, 0.05]) head.add(box(0.03, 0.03, 0.01, ink, x, 0.04, 0.1));
+    for (const x of [-0.11, 0.11]) head.add(box(0.04, 0.15, 0.09, dark, x, -0.03, -0.01));
+    tail = new THREE.Group(); tail.position.set(0, 0.52, -0.31); body.add(tail);
+    tail.add(box(0.05, 0.05, 0.26, coat, 0, 0, -0.13)); tail.rotation.x = -0.6;
+  } else {
+    body.add(box(0.15, 0.14, 0.36, coat, 0, 0.24, 0));
+    for (const [x, z] of [[-0.05, 0.13], [0.05, 0.13], [-0.05, -0.13], [0.05, -0.13]]) {
+      const g = new THREE.Group(); g.position.set(x, 0.18, z); g.add(box(0.045, 0.18, 0.045, coat, 0, -0.09, 0)); body.add(g); legs.push(g);
+    }
+    head = new THREE.Group(); head.position.set(0, 0.34, 0.2); body.add(head);
+    head.add(box(0.15, 0.12, 0.12, coat)); head.add(box(0.06, 0.04, 0.04, dark, 0, -0.03, 0.065));
+    for (const x of [-0.035, 0.035]) head.add(box(0.025, 0.022, 0.01, mat('#7fae3c', 0.3), x, 0.015, 0.062));
+    for (const x of [-0.045, 0.045]) { const e = new THREE.Mesh(new THREE.ConeGeometry(0.03, 0.07, 4), coat); e.position.set(x, 0.09, 0); e.castShadow = true; head.add(e); }
+    tail = new THREE.Group(); tail.position.set(0, 0.28, -0.18); body.add(tail);
+    tail.add(box(0.03, 0.03, 0.3, coat, 0, 0, -0.15)); tail.rotation.x = -1.0;
+  }
+  return { root, body, legs, head, tail };
+}
+class Pet {
+  constructor(d) {
+    Object.assign(this, {
+      id: d.id, name: d.name, species: d.species, size: d.size || 'm', coat: d.coat,
+      needs: d.needs || { hunger: 80, energy: 85, fun: 70 },
+      x: d.x ?? 1, y: d.y ?? 6.6, z: 0, face: d.face ?? 90,
+    });
+    this.state = 'idle'; this.timer = 0; this.path = null; this.busy = null; this.follow = null; this.anim = Math.random() * 10; this.pose = 'stand';
+    this.build();
+  }
+  get speed() { return this.species === 'dog' ? 1.6 : 1.25; }
+  build() {
+    const a = buildPet(this);
+    this.group = new THREE.Group(); this.group.add(a.root);
+    Object.assign(this, { pbody: a.body, legs: a.legs, head: a.head, tail: a.tail });
+    this.group.traverse((o) => { if (o.isMesh) o.userData.pet = this; });
+    V.scene.add(this.group);
+    if (!this.tag) {
+      this.tag = el('button', 'life-tag pet');
+      this.tag.addEventListener('click', (e) => { e.stopPropagation(); G.openPetMenu(this, e.clientX, e.clientY); });
+      $('life-overlay').append(this.tag);
+    }
+  }
+  restyle(d) {
+    Object.assign(this, { name: d.name, species: d.species, size: d.size, coat: d.coat });
+    const vis = this.group.visible;
+    V.scene.remove(this.group); this.build(); this.group.visible = vis; this.tagHtml = null;
+  }
+  remove() { V.scene.remove(this.group); this.tag.remove(); }
+  save() { return { id: this.id, name: this.name, species: this.species, size: this.size, coat: this.coat, needs: this.needs, x: this.x, y: this.y }; }
+}
+
 // ------------------------------------------------------------------ game ----
 class Game {
   async init() {
@@ -526,6 +615,8 @@ class Game {
       p.users = new Set();
     }
     this.people = [];
+    this.pets = [];
+    this.bowl = 60;                // food in the bowls, in 'pet-meals' x 20
     this.speed = 1;
     this.follow = false;
     this.cut = true;
@@ -539,6 +630,10 @@ class Game {
     this.buildUI();
     this.buildProps();
     this.buildInterior();
+    const it = (t) => this.inter?.items.find((i) => i.type === t);
+    const bed = it('petbed'), bowl = it('petbowl');
+    this.petBed = bed ? { x: bed.x, y: bed.y, z: bed.z } : { x: 0.6, y: 8.0, z: 262.15 };
+    this.petBowl = bowl ? { x: bowl.x, y: bowl.y + 0.35, z: bowl.z } : { x: 1.4, y: 8.0, z: 262.15 };
   }
 
   // ----------------------------------------------------------- lifecycle
@@ -575,6 +670,7 @@ class Game {
     this.props.visible = false;
     if (this.interior) this.interior.visible = false;
     for (const p of this.people) p.group.visible = false;
+    for (const a of this.pets) { a.group.visible = false; a.tag.style.display = 'none'; }
     this.setGlow(false);
     this.setCut(false, true);
     V.controls.minDistance = 6;
@@ -783,8 +879,7 @@ class Game {
       this.pins.push({ b, pos: V.v3(p.at[0], p.at[1], gz + (p.id === 'barn' ? 8.3 : p.id === 'dgarage' ? 5.4 : 2.4)) });
     }
     for (const r of this.inter?.labels || []) {
-      const icon = { living: '🛋️', kitchen: '🍳', kids: '🧸', office: '💻', mud: '🥾', bedroom: '🛏️', bath: '🛁', den: '🎱' }[r.room] || '🏠';
-      if (r.room === 'mud') continue;
+      const icon = { living: '🛋️', kitchen: '🍳', kids: '🧸', office: '💻', mud: '🐾', bedroom: '🛏️', bath: '🛁', den: '🎱' }[r.room] || '🏠';
       const b = el('button', 'life-pin room', `<span>${icon}</span><em>${esc(r.label)}</em>`);
       b.addEventListener('click', (e) => { e.stopPropagation(); this.openRoomMenu(r.room, e.clientX, e.clientY); });
       $('life-overlay').append(b);
@@ -850,7 +945,7 @@ class Game {
   loadSave() { try { const s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch { return null; } }
   save() {
     if (!this.people.length) return;
-    const data = { v: 1, t: this.t, money: this.money, produce: this.produce, rel: this.rel, billsDay: this.billsDay, people: this.people.map((p) => p.save()) };
+    const data = { v: 1, t: this.t, money: this.money, produce: this.produce, rel: this.rel, billsDay: this.billsDay, people: this.people.map((p) => p.save()), pets: this.pets.map((a) => a.save()), bowl: this.bowl };
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); } catch { /* private window: no saving */ }
   }
   askContinue(s) {
@@ -864,6 +959,8 @@ class Game {
   load(s) {
     Object.assign(this, { t: s.t, money: s.money, produce: s.produce || 0, rel: s.rel || {}, billsDay: s.billsDay || 0 });
     for (const pd of s.people) this.people.push(new Person(pd));
+    for (const ad of s.pets || []) this.pets.push(new Pet(ad));
+    this.bowl = s.bowl ?? 60;
     this.afterMoveIn();
   }
   setupDialog() {
@@ -876,6 +973,7 @@ class Game {
       return { name: n, trait: traits[made++ % traits.length], look: randomLook(kid), kid };
     };
     const rows = [mk(), mk()];
+    const pets = [];
     const draw = () => {
       d.innerHTML = `<h2>Move in</h2><p class="lead">Who lives at 3910 W Dupont Rd? Up to four people. Tap someone to change how they look.</p>
         <div class="life-house">${rows.map((r, i) => `
@@ -888,16 +986,33 @@ class Game {
           </div>`).join('')}
           ${rows.length < 4 ? '<button type="button" class="life-member add" id="ld-add">＋<small>Add someone</small></button>' : ''}
         </div>
+        <h3 class="life-pets-h">Pets</h3>
+        <div class="life-house">${pets.map((a, i) => `
+          <div class="life-member" data-pet="${i}">
+            <button type="button" class="life-member-edit"><span class="life-face" style="--c:${a.coat}">${a.species === 'dog' ? '🐕' : '🐈'}</span>
+              <b>${esc(a.name)}</b><small>${a.species === 'dog' ? `${{ s: 'Small', m: 'Medium', l: 'Large' }[a.size]} dog` : 'Cat'}</small><em>✏️ Customize</em></button>
+            <button type="button" class="life-x" aria-label="Remove ${esc(a.name)}">×</button>
+          </div>`).join('')}
+          ${pets.length < 3 ? '<button type="button" class="life-member add" id="ld-addpet">🐾<small>Add a pet</small></button>' : ''}
+        </div>
         <div class="life-row"><button class="primary" id="ld-go">Move in</button></div>`;
       d.querySelectorAll('.life-member[data-i]').forEach((row) => {
         const i = +row.dataset.i;
         row.querySelector('.life-member-edit').onclick = () => this.editLook(rows[i], (r) => { rows[i] = r; draw(); }, () => draw(), 'Create');
         row.querySelector('.life-x')?.addEventListener('click', () => { rows.splice(i, 1); draw(); });
       });
+      d.querySelectorAll('.life-member[data-pet]').forEach((row) => {
+        const i = +row.dataset.pet;
+        row.querySelector('.life-member-edit').onclick = () => this.editPet(pets[i], (r) => { pets[i] = r; draw(); }, () => draw(), 'Customize');
+        row.querySelector('.life-x').onclick = () => { pets.splice(i, 1); draw(); };
+      });
+      $('ld-addpet')?.addEventListener('click', () => { const r = randomPet(); pets.push(r); this.editPet(r, (n) => { pets[pets.length - 1] = n; draw(); }, () => draw(), 'Adopt'); });
       $('ld-add')?.addEventListener('click', () => { const r = mk(rows.length >= 2); rows.push(r); this.editLook(r, (n) => { rows[rows.length - 1] = n; draw(); }, () => draw(), 'Create'); });
       $('ld-go').onclick = () => {
         d.close();
         rows.forEach((r, i) => this.people.push(new Person({ ...r, id: `p${Date.now() % 1e6}-${i}`, x: 0.6 + i * 0.7, y: 6.6, face: 90 })));
+        pets.forEach((a, i) => this.pets.push(new Pet({ ...a, id: `pet${Date.now() % 1e6}-${i}`, x: 1.2 + i * 0.6, y: 5.6, face: 90 })));
+        this.bowl = 60;
         this.t = 7 * 60 + 30; this.money = 900; this.produce = 0; this.rel = {}; this.billsDay = 0;
         this.afterMoveIn();
         this.save();
@@ -949,13 +1064,13 @@ class Game {
       $('cas-dice').onclick = () => { w.look = randomLook(w.kid); draw(); };
       $('cas-cancel').onclick = () => { this.stopPreview(); back?.(); };
       $('cas-done').onclick = () => { this.stopPreview(); w.name = $('cas-name').value.trim() || w.name; done(w); };
-      this.preview(w);
+      this.preview(buildAvatar(w.look, w.kid).root, { h: w.kid ? 1.3 : 1.8, dist: 4.1 * (w.kid ? 0.78 : 1) });
     };
     draw();
     if (!d.open) d.showModal();
   }
   // a small renderer of its own, turning the figure slowly
-  preview(w) {
+  preview(fig, frame) {
     const cv = $('cas-view');
     if (!this.pv) {
       const r = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'low-power' });
@@ -972,9 +1087,9 @@ class Game {
     pv.r.setSize(240, 320, false);
     cv.replaceWith(pv.r.domElement); pv.r.domElement.id = 'cas-view';
     if (pv.fig) pv.sc.remove(pv.fig);
-    pv.fig = buildAvatar(w.look, w.kid).root; pv.sc.add(pv.fig);
-    const h = w.kid ? 1.3 : 1.8;
-    pv.cam.position.set(0, h * 0.6, 4.1 * (w.kid ? 0.78 : 1)); pv.cam.lookAt(0, h * 0.5, 0);
+    pv.fig = fig; pv.sc.add(pv.fig);
+    const h = frame.h;
+    pv.cam.position.set(0, h * 0.6 + (h < 1 ? 0.35 : 0), frame.dist); pv.cam.lookAt(0, h * 0.5, 0);
     let last = performance.now();
     cancelAnimationFrame(pv.raf);
     const spin = (now) => {
@@ -997,6 +1112,55 @@ class Game {
     this.pv.r.dispose(); this.pv.r.forceContextLoss();
     this.pv = null;
   }
+  editPet(src, done, back, verb = 'Edit') {
+    const d = $('life-dialog');
+    const w = { ...src };
+    const chips = (key, opts, val) => `<div class="life-chips" data-k="${key}">${opts.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${v === val}">${l}</button>`).join('')}</div>`;
+    const draw = () => {
+      d.innerHTML = `<div class="life-cas">
+        <div class="life-cas-left"><canvas id="cas-view" width="240" height="320"></canvas><button type="button" id="cas-dice">🎲 Surprise me</button></div>
+        <div class="life-cas-right">
+          <h2>${verb} ${esc(w.name)}</h2>
+          <div class="life-cas-sec"><label>Name <input type="text" id="cas-name" maxlength="14" value="${esc(w.name)}"></label></div>
+          <div class="life-cas-sec"><h3>Animal</h3>${chips('species', [['dog', '🐕 Dog'], ['cat', '🐈 Cat']], w.species)}</div>
+          ${w.species === 'dog' ? `<div class="life-cas-sec"><h3>Size</h3>${chips('size', [['s', 'Small'], ['m', 'Medium'], ['l', 'Large']], w.size)}</div>` : ''}
+          <div class="life-cas-sec"><h3>Coat</h3><div class="life-sw" data-k="coat">${PET_COATS[w.species].map((c) => `<button type="button" data-v="${c}" style="--c:${c}" aria-label="${c}" aria-pressed="${c === w.coat}"></button>`).join('')}</div></div>
+        </div></div>
+        <div class="life-row"><button type="button" id="cas-cancel">Cancel</button><button type="button" class="primary" id="cas-done">Done</button></div>`;
+      $('cas-name').oninput = (e) => { w.name = e.target.value.trim() || w.name; };
+      d.querySelectorAll('.life-chips, .life-sw').forEach((grp) => grp.querySelectorAll('button').forEach((b) => {
+        b.onclick = () => {
+          const k = grp.dataset.k, v = b.dataset.v;
+          w[k] = v;
+          if (k === 'species') { if (!PET_COATS[v].includes(w.coat)) w.coat = PET_COATS[v][0]; if (v === 'cat') w.size = 'm'; }
+          draw();
+        };
+      }));
+      $('cas-dice').onclick = () => { const r = randomPet(w.species); w.coat = r.coat; w.size = r.size; draw(); };
+      $('cas-cancel').onclick = () => { this.stopPreview(); back?.(); };
+      $('cas-done').onclick = () => { this.stopPreview(); w.name = $('cas-name').value.trim() || w.name; done(w); };
+      this.preview(buildPet(w).root, { h: 0.75, dist: 2.1 });
+    };
+    draw();
+    if (!d.open) d.showModal();
+  }
+  adoptPet() {
+    const was = this.speed, d = $('life-dialog');
+    this.setSpeed(0);
+    this.editPet(randomPet(), (w) => {
+      d.close();
+      const b = this.petBowl;
+      this.pets.push(new Pet({ ...w, id: `pet${Date.now() % 1e6}`, x: b.x, y: b.y + 0.4 }));
+      this.money -= 50;
+      this.toast(`🐾 Welcome home, ${esc(w.name)}!`, 'good');
+      this.setSpeed(was || 1); this.save();
+    }, () => { d.close(); this.setSpeed(was); }, 'Adopt');
+  }
+  restylePet(pet) {
+    const was = this.speed, d = $('life-dialog');
+    this.setSpeed(0);
+    this.editPet(pet.save(), (w) => { d.close(); pet.restyle(w); this.setSpeed(was); this.save(); }, () => { d.close(); this.setSpeed(was); });
+  }
   // mid-game: change how someone looks
   restylePerson(p) {
     const was = this.speed;
@@ -1010,7 +1174,7 @@ class Game {
   confirmReset() {
     const d = $('life-dialog'), was = this.speed;
     this.setSpeed(0);
-    d.innerHTML = `<h2>Start a new game?</h2><p>${esc(this.people.map((p) => p.name).join(', '))} will move out and the saved game will be deleted.</p>
+    d.innerHTML = `<h2>Start a new game?</h2><p>${esc([...this.people, ...this.pets].map((p) => p.name).join(', '))} will move out and the saved game will be deleted.</p>
       <div class="life-row"><button type="button" id="rs-no">Keep playing</button><button type="button" class="primary" id="rs-yes">Start over</button></div>`;
     d.showModal();
     $('rs-no').onclick = () => { d.close(); this.setSpeed(was); };
@@ -1019,6 +1183,8 @@ class Game {
   reset() {
     for (const p of this.people) { this.cancel(p); p.remove(); }
     this.people = [];
+    for (const a of this.pets) a.remove();
+    this.pets = []; this.bowl = 60;
     this.sel = null;
     for (const pl of Object.values(this.places)) pl.users.clear();
     this.updateTub();
@@ -1059,6 +1225,10 @@ class Game {
     for (const p of this.people) if (!p.hidden) p.group.traverse((o) => { if (o.isMesh && o !== p.ring) meshes.push(o); });
     const hp = ray.intersectObjects(meshes, false)[0];
     if (hp) { this.clickPerson(hp.object.userData.person, e); return true; }
+    const pm = [];
+    for (const a of this.pets) a.group.traverse((o) => { if (o.isMesh) pm.push(o); });
+    const ht = ray.intersectObjects(pm, false)[0];
+    if (ht) { this.openPetMenu(ht.object.userData.pet, e.clientX, e.clientY); return true; }
     const vis = V.modelMeshes.filter((o) => V.groups[o.userData.model]?.visible !== false);
     const cutY = this.cut ? this.cutPlane.constant : Infinity;
     const hit = ray.intersectObjects([...vis, ...this.interiorMeshes], false)
@@ -1127,6 +1297,18 @@ class Game {
     const users = [...place.users].map((u) => u.name);
     this.showMenu(`${place.icon} ${esc(place.label)}`, users.length ? `In use by ${esc(users.join(', '))}` : esc(p.name), items, cx, cy);
   }
+  openPetMenu(pet, cx, cy) {
+    const p = this.sel;
+    const items = [];
+    if (p) for (const [id, a] of Object.entries(PET_ACTIONS)) {
+      if ((a.dog && pet.species !== 'dog') || (a.cat && pet.species !== 'cat')) continue;
+      const why = this.whyNotPet(p, pet, id);
+      items.push({ label: a.label, icon: a.icon, hint: why || `${a.mins} min`, disabled: !!why, run: () => this.order(p, { kind: 'pet', id, petId: pet.id }) });
+    }
+    items.push({ label: `Change how ${pet.name} looks`, icon: '✏️', hint: '', run: () => this.restylePet(pet) });
+    const n = pet.needs, word = (v) => (v > 66 ? 'good' : v > 33 ? 'okay' : 'low');
+    this.showMenu(`${pet.species === 'dog' ? '🐕' : '🐈'} ${esc(pet.name)}`, `Food ${word(n.hunger)} · energy ${word(n.energy)} · fun ${word(n.fun)}`, items, cx, cy);
+  }
   openRoomMenu(room, cx, cy) {
     const p = this.sel;
     if (!p) return;
@@ -1140,6 +1322,11 @@ class Game {
       if (a.cost) bits.push(money(-a.cost));
       if (a.earn) bits.push(`earns ~${money(a.earn(p))}`);
       items.push({ label: a.label, icon: a.icon, hint: why || bits.join(' · '), disabled: !!why, run: () => this.order(p, { kind: 'act', id }) });
+    }
+    if (room === 'mud') {
+      items.push({ label: this.pets.length >= 3 ? 'Adopt a pet (three is plenty)' : 'Adopt a pet', icon: '🐾', hint: this.pets.length >= 3 ? '' : `${money(-50)}`, disabled: this.pets.length >= 3 || this.money < 50,
+        run: () => this.adoptPet() });
+      if (this.pets.length) items[0].hint = (items[0].hint ? items[0].hint + ' · ' : '') + `bowls ${Math.round(this.bowl)}% full`;
     }
     const label = this.inter.labels.find((l) => l.room === room)?.label || room;
     const pin = this.inter.labels.find((l) => l.room === room);
@@ -1170,7 +1357,7 @@ class Game {
   get season() { return 152 + (this.dayIndex % 120); }   // June 1 onward: leaves out, long evenings
 
   // locked actions don't appear until unlocked; adults-only ones never appear for children
-  hiddenFor(a, p) { return (a.locked && !this.unlocked) || (a.adult && p.kid); }
+  hiddenFor(a, p) { return (a.locked && !this.unlocked) || (a.adult && p.kid) || (a.fillBowl && !this.pets.length); }
   // ------------------------------------------------------- availability
   whyNot(p, id) {
     const a = ACTIONS[id];
@@ -1238,6 +1425,7 @@ class Game {
     if (c.kind === 'social') {
       for (const q of c.s.people) if (q !== p && q.cur?.s === c.s) { q.cur = null; q.pose = 'stand'; }
     }
+    if (c.pet) this.releasePet(c.pet);
     if (c.place) c.place.users.delete(p);
     if (c.phase === 'do' && c.act) this.applyPartial(p, c);
     p.cur = null; p.pose = 'stand'; p.path = null;
@@ -1252,6 +1440,17 @@ class Game {
       const [x, y] = task.s.spots[task.me];
       c.dest = { x, y };
       c.act = task.s.act;
+    } else if (task.kind === 'pet') {
+      const a = PET_ACTIONS[task.id], pet = this.pets.find((q) => q.id === task.petId);
+      const why = pet ? this.whyNotPet(p, pet, task.id) : 'gone';
+      if (why) { if (p === this.sel) this.toast(`${esc(p.name)}: ${esc(a.label)} - ${esc(why)}`, 'warn'); return null; }
+      c.act = a; c.pet = pet;
+      pet.busy = p; pet.path = null; pet.state = 'wait';
+      if (a.fetch || a.walkdog) { c.dest = { x: -2.0, y: 38.5 }; pet.follow = p; }
+      else {
+        const k = this.nav.snap(pet.x - 0.7, pet.y, 3);
+        c.dest = k >= 0 ? { x: this.nav.cx(k), y: this.nav.cy(k) } : { x: pet.x, y: pet.y };
+      }
     } else {
       const a = ACTIONS[task.id];
       const why = this.whyNot(p, task.id);
@@ -1288,11 +1487,14 @@ class Game {
       this.t += gm;
       this.onTime(before, this.t);
       for (const p of this.people) this.decay(p, gm);
+      for (const a of this.pets) this.petDecay(a, gm);
     }
     for (const p of this.people) this.step(p, gm, realDt);
+    for (const a of this.pets) this.petStep(a, gm);
     this.animate(realDt);
     this.moveCamera(realDt);
     this.syncWorld(realDt);
+    this.syncPets(realDt);
     this.layout();
     this.hudTimer = (this.hudTimer || 0) + realDt;
     if (this.hudTimer > 0.25) { this.hudTimer = 0; this.renderHUD(true); }
@@ -1437,6 +1639,14 @@ class Game {
       if (c.s.id === 'joke' && Math.random() < 0.25 + (this.getRel(c.s.people[0], c.s.people[1]) < 10 ? 0.3 : 0)) c.s.flop = true;
       return;
     }
+    if (c.kind === 'pet') {
+      c.phase = 'do'; c.t = 0; p.pose = c.act.pose;
+      const pet = c.pet;
+      if (c.act.walkdog) { c.route = [[-6, 34], [9, 36], [12, 48], [-4, 53], [-15, 45]]; c.leg = 0; p.path = null; }
+      else if (c.act.fetch) { p.face = 90; c.fetchFrom = { x: p.x, y: p.y }; c.fetchTo = { x: p.x + rand(-2, 2), y: p.y + 7.5 }; pet.follow = null; }
+      else { p.face = (Math.atan2(pet.y - p.y, pet.x - p.x) * 180) / Math.PI; pet.face = p.face + 180; pet.pose = 'sit'; }
+      return;
+    }
     if (c.inside) {
       p.face = (Math.atan2(c.door.door.at[1] - p.y, c.door.door.at[0] - p.x) * 180) / Math.PI;
       p.hidden = true;
@@ -1455,14 +1665,21 @@ class Game {
     const c = p.cur;
     p.cur = null; p.pose = 'stand';
     if (!c) return;
-    const done = c.kind === 'social' ? c.s.id : c.id;
+    const done = c.kind === 'social' ? c.s.id : c.id;   // (pet tasks carry their action id too)
     if (done) (p.recent ||= {})[done] = this.t;
     if (c.place) c.place.users.delete(p);
     if (c.inside) { p.hidden = false; p.x = c.door.x; p.y = c.door.y; p.face = (Math.atan2(-c.door.door.face[1], -c.door.door.face[0]) * 180) / Math.PI; }
     if (c.soak) { this.updateTub(); const s = c.seat; const k = this.nav.snap(s.x, s.y - 1.6); p.x = this.nav.cx(k); p.y = this.nav.cy(k); }
+    if (c.pet) {
+      const pet = c.pet;
+      this.releasePet(pet);
+      if (!interrupted) for (const [k, v] of Object.entries(c.act.petGain || {})) pet.needs[k] = clamp(pet.needs[k] + v, 0, 100);
+      if (!interrupted && c.act.skill) { const [sk, v] = c.act.skill; p.skills[sk] = Math.min(5, p.skills[sk] + v / 3); }
+    }
     if (interrupted) return;
     const a = c.act;
     if (!a) return;
+    if (a.fillBowl) { this.bowl = 100; this.bowlWarned = false; }
     if (a.earn) { const e = a.earn(p); this.money += e; this.toast(`🪚 ${esc(p.name)} sold a piece for ${money(e)}.`, 'good'); }
     if (a.high) {
       if (Math.random() < 0.15) {
@@ -1509,6 +1726,109 @@ class Game {
     for (const o of this.tubCover) o.visible = !soaking;
   }
 
+  // -------------------------------------------------------------- pets
+  whyNotPet(p, pet, id) {
+    const a = PET_ACTIONS[id], h = this.hour;
+    if (a.dog && pet.species !== 'dog') return 'Dogs only';
+    if (a.cat && pet.species !== 'cat') return 'Cats only';
+    if (pet.busy && pet.busy !== p) return `${pet.name} is with ${pet.busy.name}`;
+    if (pet.state === 'sleep') return `${pet.name} is asleep`;
+    if (a.day && (h < 7 || h > 19.5)) return 'Daylight only';
+    if ((a.fetch || a.walkdog) && pet.needs.energy < 15) return `${pet.name} is too tired`;
+    return '';
+  }
+  releasePet(pet) { pet.busy = null; pet.follow = null; pet.state = 'idle'; pet.timer = 5; pet.path = null; pet.pose = 'stand'; }
+  petDecay(a, gm) {
+    const h = gm / 60, n = a.needs, asleep = a.state === 'sleep';
+    n.hunger = clamp(n.hunger - (asleep ? 2 : 5) * h, 0, 100);
+    n.energy = clamp(n.energy + (asleep ? 16 : -5) * h, 0, 100);
+    n.fun = clamp(n.fun - (asleep ? 0 : 6) * h, 0, 100);
+    if (a.state === 'eat') {
+      const take = Math.min(70 * h, this.bowl * 2);
+      n.hunger = clamp(n.hunger + take, 0, 100); this.bowl = Math.max(0, this.bowl - take / 2);
+    }
+    if (n.hunger < 15 && !a.warned) { a.warned = true; this.toast(`🐾 ${esc(a.name)} is hungry${this.bowl <= 0 ? ' - the food bowls are empty' : ''}.`, 'warn'); }
+    if (n.hunger > 40) a.warned = false;
+    if (this.bowl <= 0 && !this.bowlWarned && this.pets.length) { this.bowlWarned = true; this.toast('🥣 The pet food bowls are empty.', 'warn'); }
+  }
+  petGo(a, x, y, then) {
+    a.path = this.nav.path(a.x, a.y, x, y);
+    a.then = then;
+    if (!a.path) { a.path = null; a.then = null; a.timer = 10; }
+  }
+  petStep(a, gm) {
+    // with a person: follow them (walks, going out to play) or wait while they do their thing
+    if (a.busy) {
+      const p = a.busy, c = p.cur;
+      if (c?.act?.fetch && c.phase === 'do') { this.fetchStep(a, c, gm); return; }
+      if (a.follow) {
+        const d = Math.hypot(p.x - a.x, p.y - a.y);
+        if (d > 1.1) {
+          const r = (p.face * Math.PI) / 180, tx = p.x - Math.cos(r) * 0.9 + Math.sin(r) * 0.5, ty = p.y - Math.sin(r) * 0.9 - Math.cos(r) * 0.5;
+          if (!a.path || !a.path.length || (a.repath = (a.repath || 0) + gm) > 1.5) { a.repath = 0; a.path = this.nav.path(a.x, a.y, tx, ty) || []; }
+          this.petMove(a, gm, d > 4 ? 1.8 : 1.15);
+        } else { a.pose = 'stand'; a.path = null; a.face = p.face; }
+      } else a.pose = c?.phase === 'do' ? 'sit' : 'stand';
+      return;
+    }
+    if (a.path && a.path.length) { this.petMove(a, gm, 1); if (!a.path.length) { a.path = null; const t = a.then; a.then = null; t?.(); } return; }
+    if (!gm) return;
+    if (a.state === 'sleep') {
+      a.pose = 'lie';
+      const night = this.hour >= 21.5 || this.hour < 6.5;
+      if (!night && a.needs.energy > 92) { a.state = 'idle'; a.timer = 2; }
+      return;
+    }
+    if (a.state === 'eat') {
+      a.pose = 'eat';
+      if (a.needs.hunger >= 98 || this.bowl <= 0) { a.state = 'idle'; a.timer = 8; }
+      return;
+    }
+    a.timer -= gm;
+    a.pose = a.state === 'rest' ? 'sit' : 'stand';
+    if (a.timer > 0) return;
+    const night = this.hour >= 21.5 || this.hour < 6.5, idx = this.pets.indexOf(a);
+    if (night || a.needs.energy < 20) {
+      const b = this.petBed;
+      this.petGo(a, b.x + idx * 0.25, b.y, () => { a.x = b.x + (idx - 0.5) * 0.3; a.y = b.y + (idx % 2) * 0.25; a.state = 'sleep'; a.face = rand(0, 360); });
+      return;
+    }
+    if (a.needs.hunger < 45 && this.bowl > 0) {
+      const b = this.petBowl;
+      this.petGo(a, b.x, b.y, () => { a.face = -89; a.state = 'eat'; });
+      return;
+    }
+    const out = this.people.filter((p) => !p.hidden && !p.cur?.atWork);
+    if (out.length && Math.random() < (a.species === 'dog' ? 0.65 : 0.3)) {
+      const p = pick(out), ang = rand(0, 6.28), k = this.nav.snap(p.x + Math.cos(ang) * 1.3, p.y + Math.sin(ang) * 1.3, 3);
+      if (k >= 0) this.petGo(a, this.nav.cx(k), this.nav.cy(k), () => { a.state = 'rest'; a.timer = rand(10, 30); a.face = (Math.atan2(p.y - a.y, p.x - a.x) * 180) / Math.PI; });
+    } else {
+      const ang = rand(0, 6.28), r = rand(2, 9), k = this.nav.snap(a.x + Math.cos(ang) * r, a.y + Math.sin(ang) * r, 3);
+      if (k >= 0) this.petGo(a, this.nav.cx(k), this.nav.cy(k), () => { a.state = 'rest'; a.timer = rand(15, 45); });
+    }
+    a.timer = 5;
+  }
+  petMove(a, gm, mult) {
+    let budget = a.speed * mult * gm;
+    a.pose = mult > 1.5 ? 'run' : 'walk';
+    while (budget > 0 && a.path && a.path.length) {
+      const [tx, ty] = a.path[0], dx = tx - a.x, dy = ty - a.y, d = Math.hypot(dx, dy);
+      if (d > 1e-4) a.face = (Math.atan2(dy, dx) * 180) / Math.PI;
+      if (d <= budget) { a.x = tx; a.y = ty; a.path.shift(); budget -= d; } else { a.x += (dx / d) * budget; a.y += (dy / d) * budget; budget = 0; }
+    }
+  }
+  // fetch: the ball flies out, the dog runs it down and brings it back
+  fetchStep(a, c, gm) {
+    c.fp = ((c.fp || 0) + gm / 1.6) % 2;
+    const f = c.fp % 1, out = c.fp < 1, A = c.fetchFrom, B = c.fetchTo;
+    const k = out ? Math.min(1, f * 1.15) : f;
+    a.x = out ? lerp(A.x + 0.8, B.x, k) : lerp(B.x, A.x + 0.8, k);
+    a.y = out ? lerp(A.y + 0.6, B.y, k) : lerp(B.y, A.y + 0.6, k);
+    a.face = out ? (Math.atan2(B.y - A.y, B.x - A.x) * 180) / Math.PI : (Math.atan2(A.y - B.y, A.x - B.x) * 180) / Math.PI;
+    a.pose = 'run';
+    this.fetchBall = { out, f, A, B, pet: a };
+  }
+
   // ---------------------------------------------------------- autonomy
   autonomy(p) {
     const n = p.needs, h = this.hour;
@@ -1530,6 +1850,7 @@ class Game {
       if (a.sleep) s = (h >= 21.5 || h < 5 || n.energy < 22) ? want('energy') * 120 : 0;
       if (a.work) s = this.money < 250 ? 60 : 0;                 // work is the player's call, unless money runs low
       if (a.earn && this.money < 400) s += this.money < 200 ? 30 : 10;
+      if (a.fillBowl) s = this.bowl < 25 && this.pets.some((q) => q.needs.hunger < 75) ? 45 : 0;
       if (a.produce && this.produce < 3) s += 4;                 // the garden wants tending
       if (daylight && !pl.inside && !pl.indoor) s += 3 + (p.trait === 'outdoorsy' ? 4 : 0);   // a nice day outside
       if (!daylight && pl.indoor && !a.sleep) s += 5;             // evenings are for the sofa, the pool table, a game
@@ -1539,6 +1860,16 @@ class Game {
       s -= Math.hypot(pl.at[0] - p.x, pl.at[1] - p.y) * 0.05;
       s *= rand(0.8, 1.25);
       if (s > bs) { bs = s; best = id; }
+    }
+    // the pets
+    for (const pet of this.pets) {
+      for (const [id, a] of Object.entries(PET_ACTIONS)) {
+        if (this.whyNotPet(p, pet, id)) continue;
+        let sc = worth(a.gain) + (pet.needs.fun < 40 ? 8 : 2) - Math.hypot(pet.x - p.x, pet.y - p.y) * 0.05;
+        if ((recent[id] ?? -1e9) > this.t - 240) sc *= 0.4;
+        sc *= rand(0.8, 1.25);
+        if (sc > bs) { bs = sc; best = { kind: 'pet', id, petId: pet.id, auto: true }; }
+      }
     }
     // company: talk to someone who is out and free (or only wandering)
     if (n.social < 70 && !(h >= 22 || h < 6)) {
@@ -1550,7 +1881,8 @@ class Game {
         if (sc * rand(0.8, 1.25) > bs) { this.orderSocial(p, o, id); return; }
       }
     }
-    if (best) p.queue.push({ kind: 'act', id: best, auto: true });
+    if (best && typeof best === 'object') p.queue.push(best);
+    else if (best) p.queue.push({ kind: 'act', id: best, auto: true });
     else {
       const a = rand(0, 6.28), k = this.nav.snap(p.x + Math.cos(a) * 6, p.y + Math.sin(a) * 6);
       if (k >= 0) p.queue.push({ kind: 'goto', x: this.nav.cx(k), y: this.nav.cy(k), auto: true, label: 'Wander', icon: '👣' });
@@ -1596,7 +1928,43 @@ class Game {
       const f = this.ballPhase % 1, from = this.ballPhase < 1 ? a : b, to = this.ballPhase < 1 ? b : a;
       const x = lerp(from.x, to.x, f), y = lerp(from.y, to.y, f), z = lerp(from.z, to.z, f) + 1.6 + Math.sin(f * Math.PI) * 2.2;
       this.ball.position.copy(V.v3(x, y, z)); this.ball.visible = true;
-    } else this.ball.visible = false;
+    } else if (!this.fetchBall) this.ball.visible = false;
+    // fetch ball: flies out ahead of the dog, comes back in its mouth
+    const fb = this.fetchBall;
+    if (fb) {
+      const { A, B, f, out, pet } = fb;
+      if (out) { const k = Math.min(1, f * 1.6); this.ball.position.copy(V.v3(lerp(A.x, B.x, k), lerp(A.y, B.y, k), V.groundZ(B.x, B.y) + 0.08 + 1.5 * (1 - k) + Math.sin(k * Math.PI) * 2.2)); if (f > 0.85) this.ball.position.copy(V.v3(pet.x, pet.y, pet.z + 0.5)); }
+      else this.ball.position.copy(V.v3(pet.x + Math.cos((pet.face * Math.PI) / 180) * 0.35, pet.y + Math.sin((pet.face * Math.PI) / 180) * 0.35, pet.z + 0.5));
+      this.ball.visible = true;
+      this.fetchBall = null;
+    }
+    for (const a of this.pets) {
+      const run = a.pose === 'run', walk = a.pose === 'walk';
+      a.anim += dt * (run ? 16 : walk ? 9 : 4) * Math.max(Math.min(this.speed || 0, 3), walk || run ? 1 : 0.3);
+      const s = Math.sin(a.anim);
+      a.legs.forEach((l, i) => { l.rotation.x = walk || run ? s * (run ? 0.9 : 0.6) * (i % 2 ? 1 : -1) * (i < 2 ? 1 : -1) : 0; });
+      const sit = a.pose === 'sit', lie = a.pose === 'lie', eat = a.pose === 'eat';
+      a.pbody.rotation.x = sit ? -0.35 : 0;
+      a.pbody.position.y = lie ? -(a.species === 'dog' ? 0.22 : 0.12) : sit ? -0.04 : run ? Math.abs(s) * 0.05 : 0;
+      a.pbody.position.z = sit ? -0.08 : 0;
+      if (lie) a.legs.forEach((l, i) => { l.rotation.x = i < 2 ? -1.4 : 1.4; });
+      if (sit) { a.legs[2].rotation.x = a.legs[3].rotation.x = 1.2; }
+      a.head.rotation.x = eat ? 0.7 + Math.sin(a.anim * 2) * 0.1 : lie ? 0.3 : 0;
+      const happy = !!a.busy || a.pose === 'run';
+      a.tail.rotation.y = Math.sin(a.anim * (happy ? 3 : 0.8)) * (happy ? 0.7 : 0.25);
+    }
+  }
+  syncPets(dt) {
+    for (const a of this.pets) {
+      const k = this.nav.idx(a.x, a.y);
+      let tz = k >= 0 ? this.nav.z[k] : V.groundZ(a.x, a.y);
+      if (a.state === 'sleep') tz = this.petBed.z + 0.12;
+      a.z = Math.abs(a.z - tz) > 2 ? tz : lerp(a.z, tz, Math.min(1, dt * 12));
+      a.group.position.copy(V.v3(a.x, a.y, a.z));
+      const r = (a.face * Math.PI) / 180;
+      a.group.rotation.y = Math.atan2(Math.cos(r), -Math.sin(r));
+      a.group.visible = this.active;
+    }
   }
   syncWorld(dt) {
     let anyHome = false, anyFire = false, grilling = false;
@@ -1607,6 +1975,7 @@ class Game {
       if (c?.seat?.z && c.phase === 'do') tz = c.seat.z;
       if (c?.seat?.water && c.phase === 'do') tz = c.seat.water - 0.82 * (p.kid ? 0.72 : 1) * (p.look.body === 'fem' ? 0.97 : 1);   // chest-deep
       if (c?.jog && c.phase === 'do') this.jogStep(p, dt);
+      if (c?.act?.walkdog && c.phase === 'do') { this.jogStep(p, dt, 1.25); p.pose = this.speed ? 'walk' : 'stand'; }
       p.z = Math.abs(p.z - tz) > 2 ? tz : lerp(p.z, tz, Math.min(1, dt * 12));
       p.group.position.copy(V.v3(p.x, p.y, p.z));
       const r = (p.face * Math.PI) / 180;
@@ -1639,13 +2008,13 @@ class Game {
       if (d.length() > 0.002) { ctr.add(d); cam.add(d); }
     }
   }
-  jogStep(p, dt) {
+  jogStep(p, dt, pace = 2.6) {
     const c = p.cur;
     if (!p.path || !p.path.length) {
       const [x, y] = c.route[c.leg % c.route.length]; c.leg += 1;
       p.path = this.nav.path(p.x, p.y, x, y) || [];
     }
-    let budget = 2.6 * this.speed * dt;
+    let budget = pace * this.speed * dt;
     while (budget > 0 && p.path.length) {
       const [tx, ty] = p.path[0], dx = tx - p.x, dy = ty - p.y, d = Math.hypot(dx, dy);
       if (d > 1e-4) p.face = (Math.atan2(dy, dx) * 180) / Math.PI;
@@ -1667,6 +2036,14 @@ class Game {
       if (pin.room && !this.cut) { pin.b.style.display = 'none'; continue; }
       put(pin.b, pin.pos);
       pin.b.classList.toggle('far', pin.pos.distanceTo(camPos) > 70);
+    }
+    for (const a of this.pets) {
+      if (!this.active) { a.tag.style.display = 'none'; continue; }
+      const c = a.busy?.cur;
+      const icon = a.state === 'sleep' ? '💤' : a.state === 'eat' ? '🍖' : c?.phase === 'do' ? c.act.icon : a.needs.hunger < 25 ? '🦴' : a.needs.fun < 20 ? '🥱' : '';
+      const html = `<b style="--c:${a.coat}">${a.species === 'dog' ? '🐕' : '🐈'} ${esc(a.name)}</b>${icon ? `<i>${icon}</i>` : ''}`;
+      if (a.tagHtml !== html) { a.tag.innerHTML = html; a.tagHtml = html; }
+      put(a.tag, V.v3(a.x, a.y, a.z + (a.species === 'dog' ? 1.05 : 0.7)));
     }
     for (const p of this.people) {
       if (!this.active) { p.tag.style.display = 'none'; continue; }

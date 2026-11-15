@@ -44,6 +44,11 @@ their doors). They also look after six needs and pick up skills, using what the 
 | Attached garage | drive to work (weekdays) |
 | Back lawn | watch clouds, stargaze, jog, play catch |
 
+**Pets.** Up to three dogs or cats (name, size, coat) join at move-in, or are adopted later at
+the pet corner. They get hungry, tired and bored: they eat from the food bowls someone has to
+fill, sleep on the pet bed, wander, and dogs tag along after their people. Click a pet to pet it,
+play fetch or go for a walk (dogs), or play with a string toy (cats).
+
 Click a person or their portrait to control them, click a place, room or piece of furniture (or
 its marker) for its actions, and click the floor or ground to walk there; shift-click queues. Left
 alone, people choose for themselves. The camera is free: drag to turn, right-drag or WASD/arrows

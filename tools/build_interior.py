@@ -46,7 +46,7 @@ ROOMS = [
     ("kids", "Kids' room", [(-4.04, 12.82, -0.5, 16.2)], LIGHT, FLOOR),
     ("corridor", "Corridor", [(-4.04, 16.2, -0.5, 18.0)], WOOD, FLOOR),
     ("office", "Office", [(-8.41, 12.82, -4.04, 18.0)], WOOD, FLOOR),
-    ("mud", "Mud entry", [(-7.82, 10.38, -3.85, 12.82)], "#5f574f", LINK),
+    ("mud", "Pet corner", [(-7.82, 10.38, -3.85, 12.82)], "#5f574f", LINK),
     ("bedroom", "Bedroom", [(-8.41, 18.0, -1.0, 23.48)], LIGHT, FLOOR),
     ("bath", "Bathroom", [(-1.0, 18.0, 2.0, 20.6)], TILE, FLOOR),
     ("backhall", "Back hall", [(-1.0, 20.6, 2.0, 23.48)], WOOD, FLOOR),
@@ -129,6 +129,9 @@ ITEMS = [
     ("treadmill", -6.3, 17.45, 1.8, 0.8, 0, {}),
     ("lockers", -4.3, 14.6, 0.45, 2.4, 0, {}),
     ("bench", -5.8, 12.55, 1.6, 0.4, 0, {}),
+    # pet corner in the mud entry
+    ("petbowl", -7.35, 10.95, 0.5, 0.28, 0, {}),
+    ("petbed", -4.45, 11.65, 0.85, 1.0, 0, {}),
 ]
 
 # ------------------------------------------------------------- places ------
@@ -144,6 +147,7 @@ PLACES = [
     ("readchair", "Reading chair", "📖", "living", 1, [(7.0, 11.3, 0, 0)]),
     ("pool", "Pool table", "🎱", "den", 2, [(5.0, 19.75, 90, 0), (5.0, 22.65, -90, 0)]),
     ("games", "Video games", "🎮", "den", 2, [(3.55, 18.85, 180, -0.2), (3.55, 19.8, 180, -0.2)]),
+    ("petbowl", "Food bowls", "🥣", "mud", 1, [(-7.35, 11.45, -90, -0.3)]),
     ("vanity", "Vanity", "🪞", "bath", 1, [(0.35, 18.95, -90, 0)]),
     ("toilet", "Toilet", "🚽", "bath", 1, [(1.6, 18.55, 90, 0)]),
     ("shower", "Shower", "🚿", "bath", 1, [(1.5, 20.05, -90, 0)]),

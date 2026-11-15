@@ -390,3 +390,6 @@ body.life-on .sheet, body.life-on #labels { display: none; }
 .ctx-lost span { font: 400 15px/1.4 var(--body); color: var(--ink-2); max-width: 320px; }
 .ctx-lost em { font: 700 14px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; font-style: normal; background: var(--accent); color: #fff; padding: 10px 16px; margin-top: 8px; }
 .ctx-lost, .ctx-lost:hover { background: rgba(243, 240, 232, .97); color: var(--ink); }
+.life-pets-h { margin: 14px 0 8px; font: 600 11px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
+.life-tag.pet b { font-size: 10px; padding: 2px 5px 1px; background: #fff; color: var(--ink); border: 1px solid var(--ink); border-bottom: 3px solid var(--c); }
+.life-tag.pet i { width: 24px; height: 24px; font-size: 15px; }
