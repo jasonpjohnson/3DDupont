@@ -28,6 +28,7 @@ const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls)
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const money = (n) => `${n < 0 ? '−' : ''}$${Math.abs(Math.round(n)).toLocaleString('en-US')}`;
 const SAVE_KEY = 'dupont-life-v1';
+const UNLOCK_KEY = 'dupont-life-unlocks';     // codes entered in this browser; kept through New game
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const NEEDS = [
   ['hunger', 'Hunger', '🍽️'], ['energy', 'Energy', '⚡'], ['hygiene', 'Hygiene', '🧼'],
@@ -423,6 +424,8 @@ const ACTIONS = {
   pool: { place: 'pool', label: 'Shoot some pool', icon: '🎱', mins: 40, gain: { fun: 26 }, company: { social: 20 }, pose: 'work' },
   games: { place: 'games', label: 'Play video games', icon: '🎮', mins: 45, gain: { fun: 30, energy: -3 }, company: { social: 12 }, pose: 'sit' },
   freelance: { place: 'computer', label: 'Freelance online', icon: '💻', mins: 120, gain: { fun: -6, energy: -8 }, earn: () => 70, pose: 'sit' },
+  party: { place: 'vanity', label: 'Do drugs', icon: '💊', mins: 15, gain: { fun: 45, social: 8, hygiene: -6 }, cost: 40,
+    locked: true, adult: true, playerOnly: true, high: true, pose: 'work' },
   treadmill: { place: 'treadmill', label: 'Run on the treadmill', icon: '🏃', mins: 30, gain: { fun: 6, energy: -12, hygiene: -20 }, skill: ['fitness', 0.35], pose: 'jog' },
   porch: { place: 'porch', label: 'Sit on the porch', icon: '🪑', mins: 40, gain: { fun: 14, energy: 6 }, company: { social: 18 }, trait: { outdoorsy: { fun: 10 } }, pose: 'sit' },
   grill: { place: 'grill', label: 'Grill out on the deck', icon: '🍖', mins: 50, gain: { hunger: 80, fun: 15 }, cost: 15, skill: ['cooking', 0.35], trait: { foodie: { fun: 20 }, outdoorsy: { fun: 10 } }, pose: 'work' },
@@ -451,7 +454,7 @@ const tmpV = new THREE.Vector3();
 class Person {
   constructor(d) {
     Object.assign(this, {
-      id: d.id, name: d.name, trait: d.trait, look: d.look || legacyLook(d), kid: !!d.kid,
+      id: d.id, name: d.name, trait: d.trait, look: d.look || legacyLook(d), kid: !!d.kid, high: d.high || 0,
       needs: d.needs || { hunger: 80, energy: 85, hygiene: 85, bladder: 80, fun: 70, social: 70 },
       skills: d.skills || { cooking: 0, gardening: 0, handiness: 0, fitness: 0 },
       career: d.career || { level: 1, days: 0, lastDay: -1 },
@@ -499,7 +502,7 @@ class Person {
   setPos(x, y) { this.x = x; this.y = y; }
   remove() { V.scene.remove(this.group); this.tag.remove(); }
   save() {
-    return { id: this.id, name: this.name, trait: this.trait, look: this.look, kid: this.kid,
+    return { id: this.id, name: this.name, trait: this.trait, look: this.look, kid: this.kid, high: this.high || 0,
       needs: this.needs, skills: this.skills, career: this.career, x: this.cur?.inside ? this.cur.door.x : this.x, y: this.cur?.inside ? this.cur.door.y : this.y };
   }
 }
@@ -724,11 +727,24 @@ class Game {
         <div class="life-card" id="life-card"></div>
       </div>
       <div class="life-menu" id="life-menu" hidden></div>
+      <form class="life-cheat" id="life-cheat" hidden><input type="text" id="life-cheat-in" placeholder="Enter a code" autocomplete="off" spellcheck="false" aria-label="Code"></form>
       <dialog class="life-dialog" id="life-dialog"></dialog>`;
     document.body.append(root);
     root.querySelectorAll('.life-speed button').forEach((b) => b.addEventListener('click', () => this.setSpeed(+b.dataset.s)));
     $('life-exit').addEventListener('click', () => this.exit());
     $('life-reset').addEventListener('click', () => this.confirmReset());
+    try { this.unlocked = JSON.parse(localStorage.getItem(UNLOCK_KEY) || '{}').party === true; } catch { this.unlocked = false; }
+    let taps = [];
+    $('life').querySelector('.life-clock').addEventListener('click', () => {
+      const now = performance.now(); taps = taps.filter((t) => now - t < 4000); taps.push(now);
+      if (taps.length >= 5) { taps = []; this.openCheat(); }
+    });
+    window.addEventListener('keydown', (e) => {
+      if (this.active && e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) { e.preventDefault(); this.openCheat(); }
+    });
+    $('life-cheat').addEventListener('submit', (e) => { e.preventDefault(); this.runCheat($('life-cheat-in').value); });
+    $('life-cheat-in').addEventListener('keydown', (e) => { e.stopPropagation(); if (e.key === 'Escape') $('life-cheat').hidden = true; });
+    $('life-cheat-in').addEventListener('blur', () => { setTimeout(() => { $('life-cheat').hidden = true; }, 150); });
     $('life-follow').addEventListener('click', () => this.setFollow(!this.follow));
     $('life-walls').addEventListener('click', () => this.setCut(!this.cut));
     // taking hold of the camera stops it following anyone
@@ -774,6 +790,21 @@ class Game {
       $('life-overlay').append(b);
       this.pins.push({ b, pos: V.v3(r.at[0], r.at[1], this.inter.floor_z + 1.5), room: true });
     }
+  }
+  openCheat() {
+    const f = $('life-cheat');
+    f.hidden = false; $('life-cheat-in').value = ''; $('life-cheat-in').focus();
+  }
+  runCheat(raw) {
+    const code = raw.trim().toLowerCase().replace(/\s+/g, ' ');
+    $('life-cheat').hidden = true;
+    const keep = () => { try { localStorage.setItem(UNLOCK_KEY, JSON.stringify({ party: this.unlocked })); } catch { /* private window */ } };
+    let m;
+    if (code === 'afterparty') { this.unlocked = true; keep(); this.toast('🔓 Something new at the bathroom vanity (grown-ups only).', 'good'); }
+    else if (code === 'afterparty off') { this.unlocked = false; keep(); this.toast('🔒 Locked again.'); }
+    else if ((m = code.match(/^cash (\d{1,6})$/))) { this.money += +m[1]; this.toast(`💵 ${money(+m[1])} appeared in the household account.`, 'good'); }
+    else if (code) this.toast('Nothing happens.');
+    this.renderHUD();
   }
   setFollow(on) {
     this.follow = on;
@@ -1068,7 +1099,7 @@ class Game {
     if (!p) return;
     const items = [];
     for (const [id, a] of Object.entries(ACTIONS)) {
-      if (a.place !== place.id || a.social) continue;
+      if (a.place !== place.id || a.social || this.hiddenFor(a, p)) continue;
       const why = this.whyNot(p, id);
       const bits = [a.sleep ? 'until rested' : a.work ? '9 to 5' : `${a.mins} min`];
       if (a.cost) bits.push(money(-a.cost));
@@ -1092,7 +1123,7 @@ class Game {
     const items = [];
     for (const [id, a] of Object.entries(ACTIONS)) {
       const pl = this.places[a.place];
-      if (a.social || !places.includes(pl)) continue;
+      if (a.social || !places.includes(pl) || this.hiddenFor(a, p)) continue;
       const why = this.whyNot(p, id);
       const bits = [a.sleep ? 'until rested' : `${a.mins} min`];
       if (a.cost) bits.push(money(-a.cost));
@@ -1127,10 +1158,14 @@ class Game {
   get isNight() { const h = this.hour; return h >= 20.5 || h < 6; }
   get season() { return 152 + (this.dayIndex % 120); }   // June 1 onward: leaves out, long evenings
 
+  // locked actions don't appear until unlocked; adults-only ones never appear for children
+  hiddenFor(a, p) { return (a.locked && !this.unlocked) || (a.adult && p.kid); }
   // ------------------------------------------------------- availability
   whyNot(p, id) {
     const a = ACTIONS[id];
     const h = this.hour;
+    if (a.adult && p.kid) return 'Adults only';
+    if (a.locked && !this.unlocked) return 'Locked';
     if (a.cost && this.money < a.cost) return 'Not enough money';
     if (a.needs === 'produce' && this.produce < 1) return 'No produce - tend the garden first';
     if (a.work) {
@@ -1272,6 +1307,15 @@ class Game {
     if (doing?.act?.sleep) r = { hunger: 2, energy: -(doing.act.rate.energy), hygiene: 1, bladder: 2.6, fun: 0, social: 0 };
     else if (doing?.atWork) r = { hunger: 3.5, energy: 5.5, hygiene: 2.5, bladder: 0, fun: 5.5, social: -2 };
     if (p.trait === 'nightowl' && this.isNight) r.energy *= 0.6;
+    if (p.high > 0) {                                   // high: fun holds up... until the crash
+      r.fun = -3; r.hunger *= 1.4;
+      p.high -= gm;
+      if (p.high <= 0) {
+        p.high = 0;
+        n.energy = Math.max(0, n.energy - 30); n.fun = Math.max(0, n.fun - 30); n.hygiene = Math.max(0, n.hygiene - 10);
+        this.toast(`🥴 ${esc(p.name)} is crashing.`, 'warn');
+      }
+    }
     for (const k in r) n[k] = clamp(n[k] - r[k] * h, 0, 100);
     if (doing && doing.act && !doing.act.sleep && !doing.atWork) {
       const g = this.gains(p, doing);
@@ -1409,6 +1453,15 @@ class Game {
     const a = c.act;
     if (!a) return;
     if (a.earn) { const e = a.earn(p); this.money += e; this.toast(`🪚 ${esc(p.name)} sold a piece for ${money(e)}.`, 'good'); }
+    if (a.high) {
+      if (Math.random() < 0.15) {
+        p.needs.fun = Math.max(0, p.needs.fun - 60); p.needs.social = Math.max(0, p.needs.social - 20);
+        this.toast(`😖 ${esc(p.name)} is having a bad trip.`, 'bad');
+      } else {
+        p.high = 180;
+        this.toast(`😵‍💫 ${esc(p.name)} is flying high.`);
+      }
+    }
     if (a.produce) {
       const n = a.produce + Math.floor(p.skills.gardening / 2);
       this.produce += n;
@@ -1460,7 +1513,7 @@ class Game {
     const daylight = h >= 8 && h <= 19.5;
     let best = null, bs = 0.4;
     for (const [id, a] of Object.entries(ACTIONS)) {
-      if (a.social || this.whyNot(p, id)) continue;
+      if (a.social || a.playerOnly || this.whyNot(p, id)) continue;
       const pl = this.places[a.place];
       let s = worth(this.gains(p, { act: a, place: pl }));
       if (a.sleep) s = (h >= 21.5 || h < 5 || n.energy < 22) ? want('energy') * 120 : 0;
@@ -1518,6 +1571,7 @@ class Game {
       lL.rotation.x = lx; lR.rotation.x = rx;
       aL.rotation.x = alx; aR.rotation.x = arx; aL.rotation.z = alz; aR.rotation.z = arz;
       p.upper.rotation.x = lean;
+      p.upper.rotation.z = p.high > 0 ? Math.sin(p.anim * 0.45) * 0.14 : 0;
       p.body.rotation.x = lie ? -Math.PI / 2 : 0;
       p.body.position.y = lie ? 0.14 : lift * (p.kid ? 0.72 : 1);
       p.body.position.z = lie ? 0.85 * (p.kid ? 0.72 : 1) : 0;
@@ -1611,6 +1665,7 @@ class Game {
       if (c?.phase === 'do') icon = c.kind === 'social' ? (c.s.flop ? '😬' : c.act.icon) : (c.icon || c.act?.icon || '');
       else if (c?.phase === 'wait') icon = '⏳';
       if (wv < 22 && (!c || c.phase !== 'do')) icon = NEEDS.find((n) => n[0] === wk)[2];
+      else if (p.high > 0 && (!c || c.phase !== 'do')) icon = '😵‍💫';
       const where = c?.atWork && c.phase === 'do' ? 'at work' : c?.inside && c.phase === 'do' ? 'inside' : '';
       const html = `<b style="--c:${p.shirt}">${esc(p.name)}</b>${icon ? `<i>${icon}</i>` : ''}${where ? `<small>${where}</small>` : ''}`;
       if (p.tagHtml !== html) { p.tag.innerHTML = html; p.tagHtml = html; }

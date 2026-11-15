@@ -369,3 +369,7 @@ body.life-on .sheet, body.life-on #labels { display: none; }
   .life-cas-left canvas { width: 120px; height: 160px; }
   .life-cas-right { max-height: calc(100vh - 290px); }
 }
+.life-cheat { position: absolute; left: 50%; top: 30%; transform: translateX(-50%); }
+.life-cheat[hidden] { display: none; }
+.life-cheat input { width: min(320px, calc(100vw - 40px)); font: 500 16px var(--mono); padding: 10px 12px; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.life-clock { cursor: default; user-select: none; }
