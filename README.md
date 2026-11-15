@@ -39,10 +39,18 @@ their doors). They also look after six needs and pick up skills, using what the 
 | Hot tub | soak (the cover comes off) |
 | Walk-out patio fire pit | sit by the fire, toast marshmallows |
 | Vegetable cage, berry arbors, greenhouse | tend, pick, start seedlings (produce feeds salads) |
-| Pole barn | build furniture to sell, work out |
-| Detached garage | tinker with the car |
-| Attached garage | drive to work (weekdays) |
+| Pole barn (walls cut away to see in) | work on the boat, work out |
+| Detached garage (walls cut away) | build furniture to sell, tinker with the project car |
+| Attached garage | drive to work (weekdays), or drive to Smith Field Airport to go flying or watch the planes |
 | Back lawn | watch clouds, stargaze, jog, play catch |
+
+**Smith Field.** The car takes the real roads to Smith Field Airport (902 W Ludwig Rd), about
+7.9 km by West Dupont, Dupont, Lima and West Ludwig Roads, and you can zoom out to follow it
+the whole way. There a pilot walks out to a small high-wing plane, taxis, takes off, flies a
+couple of laps over the house, lands and drives home; anyone can go to watch a circuit instead.
+`tools/build_world.py` builds `assets/world.json` from Overture Maps / OpenStreetMap data: the
+route, the roads and buildings along it, and the airfield's runways, taxiways, aprons and
+hangars, drawn flat at the lot's road height.
 
 **Pets.** Up to three dogs or cats (name, size, coat) join at move-in, or are adopted later at
 the pet corner. They get hungry, tired and bored: they eat from the food bowls someone has to
@@ -109,6 +117,7 @@ python3 tools/build_model.py spec/site_spec.json assets/           # buildings -
 python3 tools/export_sketchup.py assets/                           # the SketchUp package behind the download button
 python3 tools/build_interior.py spec/site_spec.json assets/        # the game's invented main floor
 python3 tools/build_nav.py spec/site_spec.json assets/             # walkable-ground grid and doors for the game
+python3 tools/build_world.py <overture extracts> assets/          # the drive to Smith Field and the airfield
 python3 tools/build_manifest.py spec/site_spec.json assets/        # what the viewer loads (stamps a build id)
 python3 tools/stamp_page.py                                        # copy the code to content-named files and point the page at them
 
@@ -143,6 +152,7 @@ interior is invented).
 
 ## Credits and licences
 
-LiDAR: U.S. Geological Survey 3D Elevation Program (public domain). Orthoimagery: State of
+LiDAR: U.S. Geological Survey 3D Elevation Program (public domain). Roads, buildings and the
+airfield in the game: © OpenStreetMap contributors (ODbL) via Overture Maps. Orthoimagery: State of
 Indiana, Indiana Geographic Information Office (CC0). three.js (MIT). Barlow and IBM Plex
 Mono typefaces (SIL Open Font License).

@@ -86,6 +86,8 @@ def main():
         "nav": "nav.json" if os.path.exists(os.path.join(out_dir, "nav.json")) else None,
         # the game's invented main floor (tools/build_interior.py) - not the house's real plan
         "interior": "interior.json" if os.path.exists(os.path.join(out_dir, "interior.json")) else None,
+        # the drive to Smith Field Airport and the airfield (tools/build_world.py, from Overture Maps)
+        "world": "world.json" if os.path.exists(os.path.join(out_dir, "world.json")) else None,
         "parcel": site.get("parcel"),
         "parcel_corners": site.get("parcel_corners", []),
         "layers": layer_list,

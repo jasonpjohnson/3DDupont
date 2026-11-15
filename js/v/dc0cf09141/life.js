@@ -34,7 +34,12 @@ const NEEDS = [
   ['hunger', 'Hunger', '🍽️'], ['energy', 'Energy', '⚡'], ['hygiene', 'Hygiene', '🧼'],
   ['bladder', 'Bladder', '🚻'], ['fun', 'Fun', '🎈'], ['social', 'Social', '💬'],
 ];
-const SKILLS = [['cooking', 'Cooking'], ['gardening', 'Gardening'], ['handiness', 'Handiness'], ['fitness', 'Fitness']];
+const SKILLS = [['cooking', 'Cooking'], ['gardening', 'Gardening'], ['handiness', 'Handiness'], ['fitness', 'Fitness'], ['piloting', 'Piloting']];
+// outings by car to Smith Field Airport (assets/world.json: the real roads there, and the airfield)
+const TRIPS = {
+  fly: { label: 'Drive to Smith Field and go flying', icon: '🛩️', cost: 95, adult: true, flight: true, gain: { fun: 60, social: -4 }, skill: ['piloting', 0.6] },
+  planes: { label: 'Drive to Smith Field to watch the planes', icon: '👀', cost: 0, adult: true, watch: true, gain: { fun: 30 } },
+};
 const TRAITS = {
   greenthumb: { label: 'Green thumb', hint: 'loves the garden and greenhouse' },
   handy: { label: 'Handy', hint: 'happiest in the barn or the garage' },
@@ -439,9 +444,12 @@ const ACTIONS = {
   tend: { place: 'veg', label: 'Tend the vegetables', icon: '🥕', mins: 60, gain: { fun: 10, energy: -8, hygiene: -12 }, skill: ['gardening', 0.35], produce: 2, trait: { greenthumb: { fun: 25 } }, pose: 'tend' },
   berries: { place: 'berries', label: 'Pick berries', icon: '🫐', mins: 25, gain: { hunger: 12, fun: 12 }, produce: 1, months: [5, 9], trait: { greenthumb: { fun: 10 } }, pose: 'tend' },
   seedlings: { place: 'greenhouse', label: 'Start seedlings', icon: '🌱', mins: 45, gain: { fun: 16, hygiene: -6 }, skill: ['gardening', 0.3], trait: { greenthumb: { fun: 22 } }, pose: 'hidden' },
-  woodwork: { place: 'barn', label: 'Build furniture to sell', icon: '🪚', mins: 120, gain: { fun: 8, energy: -16, hygiene: -16 }, earn: (p) => 45 + 25 * Math.floor(p.skills.handiness), skill: ['handiness', 0.4], trait: { handy: { fun: 28 } }, pose: 'hidden' },
-  workout: { place: 'barn', label: 'Work out', icon: '💪', mins: 45, gain: { fun: 6, energy: -14, hygiene: -25 }, skill: ['fitness', 0.35], pose: 'hidden' },
-  tinker: { place: 'dgarage', label: 'Tinker with the car', icon: '🔧', mins: 90, gain: { fun: 14, hygiene: -14 }, skill: ['handiness', 0.3], trait: { handy: { fun: 20 } }, pose: 'hidden' },
+  woodwork: { place: 'dgarage', spot: 'bench', label: 'Build furniture to sell', icon: '🪚', mins: 120, gain: { fun: 8, energy: -16, hygiene: -16 }, earn: (p) => 45 + 25 * Math.floor(p.skills.handiness), skill: ['handiness', 0.4], trait: { handy: { fun: 28 } }, pose: 'work' },
+  workout: { place: 'barn', spot: 'gym', label: 'Work out', icon: '💪', mins: 45, gain: { fun: 6, energy: -14, hygiene: -25 }, skill: ['fitness', 0.35], pose: 'jog' },
+  boat: { place: 'barn', spot: 'boat', label: 'Work on the boat', icon: '🚤', mins: 90, gain: { fun: 22, energy: -6, hygiene: -12 }, skill: ['handiness', 0.3], trait: { handy: { fun: 20 }, outdoorsy: { fun: 8 } }, pose: 'work' },
+  tinker: { place: 'dgarage', spot: 'car', label: 'Tinker with the project car', icon: '🔧', mins: 90, gain: { fun: 14, hygiene: -14 }, skill: ['handiness', 0.3], trait: { handy: { fun: 20 } }, pose: 'work' },
+  joint: { place: 'dgarage', spot: 'stool', label: 'Smoke a joint', icon: '🌿', mins: 15, gain: { fun: 32, social: 4 }, cost: 15,
+    locked: true, adult: true, playerOnly: true, high: true, highMins: 120, badTrip: 0.03, crash: 0.5, smoke: true, pose: 'sit' },
   work: { place: 'car', label: 'Drive to work', icon: '💼', mins: 540, work: true, pose: 'hidden' },
   clouds: { place: 'lawn', label: 'Watch the clouds', icon: '☁️', mins: 30, gain: { fun: 20, energy: 8 }, day: true, trait: { outdoorsy: { fun: 12 } }, pose: 'lie' },
   stars: { place: 'lawn', label: 'Stargaze', icon: '✨', mins: 40, gain: { fun: 28, energy: 4 }, night_only: true, trait: { nightowl: { fun: 15 }, outdoorsy: { fun: 10 } }, pose: 'lie' },
@@ -460,7 +468,7 @@ class Person {
     Object.assign(this, {
       id: d.id, name: d.name, trait: d.trait, look: d.look || legacyLook(d), kid: !!d.kid, high: d.high || 0,
       needs: d.needs || { hunger: 80, energy: 85, hygiene: 85, bladder: 80, fun: 70, social: 70 },
-      skills: d.skills || { cooking: 0, gardening: 0, handiness: 0, fitness: 0 },
+      skills: { cooking: 0, gardening: 0, handiness: 0, fitness: 0, piloting: 0, ...(d.skills || {}) },
       career: d.career || { level: 1, days: 0, lastDay: -1 },
       x: d.x ?? 2 + Math.random() * 2, y: d.y ?? 4, z: 0, face: d.face ?? 90,
     });
@@ -507,8 +515,104 @@ class Person {
   remove() { V.scene.remove(this.group); this.tag.remove(); }
   save() {
     return { id: this.id, name: this.name, trait: this.trait, look: this.look, kid: this.kid, high: this.high || 0,
-      needs: this.needs, skills: this.skills, career: this.career, x: this.cur?.inside ? this.cur.door.x : this.x, y: this.cur?.inside ? this.cur.door.y : this.y };
+      needs: this.needs, skills: this.skills, career: this.career,
+      x: this.cur?.inside || this.cur?.kind === 'trip' ? this.cur.door.x : this.x, y: this.cur?.inside || this.cur?.kind === 'trip' ? this.cur.door.y : this.y };
   }
+}
+
+// ----------------------------------------------------------------- shops ----
+// The detached garage (a woodshop and a project car) and the pole barn (a boat on its trailer, a gym corner).
+// Positions are in each building's own grid: u along its south wall, v along its east wall, from its centre.
+const SHOPS = {
+  dgarage: { c: [-33.1, -6.05], yaw: -9.5, floor: 261.5, size: [7.9, 8.3],
+    spots: { bench: [-2.85, 0.3, 180], car: [-0.6, -2.4, 0], stool: [-2.55, -3.05, 0] },
+    items: [['workbench', -3.6, 0.3, 0.7, 2.6], ['tablesaw', -0.9, 2.3, 0.9, 1.1], ['lumber', -1.4, 3.85, 3.0, 0.4], ['shopstool', -2.55, -3.05, 0.4, 0.4],
+      ['projectcar', 1.2, -1.4, 4.4, 1.8], ['toolchest', 3.3, 3.6, 1.0, 0.5]] },
+  barn: { c: [-41.45, -25.8], yaw: -9.9, floor: 261.3, size: [18.0, 13.2],
+    spots: { boat: [-1.2, -1.75, 90], gym: [5.4, -4.0, 180] },
+    items: [['boat', -1.2, 0.2, 6.2, 2.3], ['toolchest', -7.6, 5.6, 1.1, 0.5], ['weights', 6.4, -4.0, 1.4, 1.2], ['lumber', -6.5, -5.9, 3.0, 0.4]] },
+};
+function shopXY(shop, u, v) {
+  const r = (shop.yaw * Math.PI) / 180, c = Math.cos(r), s2 = Math.sin(r);
+  return [shop.c[0] + u * c - v * s2, shop.c[1] + u * s2 + v * c];
+}
+function buildShopItem(type, w, d) {
+  const g = new THREE.Group(), mats = {};
+  const mat = (c, r = 0.8) => (mats[c + r] ||= new THREE.MeshStandardMaterial({ color: c, roughness: r }));
+  const box = (bw, bh, bd, x, y, z, color, r) => { const o = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), mat(color, r)); o.position.set(x, y + bh / 2, -z); o.castShadow = true; o.receiveShadow = true; g.add(o); return o; };
+  const PLY = '#c9a46a', STEEL = '#8d969d', RED = '#b8352b';
+  switch (type) {
+    case 'workbench': box(w, 0.06, d, 0, 0.86, 0, PLY, 0.7); for (const sx of [-1, 1]) for (const sz of [-1, 1]) box(0.07, 0.86, 0.07, sx * (w / 2 - 0.06), 0, sz * (d / 2 - 0.06), '#7a5a32');
+      box(w * 0.9, 0.04, d * 0.9, 0, 0.25, 0, PLY); box(0.05, 0.9, d, -w / 2 + 0.03, 0.92, 0, '#a8875a'); // pegboard
+      for (const z of [-0.8, -0.3, 0.3, 0.8]) box(0.05, 0.25, 0.04, -w / 2 + 0.08, 1.2, z, '#333');
+      box(0.3, 0.12, 0.5, 0.05, 0.92, -0.6, '#e2c38a'); break;                   // a board being worked
+    case 'tablesaw': box(w, 0.8, d, 0, 0, 0, '#3b4a57', 0.5); box(w + 0.2, 0.04, d + 0.1, 0, 0.8, 0, STEEL, 0.3); { const b = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.01, 24), mat('#ddd', 0.2)); b.rotation.z = Math.PI / 2; b.position.set(0, 0.86, 0); g.add(b); } break;
+    case 'lumber': for (let i = 0; i < 4; i++) box(w, 0.04, d, 0, 0.6 + i * 0.4, 0, '#6b5a48'); for (let i = 0; i < 4; i++) box(w * 0.95, 0.09, d * 0.8, 0, 0.64 + i * 0.4, 0, ['#e2c38a', '#cfa66b', '#e8d3a6', '#b98a52'][i]);
+      for (const x of [-w / 2 + 0.05, w / 2 - 0.05]) box(0.06, 2.2, 0.06, x, 0, 0, '#6b5a48'); break;
+    case 'shopstool': box(0.36, 0.05, 0.36, 0, 0.62, 0, RED); for (const sx of [-1, 1]) for (const sz of [-1, 1]) box(0.04, 0.62, 0.04, sx * 0.14, 0, sz * 0.14, '#222'); break;
+    case 'toolchest': box(w, 1.0, d, 0, 0, 0, RED, 0.4); for (let y = 0.15; y < 1; y += 0.2) box(w * 0.9, 0.02, 0.02, 0, y, -d / 2 - 0.01, '#ddd'); box(w, 0.4, d, 0, 1.0, 0, RED, 0.4); break;
+    case 'weights': box(w * 0.4, 0.45, d * 0.9, -w * 0.25, 0, 0, '#222'); box(w, 0.05, 0.05, 0, 1.0, 0, STEEL); for (const x of [-w / 2 + 0.1, w / 2 - 0.1]) { const pl = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.06, 20), mat('#1d1d1d')); pl.rotation.z = Math.PI / 2; pl.position.set(x, 1.0, 0); g.add(pl); }
+      for (const x of [-w / 2 + 0.2, w / 2 - 0.2]) box(0.05, 1.1, 0.05, x, 0, 0.3, STEEL); break;
+    case 'projectcar': { const car = buildCar('#8b2e2e'); car.rotation.y = Math.PI / 2; car.scale.setScalar(0.9); g.add(car); break; }
+    case 'boat': {
+      // trailer
+      box(w * 0.9, 0.08, 0.08, 0, 0.45, 0.6, '#555'); box(w * 0.9, 0.08, 0.08, 0, 0.45, -0.6, '#555'); box(1.4, 0.08, 0.08, w * 0.5, 0.45, 0, '#555');
+      for (const z of [-0.95, 0.95]) { const t = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.2, 16), mat('#151515')); t.rotation.x = Math.PI / 2; t.position.set(-0.6, 0.3, -z); g.add(t); }
+      // hull: a tapered box with a pointed bow
+      const hull = new THREE.Shape(); const L = w, B = d / 2;
+      hull.moveTo(-L / 2, -B); hull.lineTo(L * 0.18, -B); hull.quadraticCurveTo(L * 0.45, -B * 0.8, L / 2, 0); hull.quadraticCurveTo(L * 0.45, B * 0.8, L * 0.18, B); hull.lineTo(-L / 2, B); hull.lineTo(-L / 2, -B);
+      const geo = new THREE.ExtrudeGeometry(hull, { depth: 0.75, bevelEnabled: false }); geo.rotateX(-Math.PI / 2);
+      const h = new THREE.Mesh(geo, mat('#f4f4f2', 0.35)); h.position.y = 0.55; h.castShadow = true; g.add(h);
+      const deckGeo = new THREE.ShapeGeometry(hull); deckGeo.rotateX(-Math.PI / 2);
+      const dk = new THREE.Mesh(deckGeo, mat('#c9b79c', 0.8)); dk.position.y = 1.29; g.add(dk);
+      const st = new THREE.Mesh(new THREE.ExtrudeGeometry(hull, { depth: 0.12, bevelEnabled: false }).rotateX(-Math.PI / 2), mat('#2e86ab', 0.4)); st.position.y = 0.95; st.scale.set(1.002, 1, 1.01); g.add(st);
+      box(0.9, 0.5, 1.2, L * 0.05, 1.29, 0, '#f4f4f2', 0.4); box(0.05, 0.4, 1.1, L * 0.05 + 0.45, 1.79, 0, '#9cc9da', 0.1);   // console, windscreen
+      box(0.5, 0.6, 0.5, -L / 2 - 0.15, 0.7, 0, '#222', 0.5);                                           // outboard
+      break;
+    }
+    default: box(w, 0.6, d, 0, 0, 0, '#999');
+  }
+  return g;
+}
+
+// -------------------------------------------------------------- vehicles ----
+function buildCar(color = '#33475b') {
+  const g = new THREE.Group(), m = (c, r = 0.5, extra = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: r, ...extra });
+  const body = m(color, 0.35, { metalness: 0.3 }), glass = m('#1b2228', 0.1), tire = m('#15181b', 0.9), trim = m('#c9ccd0', 0.3);
+  const box = (w, h, d, mt, x, y, z) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mt); o.position.set(x, y, z); o.castShadow = true; g.add(o); return o; };
+  box(1.9, 0.75, 4.7, body, 0, 0.62, 0);                        // body (front is +z)
+  box(1.7, 0.62, 2.7, body, 0, 1.3, -0.25);                      // cabin
+  box(1.72, 0.48, 2.5, glass, 0, 1.32, -0.25);
+  box(1.6, 0.42, 0.05, glass, 0, 1.3, 1.12);                     // windscreen
+  for (const x of [-0.6, 0.6]) box(0.3, 0.12, 0.05, m('#fff8d8', 0.2, { emissive: '#665e3a' }), x, 0.78, 2.36);
+  for (const x of [-0.65, 0.65]) box(0.3, 0.1, 0.05, m('#8a1c1c', 0.3, { emissive: '#3a0a0a' }), x, 0.82, -2.36);
+  box(1.92, 0.12, 4.72, trim, 0, 0.3, 0);
+  for (const x of [-0.85, 0.85]) for (const z of [-1.45, 1.45]) {
+    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.26, 18), tire); w.rotation.z = Math.PI / 2; w.position.set(x, 0.36, z); g.add(w);
+  }
+  return g;
+}
+function buildPlane() {
+  const g = new THREE.Group(), m = (c, r = 0.45) => new THREE.MeshStandardMaterial({ color: c, roughness: r });
+  const white = m('#f4f4f2'), stripe = m('#c0392b'), glass = m('#2a3640', 0.1), dark = m('#1d2125', 0.6);
+  const box = (w, h, d, mt, x, y, z) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mt); o.position.set(x, y, z); o.castShadow = true; g.add(o); return o; };
+  box(1.15, 1.25, 2.6, white, 0, 1.55, 0.9);                    // cabin (front is +z)
+  box(1.0, 0.9, 1.0, white, 0, 1.45, 2.6);                      // cowling
+  box(1.17, 0.5, 1.6, glass, 0, 1.95, 1.15);                    // windows
+  { const t = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.6, 4.2, 10), white); t.rotation.x = Math.PI / 2; t.position.set(0, 1.62, -2.4); t.castShadow = true; g.add(t); }
+  box(1.18, 0.12, 4.4, stripe, 0, 1.35, 0.2);                   // stripe
+  box(11.0, 0.14, 1.55, white, 0, 2.25, 1.0);                   // high wing
+  for (const x of [-5.4, 5.4]) box(0.2, 0.15, 1.56, stripe, x, 2.25, 1.0);
+  for (const x of [-1.6, 1.6]) { const st = box(0.08, 1.2, 0.12, white, x * 0.9, 1.65, 1.2); st.rotation.z = x > 0 ? -0.75 : 0.75; }
+  box(3.4, 0.1, 0.9, white, 0, 1.7, -4.3);                      // tailplane
+  const fin = box(0.1, 1.3, 1.1, stripe, 0, 2.3, -4.3); fin.rotation.x = -0.25;
+  for (const x of [-1.0, 1.0]) { const w = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.16, 14), dark); w.rotation.z = Math.PI / 2; w.position.set(x, 0.3, 0.5); g.add(w); box(0.06, 0.8, 0.06, dark, x * 0.9, 0.55, 0.5); }
+  { const w = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.12, 14), dark); w.rotation.z = Math.PI / 2; w.position.set(0, 0.25, 2.7); g.add(w); box(0.06, 0.8, 0.06, dark, 0, 0.6, 2.7); }
+  const prop = new THREE.Group(); prop.position.set(0, 1.45, 3.15); g.add(prop);
+  { const sp = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.35, 12), dark); sp.rotation.x = Math.PI / 2; prop.add(sp); }
+  prop.add(new THREE.Mesh(new THREE.BoxGeometry(0.16, 1.9, 0.05), dark));
+  g.userData.prop = prop;
+  return g;
 }
 
 // ------------------------------------------------------------------ pets ----
@@ -604,6 +708,7 @@ class Game {
     const d = await (await fetch(V.asset(M.nav))).json();
     this.nav = new Nav(d);
     this.inter = M.interior ? await (await fetch(V.asset(M.interior))).json() : null;
+    this.world = M.world ? await (await fetch(V.asset(M.world))).json() : null;
     this.places = placeDefs(this.nav, this.inter);
     for (const [id, p] of Object.entries(this.places)) {
       p.id = id;
@@ -630,6 +735,8 @@ class Game {
     this.buildUI();
     this.buildProps();
     this.buildInterior();
+    this.buildWorld();
+    this.buildShops();
     const it = (t) => this.inter?.items.find((i) => i.type === t);
     const bed = it('petbed'), bowl = it('petbowl');
     this.petBed = bed ? { x: bed.x, y: bed.y, z: bed.z } : { x: 0.6, y: 8.0, z: 262.15 };
@@ -647,6 +754,9 @@ class Game {
     v.select(null);
     this.props.visible = true;
     if (this.interior) this.interior.visible = true;
+    if (this.shopGroup) this.shopGroup.visible = true;
+    if (this.worldGroup) { this.worldGroup.visible = true; this.planeMesh.visible = true; this.carMesh.visible = !!this.carUser && !!this.carUser.cur?.kind; }
+    v.camera.far = 40000; v.camera.updateProjectionMatrix(); v.controls.maxDistance = 16000;
     for (const p of this.people) p.group.visible = !p.hidden;
     v.state.game = this;
     this.viewerSun = { minutes: v.state.minutes, day: v.state.day };
@@ -669,6 +779,9 @@ class Game {
     V.state.game = null;
     this.props.visible = false;
     if (this.interior) this.interior.visible = false;
+    if (this.shopGroup) { this.shopGroup.visible = false; this.puff.visible = false; }
+    if (this.worldGroup) { this.worldGroup.visible = false; this.planeMesh.visible = false; this.carMesh.visible = false; }
+    V.camera.far = 4000; V.camera.near = 0.5; V.camera.updateProjectionMatrix(); V.controls.maxDistance = 900;
     for (const p of this.people) p.group.visible = false;
     for (const a of this.pets) { a.group.visible = false; a.tag.style.display = 'none'; }
     this.setGlow(false);
@@ -790,6 +903,213 @@ class Game {
     }
     g.visible = false;
   }
+  // ------------------------------------------------- the world outside
+  buildWorld() {
+    const W = this.world;
+    if (!W) return;
+    const g = new THREE.Group(); g.name = 'life-world'; g.visible = false; this.worldGroup = g; V.scene.add(g);
+    const z0 = V.M.z0, gz = W.ground_z, y0 = gz - z0;
+    const flat = (pts, y, color, extra = {}) => {          // a flat polygon
+      const sh = new THREE.Shape(pts.map(([x, yy]) => new THREE.Vector2(x, yy)));
+      const geo = new THREE.ShapeGeometry(sh); geo.rotateX(-Math.PI / 2);
+      const o = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness: 1, polygonOffset: true, polygonOffsetFactor: extra.off ?? -1, polygonOffsetUnits: extra.off ?? -1 }));
+      o.position.y = y; o.receiveShadow = true; g.add(o); return o;
+    };
+    // the ground, with a hole where the surveyed lot is
+    const all = [W.lot[0], W.lot[1], W.lot[2], W.lot[3]];
+    for (const p of W.route) { all[0] = Math.min(all[0], p.x); all[1] = Math.min(all[1], p.y); all[2] = Math.max(all[2], p.x); all[3] = Math.max(all[3], p.y); }
+    const pad = 3000, [lx0, ly0, lx1, ly1] = W.lot;
+    const outer = new THREE.Shape([[all[0] - pad, all[1] - pad], [all[2] + pad, all[1] - pad], [all[2] + pad, all[3] + pad], [all[0] - pad, all[3] + pad]].map(([x, yy]) => new THREE.Vector2(x, yy)));
+    outer.holes.push(new THREE.Path([[lx0, ly0], [lx0, ly1], [lx1, ly1], [lx1, ly0]].map(([x, yy]) => new THREE.Vector2(x, yy))));
+    { const geo = new THREE.ShapeGeometry(outer); geo.rotateX(-Math.PI / 2);
+      const o = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0x84a566, roughness: 1 })); o.position.y = y0 - 0.05; o.receiveShadow = true; g.add(o); }
+    // ribbons: roads, taxiways, centre lines
+    const ribbons = (lines, y, color) => {
+      const pos = [], idx = [];
+      for (const { w, p } of lines) {
+        for (let i = 0; i < p.length - 1; i++) {
+          const [ax, ay] = p[i], [bx, by] = p[i + 1], L = Math.hypot(bx - ax, by - ay);
+          if (L < 0.01) continue;
+          const nx = (-(by - ay) / L) * w / 2, ny = ((bx - ax) / L) * w / 2, b0 = pos.length / 3;
+          pos.push(ax + nx, 0, -(ay + ny), ax - nx, 0, -(ay - ny), bx - nx, 0, -(by - ny), bx + nx, 0, -(by + ny));
+          idx.push(b0, b0 + 1, b0 + 2, b0, b0 + 2, b0 + 3);
+          // a round-ish joint
+          if (i) { const j = pos.length / 3; pos.push(ax, 0, -ay); for (let k = 0; k <= 6; k++) { const a = (k / 6) * Math.PI * 2; pos.push(ax + Math.cos(a) * w / 2, 0, -(ay + Math.sin(a) * w / 2)); if (k) idx.push(j, j + k, j + k + 1); } }
+        }
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.setIndex(idx); geo.computeVertexNormals();
+      const o = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness: 0.95, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+      o.position.y = y; o.receiveShadow = true; g.add(o); return o;
+    };
+    ribbons(W.roads.map((r) => ({ w: r.w, p: r.p })), y0 + 0.04, 0x55595e);
+    // buildings, all in one mesh: pale walls, darker roofs
+    const extrude = (list, wallC, roofC) => {
+      const pos = [], col = [], idx = [], cw = new THREE.Color(wallC), cr = new THREE.Color(roofC);
+      for (const b of list) {
+        let pts = b.p.slice(0, -1);
+        if (pts.length < 3) continue;
+        if (THREE.ShapeUtils.isClockWise(pts.map(([x, yy]) => new THREE.Vector2(x, yy)))) pts = pts.reverse();
+        const h = b.h, shade = 0.9 + ((pts.length * 7919) % 20) / 100;
+        for (let i = 0; i < pts.length; i++) {
+          const [ax, ay] = pts[i], [bx, by] = pts[(i + 1) % pts.length], k = pos.length / 3;
+          pos.push(ax, 0, -ay, bx, 0, -by, bx, h, -by, ax, h, -ay);
+          for (let q = 0; q < 4; q++) col.push(cw.r * shade, cw.g * shade, cw.b * shade);
+          idx.push(k, k + 1, k + 2, k, k + 2, k + 3);
+        }
+        const tri = THREE.ShapeUtils.triangulateShape(pts.map(([x, yy]) => new THREE.Vector2(x, yy)), []), k = pos.length / 3;
+        for (const [x, yy] of pts) { pos.push(x, h, -yy); col.push(cr.r, cr.g, cr.b); }
+        for (const [a, b2, c] of tri) idx.push(k + a, k + b2, k + c);
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+      geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+      geo.setIndex(idx); geo.computeVertexNormals();
+      const o = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.9, side: THREE.DoubleSide }));
+      o.position.y = y0; o.castShadow = false; o.receiveShadow = true; g.add(o); return o;
+    };
+    extrude(W.buildings, '#e3dccd', '#5d6166');
+    // the airfield
+    const A = W.airport;
+    if (A.boundary) flat(A.boundary, y0 + 0.01, 0x9bbb72, { off: -1 });
+    for (const ap of A.aprons) flat(ap, y0 + 0.03, 0x6a6e72, { off: -2 });
+    ribbons(A.taxiways.map((p) => ({ w: 11, p })), y0 + 0.05, 0x63676b);
+    ribbons(A.taxiways.map((p) => ({ w: 0.35, p })), y0 + 0.07, 0xe0b52a);
+    for (const rw of A.runways) {
+      const [ax, ay] = rw.a, [bx, by] = rw.b, L = Math.hypot(bx - ax, by - ay), ux = (bx - ax) / L, uy = (by - ay) / L;
+      ribbons([{ w: rw.w, p: [rw.a, rw.b] }], y0 + 0.08, 0x3b3f44);
+      const dashes = [];
+      for (let d = 80; d < L - 80; d += 50) dashes.push({ w: 0.9, p: [[ax + ux * d, ay + uy * d], [ax + ux * (d + 25), ay + uy * (d + 25)]] });
+      for (const [ex, ey, sgn] of [[ax, ay, 1], [bx, by, -1]]) {               // threshold bars
+        for (let k = -3; k <= 3; k++) { if (!k) continue; const ox = -uy * k * (rw.w / 8), oy = ux * k * (rw.w / 8);
+          dashes.push({ w: 1.4, p: [[ex + ox + ux * sgn * 6, ey + oy + uy * sgn * 6], [ex + ox + ux * sgn * 36, ey + oy + uy * sgn * 36]] }); }
+      }
+      ribbons(dashes, y0 + 0.1, 0xf4f4f2);
+    }
+    extrude(A.buildings, '#eef0f1', '#8b9198');
+    // windsock between the runways
+    { const r0 = A.runways[0], r1 = A.runways[1] || r0;
+      const sx = (r0.a[0] + r0.b[0] + r1.a[0] + r1.b[0]) / 4 + 60, sy = (r0.a[1] + r0.b[1] + r1.a[1] + r1.b[1]) / 4 - 40;
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 6, 8), new THREE.MeshStandardMaterial({ color: 0xdddddd })); pole.position.set(sx, y0 + 3, -sy); g.add(pole);
+      const sock = new THREE.Mesh(new THREE.ConeGeometry(0.45, 2.6, 12, 1, true), new THREE.MeshStandardMaterial({ color: 0xff7a1a, side: THREE.DoubleSide }));
+      sock.rotation.z = Math.PI / 2 - 0.15; sock.position.set(sx + 1.3, y0 + 5.7, -sy); g.add(sock); }
+    // the household's car and the plane
+    this.carMesh = buildCar(); this.carMesh.visible = false; V.scene.add(this.carMesh);
+    this.planeMesh = buildPlane(); V.scene.add(this.planeMesh);
+    this.planeMesh.visible = false;
+    this.parkPlane();
+    // the route as a polyline with distances, for the car
+    const R = W.route.map((p) => ({ ...p }));
+    let acc = 0; R[0].d = 0;
+    for (let i = 1; i < R.length; i++) { acc += Math.hypot(R[i].x - R[i - 1].x, R[i].y - R[i - 1].y); R[i].d = acc; }
+    this.route = R; this.routeLen = acc;
+  }
+  buildShops() {
+    const g = new THREE.Group(); g.name = 'life-shops'; g.visible = false; this.shopGroup = g; V.scene.add(g);
+    for (const [id, shop] of Object.entries(SHOPS)) {
+      { const slab = new THREE.Mesh(new THREE.BoxGeometry(shop.size[0], 0.1, shop.size[1]), new THREE.MeshStandardMaterial({ color: 0xa9a8a3, roughness: 0.95 }));
+        slab.position.copy(V.v3(shop.c[0], shop.c[1], shop.floor - 0.045)); slab.rotation.y = (shop.yaw * Math.PI) / 180; slab.receiveShadow = true; g.add(slab); }
+      for (const [type, u, v, w, d] of shop.items) {
+        const o = buildShopItem(type, w, d), [x, y] = shopXY(shop, u, v);
+        o.position.copy(V.v3(x, y, shop.floor)); o.rotation.y = (shop.yaw * Math.PI) / 180; g.add(o);
+        o.traverse((m) => { if (m.isMesh) { m.userData.shop = id; this.interiorMeshes.push(m); } });
+      }
+      const pl = this.places[id];
+      pl.spots = Object.fromEntries(Object.entries(shop.spots).map(([k, [u, v, f]]) => { const [x, y] = shopXY(shop, u, v); return [k, { x, y, z: shop.floor, face: f + shop.yaw }]; }));
+      pl.cap = 3;
+    }
+    // the garage and barn roofs and upper walls go with the house's when the walls are cut away
+    for (const id of ['garage_detached', 'pole_barn']) V.groups[id]?.traverse((o) => {
+      if (!o.isMesh) return;
+      for (const mt of [o.material, o.userData.photo].filter(Boolean)) if (!this.cutMats.has(mt)) this.cutMats.set(mt, mt.side);
+    });
+    // a little smoke for the garage
+    this.puff = new THREE.Group();
+    for (let i = 0; i < 4; i++) { const s2 = new THREE.Mesh(new THREE.SphereGeometry(0.07 + i * 0.03, 8, 6), new THREE.MeshBasicMaterial({ color: 0xdedede, transparent: true, opacity: 0.45 - i * 0.08, depthWrite: false })); this.puff.add(s2); }
+    this.puff.visible = false; V.scene.add(this.puff);
+  }
+  // height of the world at a point: the surveyed lot where there is one, flat ground beyond
+  worldZ(x, y) {
+    const [lx0, ly0, lx1, ly1] = this.world.lot;
+    if (x > lx0 + 1 && x < lx1 - 1 && y > ly0 + 1 && y < ly1 - 1) return V.groundZ(x, y);
+    return this.world.ground_z;
+  }
+  parkPlane() {
+    const A = this.world.airport, rw = A.runways[0];
+    const hdg = Math.atan2(rw.b[1] - rw.a[1], rw.b[0] - rw.a[0]) + Math.PI / 2;
+    this.placeVehicle(this.planeMesh, A.plane[0], A.plane[1], this.world.ground_z, hdg, 0, 0);
+  }
+  placeVehicle(o, x, y, z, hdg, pitch = 0, bank = 0) {
+    o.position.copy(V.v3(x, y, z));
+    o.rotation.set(0, 0, 0);
+    o.rotation.order = 'YXZ';
+    o.rotation.y = Math.atan2(Math.cos(hdg), -Math.sin(hdg));   // the model's front is +z; hdg counter-clockwise from east
+    o.rotation.x = -pitch;
+    o.rotation.z = bank;
+  }
+  // where along the route, as a point and heading
+  routeAt(d) {
+    const R = this.route;
+    d = clamp(d, 0, this.routeLen);
+    let i = 1;
+    while (i < R.length - 1 && R[i].d < d) i++;
+    const a = R[i - 1], b = R[i], f = (d - a.d) / Math.max(b.d - a.d, 1e-6);
+    return { x: lerp(a.x, b.x, f), y: lerp(a.y, b.y, f), hdg: Math.atan2(b.y - a.y, b.x - a.x), slow: a.slow && b.slow };
+  }
+  // the flight: taxi out, take off, a lap or two of the house (or a circuit of the field), land, taxi back
+  flightPath(kind) {
+    const A = this.world.airport, rw = A.runways[0], gz = this.world.ground_z;
+    const [ax, ay] = rw.a, [bx, by] = rw.b, L = Math.hypot(bx - ax, by - ay), ux = (bx - ax) / L, uy = (by - ay) / L;
+    const lx = -uy, ly = ux;                                   // left of the runway heading
+    const P = { x: A.plane[0], y: A.plane[1] };
+    const t = ((P.x - ax) * ux + (P.y - ay) * uy);
+    const Q = { x: ax + ux * clamp(t, 60, L - 60), y: ay + uy * clamp(t, 60, L - 60) };
+    const pts = [];                                            // [x, y, z above ground, speed in m per game minute]
+    const add = (x, y, h, v) => pts.push([x, y, h, v]);
+    add(P.x, P.y, 0, 40); add(Q.x, Q.y, 0, 40); add(ax + ux * 15, ay + uy * 15, 0, 40);
+    add(ax + ux * 40, ay + uy * 40, 0, 60);
+    add(ax + ux * L * 0.55, ay + uy * L * 0.55, 0, 200);      // rotate
+    const air = [];
+    if (kind === 'fly') {
+      air.push([bx + ux * 900, by + uy * 900, 160]);
+      const hx = 0, hy = 0, r = 420;
+      const start = Math.atan2(by - hy, bx - hx);
+      air.push([hx + Math.cos(start) * 1400, hy + Math.sin(start) * 1400, 280]);
+      for (let k = 0; k <= 26; k++) { const a = start + (k / 13) * Math.PI * 2; air.push([hx + Math.cos(a) * r, hy + Math.sin(a) * r, 260]); }
+      air.push([(hx + ax) / 2 + lx * 600, (hy + ay) / 2 + ly * 600, 300]);
+    } else {
+      air.push([bx + ux * 600, by + uy * 600, 150]);
+      air.push([bx + ux * 700 + lx * 800, by + uy * 700 + ly * 800, 300]);
+    }
+    air.push([ax - ux * 400 + lx * 900, ay - uy * 400 + ly * 900, 280]);    // downwind / base
+    air.push([ax - ux * 1800 + lx * 500, ay - uy * 1800 + ly * 500, 220]);
+    air.push([ax - ux * 1400, ay - uy * 1400, 110]);                       // final
+    air.push([ax - ux * 500, ay - uy * 500, 40]);
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(ax + ux * L * 0.55, ay + uy * L * 0.55, 0), new THREE.Vector3(ax + ux * L * 0.55 + ux * 350, ay + uy * L * 0.55 + uy * 350, 35),
+      ...air.map(([x, y, h]) => new THREE.Vector3(x, y, h)),
+      new THREE.Vector3(ax + ux * 60, ay + uy * 60, 2), new THREE.Vector3(ax + ux * 160, ay + uy * 160, 0)], false, 'centripetal', 0.5);
+    const samples = curve.getSpacedPoints(Math.max(60, Math.round(curve.getLength() / 40)));
+    for (const v of samples.slice(1)) add(v.x, v.y, Math.max(0, v.z), v.z > 3 ? 260 : 150);
+    add(ax + ux * Math.min(L * 0.7, t + 30), ay + uy * Math.min(L * 0.7, t + 30), 0, 70);
+    add(Q.x, Q.y, 0, 40); add(P.x, P.y, 0, 30);
+    let acc = 0;
+    const F = pts.map(([x, y, h, v], i) => { if (i) acc += Math.hypot(x - pts[i - 1][0], y - pts[i - 1][1], h - pts[i - 1][2]); return { x, y, z: gz + h, v, d: acc }; });
+    return { pts: F, len: acc };
+  }
+  flightAt(F, d) {
+    const p = F.pts;
+    let i = 1;
+    while (i < p.length - 1 && p[i].d < d) i++;
+    const a = p[i - 1], b = p[i], f = clamp((d - a.d) / Math.max(b.d - a.d, 1e-6), 0, 1);
+    const c = p[Math.min(i + 1, p.length - 1)];
+    const hdg = Math.atan2(b.y - a.y, b.x - a.x), hdg2 = Math.atan2(c.y - b.y, c.x - b.x);
+    let turn = hdg2 - hdg; while (turn > Math.PI) turn -= 2 * Math.PI; while (turn < -Math.PI) turn += 2 * Math.PI;
+    const run = Math.hypot(b.x - a.x, b.y - a.y);
+    return { x: lerp(a.x, b.x, f), y: lerp(a.y, b.y, f), z: lerp(a.z, b.z, f), v: lerp(a.v, b.v, f), hdg,
+      pitch: Math.atan2(b.z - a.z, Math.max(run, 0.01)), bank: a.z > this.world.ground_z + 5 ? clamp(-turn * 2.2, -0.6, 0.6) : 0 };
+  }
+
   setGlow(on) {
     if (this.glowOn === on) return;
     this.glowOn = on;
@@ -817,6 +1137,7 @@ class Game {
         <button class="life-follow" id="life-exit">Exit</button>
       </div>
       <div class="life-toasts" id="life-toasts" aria-live="polite"></div>
+      <div class="life-credit">Roads &amp; Smith Field: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors, Overture Maps</div>
       <div class="life-help" id="life-help">Drag to turn · right-drag or <b>WASD</b>/arrows to move · scroll to zoom · <b>C</b> walls · <b>F</b> follow</div>
       <div class="life-dock">
         <div class="life-faces" id="life-faces"></div>
@@ -870,6 +1191,13 @@ class Game {
     this.setSpeed(1);
   }
   makePins() {
+    if (this.world) {
+      const A = this.world.airport;
+      const b = el('button', 'life-pin far-ok', '<span>✈️</span><em>Smith Field</em>');
+      b.addEventListener('click', (e) => { e.stopPropagation(); this.openPlaceMenu(this.places.car, e.clientX, e.clientY, '✈️ Smith Field Airport'); });
+      $('life-overlay').append(b);
+      this.pins.push({ b, pos: V.v3(A.park[0], A.park[1] + 60, this.world.ground_z + 25), world: true });
+    }
     for (const p of Object.values(this.places)) {
       if (p.indoor) continue;
       const b = el('button', 'life-pin', `<span>${p.icon}</span><em>${esc(p.label)}</em>`);
@@ -899,7 +1227,7 @@ class Game {
     if (flat.includes('afterparty') && flat.includes('off')) { this.unlocked = false; keep(); this.toast('🔒 Locked again.'); }
     else if (flat.includes('afterparty')) {
       this.unlocked = true; keep();
-      this.toast('🔓 Unlocked! Select a grown-up, then click the Bathroom marker (or the sink) and choose 💊 Do drugs.', 'good');
+      this.toast('🔓 Unlocked! For a grown-up: 💊 at the Bathroom (or the sink), 🌿 Smoke a joint in the detached garage.', 'good');
     }
     else if ((m = code.match(/^cash (\d{1,6})$/))) { this.money += +m[1]; this.toast(`💵 ${money(+m[1])} appeared in the household account.`, 'good'); }
     else if (code) this.toast(`Nothing happens. (The code box got “${esc(raw.trim())}”.)`);
@@ -1182,6 +1510,7 @@ class Game {
   }
   reset() {
     for (const p of this.people) { this.cancel(p); p.remove(); }
+    this.carUser = null;
     this.people = [];
     for (const a of this.pets) a.remove();
     this.pets = []; this.bowl = 60;
@@ -1232,10 +1561,11 @@ class Game {
     const vis = V.modelMeshes.filter((o) => V.groups[o.userData.model]?.visible !== false);
     const cutY = this.cut ? this.cutPlane.constant : Infinity;
     const hit = ray.intersectObjects([...vis, ...this.interiorMeshes], false)
-      .find((h) => !((h.object.userData.model === 'house' || h.object.userData.wall) && h.point.y > cutY));
+      .find((h) => !((['house', 'garage_detached', 'pole_barn'].includes(h.object.userData.model) || h.object.userData.wall) && h.point.y > cutY));
     const ground = ray.intersectObject(V.terrain, false)[0];
     if (hit && (!ground || hit.distance <= ground.distance + 0.01)) {
       const u = hit.object.userData;
+      if (u.shop) { this.openPlaceMenu(this.places[u.shop], e.clientX, e.clientY); return true; }
       if (u.room && !u.floor) { this.openRoomMenu(u.room, e.clientX, e.clientY); return true; }
       const place = u.room ? null : this.placeForMesh(hit.object, hit.point);
       if (place) { this.openPlaceMenu(place, e.clientX, e.clientY); return true; }
@@ -1275,7 +1605,7 @@ class Game {
     }
     this.showMenu(`${esc(me.name)} → ${esc(p.name)}`, `Relationship ${Math.round(this.getRel(me, p))}`, items, e.clientX, e.clientY);
   }
-  openPlaceMenu(place, cx, cy) {
+  openPlaceMenu(place, cx, cy, title) {
     const p = this.sel;
     if (!p) return;
     const items = [];
@@ -1287,6 +1617,12 @@ class Game {
       if (a.earn) bits.push(`earns ~${money(a.earn(p))}`);
       items.push({ label: a.label, icon: a.icon, hint: why || bits.join(' · '), disabled: !!why, run: () => this.order(p, { kind: 'act', id }) });
     }
+    if (place.id === 'car' && this.world) {
+      for (const [id, tr] of Object.entries(TRIPS)) {
+        const why = this.whyNotTrip(p, id);
+        items.push({ label: tr.label, icon: tr.icon, hint: why || [`${this.world.route_km} km each way`, tr.cost ? money(-tr.cost) : ''].filter(Boolean).join(' · '), disabled: !!why, run: () => this.order(p, { kind: 'trip', id }) });
+      }
+    }
     if (place.id === 'lawn') {
       for (const q of this.people) {
         if (q === p) continue;
@@ -1295,7 +1631,7 @@ class Game {
       }
     }
     const users = [...place.users].map((u) => u.name);
-    this.showMenu(`${place.icon} ${esc(place.label)}`, users.length ? `In use by ${esc(users.join(', '))}` : esc(p.name), items, cx, cy);
+    this.showMenu(title ? esc(title) : `${place.icon} ${esc(place.label)}`, users.length ? `In use by ${esc(users.join(', '))}` : esc(p.name), items, cx, cy);
   }
   openPetMenu(pet, cx, cy) {
     const p = this.sel;
@@ -1371,6 +1707,7 @@ class Game {
       if (this.weekday > 4) return 'No work on weekends';
       if (h < 6 || h > 10) return 'Leave between 6 and 10 am';
       if (p.career.lastDay === this.dayIndex) return 'Already worked today';
+      if (this.carUser && this.carUser !== p) return `${this.carUser.name} has the car`;
     }
     if (a.day && (h < 7 || h > 19.5)) return 'Daylight only';
     if (a.night_only && !this.isNight) return 'After dark';
@@ -1383,6 +1720,7 @@ class Game {
     return '';
   }
   whyNotSocial(a, b, act) {
+    if (b.cur?.kind === 'trip') return `${b.name} is out at Smith Field`;
     if (b.cur?.inside || b.cur?.atWork) return `${b.name} is ${b.cur.atWork ? 'at work' : 'inside'}`;
     if (b.cur && b.cur.kind === 'social') return `${b.name} is busy`;
     if (act.needRel && this.getRel(a, b) < act.needRel) return 'Not close enough yet';
@@ -1426,6 +1764,7 @@ class Game {
       for (const q of c.s.people) if (q !== p && q.cur?.s === c.s) { q.cur = null; q.pose = 'stand'; }
     }
     if (c.pet) this.releasePet(c.pet);
+    if (c.kind === 'trip') { this.endTrip(p, c); p.cur = null; p.pose = 'stand'; p.path = null; return; }
     if (c.place) c.place.users.delete(p);
     if (c.phase === 'do' && c.act) this.applyPartial(p, c);
     p.cur = null; p.pose = 'stand'; p.path = null;
@@ -1440,6 +1779,15 @@ class Game {
       const [x, y] = task.s.spots[task.me];
       c.dest = { x, y };
       c.act = task.s.act;
+    } else if (task.kind === 'trip') {
+      const tr = TRIPS[task.id];
+      const why = this.whyNotTrip(p, task.id);
+      if (why) { if (p === this.sel) this.toast(`${esc(p.name)}: ${esc(tr.label)} - ${esc(why)}`, 'warn'); return null; }
+      const doors = this.places.car.doors;
+      c.door = doors.slice().sort((d1, d2) => Math.hypot(d1.x - p.x, d1.y - p.y) - Math.hypot(d2.x - p.x, d2.y - p.y))[0];
+      c.dest = { x: c.door.x, y: c.door.y };
+      c.act = { ...tr, mins: 200 };
+      this.carUser = p;
     } else if (task.kind === 'pet') {
       const a = PET_ACTIONS[task.id], pet = this.pets.find((q) => q.id === task.petId);
       const why = pet ? this.whyNotPet(p, pet, task.id) : 'gone';
@@ -1493,6 +1841,9 @@ class Game {
     for (const a of this.pets) this.petStep(a, gm);
     this.animate(realDt);
     this.moveCamera(realDt);
+    if (this.planeMesh?.visible) this.planeMesh.userData.prop.rotation.z += realDt * (this.planeMoving ? 60 : 0);
+    { const d = V.camera.position.distanceTo(V.controls.target), nn = clamp(d / 600, 0.5, 25);
+      if (Math.abs(V.camera.near - nn) > 0.05) { V.camera.near = nn; V.camera.updateProjectionMatrix(); } }
     this.syncWorld(realDt);
     this.syncPets(realDt);
     this.layout();
@@ -1525,7 +1876,8 @@ class Game {
       p.high -= gm;
       if (p.high <= 0) {
         p.high = 0;
-        n.energy = Math.max(0, n.energy - 30); n.fun = Math.max(0, n.fun - 30); n.hygiene = Math.max(0, n.hygiene - 10);
+        const k = p.crashScale ?? 1;
+        n.energy = Math.max(0, n.energy - 30 * k); n.fun = Math.max(0, n.fun - 30 * k); n.hygiene = Math.max(0, n.hygiene - 10 * k);
         this.toast(`🥴 ${esc(p.name)} is crashing.`, 'warn');
       }
     }
@@ -1537,7 +1889,7 @@ class Game {
       if (doing.act.skill) { const [s, v] = doing.act.skill; p.skills[s] = Math.min(5, p.skills[s] + (v / 3) * f * (1 - p.skills[s] / 7)); }
     }
     // a need running out interrupts whatever they chose to do (orders from the player hold out a little longer)
-    if (doing && doing.kind !== 'collapse' && !doing.act?.sleep && !doing.atWork && doing.kind !== 'social') {
+    if (doing && doing.kind !== 'collapse' && doing.kind !== 'trip' && !doing.act?.sleep && !doing.atWork && doing.kind !== 'social') {
       const lim = doing.auto ? 12 : 5;
       const k = ['energy', 'bladder', 'hunger'].find((q) => n[q] < lim && !(doing.act?.gain?.[q] > 0));
       if (k) {
@@ -1551,7 +1903,7 @@ class Game {
       n.bladder = 100; n.hygiene = 0; n.fun = Math.max(0, n.fun - 25);
       this.toast(`😳 ${esc(p.name)} didn't make it to the bathroom in time.`, 'bad');
     }
-    if (n.energy <= 0 && !(doing?.act?.sleep) && !c?.inside) {
+    if (n.energy <= 0 && !(doing?.act?.sleep) && !c?.inside && c?.kind !== 'trip') {
       this.cancel(p); p.queue.length = 0;
       p.cur = { kind: 'collapse', phase: 'do', t: 0, mins: 180, pose: 'lie', label: 'Passed out', icon: '😴' };
       this.toast(`😴 ${esc(p.name)} fell asleep right where they stood.`, 'bad');
@@ -1608,6 +1960,7 @@ class Game {
       if (c.wt > 90 || (o.cur?.s !== c.s && !o.queue.some((t) => t.s === c.s))) { c.s.dead = true; p.cur = null; p.pose = 'stand'; }
       return;
     }
+    if (c.phase === 'do' && c.kind === 'trip') { c.t += gm; this.tripStep(p, c, gm); return; }
     if (c.phase === 'do') {
       c.t += gm;
       if (c.kind === 'social') this.faceOther(p, c);
@@ -1639,6 +1992,13 @@ class Game {
       if (c.s.id === 'joke' && Math.random() < 0.25 + (this.getRel(c.s.people[0], c.s.people[1]) < 10 ? 0.3 : 0)) c.s.flop = true;
       return;
     }
+    if (c.kind === 'trip') {
+      c.phase = 'do'; c.t = 0; c.leg = 'out'; c.dist = 0;
+      p.hidden = true; this.carMesh.visible = true;
+      if (c.act.cost) this.money -= c.act.cost;
+      if (p === this.sel) this.toast(`🚗 ${esc(p.name)} is driving to Smith Field (${this.world.route_km} km).`);
+      return;
+    }
     if (c.kind === 'pet') {
       c.phase = 'do'; c.t = 0; p.pose = c.act.pose;
       const pet = c.pet;
@@ -1647,7 +2007,10 @@ class Game {
       else { p.face = (Math.atan2(pet.y - p.y, pet.x - p.x) * 180) / Math.PI; pet.face = p.face + 180; pet.pose = 'sit'; }
       return;
     }
-    if (c.inside) {
+    if (c.inside && c.place.spots && c.act.spot) {
+      const sp = c.place.spots[c.act.spot], n = [...c.place.users].filter((u) => u !== p && u.cur?.seat === sp).length;
+      c.seat = sp; p.x = sp.x + n * 0.5; p.y = sp.y + n * 0.3; p.face = sp.face; p.hidden = false;
+    } else if (c.inside) {
       p.face = (Math.atan2(c.door.door.at[1] - p.y, c.door.door.at[0] - p.x) * 180) / Math.PI;
       p.hidden = true;
     } else if (c.seat) {
@@ -1682,12 +2045,13 @@ class Game {
     if (a.fillBowl) { this.bowl = 100; this.bowlWarned = false; }
     if (a.earn) { const e = a.earn(p); this.money += e; this.toast(`🪚 ${esc(p.name)} sold a piece for ${money(e)}.`, 'good'); }
     if (a.high) {
-      if (Math.random() < 0.15) {
+      p.crashScale = a.crash ?? 1;
+      if (Math.random() < (a.badTrip ?? 0.15)) {
         p.needs.fun = Math.max(0, p.needs.fun - 60); p.needs.social = Math.max(0, p.needs.social - 20);
         this.toast(`😖 ${esc(p.name)} is having a bad trip.`, 'bad');
       } else {
-        p.high = 180;
-        this.toast(`😵‍💫 ${esc(p.name)} is flying high.`);
+        p.high = a.highMins || 180;
+        this.toast(a.smoke ? `🌿 ${esc(p.name)} is feeling mellow.` : `😵‍💫 ${esc(p.name)} is flying high.`);
       }
     }
     if (a.produce) {
@@ -1724,6 +2088,92 @@ class Game {
     const soaking = this.people.some((p) => p.cur?.soak && p.cur.phase === 'do');
     this.water.visible = soaking;
     for (const o of this.tubCover) o.visible = !soaking;
+  }
+
+  // -------------------------------------------------------------- trips
+  whyNotTrip(p, id) {
+    const tr = TRIPS[id], h = this.hour;
+    if (!this.world) return 'No map';
+    if (p.kid) return 'Kids can\'t drive';
+    if (this.carUser && this.carUser !== p) return `${this.carUser.name} has the car`;
+    if (this.people.some((q) => q.cur?.atWork && q.cur.phase === 'do')) return 'The car is at work';
+    if (h < 7 || h > 18.5) return 'Smith Field: daytime only';
+    if (tr.cost && this.money < tr.cost) return 'Not enough money';
+    return '';
+  }
+  // drive, walk, fly or watch, walk, drive home
+  tripStep(p, c, gm) {
+    const W = this.world, A = W.airport, gz = W.ground_z;
+    const drive = (dir) => {
+      const here = this.routeAt(c.dist);
+      c.dist += dir * (here.slow ? 22 : 150) * gm;
+      const at = this.routeAt(c.dist);
+      this.placeVehicle(this.carMesh, at.x, at.y, this.worldZ(at.x, at.y), dir > 0 ? at.hdg : at.hdg + Math.PI);
+      p.x = at.x; p.y = at.y; p.z = this.worldZ(at.x, at.y);
+      return dir > 0 ? c.dist >= this.routeLen : c.dist <= 0;
+    };
+    const walk = (tx, ty) => {
+      const dx = tx - p.x, dy = ty - p.y, d = Math.hypot(dx, dy), step = 1.35 * gm;
+      p.pose = gm ? 'walk' : 'stand';
+      if (d > 1e-3) p.face = (Math.atan2(dy, dx) * 180) / Math.PI;
+      if (d <= step) { p.x = tx; p.y = ty; return true; }
+      p.x += (dx / d) * step; p.y += (dy / d) * step; return false;
+    };
+    switch (c.leg) {
+      case 'out':
+        if (drive(1)) { c.leg = 'arrive'; p.hidden = false; p.away = true; p.x = A.park[0] + 2; p.y = A.park[1]; }
+        break;
+      case 'arrive': {
+        const [tx, ty] = c.act.flight ? [A.plane[0] - 2.5, A.plane[1] - 1] : A.watch;
+        if (walk(tx, ty)) {
+          if (c.act.flight) { c.leg = 'flight'; c.fd = 0; c.F = this.flightPath('fly'); p.hidden = true; this.planeMesh.visible = true; if (p === this.sel) this.toast(`🛩️ ${esc(p.name)} is taking off.`); }
+          else { c.leg = 'watch'; c.wt = 0; c.F = this.flightPath('circuit'); c.fd = 0; this.ambientPlane = true; }
+        }
+        break;
+      }
+      case 'flight': case 'watch': {
+        c.fd += this.flightAt(c.F, c.fd).v * gm;
+        const at = this.flightAt(c.F, c.fd);
+        this.placeVehicle(this.planeMesh, at.x, at.y, at.z, at.hdg, at.pitch, at.bank);
+        this.planeMoving = true;
+        if (c.leg === 'flight') { p.x = at.x; p.y = at.y; p.z = at.z; if (c.act.skill) { const [sk, v] = c.act.skill; p.skills[sk] = Math.min(5, p.skills[sk] + (v / 60) * gm * 0.2); } }
+        else { p.pose = 'stand'; const r = A.runways[0]; p.face = (Math.atan2((r.a[1] + r.b[1]) / 2 - p.y, (r.a[0] + r.b[0]) / 2 - p.x) * 180) / Math.PI; }
+        if (c.fd >= c.F.len) {
+          this.parkPlane(); this.planeMoving = false; this.ambientPlane = false;
+          if (c.leg === 'flight') { p.hidden = false; p.x = A.plane[0] - 2.5; p.y = A.plane[1] - 1; if (p === this.sel) this.toast(`🛬 ${esc(p.name)} landed. What a view of the house!`, 'good'); }
+          c.leg = 'back';
+        }
+        break;
+      }
+      case 'back':
+        if (walk(A.park[0] + 2, A.park[1])) { c.leg = 'home'; p.hidden = true; }
+        break;
+      case 'home':
+        if (drive(-1)) { this.endTrip(p, c); const sk = c.act.skill; p.cur = null; p.pose = 'stand';
+          if (sk) { p.skills[sk[0]] = Math.min(5, p.skills[sk[0]] + sk[1] / 3); }
+          (p.recent ||= {})[c.id] = this.t;
+          if (p === this.sel) this.toast(`🏠 ${esc(p.name)} is home from Smith Field.`, 'good'); }
+        break;
+      default: break;
+    }
+  }
+  endTrip(p, c) {
+    this.carMesh.visible = false;
+    this.carUser = null;
+    this.parkPlane(); this.planeMoving = false; this.ambientPlane = false;
+    p.hidden = false; p.away = false;
+    p.x = c.door.x; p.y = c.door.y; p.face = (Math.atan2(-c.door.door.face[1], -c.door.door.face[0]) * 180) / Math.PI;
+    const k = this.nav.idx(p.x, p.y); p.z = k >= 0 ? this.nav.z[k] : V.groundZ(p.x, p.y);
+  }
+  // what the camera follows: the person, or the car or plane they are in
+  tracked(p) {
+    const c = p?.cur;
+    if (c?.kind === 'trip' && p.hidden) {
+      const o = c.leg === 'flight' ? this.planeMesh : this.carMesh;
+      const v = o.position;
+      return new THREE.Vector3(v.x, v.y + 1.5, v.z);
+    }
+    return null;
   }
 
   // -------------------------------------------------------------- pets
@@ -1973,6 +2423,7 @@ class Game {
       let tz = k >= 0 ? this.nav.z[k] : V.groundZ(p.x, p.y);
       const c = p.cur;
       if (c?.seat?.z && c.phase === 'do') tz = c.seat.z;
+      if (c?.kind === 'trip' && c.phase === 'do') tz = p.hidden ? p.z : this.worldZ(p.x, p.y);
       if (c?.seat?.water && c.phase === 'do') tz = c.seat.water - 0.82 * (p.kid ? 0.72 : 1) * (p.look.body === 'fem' ? 0.97 : 1);   // chest-deep
       if (c?.jog && c.phase === 'do') this.jogStep(p, dt);
       if (c?.act?.walkdog && c.phase === 'do') { this.jogStep(p, dt, 1.25); p.pose = this.speed ? 'walk' : 'stand'; }
@@ -2000,9 +2451,16 @@ class Game {
     this.flame.visible = anyFire;
     if (anyFire) { const f = 0.85 + Math.sin(performance.now() / 90) * 0.1 + Math.sin(performance.now() / 37) * 0.05; this.flame.scale.set(f, f * 1.15, f); this.fireLight.intensity = dark ? 6 * f : 1.5; } else this.fireLight.intensity = 0;
     this.smoke.material.opacity = grilling ? 0.25 + 0.1 * Math.sin(performance.now() / 200) : 0;
+    const smoker = this.people.find((q) => q.cur?.act?.smoke && q.cur.phase === 'do');
+    this.puff.visible = !!smoker && this.active;
+    if (smoker) {
+      const t = performance.now() / 1000, r = (smoker.face * Math.PI) / 180;
+      this.puff.children.forEach((m, i) => { const k = (t * 0.5 + i / 4) % 1; m.position.copy(V.v3(smoker.x + Math.cos(r) * 0.18 + Math.sin(t + i) * 0.05 * k, smoker.y + Math.sin(r) * 0.18, smoker.z + 1.25 + k * 0.9)); m.scale.setScalar(0.6 + k * 1.6); m.material.opacity = 0.4 * (1 - k); });
+    }
     // camera follows the selected person
-    if (this.follow && this.sel && !this.sel.hidden) {
-      const tgt = V.v3(this.sel.x, this.sel.y, this.sel.z + 1);
+    const tracked = this.sel && this.tracked(this.sel);
+    if (this.follow && this.sel && (!this.sel.hidden || tracked)) {
+      const tgt = tracked || V.v3(this.sel.x, this.sel.y, this.sel.z + 1);
       const ctr = V.controls.target, cam = V.camera.position;
       const d = tgt.clone().sub(ctr).multiplyScalar(Math.min(1, dt * 2.5));
       if (d.length() > 0.002) { ctr.add(d); cam.add(d); }
@@ -2035,7 +2493,7 @@ class Game {
     for (const pin of this.pins) {
       if (pin.room && !this.cut) { pin.b.style.display = 'none'; continue; }
       put(pin.b, pin.pos);
-      pin.b.classList.toggle('far', pin.pos.distanceTo(camPos) > 70);
+      pin.b.classList.toggle('far', !pin.world && pin.pos.distanceTo(camPos) > 70);
     }
     for (const a of this.pets) {
       if (!this.active) { a.tag.style.display = 'none'; continue; }
@@ -2052,13 +2510,17 @@ class Game {
       let icon = '';
       if (c?.phase === 'do') icon = c.kind === 'social' ? (c.s.flop ? '😬' : c.act.icon) : (c.icon || c.act?.icon || '');
       else if (c?.phase === 'wait') icon = '⏳';
-      if (wv < 22 && (!c || c.phase !== 'do')) icon = NEEDS.find((n) => n[0] === wk)[2];
+      if (c?.kind === 'trip' && c.phase === 'do') icon = c.leg === 'flight' ? '🛩️' : c.leg === 'watch' ? '👀' : c.leg === 'out' || c.leg === 'home' ? '🚗' : c.act.icon;
+      else if (wv < 22 && (!c || c.phase !== 'do')) icon = NEEDS.find((n) => n[0] === wk)[2];
       else if (p.high > 0 && (!c || c.phase !== 'do')) icon = '😵‍💫';
-      const where = c?.atWork && c.phase === 'do' ? 'at work' : c?.inside && c.phase === 'do' ? 'inside' : '';
+      const where = c?.inside && c.phase === 'do' && !p.hidden ? ''
+        : c?.kind === 'trip' && c.phase === 'do' ? ({ out: 'driving', home: 'driving home', flight: 'flying', watch: 'watching planes' }[c.leg] || 'at Smith Field')
+        : c?.atWork && c.phase === 'do' ? 'at work' : c?.inside && c.phase === 'do' ? 'inside' : '';
       const html = `<b style="--c:${p.shirt}">${esc(p.name)}</b>${icon ? `<i>${icon}</i>` : ''}${where ? `<small>${where}</small>` : ''}`;
       if (p.tagHtml !== html) { p.tag.innerHTML = html; p.tagHtml = html; }
       p.tag.classList.toggle('sel', p === this.sel);
-      const pos = p.hidden ? (c?.door ? V.v3(c.door.x, c.door.y, (this.nav.zAt(c.door.x, c.door.y) ?? p.z) + 2.4) : V.v3(p.x, p.y, p.z + 2.2))
+      const ride = this.tracked(p);
+      const pos = ride ? ride.clone().setY(ride.y + 2.5) : p.hidden ? (c?.door ? V.v3(c.door.x, c.door.y, (this.nav.zAt(c.door.x, c.door.y) ?? p.z) + 2.4) : V.v3(p.x, p.y, p.z + 2.2))
         : V.v3(p.x, p.y, p.z + (p.pose === 'lie' ? 0.9 : (p.kid ? 1.55 : 2.05)) - (p.sink ? 0.4 : 0));
       put(p.tag, pos);
     }
@@ -2096,7 +2558,7 @@ class Game {
     const p = this.sel, card = $('life-card');
     if (!p) { card.innerHTML = ''; return; }
     const c = p.cur;
-    const now = c ? (c.kind === 'goto' ? (c.label || 'Walking') : c.kind === 'collapse' ? c.label : c.kind === 'social' ? `${c.act.label} with ${c.s.people[1 - c.me].name}` : c.act.label) : 'Idle';
+    const now = c ? (c.kind === 'trip' ? c.act.label : c.kind === 'goto' ? (c.label || 'Walking') : c.kind === 'collapse' ? c.label : c.kind === 'social' ? `${c.act.label} with ${c.s.people[1 - c.me].name}` : c.act.label) : 'Idle';
     const icon = c ? (c.icon || c.act?.icon || '👣') : '·';
     const phase = c ? (c.phase === 'walk' ? ' (on the way)' : c.phase === 'wait' ? ' (waiting)' : '') : '';
     const q = p.queue.map((t, i) => {

@@ -3960,6 +3960,7 @@
  },
  "nav": "nav.json",
  "interior": "interior.json",
+ "world": "world.json",
  "parcel": [
   [
    39.06,
@@ -4571,5 +4572,5 @@
   ],
   "footer": "The model is a reconstruction for visualisation, not a survey. The parcel line is the county GIS line and is not a legal boundary."
  },
- "build": "0f6a901e9a"
+ "build": "607defcb2d"
 }
