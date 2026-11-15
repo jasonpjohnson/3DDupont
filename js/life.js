@@ -800,8 +800,12 @@ class Game {
     $('life-cheat').hidden = true;
     const keep = () => { try { localStorage.setItem(UNLOCK_KEY, JSON.stringify({ party: this.unlocked })); } catch { /* private window */ } };
     let m;
-    if (code === 'afterparty') { this.unlocked = true; keep(); this.toast('🔓 Something new at the bathroom vanity (grown-ups only).', 'good'); }
-    else if (code === 'afterparty off') { this.unlocked = false; keep(); this.toast('🔒 Locked again.'); }
+    const flat = code.replace(/[^a-z0-9]/g, '');            // forgiving: "After party", "after-party.", "afterparty on"...
+    if (flat.includes('afterparty') && flat.includes('off')) { this.unlocked = false; keep(); this.toast('🔒 Locked again.'); }
+    else if (flat.includes('afterparty')) {
+      this.unlocked = true; keep();
+      this.toast('🔓 Unlocked! Select a grown-up, then click the Bathroom marker (or the sink) and choose 💊 Do drugs.', 'good');
+    }
     else if ((m = code.match(/^cash (\d{1,6})$/))) { this.money += +m[1]; this.toast(`💵 ${money(+m[1])} appeared in the household account.`, 'good'); }
     else if (code) this.toast('Nothing happens.');
     this.renderHUD();
