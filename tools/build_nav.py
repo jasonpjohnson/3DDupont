@@ -95,14 +95,37 @@ def main():
                     jj.append(j); ii.append(i)
         return np.array(jj, int), np.array(ii, int)
 
+    # the game's (invented) main floor: its wings are walkable inside, walled at their edge
+    inter = None
+    ipath = os.path.join(a.assets, "interior.json")
+    if os.path.exists(ipath):
+        inter = json.load(open(ipath))
+    room_polys = [Polygon(p) for r in (inter or {}).get("rooms", []) for p in r["polys"]]
+    inside = unary_union(room_polys).buffer(0.02) if room_polys else None
+    inside_core = prep(inside.buffer(-0.4)) if inside else None
+    MAIN = {"link", "north_range", "north_bay", "core_west", "core_east", "east_wing", "b_gable", "c_gable"} if inside else set()
+
+    def indoors(x, y):
+        return inside_core is not None and inside_core.contains(Point(x, y))
+
     blocked = []
     floors = []
     for b in spec["buildings"]:
         for w in b.get("wings", []):
-            if w.get("footprint"):
+            if w.get("footprint") and not (b["id"] == "house" and w["id"] in MAIN):
                 blocked.append(Polygon(w["footprint"]).buffer(0.25, join_style=2))
         for e in b.get("elements", []):
             k, eid = e["kind"], e["id"]
+            ref = None
+            for key in ("center", "base", "a"):
+                if isinstance(e.get(key), list) and len(e[key]) >= 2 and not isinstance(e[key][0], list):
+                    ref = e[key]; break
+            if ref is None:
+                for key in ("polygon", "path"):
+                    if isinstance(e.get(key), list) and e[key] and isinstance(e[key][0], list):
+                        ref = e[key][0]; break
+            if ref is not None and indoors(ref[0], ref[1]):
+                continue
             if k == "prism":
                 if FLOOR.search(eid) and not NOT_FLOOR.search(eid):
                     floors.append((poly_of(e), float(e["z1"])))
@@ -167,6 +190,36 @@ def main():
     for q in ramps:                       # stairs win over the railing / skirt lines drawn across their head
         jj, ii = cells(q.buffer(-0.15))
         walk[jj, ii] = True
+    if inter:
+        for r in inter["rooms"]:
+            for p in r["polys"]:
+                jj, ii = cells(Polygon(p).buffer(0.03))
+                Z[jj, ii] = r["z"]; walk[jj, ii] = True; steep[jj, ii] = False
+        jj, ii = cells(inside.boundary.buffer(0.22))
+        walk[jj, ii] = False
+        for w in inter["walls"]:
+            jj, ii = cells(LineString([w["a"], w["b"]]).buffer(inter["wall_t"] / 2 + 0.16, cap_style=2))
+            walk[jj, ii] = False
+        for it in inter["items"]:
+            if it["type"] in ("rug", "tv", "lamp"):
+                continue
+            jj, ii = cells(box_poly({"center": [it["x"], it["y"]], "size": [it["w"], it["d"]], "yaw": it["yaw"]}, 0.12))
+            walk[jj, ii] = False
+        bnd = inside.boundary
+        for d in inter["doors"]:                 # door openings through the outer wall
+            pt = Point(d["at"])
+            pr = bnd.project(pt)
+            p0, p1 = bnd.interpolate(max(pr - 0.3, 0)), bnd.interpolate(pr + 0.3)
+            ux, uy = p1.x - p0.x, p1.y - p0.y
+            L = math.hypot(ux, uy) or 1; ux, uy = ux / L, uy / L
+            hw = d["width"] * 0.42
+            gap = Polygon([(pt.x + ux * hw - uy * 0.5, pt.y + uy * hw + ux * 0.5), (pt.x - ux * hw - uy * 0.5, pt.y - uy * hw + ux * 0.5),
+                           (pt.x - ux * hw + uy * 0.5, pt.y - uy * hw - ux * 0.5), (pt.x + ux * hw + uy * 0.5, pt.y + uy * hw - ux * 0.5)])
+            jj, ii = cells(gap)
+            if d["id"] == "garage_link":             # the garage itself stays closed: open only the house side
+                keep = np.array([inside.contains(Point(xs[i], ys[j])) for j, i in zip(jj, ii)], bool)
+                jj, ii = jj[keep], ii[keep]
+            walk[jj, ii] = True
     walk &= ~steep
 
     def reach(start):
@@ -222,6 +275,17 @@ def main():
             doors.append({"id": o["id"], "building": b["id"], "kind": o["kind"], "label": o.get("label", o["id"]),
                           "x": round(float(xs[i]), 3), "y": round(float(ys[j]), 3),
                           "face": [round(-nxv, 4), round(-nyv, 4)], "at": [round(o["at"][0], 3), round(o["at"][1], 3)]})
+    if inter:                                     # the door from the house into the garage: approached from inside
+        gl = inter["garage_link"]
+        gi, gj = int((gl["inside"][0] - x0) / CELL), int((gl["inside"][1] - y0) / CELL)
+        if seen[gj, gi]:
+            doors.append({"id": "garage_link", "building": "house", "kind": "door", "label": "Door from the house to the garage",
+                          "x": round(float(xs[gi]), 3), "y": round(float(ys[gj]), 3), "face": gl["face"], "at": gl["outside"]})
+        else:
+            print("door not reachable: garage_link")
+        jj, ii = np.nonzero(walk)
+        ins = [(j, i) for j, i in zip(jj, ii) if inside.contains(Point(xs[i], ys[j]))]
+        print(f"indoor cells: {len(ins)}, reachable {sum(seen[j, i] for j, i in ins)}")
     zb = float(np.floor(Z.min()))
     zcm = np.clip(np.round((Z - zb) * 100), 0, 65535).astype("<u2")
     out = {"x0": x0, "y0": y0, "cell": CELL, "nx": nx, "ny": ny, "zbase": zb, "step": STEP,

@@ -1,9 +1,9 @@
 // Life mode: a small household living on the lot. People have needs (hunger, energy, hygiene, bladder,
 // fun, social), walk the real grounds on a grid built from the model (tools/build_nav.py), and use the
-// places the property actually has: the house (through its real doors), the hot tub, the fire pit on the
-// walk-out patio, the porch, a grill on the rear deck, the vegetable cage, the berry arbors, the
-// greenhouse, the pole barn, the detached garage, the lawn - and the car, to go to work.
-// The inside of the house is not modelled: people go in through a door and come back out of it.
+// places the property actually has: the hot tub, the fire pit on the walk-out patio, the porch, a grill on
+// the rear deck, the vegetable cage, the berry arbors, the greenhouse, the pole barn, the detached garage,
+// the lawn - and the car, to go to work. Inside, the main floor is an INVENTED layout (assets/interior.json,
+// tools/build_interior.py) fitted inside the real exterior walls and doors; it is not the real floor plan.
 import * as THREE from 'three';
 
 let V = null;          // the viewer (window.__viewer)
@@ -164,20 +164,117 @@ class Nav {
   }
 }
 
+// -------------------------------------------------------------- furniture ---
+function inPoly(poly, x, y) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i], [xj, yj] = poly[j];
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+// Simple pieces in the house's palette: white shaker cabinets, quartz tops, black pulls, dark wood.
+// Local frame: x = item width (w), z-up height, and "d" along the item's depth (site y before yaw).
+const WHITE = '#f3f1ec', QUARTZ = '#f7f7f4', BLACK = '#1d2125', WOOD_D = '#4a3226', STEEL = '#b9bdc1';
+function furniture(it, mat) {
+  const g = new THREE.Group(), w = it.w, d = it.d;
+  const box = (bw, bh, bd, x, y, z, color, r) => {   // x: along w, y: bottom height, z: along d
+    const o = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), mat(color, r));
+    o.position.set(x, y + bh / 2, -z); g.add(o); return o;
+  };
+  const cyl = (rt, rb, h, x, y, z, color, seg = 16) => {
+    const o = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat(color)); o.position.set(x, y + h / 2, -z); g.add(o); return o;
+  };
+  const legs = (h, inset, color, t = 0.05) => { for (const sx of [-1, 1]) for (const sz of [-1, 1]) box(t, h, t, sx * (w / 2 - inset), 0, sz * (d / 2 - inset), color); };
+  switch (it.type) {
+    case 'counter':
+      box(w, 0.1, d, 0, 0, 0, '#2a2a2a'); box(w, 0.78, d, 0, 0.1, 0, WHITE); box(w + 0.03, 0.04, d + 0.02, 0, 0.88, 0, QUARTZ, 0.3);
+      for (let z = -d / 2 + 0.3; z < d / 2; z += 0.6) box(0.02, 0.02, 0.16, -w / 2 - 0.01, 0.78, z, BLACK);
+      box(0.35, 0.7, d, w / 2 - 0.17, 1.45, 0, WHITE);           // wall cabinets
+      break;
+    case 'stove': box(w, 0.9, d, 0, 0, 0, '#3a3d40', 0.4); box(w, 0.02, d, 0, 0.92, 0, BLACK, 0.2);
+      for (const a of [-0.17, 0.17]) for (const b of [-0.2, 0.2]) cyl(0.08, 0.08, 0.012, a * 0.0 + (a > 0 ? 0.12 : -0.12), 0.94, b, '#555');
+      break;
+    case 'sink': box(w, 0.02, d, 0, 0.915, 0, '#222', 0.3); cyl(0.015, 0.015, 0.3, w / 2 - 0.08, 0.92, 0, '#b08d57'); break;
+    case 'fridge': box(w, 1.85, d, 0, 0, 0, STEEL, 0.25); box(0.01, 1.6, 0.01, -w / 2 - 0.005, 0.2, 0, '#555'); box(0.03, 0.5, 0.03, -w / 2 - 0.03, 1.0, -0.06, '#888'); box(0.03, 0.5, 0.03, -w / 2 - 0.03, 1.0, 0.06, '#888'); break;
+    case 'tall_cabinet': box(w, 2.2, d, 0, 0, 0, WHITE); box(0.02, 0.3, 0.02, -w / 2 - 0.01, 1.0, 0, BLACK); break;
+    case 'island': box(w * 0.85, 0.88, d * 0.92, 0.06, 0, 0, '#5d6e72'); box(w + 0.05, 0.05, d + 0.05, 0, 0.88, 0, QUARTZ, 0.3); break;
+    case 'stool': cyl(0.17, 0.17, 0.05, 0, 0.7, 0, BLACK); cyl(0.02, 0.03, 0.7, 0, 0, 0, BLACK, 6); break;
+    case 'table': box(w, 0.05, d, 0, 0.72, 0, WOOD_D, 0.5); legs(0.72, 0.08, WOOD_D); break;
+    case 'chair': {
+      const c = it.color || '#e9e6df';
+      box(w, 0.05, d, 0, 0.44, 0, c); box(0.05, 0.5, d, -w / 2 + 0.03, 0.47, 0, c); legs(0.44, 0.04, WOOD_D, 0.04); break;
+    }
+    case 'rug': { const o = box(w, 0.012, d, 0, 0.01, 0, it.color || '#b9c0c4', 1); o.castShadow = false; break; }
+    case 'tv_console': box(w, 0.5, d, 0, 0, 0, WOOD_D, 0.6); break;
+    case 'tv': box(w, 0.82, d, 0, 0.95, 0, '#101214', 0.2); break;
+    case 'sofa': case 'armchair': {
+      const c = it.color || '#d8d4cb';
+      box(w, 0.42, d, 0, 0, 0, c, 0.9); box(0.22, 0.45, d, -w / 2 + 0.11, 0.42, 0, c, 0.9);
+      box(w, 0.2, 0.18, 0, 0.42, d / 2 - 0.09, c, 0.9); box(w, 0.2, 0.18, 0, 0.42, -d / 2 + 0.09, c, 0.9);
+      break;
+    }
+    case 'coffee_table': box(w, 0.06, d, 0, 0.38, 0, WOOD_D, 0.5); box(w * 0.9, 0.3, d * 0.9, 0, 0.05, 0, '#3a2a20'); break;
+    case 'lamp': cyl(0.12, 0.15, 0.03, 0, 0, 0, BLACK); cyl(0.015, 0.015, 1.4, 0, 0.03, 0, BLACK, 6);
+      { const sh = cyl(0.14, 0.2, 0.28, 0, 1.35, 0, '#f2e6c9'); sh.material = new THREE.MeshStandardMaterial({ color: 0xf2e6c9, emissive: 0x6b5a3a, roughness: 0.9 }); }
+      break;
+    case 'plant': cyl(0.18, 0.14, 0.4, 0, 0, 0, '#cfd6d2'); { const o = new THREE.Mesh(new THREE.IcosahedronGeometry(0.33, 1), mat('#3f7a4a', 0.9)); o.position.set(0, 0.75, 0); o.scale.set(1, 1.3, 1); g.add(o); } break;
+    case 'bookshelf': box(w, 2.0, d, 0, 0, 0, WHITE);
+      for (let y = 0.35; y < 1.9; y += 0.4) { box(w * 0.7, 0.24, d * 0.85, -0.03, y, 0, ['#8e5ea2', '#2e86ab', '#d1495b', '#3d9970'][Math.round(y * 5) % 4], 0.9); }
+      break;
+    case 'bench': box(w, 0.06, d, 0, 0.42, 0, WOOD_D, 0.5); box(w * 0.95, 0.36, d * 0.9, 0, 0.04, 0, WHITE); break;
+    case 'pooltable': box(w, 0.12, d, 0, 0.66, 0, WOOD_D, 0.5); box(w - 0.14, 0.02, d - 0.14, 0, 0.775, 0, '#1f6f4a', 0.95); legs(0.66, 0.12, WOOD_D, 0.12);
+      for (const [bx, bz, bc] of [[0.2, 0.3, '#f2c14e'], [-0.15, 0.4, '#d1495b'], [0.05, -0.5, '#f7f7f4'], [-0.25, -0.1, '#2e86ab']]) { const b = new THREE.Mesh(new THREE.SphereGeometry(0.03, 10, 8), mat(bc, 0.3)); b.position.set(bx, 0.82, -bz); g.add(b); }
+      break;
+    case 'beanbag': { const o = new THREE.Mesh(new THREE.SphereGeometry(0.42, 18, 12), mat(it.color || '#2e86ab', 0.95)); o.scale.set(1, 0.55, 1); o.position.y = 0.22; g.add(o); break; }
+    case 'vanity': box(w, 0.82, d, 0, 0.0, 0, WHITE); box(w + 0.02, 0.04, d + 0.02, 0, 0.82, 0, QUARTZ, 0.3); box(0.4, 0.02, 0.3, 0, 0.865, 0.03, '#ffffff', 0.2); break;
+    case 'toilet': box(0.38, 0.4, 0.45, 0, 0, 0.08, '#fafafa', 0.3); box(0.42, 0.4, 0.2, 0, 0.35, -0.2, '#fafafa', 0.3); break;
+    case 'tub': { const o = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.42, 0.6, 24), mat('#fafafa', 0.25)); o.scale.set(w / 1.0, 1, d / 1.0); o.position.y = 0.3; g.add(o);
+      const wtr = new THREE.Mesh(new THREE.CylinderGeometry(0.44, 0.44, 0.01, 24), mat('#9cd3e0', 0.1)); wtr.scale.copy(o.scale); wtr.position.y = 0.55; g.add(wtr); break; }
+    case 'shower': box(w, 0.05, d, 0, 0, 0, '#bfb8ac', 0.6);
+      { const gl = new THREE.MeshStandardMaterial({ color: 0xcfe4ea, transparent: true, opacity: 0.25, roughness: 0.05, depthWrite: false });
+        const a = new THREE.Mesh(new THREE.BoxGeometry(0.02, 2.0, d), gl); a.position.set(-w / 2, 1.0, 0); g.add(a);
+        const b = new THREE.Mesh(new THREE.BoxGeometry(w, 2.0, 0.02), gl); b.position.set(0, 1.0, d / 2); g.add(b); }
+      box(0.15, 0.03, 0.15, w / 2 - 0.15, 1.95, 0, BLACK);
+      break;
+    case 'bed': {
+      const head = it.head || 'w';
+      box(w, 0.3, d, 0, 0, 0, WOOD_D, 0.6); box(w - 0.04, 0.2, d - 0.04, 0, 0.3, 0, '#f4f4f0', 0.9);
+      if (head === 'w') {
+        box(0.08, 1.0, d, -w / 2 + 0.04, 0, 0, WOOD_D); box(w * 0.62, 0.06, d - 0.02, w * 0.17, 0.5, 0, it.color || '#e7e3da', 0.95);
+        for (const z of [-d / 4, d / 4]) box(0.35, 0.12, d / 2 - 0.12, -w / 2 + 0.3, 0.5, z, '#ffffff', 0.95);
+      } else {
+        box(w, 1.0, 0.08, 0, 0, -d / 2 + 0.04, WOOD_D); box(w - 0.02, 0.06, d * 0.62, 0, 0.5, d * 0.17, it.color || '#e7e3da', 0.95);
+        box(w - 0.25, 0.12, 0.35, 0, 0.5, -d / 2 + 0.3, '#ffffff', 0.95);
+      }
+      break;
+    }
+    case 'nightstand': box(w, 0.55, d, 0, 0, 0, WOOD_D, 0.6); cyl(0.07, 0.1, 0.03, 0, 0.55, 0, BLACK); break;
+    case 'dresser': box(w, 0.8, d, 0, 0, 0, WHITE); for (const y of [0.18, 0.43, 0.68]) box(0.2, 0.02, 0.02, 0, y, -d / 2 - 0.01, BLACK); break;
+    case 'toybox': box(w, 0.45, d, 0, 0, 0, '#e4572e', 0.7); break;
+    case 'desk': box(w, 0.04, d, 0, 0.73, 0, WOOD_D, 0.5); legs(0.73, 0.04, BLACK, 0.04); box(0.05, 0.38, 0.6, -w / 2 + 0.12, 0.77, 0, '#101214', 0.2); break;
+    case 'treadmill': box(w, 0.18, d, 0, 0, 0, '#2a2e33'); box(w - 0.3, 0.02, d - 0.25, 0.1, 0.18, 0, '#111'); box(0.06, 1.1, d, -w / 2 + 0.05, 0.18, 0, '#2a2e33'); box(0.25, 0.08, d, -w / 2 + 0.12, 1.25, 0, '#2a2e33'); break;
+    case 'lockers': box(w, 0.45, d, 0, 0, 0, WHITE); box(w, 0.04, d, 0, 0.45, 0, WOOD_D); box(0.05, 1.7, d, w / 2 - 0.03, 0.49, 0, WHITE); box(w, 0.5, d, 0, 1.75, 0, WHITE); break;
+    default: box(w, 0.6, d, 0, 0, 0, '#999');
+  }
+  return g;
+}
+
 // ---------------------------------------------------------------- places ----
 // Site coordinates (metres, x east, y north). `stand` = where a person stands or sits, with the
 // direction they face (degrees, 0 = east, 90 = north). `inside` places hide the person at a door.
-function placeDefs(nav) {
+function placeDefs(nav, inter) {
   const door = (id) => nav.doors.find((d) => d.id === id);
-  const houseDoors = nav.doors.filter((d) => d.building === 'house' && d.kind === 'door');
   const at = (d, face) => ({ x: d.x, y: d.y, face: face ?? (Math.atan2(d.face[1], d.face[0]) * 180) / Math.PI, door: d });
   const fp = [4.931, 26.471];
   const ring = [45, 135, 225, 315].map((a) => {
     const r = (a * Math.PI) / 180;
     return { x: fp[0] + Math.cos(r) * 1.45, y: fp[1] + Math.sin(r) * 1.45, face: a + 180, sit: true, z: 259.52 };
   });
+  const indoor = {};
+  for (const q of inter?.places || []) indoor[q.id] = { label: q.label, icon: q.icon, room: q.room, indoor: true, cap: q.cap, at: q.at, stand: q.stand.map((t) => ({ ...t })) };
   return {
-    house: { label: 'House', icon: '🏠', at: [0.6, 9.4], doors: houseDoors.map((d) => at(d)), inside: true, cap: 99 },
+    ...indoor,
     porch: { label: 'Porch chairs', icon: '🪑', at: [6.0, 9.6], cap: 2, stand: [{ x: 5.55, y: 9.75, face: -90, sit: true, z: 262.15 }, { x: 6.55, y: 9.75, face: -90, sit: true, z: 262.15 }] },
     grill: { label: 'Grill on the deck', icon: '🍖', at: [-1.2, 26.95], cap: 1, stand: [{ x: -1.2, y: 26.25, face: 90 }] },
     hottub: { label: 'Hot tub', icon: '♨️', at: [14.72, 21.98], cap: 3, approach: { x: 14.72, y: 19.55 },
@@ -188,7 +285,7 @@ function placeDefs(nav) {
     greenhouse: { label: 'Greenhouse', icon: '🌱', at: [-33.6, 18.1], cap: 1, doors: [at(door('site_gh_door'))], inside: true },
     barn: { label: 'Pole barn', icon: '🪚', at: [-41.4, -25.8], cap: 2, doors: [at(door('barn_overhead_door')), at(door('barn_man_door'))].filter((d) => d.door), inside: true },
     dgarage: { label: 'Detached garage', icon: '🔧', at: [-33.0, -6.0], cap: 1, doors: [at(door('dg_overhead_door')), at(door('dg_man_door'))].filter((d) => d.door), inside: true },
-    car: { label: 'Car (attached garage)', icon: '🚗', at: [-6.8, 6.0], cap: 4, doors: [at(door('sides_garage_door'))], inside: true },
+    car: { label: 'Car (attached garage)', icon: '🚗', at: [-6.8, 6.0], cap: 4, doors: [at(door('sides_garage_door')), door('garage_link') && at(door('garage_link'))].filter(Boolean), inside: true },
     lawn: { label: 'Back lawn', icon: '☁️', at: [-2.0, 42.0], cap: 99, stand: [{ x: -2.0, y: 43.0, face: 90 }] },
   };
 }
@@ -196,16 +293,22 @@ function placeDefs(nav) {
 // ---------------------------------------------------------------- actions ---
 // gain: total change over the whole action. mins: duration in game minutes.
 const ACTIONS = {
-  meal: { place: 'house', label: 'Cook a meal', icon: '🍳', mins: 50, gain: { hunger: 70, fun: 5 }, skill: ['cooking', 0.3], cost: 10, trait: { foodie: { fun: 25 } }, pose: 'hidden' },
-  snack: { place: 'house', label: 'Grab a snack', icon: '🥪', mins: 10, gain: { hunger: 22 }, cost: 3, pose: 'hidden' },
-  salad: { place: 'house', label: 'Make a garden salad', icon: '🥗', mins: 20, gain: { hunger: 45, fun: 8 }, needs: 'produce', skill: ['cooking', 0.15], trait: { foodie: { fun: 15 }, greenthumb: { fun: 10 } }, pose: 'hidden' },
-  shower: { place: 'house', label: 'Shower', icon: '🚿', mins: 20, gain: { hygiene: 85 }, pose: 'hidden' },
-  toilet: { place: 'house', label: 'Use the bathroom', icon: '🚽', mins: 8, gain: { bladder: 100 }, pose: 'hidden' },
-  sleep: { place: 'house', label: 'Sleep', icon: '🛏️', mins: 480, sleep: true, rate: { energy: 13 }, pose: 'hidden' },
-  nap: { place: 'house', label: 'Take a nap', icon: '💤', mins: 60, gain: { energy: 18 }, pose: 'hidden' },
-  tv: { place: 'house', label: 'Watch TV', icon: '📺', mins: 60, gain: { fun: 32, energy: -2 }, pose: 'hidden' },
-  read: { place: 'house', label: 'Read a book', icon: '📖', mins: 45, gain: { fun: 20 }, pose: 'hidden' },
-  phone: { place: 'house', label: 'Call a friend', icon: '☎️', mins: 30, gain: { social: 38, fun: 5 }, trait: { social: { social: 10 } }, pose: 'hidden' },
+  meal: { place: 'stove', label: 'Cook a meal', icon: '🍳', mins: 50, gain: { hunger: 70, fun: 5 }, skill: ['cooking', 0.3], cost: 10, trait: { foodie: { fun: 25 } }, pose: 'work' },
+  snack: { place: 'fridge', label: 'Grab a snack', icon: '🥪', mins: 10, gain: { hunger: 22 }, cost: 3, pose: 'work' },
+  salad: { place: 'counter', label: 'Make a garden salad', icon: '🥗', mins: 20, gain: { hunger: 45, fun: 8 }, needs: 'produce', skill: ['cooking', 0.15], trait: { foodie: { fun: 15 }, greenthumb: { fun: 10 } }, pose: 'work' },
+  dinner: { place: 'table', label: 'Sit down for dinner', icon: '🍽️', mins: 40, gain: { hunger: 55, fun: 6 }, cost: 8, company: { social: 22 }, trait: { foodie: { fun: 12 } }, pose: 'sit' },
+  shower: { place: 'shower', label: 'Shower', icon: '🚿', mins: 20, gain: { hygiene: 85 }, pose: 'shower' },
+  bath: { place: 'tub', label: 'Take a bath', icon: '🛁', mins: 40, gain: { hygiene: 75, fun: 14, energy: 5 }, pose: 'soak' },
+  toilet: { place: 'toilet', label: 'Use the toilet', icon: '🚽', mins: 8, gain: { bladder: 100 }, pose: 'sit' },
+  sleep: { place: 'beds', label: 'Sleep', icon: '🛏️', mins: 480, sleep: true, rate: { energy: 13 }, pose: 'lie' },
+  nap: { place: 'beds', label: 'Take a nap', icon: '💤', mins: 60, gain: { energy: 18 }, pose: 'lie' },
+  tv: { place: 'sofa', label: 'Watch TV', icon: '📺', mins: 60, gain: { fun: 32, energy: -2 }, company: { social: 14 }, pose: 'sit' },
+  read: { place: 'readchair', label: 'Read a book', icon: '📖', mins: 45, gain: { fun: 20 }, pose: 'sit' },
+  phone: { place: 'armchair', label: 'Call a friend', icon: '☎️', mins: 30, gain: { social: 38, fun: 5 }, trait: { social: { social: 10 } }, pose: 'sit' },
+  pool: { place: 'pool', label: 'Shoot some pool', icon: '🎱', mins: 40, gain: { fun: 26 }, company: { social: 20 }, pose: 'work' },
+  games: { place: 'games', label: 'Play video games', icon: '🎮', mins: 45, gain: { fun: 30, energy: -3 }, company: { social: 12 }, pose: 'sit' },
+  freelance: { place: 'computer', label: 'Freelance online', icon: '💻', mins: 120, gain: { fun: -6, energy: -8 }, earn: () => 70, pose: 'sit' },
+  treadmill: { place: 'treadmill', label: 'Run on the treadmill', icon: '🏃', mins: 30, gain: { fun: 6, energy: -12, hygiene: -20 }, skill: ['fitness', 0.35], pose: 'jog' },
   porch: { place: 'porch', label: 'Sit on the porch', icon: '🪑', mins: 40, gain: { fun: 14, energy: 6 }, company: { social: 18 }, trait: { outdoorsy: { fun: 10 } }, pose: 'sit' },
   grill: { place: 'grill', label: 'Grill out on the deck', icon: '🍖', mins: 50, gain: { hunger: 80, fun: 15 }, cost: 15, skill: ['cooking', 0.35], trait: { foodie: { fun: 20 }, outdoorsy: { fun: 10 } }, pose: 'work' },
   soak: { place: 'hottub', label: 'Soak in the hot tub', icon: '♨️', mins: 45, gain: { fun: 32, hygiene: 15, energy: 8 }, company: { social: 22 }, night: { fun: 12 }, trait: { outdoorsy: { fun: 15 } }, pose: 'soak' },
@@ -301,11 +404,12 @@ class Game {
     if (!M.nav) throw new Error('this build has no walkable-ground grid (nav.json)');
     const d = await (await fetch(V.asset(M.nav))).json();
     this.nav = new Nav(d);
-    this.places = placeDefs(this.nav);
+    this.inter = M.interior ? await (await fetch(V.asset(M.interior))).json() : null;
+    this.places = placeDefs(this.nav, this.inter);
     for (const [id, p] of Object.entries(this.places)) {
       p.id = id;
       for (const s of p.stand || []) {
-        if (s.soak) continue;
+        if (s.soak || p.indoor) continue;
         const k = this.nav.snap(s.x, s.y, 3);
         if (k >= 0 && Math.hypot(this.nav.cx(k) - s.x, this.nav.cy(k) - s.y) > 0.5 && !s.z) { s.x = this.nav.cx(k); s.y = this.nav.cy(k); }
       }
@@ -313,7 +417,9 @@ class Game {
     }
     this.people = [];
     this.speed = 1;
-    this.follow = true;
+    this.follow = false;
+    this.cut = true;
+    this.keys = new Set();
     this.t = 7 * 60 + 30;          // game minutes since day 0 00:00
     this.money = 900;
     this.produce = 0;
@@ -322,6 +428,7 @@ class Game {
     this.billsDay = 0;
     this.buildUI();
     this.buildProps();
+    this.buildInterior();
   }
 
   // ----------------------------------------------------------- lifecycle
@@ -334,6 +441,7 @@ class Game {
     if (v.state.measuring) v.toggleMeasure?.(false);
     v.select(null);
     this.props.visible = true;
+    if (this.interior) this.interior.visible = true;
     for (const p of this.people) p.group.visible = !p.hidden;
     v.state.game = this;
     this.viewerSun = { minutes: v.state.minutes, day: v.state.day };
@@ -342,7 +450,9 @@ class Game {
       const saved = this.loadSave();
       if (saved) this.askContinue(saved); else this.setupDialog();
     }
-    v.goToView({ pos: [22, -22, v.M.z0 + 26], target: [-2, 12, v.M.z0] }, true);
+    v.goToView({ pos: [20, -8, v.M.z0 + 22], target: [1, 16, v.M.z0] }, true);
+    v.controls.minDistance = 2;
+    this.setCut(this.cut);
     this.renderHUD();
   }
   exit() {
@@ -353,8 +463,12 @@ class Game {
     this.closeMenu();
     V.state.game = null;
     this.props.visible = false;
+    if (this.interior) this.interior.visible = false;
     for (const p of this.people) p.group.visible = false;
     this.setGlow(false);
+    this.setCut(false, true);
+    V.controls.minDistance = 6;
+    this.keys.clear();
     if (this.viewerSun) { Object.assign(V.state, this.viewerSun); V.setSun(); }
     V.state.dirty = true;
   }
@@ -409,6 +523,67 @@ class Game {
     this.dark = Math.max(clamp((h - 20.9) / 0.9, 0, 1), clamp((6.2 - h) / 0.9, 0, 1));
     for (const l of this.lights) l.intensity *= 1 - 0.72 * this.dark;
   }
+  // ---------------------------------------------------- the main floor
+  // Walls cut away (Sims-style) by a clipping plane a little above the floor, applied to the house model
+  // and the partitions; `off` takes the plane away entirely when leaving the game.
+  setCut(on, off = false) {
+    this.cut = on;
+    const fz = this.inter?.floor_z ?? 262.3;
+    this.cutPlane.constant = on ? fz + (this.inter?.cut ?? 1.15) - V.M.z0 : 1e5;
+    V.renderer.localClippingEnabled = !off;
+    for (const [mat, side] of this.cutMats) {
+      mat.clippingPlanes = off ? null : [this.cutPlane];
+      mat.side = on && !off ? THREE.DoubleSide : side;
+      mat.needsUpdate = true;
+    }
+    const wb = $('life-walls');
+    if (wb) { wb.setAttribute('aria-pressed', String(on)); wb.textContent = on ? 'Walls cut' : 'Walls up'; }
+    V.state.dirty = true;
+  }
+  buildInterior() {
+    this.cutPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 1e5);
+    this.cutMats = new Map();
+    V.groups.house?.traverse((o) => {
+      if (!o.isMesh) return;
+      for (const mt of [o.material, o.userData.photo].filter(Boolean)) if (!this.cutMats.has(mt)) this.cutMats.set(mt, mt.side);
+    });
+    const I = this.inter;
+    this.interiorMeshes = [];
+    if (!I) return;
+    const g = new THREE.Group(); g.name = 'life-interior'; this.interior = g; V.scene.add(g);
+    const z0 = V.M.z0, mats = {};
+    const mat = (c, r = 0.75, extra = {}) => (mats[c + r + JSON.stringify(extra)] ||= new THREE.MeshStandardMaterial({ color: c, roughness: r, ...extra }));
+    for (const r of I.rooms) {
+      for (const poly of r.polys) {
+        const sh = new THREE.Shape(poly.map(([x, y]) => new THREE.Vector2(x, y)));
+        const geo = new THREE.ShapeGeometry(sh); geo.rotateX(-Math.PI / 2);
+        const o = new THREE.Mesh(geo, mat(r.color, 0.6));
+        o.position.y = r.z - z0 + 0.012; o.receiveShadow = true;
+        o.userData.floor = r; o.userData.room = r.id; g.add(o); this.interiorMeshes.push(o);
+      }
+    }
+    const wallMat = new THREE.MeshStandardMaterial({ color: 0xdcd6cc, roughness: 0.9, clippingPlanes: [this.cutPlane] });
+    const capMat = new THREE.MeshStandardMaterial({ color: 0xf4f2ee, roughness: 0.8, clippingPlanes: [this.cutPlane] });
+    this.cutMats.set(wallMat, THREE.FrontSide); this.cutMats.set(capMat, THREE.FrontSide);
+    for (const w of I.walls) {
+      const [ax, ay] = w.a, [bx, by] = w.b, L = Math.hypot(bx - ax, by - ay);
+      const o = new THREE.Mesh(new THREE.BoxGeometry(L + I.wall_t, I.wall_h, I.wall_t), wallMat);
+      o.position.copy(V.v3((ax + bx) / 2, (ay + by) / 2, I.floor_z + I.wall_h / 2));
+      o.rotation.y = Math.atan2(by - ay, bx - ax);
+      o.castShadow = true; o.receiveShadow = true; o.userData.wall = true; g.add(o); this.interiorMeshes.push(o);
+      const base = new THREE.Mesh(new THREE.BoxGeometry(L + I.wall_t + 0.02, 0.1, I.wall_t + 0.03), capMat);
+      base.position.copy(V.v3((ax + bx) / 2, (ay + by) / 2, I.floor_z + 0.05)); base.rotation.y = o.rotation.y; g.add(base);
+    }
+    for (const it of I.items) {
+      const f = furniture(it, mat);
+      f.position.copy(V.v3(it.x, it.y, it.z));
+      f.rotation.y = (it.yaw * Math.PI) / 180;
+      const room = I.rooms.find((r) => r.polys.some((pl) => inPoly(pl, it.x, it.y)));
+      f.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; o.userData.room = room?.id; this.interiorMeshes.push(o); } });
+      g.add(f);
+    }
+    g.visible = false;
+  }
   setGlow(on) {
     if (this.glowOn === on) return;
     this.glowOn = on;
@@ -430,10 +605,12 @@ class Game {
         </div>
         <div class="life-money" id="life-money" title="Household funds"></div>
         <div class="life-produce" id="life-produce" title="Fresh produce from the garden"></div>
-        <button class="life-follow" id="life-follow" aria-pressed="true" title="Camera follows the selected person (F)">Follow</button>
+        <button class="life-follow" id="life-walls" aria-pressed="true" title="Cut the walls away to see inside (C)">Walls cut</button>
+        <button class="life-follow" id="life-follow" aria-pressed="false" title="Camera follows the selected person (F)">Follow</button>
         <button class="life-exit" id="life-exit">Exit</button>
       </div>
       <div class="life-toasts" id="life-toasts" aria-live="polite"></div>
+      <div class="life-help" id="life-help">Drag to turn · right-drag or <b>WASD</b>/arrows to move · scroll to zoom · <b>C</b> walls · <b>F</b> follow</div>
       <div class="life-dock">
         <div class="life-faces" id="life-faces"></div>
         <div class="life-card" id="life-card"></div>
@@ -443,14 +620,26 @@ class Game {
     document.body.append(root);
     root.querySelectorAll('.life-speed button').forEach((b) => b.addEventListener('click', () => this.setSpeed(+b.dataset.s)));
     $('life-exit').addEventListener('click', () => this.exit());
-    $('life-follow').addEventListener('click', () => { this.follow = !this.follow; $('life-follow').setAttribute('aria-pressed', String(this.follow)); });
+    $('life-follow').addEventListener('click', () => this.setFollow(!this.follow));
+    $('life-walls').addEventListener('click', () => this.setCut(!this.cut));
+    // taking hold of the camera stops it following anyone
+    V.controls.addEventListener('start', () => { if (this.active && this.follow) this.setFollow(false); });
+    const MOVE = { w: 'f', arrowup: 'f', s: 'b', arrowdown: 'b', a: 'l', arrowleft: 'l', d: 'r', arrowright: 'r', q: 'ccw', e: 'cw' };
+    window.addEventListener('keyup', (e) => { const k = MOVE[e.key.toLowerCase()]; if (k) this.keys.delete(k); });
+    window.addEventListener('blur', () => this.keys.clear());
+    window.addEventListener('keydown', (e) => {
+      if (!this.active || e.target.closest?.('input, select, textarea, dialog') || e.metaKey || e.ctrlKey) return;
+      const k = MOVE[e.key.toLowerCase()];
+      if (k) { e.preventDefault(); this.keys.add(k); if (this.follow) this.setFollow(false); }
+      else if (e.key === 'c' || e.key === 'C') this.setCut(!this.cut);
+    });
     window.addEventListener('keydown', (e) => {
       if (!this.active || e.target.closest?.('input, select, textarea, dialog')) return;
       if (e.key === ' ') { e.preventDefault(); this.setSpeed(this.speed ? 0 : this.lastSpeed || 1); }
       else if (e.key === '1') this.setSpeed(1);
       else if (e.key === '2') this.setSpeed(3);
       else if (e.key === '3') this.setSpeed(12);
-      else if (e.key === 'f' || e.key === 'F') $('life-follow').click();
+      else if (e.key === 'f' || e.key === 'F') this.setFollow(!this.follow);
       else if (e.key === 'Tab' && this.people.length) { e.preventDefault(); const i = this.people.indexOf(this.sel); this.selectPerson(this.people[(i + 1) % this.people.length]); }
       else if (e.key === 'Escape') this.closeMenu();
     });
@@ -461,12 +650,43 @@ class Game {
   }
   makePins() {
     for (const p of Object.values(this.places)) {
+      if (p.indoor) continue;
       const b = el('button', 'life-pin', `<span>${p.icon}</span><em>${esc(p.label)}</em>`);
       b.addEventListener('click', (e) => { e.stopPropagation(); this.openPlaceMenu(p, e.clientX, e.clientY); });
       $('life-overlay').append(b);
       const gz = V.groundZ(p.at[0], p.at[1]);
-      this.pins.push({ b, pos: V.v3(p.at[0], p.at[1], gz + (p.id === 'house' ? 4.2 : p.id === 'barn' ? 8.3 : p.id === 'dgarage' ? 5.4 : 2.4)) });
+      this.pins.push({ b, pos: V.v3(p.at[0], p.at[1], gz + (p.id === 'barn' ? 8.3 : p.id === 'dgarage' ? 5.4 : 2.4)) });
     }
+    for (const r of this.inter?.labels || []) {
+      const icon = { living: '🛋️', kitchen: '🍳', kids: '🧸', office: '💻', mud: '🥾', bedroom: '🛏️', bath: '🛁', den: '🎱' }[r.room] || '🏠';
+      if (r.room === 'mud') continue;
+      const b = el('button', 'life-pin room', `<span>${icon}</span><em>${esc(r.label)}</em>`);
+      b.addEventListener('click', (e) => { e.stopPropagation(); this.openRoomMenu(r.room, e.clientX, e.clientY); });
+      $('life-overlay').append(b);
+      this.pins.push({ b, pos: V.v3(r.at[0], r.at[1], this.inter.floor_z + 1.5), room: true });
+    }
+  }
+  setFollow(on) {
+    this.follow = on;
+    $('life-follow').setAttribute('aria-pressed', String(on));
+    if (on && this.sel) this.recenter(this.sel);
+  }
+  // WASD / arrows slide the view over the ground; Q/E turn it
+  moveCamera(dt) {
+    if (!this.keys.size) return;
+    const cam = V.camera, ctr = V.controls.target;
+    const fwd = ctr.clone().sub(cam.position); fwd.y = 0;
+    const dist = cam.position.distanceTo(ctr);
+    if (fwd.lengthSq() < 1e-6) fwd.set(0, 0, -1);
+    fwd.normalize();
+    const right = new THREE.Vector3(-fwd.z, 0, fwd.x);
+    const v = new THREE.Vector3(), sp = Math.max(4, dist * 0.9) * dt;
+    if (this.keys.has('f')) v.add(fwd); if (this.keys.has('b')) v.sub(fwd);
+    if (this.keys.has('r')) v.add(right); if (this.keys.has('l')) v.sub(right);
+    if (v.lengthSq()) { v.normalize().multiplyScalar(sp); cam.position.add(v); ctr.add(v); }
+    const turn = (this.keys.has('ccw') ? 1 : 0) - (this.keys.has('cw') ? 1 : 0);
+    if (turn) { const off = cam.position.clone().sub(ctr); off.applyAxisAngle(new THREE.Vector3(0, 1, 0), turn * 1.4 * dt); cam.position.copy(ctr).add(off); }
+    V.controls.update();
   }
   setSpeed(s) {
     if (s) this.lastSpeed = s;
@@ -577,10 +797,14 @@ class Game {
     const hp = ray.intersectObjects(meshes, false)[0];
     if (hp) { this.clickPerson(hp.object.userData.person, e); return true; }
     const vis = V.modelMeshes.filter((o) => V.groups[o.userData.model]?.visible !== false);
-    const hit = ray.intersectObjects(vis, false)[0];
+    const cutY = this.cut ? this.cutPlane.constant : Infinity;
+    const hit = ray.intersectObjects([...vis, ...this.interiorMeshes], false)
+      .find((h) => !((h.object.userData.model === 'house' || h.object.userData.wall) && h.point.y > cutY));
     const ground = ray.intersectObject(V.terrain, false)[0];
     if (hit && (!ground || hit.distance <= ground.distance + 0.01)) {
-      const place = this.placeForMesh(hit.object, hit.point);
+      const u = hit.object.userData;
+      if (u.room && !u.floor) { this.openRoomMenu(u.room, e.clientX, e.clientY); return true; }
+      const place = u.room ? null : this.placeForMesh(hit.object, hit.point);
       if (place) { this.openPlaceMenu(place, e.clientX, e.clientY); return true; }
     }
     const pt = hit || ground;
@@ -596,11 +820,7 @@ class Game {
     if (/fire_pit/.test(n)) return this.places.firepit;
     if (/porch/.test(n) && !/roof/.test(n)) return this.places.porch;
     if (/^garage_|garage_door|sides_garage/.test(n)) return this.places.car;
-    if (m === 'house') {
-      if (/rear_deck/.test(n)) return this.places.grill;
-      if (/deck|railing|stairs|patio|walkout|river_rock|foundation/.test(n)) return null;
-      return this.places.house;
-    }
+    if (m === 'house') return /rear_deck/.test(n) ? this.places.grill : null;
     if (m === 'pole_barn') return this.places.barn;
     if (m === 'garage_detached') return this.places.dgarage;
     if (m === 'greenhouse') return this.places.greenhouse;
@@ -644,6 +864,25 @@ class Game {
     const users = [...place.users].map((u) => u.name);
     this.showMenu(`${place.icon} ${esc(place.label)}`, users.length ? `In use by ${esc(users.join(', '))}` : esc(p.name), items, cx, cy);
   }
+  openRoomMenu(room, cx, cy) {
+    const p = this.sel;
+    if (!p) return;
+    const places = Object.values(this.places).filter((q) => q.room === room);
+    const items = [];
+    for (const [id, a] of Object.entries(ACTIONS)) {
+      const pl = this.places[a.place];
+      if (a.social || !places.includes(pl)) continue;
+      const why = this.whyNot(p, id);
+      const bits = [a.sleep ? 'until rested' : `${a.mins} min`];
+      if (a.cost) bits.push(money(-a.cost));
+      if (a.earn) bits.push(`earns ~${money(a.earn(p))}`);
+      items.push({ label: a.label, icon: a.icon, hint: why || bits.join(' · '), disabled: !!why, run: () => this.order(p, { kind: 'act', id }) });
+    }
+    const label = this.inter.labels.find((l) => l.room === room)?.label || room;
+    const pin = this.inter.labels.find((l) => l.room === room);
+    items.push({ label: 'Walk here', icon: '👣', hint: '', run: () => this.order(p, { kind: 'goto', x: pin.at[0], y: pin.at[1], label: `Go to the ${label.toLowerCase()}`, icon: '👣' }) });
+    this.showMenu(esc(label), esc(p.name), items, cx, cy);
+  }
   showMenu(title, sub, items, cx, cy) {
     const m = $('life-menu');
     m.innerHTML = `<header><b>${title}</b><small>${sub}</small></header>`;
@@ -684,6 +923,7 @@ class Game {
     if (a.months) { const mo = new Date(2026, 0, this.season).getMonth(); if (mo < a.months[0] || mo > a.months[1]) return 'Out of season'; }
     if (a.sleep && p.needs.energy > 85) return 'Not tired';
     if (id === 'woodwork' && p.kid) return 'Too young for power tools';
+    if (id === 'freelance' && p.kid) return 'Kids don\'t have clients';
     const pl = this.places[a.place];
     if (pl && pl.users.size >= pl.cap && !pl.users.has(p)) return 'Full right now';
     return '';
@@ -757,7 +997,9 @@ class Game {
         c.inside = true;
       } else {
         const taken = new Set([...c.place.users].filter((u) => u !== p && u.cur?.seat).map((u) => u.cur.seat));
-        c.seat = (c.place.stand || []).find((s) => !taken.has(s)) || c.place.stand[0];
+        let stands = c.place.stand || [];
+        if (c.place.id === 'beds') stands = p.kid ? [stands[2], stands[3], stands[0], stands[1]] : [stands[0], stands[1], stands[2], stands[3]];
+        c.seat = stands.find((s) => s && !taken.has(s)) || stands[0];
         c.dest = c.place.approach || { x: c.seat.x, y: c.seat.y };
         if (c.seat.soak) c.soak = true;
       }
@@ -782,6 +1024,7 @@ class Game {
     }
     for (const p of this.people) this.step(p, gm, realDt);
     this.animate(realDt);
+    this.moveCamera(realDt);
     this.syncWorld(realDt);
     this.layout();
     this.hudTimer = (this.hudTimer || 0) + realDt;
@@ -1003,7 +1246,8 @@ class Game {
       if (a.work) s = this.money < 250 ? 60 : 0;                 // work is the player's call, unless money runs low
       if (a.earn && this.money < 400) s += this.money < 200 ? 30 : 10;
       if (a.produce && this.produce < 3) s += 4;                 // the garden wants tending
-      if (daylight && !pl.inside) s += 3 + (p.trait === 'outdoorsy' ? 4 : 0);   // a nice day outside
+      if (daylight && !pl.inside && !pl.indoor) s += 3 + (p.trait === 'outdoorsy' ? 4 : 0);   // a nice day outside
+      if (!daylight && pl.indoor && !a.sleep) s += 5;             // evenings are for the sofa, the pool table, a game
       if (id === 'nap' && h >= 18) s *= 0.2;                     // save it for bedtime
       const ago = this.t - (recent[id] ?? -1e9);                  // variety: the same thing again soon is less fun
       if (!a.sleep && id !== 'toilet' && ago < 360) s *= 0.25 + 0.75 * (ago / 360);
@@ -1047,6 +1291,7 @@ class Game {
         case 'hug': alx = arx = -1.4; alz = 0.5; arz = -0.5; break;
         case 'catch': { const ph = (this.ballPhase || 0); arx = -2.6 + Math.sin(ph * Math.PI * 2) * 0.5; alx = -0.8; break; }
         case 'lie': lie = true; break;
+        case 'shower': alx = arx = -2.7 + Math.sin(p.anim * 1.3) * 0.25; alz = 0.25; arz = -0.25; break;
         default: alx = Math.sin(p.anim * 0.5) * 0.03; arx = -alx;
       }
       lL.rotation.x = lx; lR.rotation.x = rx;
@@ -1082,7 +1327,7 @@ class Game {
       p.group.rotation.y = Math.atan2(Math.cos(r), -Math.sin(r));
       p.group.visible = this.active && !p.hidden;
       if (p.ring.visible) { p.ring.material.opacity = 0.6 + 0.3 * Math.sin(performance.now() / 300); }
-      if (c?.inside && c.phase === 'do' && c.place.id === 'house') anyHome = true;
+      if (c?.place?.indoor && c.phase === 'do') anyHome = true;
       if (c?.place?.id === 'firepit' && c.phase === 'do') anyFire = true;
       if (c?.place?.id === 'grill' && c.phase === 'do') grilling = true;
     }
@@ -1101,7 +1346,7 @@ class Game {
     if (anyFire) { const f = 0.85 + Math.sin(performance.now() / 90) * 0.1 + Math.sin(performance.now() / 37) * 0.05; this.flame.scale.set(f, f * 1.15, f); this.fireLight.intensity = dark ? 6 * f : 1.5; } else this.fireLight.intensity = 0;
     this.smoke.material.opacity = grilling ? 0.25 + 0.1 * Math.sin(performance.now() / 200) : 0;
     // camera follows the selected person
-    if (this.follow && this.sel && !this.sel.hidden && this.speed) {
+    if (this.follow && this.sel && !this.sel.hidden) {
       const tgt = V.v3(this.sel.x, this.sel.y, this.sel.z + 1);
       const ctr = V.controls.target, cam = V.camera.position;
       const d = tgt.clone().sub(ctr).multiplyScalar(Math.min(1, dt * 2.5));
@@ -1133,6 +1378,7 @@ class Game {
     };
     const camPos = cam.position;
     for (const pin of this.pins) {
+      if (pin.room && !this.cut) { pin.b.style.display = 'none'; continue; }
       put(pin.b, pin.pos);
       pin.b.classList.toggle('far', pin.pos.distanceTo(camPos) > 70);
     }

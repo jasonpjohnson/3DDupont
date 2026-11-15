@@ -83,7 +83,7 @@ async function init() {
   renderer.setAnimationLoop(tick);
   requestAnimationFrame(() => $('loading').classList.add('done'));
   window.__viewer = { state, M, scene, camera, controls, goToView, applyMode, setLayer, setSun, renderOnce,
-    v3, asset, groups, modelMeshes, terrain, groundZ, select, toggleMeasure };
+    v3, asset, groups, modelMeshes, terrain, groundZ, select, toggleMeasure, renderer };
   setupLife();
 }
 

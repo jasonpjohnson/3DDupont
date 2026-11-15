@@ -30,7 +30,7 @@ their doors). They also look after six needs and pick up skills, using what the 
 
 | Place | Things to do |
 |---|---|
-| House (any exterior door) | cook, snack, shower, sleep, nap, TV, read, call a friend |
+| Main floor (invented layout, see below) | cook, eat, wash, sleep, nap, TV, read, call a friend, pool, video games, freelance on the computer, treadmill |
 | Front porch chairs | sit and watch the road |
 | Rear deck | grill out |
 | Hot tub | soak (the cover comes off) |
@@ -41,12 +41,18 @@ their doors). They also look after six needs and pick up skills, using what the 
 | Attached garage | drive to work (weekdays) |
 | Back lawn | watch clouds, stargaze, jog, play catch |
 
-Click a person or their portrait to control them, click a place (or its marker) for its actions,
-and click the ground to walk there; shift-click queues. Left alone, people choose for themselves.
-Space pauses, 1–3 set the speed, F toggles the follow camera, Tab cycles people. The game clock
-drives the sun, nights get dark, and the windows light up when someone is home. The household
-is saved in the browser (localStorage). The inside of the house is not modelled: people go in by
-a door and come back out of it.
+Click a person or their portrait to control them, click a place, room or piece of furniture (or
+its marker) for its actions, and click the floor or ground to walk there; shift-click queues. Left
+alone, people choose for themselves. The camera is free: drag to turn, right-drag or WASD/arrows
+to move, Q/E to turn, scroll to zoom; F makes it follow the selected person. C (or *Walls*) cuts the
+house's walls away just above the main floor so you can see in, or puts them back. Space pauses,
+1–3 set the speed, Tab cycles people. The game clock drives the sun, nights get dark, and the
+windows light up when someone is home. The household is saved in the browser (localStorage).
+
+**The interior is made up.** `tools/build_interior.py` writes `assets/interior.json`: an invented
+main floor of furnished rooms, fitted inside the real exterior
+walls and using the real exterior doors, furnished in general terms in the house's style. It is
+not the house's actual floor plan. The upper floor and basement are not modelled.
 
 ## How it was made
 
@@ -93,6 +99,7 @@ python3 tools/build_site.py data/lidar/IN_Statewide_B1_2017_raw3857.npz assets/ 
         [--ortho photo.png --cir infrared.png]                     # terrain, trees, points, paving, fence
 python3 tools/build_model.py spec/site_spec.json assets/           # buildings -> .glb + parts catalogue
 python3 tools/export_sketchup.py assets/                           # the SketchUp package behind the download button
+python3 tools/build_interior.py spec/site_spec.json assets/        # the game's invented main floor
 python3 tools/build_nav.py spec/site_spec.json assets/             # walkable-ground grid and doors for the game
 python3 tools/build_manifest.py spec/site_spec.json assets/        # what the viewer loads (stamps a build id)
 python3 tools/stamp_page.py                                        # version the script and stylesheet links
@@ -123,7 +130,8 @@ elevation. Grid north is 1.19° east of true north; the sun study corrects for i
 
 This is a reconstruction for visualisation, not a survey. The parcel line is the county GIS
 line and is not a legal boundary. The model shows the exterior only. No owner names, sale
-prices, assessed values, interior layout or private photographs are included.
+prices, assessed values, real interior layout or private photographs are included (the game's
+interior is invented).
 
 ## Credits and licences
 
