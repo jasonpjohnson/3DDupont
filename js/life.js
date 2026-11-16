@@ -28,7 +28,7 @@ const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls)
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const money = (n) => `${n < 0 ? '−' : ''}$${Math.abs(Math.round(n)).toLocaleString('en-US')}`;
 const SAVE_KEY = 'dupont-life-v1';
-const UNLOCK_KEY = 'dupont-life-unlocks';     // codes entered in this browser; kept through New game
+const UNLOCK_KEY = 'dupont-life-unlocks';     // codes entered in this browser; cleared by New game
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const NEEDS = [
   ['hunger', 'Hunger', '🍽️'], ['energy', 'Energy', '⚡'], ['hygiene', 'Hygiene', '🧼'],
@@ -1214,6 +1214,11 @@ class Game {
       this.pins.push({ b, pos: V.v3(r.at[0], r.at[1], this.inter.floor_z + 1.5), room: true });
     }
   }
+  // a new household starts with every code switched off
+  lockAll() {
+    this.unlocked = false;
+    try { localStorage.removeItem(UNLOCK_KEY); } catch { /* ignore */ }
+  }
   openCheat() {
     const f = $('life-cheat');
     f.hidden = false; $('life-cheat-in').value = ''; $('life-cheat-in').focus();
@@ -1282,7 +1287,7 @@ class Game {
       <div class="life-row"><button class="primary" id="ld-cont">Continue</button><button id="ld-new">New household</button></div>`;
     d.showModal();
     $('ld-cont').onclick = () => { d.close(); this.load(s); };
-    $('ld-new').onclick = () => { try { localStorage.removeItem(SAVE_KEY); } catch { /* ignore */ } this.setupDialog(); };
+    $('ld-new').onclick = () => { try { localStorage.removeItem(SAVE_KEY); } catch { /* ignore */ } this.lockAll(); this.setupDialog(); };
   }
   load(s) {
     Object.assign(this, { t: s.t, money: s.money, produce: s.produce || 0, rel: s.rel || {}, billsDay: s.billsDay || 0 });
@@ -1519,6 +1524,7 @@ class Game {
     this.updateTub();
     this.setGlow(false);
     try { localStorage.removeItem(SAVE_KEY); } catch { /* ignore */ }
+    this.lockAll();
     Object.assign(this, { t: 7 * 60 + 30, money: 900, produce: 0, rel: {}, billsDay: 0 });
     $('life-toasts').innerHTML = '';
     this.renderHUD();
